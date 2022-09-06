@@ -30,7 +30,7 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <button onClick={getWeather}>Fetch weather forecast.</button>
+        <button onClick={getWeather}>Fetch weather forecast now.</button>
         {weather === null ? (
           <p>Nothing fetched yet</p>
         ) : (
