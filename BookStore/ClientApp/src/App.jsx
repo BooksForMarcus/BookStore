@@ -35,7 +35,7 @@ function App() {
           <p>Nothing fetched yet</p>
         ) : (
           weather.map((w, i) => {
-            return <p key={i}>{w.summary}</p>;
+            return <p key={i}>{w.name}</p>;
           })
         )}
         <p>
