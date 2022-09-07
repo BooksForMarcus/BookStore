@@ -10,6 +10,7 @@ public class CustomerCrud
     public CustomerCrud(MongoDbAccess db)
     {
         customers = db.CustomersCollection;
+
     }
 
     public async Task<bool> CreateCustomer(Customer customer)
