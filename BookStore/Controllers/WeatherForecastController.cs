@@ -1,10 +1,15 @@
 ﻿namespace ASP_Vite.Controllers;
+
+using BookStore.DbAccess;
+using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
 public class WeatherForecastController : ControllerBase
 {
+    CustomerCrud customers;
+    
     private static readonly string[] Summaries = new[]
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -12,20 +17,22 @@ public class WeatherForecastController : ControllerBase
 
     private readonly ILogger<WeatherForecastController> _logger;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger,CustomerCrud cc)
     {
         _logger = logger;
+        customers = cc;
     }
 
     [HttpGet]
-    public IEnumerable<WeatherForecast> Get()
+    public async Task<List<Customer>> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = DateTime.Now.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+        return await customers.GetAllCustomers();
+    }
+    [HttpPost]
+    public async Task<IActionResult> Post(Customer customer)
+    {
+        var result = await customers.CreateCustomer(customer);
+        if (result) return Ok();
+        else return BadRequest();
     }
 }
