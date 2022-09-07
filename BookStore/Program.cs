@@ -1,7 +1,4 @@
-// -----------------------------------------------------------------------------------------------
-//  Program.cs by Thomas Thorin, Copyright (C) 2022.
-//  Published under GNU General Public License v3 (GPL-3)
-// -----------------------------------------------------------------------------------------------
+using BookStore.DbAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<MongoDbAccess>();
+builder.Services.AddSingleton<CustomerCrud>();
 
 var app = builder.Build();
 
@@ -32,11 +31,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html"); ;
+app.MapFallbackToFile("index.html");
 
 app.Run();
