@@ -20,7 +20,7 @@ public class CustomerCrud
 	}
 	public async Task<List<Customer>> GetAllCustomers()
 	{
-		var resp = await customers.FindAsync(_ => true);
-		return resp.ToList();
+        var resp = (await customers.FindAsync(_ => true)).ToList();
+		return resp;
 	}
 }

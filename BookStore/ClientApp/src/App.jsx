@@ -8,8 +8,8 @@ function App() {
   const [count, setCount] = useState(0);
   const [weather, setWeather] = useRecoilState(weatherState);
 
-  const getWeather = async () => {
-    const resp = await fetch("/api/weatherforecast");
+  const getCustomers = async () => {
+    const resp = await fetch("/api/customer");
     const json = await resp.json();
     console.log(json);
     setWeather(json);
@@ -30,7 +30,7 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <button onClick={getWeather}>Fetch weather forecast now.</button>
+        <button onClick={getCustomers}>Fetch customers now.</button>
         {weather === null ? (
           <p>Nothing fetched yet</p>
         ) : (
