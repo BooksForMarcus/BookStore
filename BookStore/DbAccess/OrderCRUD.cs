@@ -23,15 +23,20 @@ namespace BookStore.DbAccess
 			return resp;
 		}
 
-		public async Task<bool> UpdateOrders()
+		public async Task<bool> UpdateOrders(Order customerId, Order updatedorder )
         {
-			throw new NotImplementedException();
-        }
+			var updatefilter = Builders<Order>.Filter.Eq("OrderId", customerId);
+			var update = Builders<Order>.Update.Set("Order", updatedorder);
+			var resp = await orders.UpdateOneAsync(updatefilter, update);
+			return resp.IsAcknowledged;
+		}
 
-		public async Task<bool> DeleteOrders()
+		public async Task<bool> DeleteOrders(Order customerId)
         {
-			throw new NotImplementedException();
-        }
+			var deletefilter = Builders<Order>.Filter.Eq("Id", customerId);
+			var resp = await orders.DeleteOneAsync(deletefilter);
+			return resp.IsAcknowledged;
+		}
 	}
 }
 
