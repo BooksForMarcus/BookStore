@@ -1,4 +1,3 @@
-﻿
 namespace BookStore.DbAccess;
 
 using BookStore.Models;
@@ -7,9 +6,11 @@ using MongoDB.Driver;
 public class CustomerCrud
 {
     private IMongoCollection<Customer> customers;
+    
     public CustomerCrud(MongoDbAccess db)
     {
         customers = db.CustomersCollection;
+    }
 
 
 	public async Task<bool> CreateCustomer(Customer customer)
