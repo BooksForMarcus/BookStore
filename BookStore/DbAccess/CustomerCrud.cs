@@ -11,19 +11,16 @@ public class CustomerCrud
     {
         customers = db.CustomersCollection;
 
-    }
 
-    public async Task<bool> CreateCustomer(Customer customer)
-    {
-
-        await customers.InsertOneAsync(customer);
-
-        var result = !String.IsNullOrWhiteSpace(customer.Id);
-        return result;
-    }
-    public async Task<List<Customer>> GetAllCustomers()
-    {
-        var resp = await customers.FindAsync(_ => true);
-        return resp.ToList();
-    }
+	public async Task<bool> CreateCustomer(Customer customer)
+	{
+		await customers.InsertOneAsync(customer);
+		var result = !String.IsNullOrWhiteSpace(customer.Id);
+		return result;
+	}
+	public async Task<List<Customer>> GetAllCustomers()
+	{
+        var resp = (await customers.FindAsync(_ => true)).ToList();
+		return resp;
+	}
 }
