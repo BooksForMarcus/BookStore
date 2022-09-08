@@ -35,4 +35,13 @@ public class WeatherForecastController : ControllerBase
         if (result) return Ok();
         else return BadRequest();
     }
+
+    [HttpPut("{id")]
+    public async Task<IActionResult> Update(Customer updated)
+    {
+        var result = await customers.UpdateCustomer(updated);
+
+        if (result) return Ok();
+        else return BadRequest();
+    }
 }
