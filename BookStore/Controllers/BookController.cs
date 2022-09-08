@@ -42,6 +42,13 @@ public class BookController : ControllerBase
     //public void Put(int id, [FromBody] string value)
     //{
     //}
+    [HttpPut]
+    public async Task<IActionResult> Put(Book book)
+    {
+        var result = await _bookCrud.UpdateBook(book);
+        if (!String.IsNullOrWhiteSpace(result.Id)) return Ok();
+        return BadRequest();
+    }
 
     //// DELETE api/<CustomerController>/5
     //[HttpDelete("{id}")]
