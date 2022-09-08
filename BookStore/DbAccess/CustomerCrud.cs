@@ -1,4 +1,3 @@
-﻿
 namespace BookStore.DbAccess;
 
 using BookStore.Models;
@@ -6,11 +5,13 @@ using MongoDB.Driver;
 
 public class CustomerCrud
 {
-	private IMongoCollection<Customer> customers;
-	public CustomerCrud(MongoDbAccess db)
-	{
-		customers = db.CustomersCollection;
-	}
+    private IMongoCollection<Customer> customers;
+    
+    public CustomerCrud(MongoDbAccess db)
+    {
+        customers = db.CustomersCollection;
+    }
+
 
 	public async Task<List<Customer>> GetAllCustomers()
 	{
@@ -27,9 +28,11 @@ public class CustomerCrud
 
 	public async Task<bool> UpdateCustomer(Customer updatedCustomer) 
 	{
+
 		var result = await customers.ReplaceOneAsync(x => x.Id == updatedCustomer.Id, updatedCustomer);
 		
 		return result.IsAcknowledged && result.ModifiedCount > 0;
+
 	}
 
 
