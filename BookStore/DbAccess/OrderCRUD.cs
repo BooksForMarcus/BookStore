@@ -13,8 +13,9 @@ namespace BookStore.DbAccess
 
 		public async Task<bool> CreateOrder(Order order)
 		{
+			order.Id = "";
 			await orders.InsertOneAsync(order);
-			var result = !String.IsNullOrWhiteSpace(order.CustomerId);
+			var result = !String.IsNullOrWhiteSpace(order.Id);
 			return result;
 		}
 		public async Task<List<Order>> GetAllOrders()
@@ -33,7 +34,7 @@ namespace BookStore.DbAccess
 
 		public async Task<bool> DeleteOrders(Order customerId)
         {
-			var deletefilter = Builders<Order>.Filter.Eq("Id", customerId);
+			var deletefilter = Builders<Order>.Filter.Eq("OrderId", customerId);
 			var resp = await orders.DeleteOneAsync(deletefilter);
 			return resp.IsAcknowledged;
 		}
