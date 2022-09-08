@@ -22,13 +22,13 @@ function App() {
                     <img className="nav_logo" src={logo} alt="An image of bookstore logo" />
                     <div className="navbar">
                         <div className="menu-item" >
-                            <Link to="/">Home</Link>
+                            <Link to="/">HEM</Link>
                         </div>
                         <div className="menu-item" >
-                            <Link to="/admin">Admin</Link>
+                            <Link to="/admin">ADMIN</Link>
                         </div>
                         <div className="menu-item" >
-                            <Link to="/login">Logga in</Link>
+                            <Link to="/login">LOGGA IN</Link>
                         </div>
                     </div>
                 </header>
