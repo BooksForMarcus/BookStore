@@ -25,10 +25,10 @@ function App() {
                             <Link to="/">HEM</Link>
                         </div>
                         <div className="menu-item" >
-                            <Link to="/admin">ADMIN</Link>
+                            <Link to="/">ADMIN</Link>
                         </div>
                         <div className="menu-item" >
-                            <Link to="/login">LOGGA IN</Link>
+                            <Link to="/">LOGGA IN</Link>
                         </div>
                     </div>
                 </header>

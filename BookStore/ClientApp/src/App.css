@@ -42,8 +42,8 @@ footer {
 .card {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    color: #433932;
-    background-color: #fef8f1;
+    color: #415d51;
+    background-color: #FCF8E8;
     padding: 0.5em;
     padding-left: 2em;
 }
@@ -60,6 +60,6 @@ footer {
     background-color: #e7d2ac;
 }
 
-.read-the-docs {
+/*.read-the-docs {
     color: #ababab;
-}
+}*/
