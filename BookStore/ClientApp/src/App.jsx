@@ -1,115 +1,41 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Link
+} from "react-router-dom";
 import "./App.css";
-import { useRecoilState } from "recoil";
-import weatherState from "./atoms/weatherState";
+import HomeView from "./views/HomeView";
+import AdminView from "./views/AdminHomeView";
+import LoginView from "./views/LoginView";
 
 function App() {
     const [count, setCount] = useState(0);
-    const [weather, setWeather] = useRecoilState(weatherState);
 
-    const getWeather = async () => {
-        const resp = await fetch("/api/weatherforecast");
-        const json = await resp.json();
-        console.log(json);
-        setWeather(json);
-    };
 
     return (
-        <div className="App">
-            <header></header>
-            <main>
-                <div className="side"></div>
-                <div>
-                    <div className="card">
-                        <h3>Top 5 Nyheter</h3>
-                        {/*{weather === null ? (*/}
-                        {/*    <p>Boktitel</p>*/}
-                        {/*) : (*/}
-                        {/*    weather.map((w, i) => {*/}
-                        {/*        return*/}
-                        {/*        <div className="card-product">*/}
-                        {/*            <div className="book-image"></div>*/}
-                        {/*                <p key={i}>{w.name}</p>*/}
-                        {/*            </div>;*/}
-                        {/*    })*/}
-                        {/*)}*/}
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <h3>Top 5 Begagnat</h3>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <h3>Hitta något nytt!</h3>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Boktitel</p>
-                        </div>
-                    </div>
-                </div>
-            </main>
-            <footer>
-                {/*<button onClick={() => setCount((count) => count + 1)}>*/}
-                {/*    count is {count}*/}
-                {/*</button>*/}
-                <button onClick={getWeather}>Fetch weather forecast now.</button>
-            </footer>
-        </div>
+        <BrowserRouter>
+            <div className="App">
+                    <header>
+                            <div className="navbar">
+                                <Link className="menu-item" to="/">Home</Link>
+                                <Link className="menu-item" to="/admin">Admin</Link>
+                                <Link className="menu-item" to="/login">Logga in</Link>
+                            </div>
+                    </header>
+                <Routes>
+                    <Route path='/' element={<HomeView />} />
+                    <Route path='/admin' element={<AdminView />} />
+                    <Route path='/login' element={<LoginView />} />
+                </Routes>
+                <footer>
+                    {/*<button onClick={() => setCount((count) => count + 1)}>*/}
+                    {/*    count is {count}*/}
+                    {/*</button>*/}
+                </footer>
+            </div>
+        </BrowserRouter>
     );
 }
 

@@ -3,6 +3,15 @@ header {
     padding: 3em;
 }
 
+navbar {
+    display: grid;
+    grid-template-columns: 1fr, 1fr, 1fr, 1fr;
+}
+
+.menu-item {
+    margin-right: 2em;
+}
+
 main {
     display: grid;
     grid-template-columns: 1fr 4fr;
