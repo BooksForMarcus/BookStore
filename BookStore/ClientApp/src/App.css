@@ -1,41 +1,44 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+header {
+    background-color: #222222;
+    padding: 3em;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+main {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+footer {
+    background-color: #4c4c4c;
+    padding: 2em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.side {
+    background-color: #ababab;
 }
 
 .card {
-  padding: 2em;
+    
+    color: #808080;
+    background-color: #ffffff;
+    padding: 0.5em;
+    padding-left: 2em;
+    border-bottom: solid;
+    border-color: #d3d3d3;
+}
+
+.card-product {
+    display: inline-grid;
+    place-items: center;
+    padding: 1em;
+}
+
+.book-image {
+    height: 200px;
+    width: 150px;
+    background-color: #d2d2d2;
 }
 
 .read-the-docs {
-  color: #888;
+    color: #ababab;
 }
