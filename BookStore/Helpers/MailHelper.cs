@@ -33,7 +33,7 @@ public class MailHelper
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             using (MailMessage mail = new())
             {
-                mail.From = new MailAddress(_sender, "Bookstore For Marcus");
+                mail.From = new MailAddress(_sender, "Bokcirkeln");
                 mail.To.Add(new MailAddress(mailTo));
                 mail.Subject = subject;
                 mail.Body = msg;
