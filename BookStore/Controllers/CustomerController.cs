@@ -21,12 +21,6 @@ public class CustomerController : ControllerBase
         return await _customerCrud.GetAllCustomers();
     }
 
-    //// GET api/<CustomerController>/5
-    //[HttpGet("{id}")]
-    //public string Get(int id)
-    //{
-    //    return "value";
-    //}
 
     // POST api/<CustomerController>
     [HttpPost]
@@ -37,15 +31,31 @@ public class CustomerController : ControllerBase
         else return BadRequest();
     }
 
-    //// PUT api/<CustomerController>/5
-    //[HttpPut("{id}")]
-    //public void Put(int id, [FromBody] string value)
-    //{
-    //}
+    [HttpPut]
+    public async Task<IActionResult> Put(Customer customer)
+    {
+        var result = await _customerCrud.UpdateCustomer(customer);
+        if (!String.IsNullOrWhiteSpace(result.Id)) return Ok();
+        return BadRequest();
+    }
 
-    //// DELETE api/<CustomerController>/5
-    //[HttpDelete("{id}")]
-    //public void Delete(int id)
+
+    //Takes string Id
+    [HttpDelete]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var result = await _customerCrud.DeleteCustomer(id);
+        if (result) return Ok();
+        else return BadRequest();
+    }
+
+
+    //Takes Customer object, then customer ID
+    //[HttpDelete]
+    //public async Task<IActionResult> Delete(Customer customer)
     //{
+    //    var result = await _customerCrud.DeleteCustomer(customer.Id);
+    //    if (result) return Ok();
+    //    else return BadRequest();
     //}
 }

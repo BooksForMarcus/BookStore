@@ -12,7 +12,6 @@ public class CustomerCrud
         customers = db.CustomersCollection;
     }
 
-
 	public async Task<List<Customer>> GetAllCustomers()
 	{
 		var resp = await customers.FindAsync(_ => true);
@@ -26,24 +25,36 @@ public class CustomerCrud
 		return result;
 	}
 
-	public async Task<bool> UpdateCustomer(Customer updatedCustomer) 
+	public async Task<Customer> UpdateCustomer(Customer updatedCustomer) 
 	{
-
-		var result = await customers.ReplaceOneAsync(x => x.Id == updatedCustomer.Id, updatedCustomer);
-		
-		return result.IsAcknowledged && result.ModifiedCount > 0;
-
+		var result = new Customer();
+        if (updatedCustomer.Id.Length == 24)
+        {
+			result = await customers.FindOneAndReplaceAsync(x => x.Id == updatedCustomer.Id, updatedCustomer);
+		}
+		return result;
 	}
 
+	//Takes string Id
+	public async Task<bool> DeleteCustomer(string id)
+	{
+		if (id.Length == 24)
+		{
+			await customers.DeleteOneAsync(x => x.Id == id);
+			return true;
+		}
+		return false;
+	}
 
-	//Det behöver fixa return value
-	//public async Task<bool> DeleteCustomer(Customer coustomer)
+	//Takes Customer object, then customer ID
+	//public async Task<bool> DeleteCustomer(Customer customer)
 	//{
-	//	var result = await customers.DeleteOneAsync(s => s.Id == coustomer.Id);
-	//	return ...
+
+	//	if (customer.Id.Length == 24)
+	//	{
+	//		await customers.DeleteOneAsync(x => x.Id == customer.Id);
+	//		return true;
+	//	}
+	//	return false;
 	//}
-
-
-	
-
 }
