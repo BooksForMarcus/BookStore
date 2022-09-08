@@ -6,19 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CustomerController : ControllerBase
+public class BookController : ControllerBase
 {
-    private readonly CustomerCrud _customerCrud;
+    private readonly BookCrud _bookCrud;
 
-    public CustomerController(CustomerCrud customerCrud) =>
-        _customerCrud = customerCrud;
+    public BookController(BookCrud bookCrud) =>
+        _bookCrud = bookCrud;
 
 
-    // GET: api/<CustomerController>
+    // GET: api/<BookController>
     [HttpGet]
-    public async Task<IEnumerable<Customer>> Get()
+    public async Task<IEnumerable<Book>> Get()
     {
-        return await _customerCrud.GetAllCustomers();
+        return await _bookCrud.GetAllBooks();
     }
 
     //// GET api/<CustomerController>/5
@@ -30,9 +30,9 @@ public class CustomerController : ControllerBase
 
     // POST api/<CustomerController>
     [HttpPost]
-    public async Task<IActionResult> Post(Customer customer)
+    public async Task<IActionResult> Post(Book book)
     {
-        var result = await _customerCrud.CreateCustomer(customer);
+        var result = await _bookCrud.CreateBook(book);
         if (result) return Ok();
         else return BadRequest();
     }
@@ -42,6 +42,13 @@ public class CustomerController : ControllerBase
     //public void Put(int id, [FromBody] string value)
     //{
     //}
+    [HttpPut]
+    public async Task<IActionResult> Put(Book book)
+    {
+        var result = await _bookCrud.UpdateBook(book);
+        if (!String.IsNullOrWhiteSpace(result.Id)) return Ok();
+        return BadRequest();
+    }
 
     //// DELETE api/<CustomerController>/5
     //[HttpDelete("{id}")]
@@ -49,3 +56,4 @@ public class CustomerController : ControllerBase
     //{
     //}
 }
+

@@ -13,6 +13,8 @@ public class MongoDbAccess
     private const string ordersCollection = "Orders";
 
     public IMongoCollection<Customer> CustomersCollection { get => MongoConnect<Customer>(customerCollection); }
+    public IMongoCollection<Order> OrdersCollection { get => MongoConnect<Order>(ordersCollection); }
+    public IMongoCollection<Book> BooksCollection { get => MongoConnect<Book>(booksCollection); }
 
     public MongoDbAccess()
     {
