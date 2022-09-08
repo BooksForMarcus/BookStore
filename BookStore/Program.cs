@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<MongoDbAccess>();
 builder.Services.AddSingleton<CustomerCrud>();
 builder.Services.AddSingleton<OrderCRUD>();
+builder.Services.AddSingleton<BookCrud>();
 
 var app = builder.Build();
 
