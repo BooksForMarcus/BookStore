@@ -1,15 +1,22 @@
 header {
-    background-color: #222222;
-    padding: 3em;
+    background-color: #688472;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
-navbar {
+.nav_logo {
+    width: 200px;
+    margin: 1.5em 0em 0em 2em;
+}
+
+.navbar {
     display: grid;
-    grid-template-columns: 1fr, 1fr, 1fr, 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-top: 7em;
 }
 
 .menu-item {
-    margin-right: 2em;
 }
 
 main {
@@ -18,26 +25,31 @@ main {
 }
 
 footer {
-    background-color: #4c4c4c;
+    background-color: #688472;
     padding: 2em;
 }
 
 .side {
-    background-color: #ababab;
+    background-color: #ECB390;
+}
+
+.main-wrapper {
+    padding-top: 2em;
+    display: grid;
+    place-items: center;
 }
 
 .card {
-    
-    color: #808080;
-    background-color: #ffffff;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    color: #433932;
+    background-color: #fef8f1;
     padding: 0.5em;
     padding-left: 2em;
-    border-bottom: solid;
-    border-color: #d3d3d3;
 }
 
 .card-product {
-    display: inline-grid;
+    display: grid;
     place-items: center;
     padding: 1em;
 }
@@ -45,7 +57,7 @@ footer {
 .book-image {
     height: 200px;
     width: 150px;
-    background-color: #d2d2d2;
+    background-color: #e7d2ac;
 }
 
 .read-the-docs {

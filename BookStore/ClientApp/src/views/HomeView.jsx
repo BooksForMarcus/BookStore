@@ -16,11 +16,11 @@ function HomeView() {
     return (
         <main>
             <div className="side">
-                <button onClick={getWeather}>Fetch weather forecast now.</button>
+                {/*<button onClick={getWeather}>Fetch weather forecast now.</button>*/}
             </div>
-            <div>
+            <div className="main-wrapper">
+                <h3>Top 5 Nyheter</h3>
                 <div className="card">
-                    <h3>Top 5 Nyheter</h3>
                     {/*{weather === null ? (*/}
                     {/*    <p>Boktitel</p>*/}
                     {/*) : (*/}
@@ -53,8 +53,8 @@ function HomeView() {
                         <p>Boktitel</p>
                     </div>
                 </div>
+                <h3>Top 5 Begagnat</h3>
                 <div className="card">
-                    <h3>Top 5 Begagnat</h3>
                     <div className="card-product">
                         <div className="book-image"></div>
                         <p>Boktitel</p>
@@ -76,8 +76,8 @@ function HomeView() {
                         <p>Boktitel</p>
                     </div>
                 </div>
+                <h3>Hitta något nytt!</h3>
                 <div className="card">
-                    <h3>Hitta något nytt!</h3>
                     <div className="card-product">
                         <div className="book-image"></div>
                         <p>Boktitel</p>

@@ -9,6 +9,7 @@ import "./App.css";
 import HomeView from "./views/HomeView";
 import AdminView from "./views/AdminHomeView";
 import LoginView from "./views/LoginView";
+import logo from './assets/boklogo.png'
 
 function App() {
     const [count, setCount] = useState(0);
@@ -17,13 +18,20 @@ function App() {
     return (
         <BrowserRouter>
             <div className="App">
-                    <header>
-                            <div className="navbar">
-                                <Link className="menu-item" to="/">Home</Link>
-                                <Link className="menu-item" to="/admin">Admin</Link>
-                                <Link className="menu-item" to="/login">Logga in</Link>
-                            </div>
-                    </header>
+                <header>
+                    <img className="nav_logo" src={logo} alt="An image of bookstore logo" />
+                    <div className="navbar">
+                        <div className="menu-item" >
+                            <Link to="/">Home</Link>
+                        </div>
+                        <div className="menu-item" >
+                            <Link to="/admin">Admin</Link>
+                        </div>
+                        <div className="menu-item" >
+                            <Link to="/login">Logga in</Link>
+                        </div>
+                    </div>
+                </header>
                 <Routes>
                     <Route path='/' element={<HomeView />} />
                     <Route path='/admin' element={<AdminView />} />
