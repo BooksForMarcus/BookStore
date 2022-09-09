@@ -93,4 +93,10 @@ public class BookCrud
         }
         return result;
     }
+
+    public bool AdminVerification()
+    {
+        //This method really needs to be updated with something better!
+        return true;
+    }
 }
