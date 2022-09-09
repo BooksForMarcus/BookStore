@@ -48,7 +48,7 @@ namespace BookStore.Controllers
         public async Task<IActionResult> Delete(Order order)
         {
             var result = await _orderCRUD.DeleteOrders(order);
-            if(!String.IsNullOrWhiteSpace(order.Id)) return Ok();
+            if (!String.IsNullOrWhiteSpace(order.Id)) return Ok();
             return BadRequest();
         }
 
