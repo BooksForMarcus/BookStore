@@ -32,12 +32,23 @@ namespace BookStore.DbAccess
 			return resp.IsAcknowledged;
 		}
 
-		public async Task<bool> DeleteOrders(Order deletedOrder)
+		//public async Task<bool> DeleteOrders(Order deletedOrder)
+  //      {
+		//	var deletefilter = Builders<Order>.Filter.Eq("OrderId",deletedOrder.Id);
+		//	var result = await orders.DeleteOneAsync(d => d.Id == deletedOrder.Id);
+		//	return result.IsAcknowledged && result.DeletedCount > 0;
+		//}
+
+		public async Task<bool> DeleteOrders(string id)
         {
-			var deletefilter = Builders<Order>.Filter.Eq("OrderId",deletedOrder.Id);
-			var result = await orders.DeleteOneAsync(d => d.Id == deletedOrder.Id);
-			return result.IsAcknowledged && result.DeletedCount > 0;
-		}
+			var result = false;
+			if(id.Length == 24)
+            {
+				var resp = await orders.DeleteOneAsync(i => i.Id == id);
+				result = resp.IsAcknowledged && resp.DeletedCount> 0;
+            }
+			return result;
+        }
 
         public async Task<bool> UpdateOrder(Order updatedOrder)
         {
