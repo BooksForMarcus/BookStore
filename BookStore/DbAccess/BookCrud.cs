@@ -54,7 +54,7 @@ public class BookCrud
         //return true; //don't, actually.
     }
 
-    public async Task<bool> UpdateBookPrice(Guid id, decimal newPrice)
+    public async Task<bool> UpdateBookPrice(string id, decimal newPrice)
     {
         //var resp = await books.FindAsync(_ => true);
         //return resp.ToList();
@@ -64,7 +64,7 @@ public class BookCrud
 
         var update = Builders<Book>.Update.Set("Price", newPrice);
         var resp = await books.UpdateOneAsync(updatefilter, update);
-        return resp.IsAcknowledged;
+        return resp.IsAcknowledged && resp.ModifiedCount > 0;
 
         //return true; //don't, actually.
     }
@@ -92,5 +92,11 @@ public class BookCrud
             result = await books.FindOneAndReplaceAsync(b => b.Id == updateBook.Id, updateBook);
         }
         return result;
+    }
+
+    public bool AdminVerification()
+    {
+        //This method really needs to be updated with something better!
+        return true;
     }
 }
