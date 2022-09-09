@@ -48,14 +48,4 @@ public class CustomerController : ControllerBase
         if (result) return Ok();
         else return BadRequest();
     }
-
-
-    //Takes Customer object, then customer ID
-    //[HttpDelete]
-    //public async Task<IActionResult> Delete(Customer customer)
-    //{
-    //    var result = await _customerCrud.DeleteCustomer(customer.Id);
-    //    if (result) return Ok();
-    //    else return BadRequest();
-    //}
 }

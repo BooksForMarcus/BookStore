@@ -35,26 +35,15 @@ public class CustomerCrud
 		return result;
 	}
 
-	//Takes string Id
-	public async Task<bool> DeleteCustomer(string id)
-	{
-		if (id.Length == 24)
-		{
-			await customers.DeleteOneAsync(x => x.Id == id);
-			return true;
-		}
-		return false;
-	}
-
-	//Takes Customer object, then customer ID
-	//public async Task<bool> DeleteCustomer(Customer customer)
-	//{
-
-	//	if (customer.Id.Length == 24)
-	//	{
-	//		await customers.DeleteOneAsync(x => x.Id == customer.Id);
-	//		return true;
-	//	}
-	//	return false;
-	//}
+    //Takes string Id
+    public async Task<bool> DeleteCustomer(string id)
+    {
+        var result = false;
+        if (id.Length == 24)
+        {
+            var response = await customers.DeleteOneAsync(x => x.Id == id);
+            result = response.IsAcknowledged && response.DeletedCount > 0;
+        }
+        return result;
+    }
 }
