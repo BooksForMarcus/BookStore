@@ -41,9 +41,9 @@ public class BookController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(Book book)
     {
- 
+
         var result = await _bookCrud.CreateBook(book);
-        if (result) return Ok ();
+        if (result) return Ok();
         else return BadRequest();
     }
 
@@ -65,13 +65,17 @@ public class BookController : ControllerBase
     //pattern: "{controller}/{action=Index}/{id?}");
     //kan man göra så här?
 
-    //[Route("api/[controller]/{id}/{newPrice}")]
-    //public async Task<IActionResult> Put(Guid id, decimal newPrice)
-    //{
-    //    var result = await _bookCrud.UpdateBookPrice(id, newPrice);
-    //    if (result) return Ok();
-    //    return BadRequest();
-    //}
+    [HttpPut("pricechange/")]
+    public async Task<IActionResult> PriceChange(BookOperation op)
+    {
+        if (_bookCrud.AdminVerification())
+        {
+            var result = await _bookCrud.UpdateBookPrice(op.Book.Id, op.Book.Price);
+            if (result) return Ok();
+            return BadRequest();
+        }
+        return Forbid();
+    }
 
     //[Route("api/[controller]/stock/{id}/")]
 
