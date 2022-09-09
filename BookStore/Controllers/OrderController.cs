@@ -47,8 +47,13 @@ namespace BookStore.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(string id)
         {
+
             var result = await _orderCRUD.DeleteOrders(id);
             if(result) return Ok();
+
+            var result = await _orderCRUD.DeleteOrders(order);
+            if (!String.IsNullOrWhiteSpace(order.Id)) return Ok();
+
             return BadRequest();
         }
 
