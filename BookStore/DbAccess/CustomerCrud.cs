@@ -5,14 +5,12 @@ using MongoDB.Driver;
 
 public class CustomerCrud
 {
-    private IMongoCollection<Customer> customers;
-    
-    public CustomerCrud(MongoDbAccess db)
-    {
-        customers = db.CustomersCollection;
-    }
+    private readonly IMongoCollection<Customer> customers;
 
-	public async Task<List<Customer>> GetAllCustomers()
+    public CustomerCrud(MongoDbAccess db) =>
+		customers = db.CustomersCollection;
+
+    public async Task<List<Customer>> GetAllCustomers()
 	{
 		var resp = await customers.FindAsync(_ => true);
 		return resp.ToList();
@@ -25,7 +23,7 @@ public class CustomerCrud
 		return result;
 	}
 
-	public async Task<Customer> UpdateCustomer(Customer updatedCustomer) 
+	public async Task<Customer> UpdateCustomer(Customer updatedCustomer)
 	{
 		var result = new Customer();
         if (updatedCustomer.Id.Length == 24)
