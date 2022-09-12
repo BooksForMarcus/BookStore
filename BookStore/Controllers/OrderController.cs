@@ -36,6 +36,23 @@ namespace BookStore.Controllers
             else return BadRequest();
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Put(Order order)
+        {
+            var result = await _orderCRUD.UpdateOrder(order);
+            if (!String.IsNullOrWhiteSpace(order.Id)) return Ok();
+            return BadRequest();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string id)
+        {
+
+            var result = await _orderCRUD.DeleteOrders(id);
+            if(result) return Ok();
+            return BadRequest();
+        }
+
         //// PUT api/<CustomerController>/5
         //[HttpPut("{id}")]
         //public void Put(int id, [FromBody] string value)

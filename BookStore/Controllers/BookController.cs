@@ -3,8 +3,10 @@
 using BookStore.DbAccess;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
+//using System.Web.Http;
 
 [Route("api/[controller]")]
+//[Route("api/[controller]")]
 [ApiController]
 public class BookController : ControllerBase
 {
@@ -21,6 +23,13 @@ public class BookController : ControllerBase
         return await _bookCrud.GetAllBooks();
     }
 
+    //[Route("api/[controller]/one/{id:guid}/")]
+    //[Route("{id:guid}")]
+    //public async Task<Book> Get(Guid id)
+    //{
+    //    return await _bookCrud.GetBook(id);
+    //}
+
     //// GET api/<CustomerController>/5
     //[HttpGet("{id}")]
     //public string Get(int id)
@@ -32,6 +41,7 @@ public class BookController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(Book book)
     {
+
         var result = await _bookCrud.CreateBook(book);
         if (result) return Ok();
         else return BadRequest();
@@ -47,6 +57,47 @@ public class BookController : ControllerBase
     {
         var result = await _bookCrud.UpdateBook(book);
         if (!String.IsNullOrWhiteSpace(result.Id)) return Ok();
+        return BadRequest();
+    }
+
+
+
+    //pattern: "{controller}/{action=Index}/{id?}");
+    //kan man göra så här?
+
+    [HttpPut("pricechange/")]
+    public async Task<IActionResult> PriceChange(BookOperation op)
+    {
+        if (_bookCrud.AdminVerification())
+        {
+            var result = await _bookCrud.UpdateBookPrice(op.Book.Id, op.Book.Price);
+            if (result) return Ok();
+            return BadRequest();
+        }
+        return Forbid();
+    }
+
+    //[Route("api/[controller]/stock/{id}/")]
+
+    //public async Task<IActionResult> Put(Guid id, [FromBody] int newStock)
+    //{
+    //    var result = await _bookCrud.UpdateBookInventory(id, newStock);
+    //    if (result) return Ok();
+    //    return BadRequest();
+    //}
+
+    [HttpDelete]
+    //public async Task<IActionResult> Delete(Guid id)
+    //{
+    //    var result = await _bookCrud.DeleteBook(id);
+    //    if (result) return Ok();
+    //    return BadRequest();
+    //}
+
+    public async Task<IActionResult> Delete(Book book)
+    {
+        var result = await _bookCrud.DeleteBook(book);
+        if (result) return Ok();
         return BadRequest();
     }
 
