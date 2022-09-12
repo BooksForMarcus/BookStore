@@ -14,7 +14,6 @@ function HomeView() {
     };
 
     const GetTopFiveNewBooks = () => {
-        
 
         return book === null ? (
             <div className="card-product">
@@ -23,16 +22,18 @@ function HomeView() {
             </div>
         ) : 
             book.map((b, i) => {
+                if (b.year === 2022 & b.soldBy === "store")
                 return (<div className="card-product">
                     <div className="book-image"></div>
-                    <p key={i}>{b.title}</p>
+                    <p key={b.isbn}>{b.title}</p>
+                    <p key={b.isbn}>{b.price}kr</p>
                 </div>
             )}
         );
     }
 
     useEffect(() => {
-        getBooks 
+        getBooks() 
     }, []);
 
     return (
