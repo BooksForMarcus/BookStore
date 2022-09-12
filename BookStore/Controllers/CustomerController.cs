@@ -4,6 +4,7 @@ using BookStore.DbAccess;
 using BookStore.DTO;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -32,12 +33,11 @@ public class CustomerController : ControllerBase
         else return BadRequest(result);
     }
 
-    [HttpPut]
-    public async Task<IActionResult> Put(Customer customer)
+    [HttpPut("updatecustomer")]
+    public async Task<IActionResult> Put(CustomerOperation op)
     {
-        var result = await _customerCrud.UpdateCustomer(customer);
-        if (!String.IsNullOrWhiteSpace(result.Id)) return Ok();
-        return BadRequest();
+        var result = await _customerCrud.UpdateCustomer(op);
+        return result is not null ? Ok() : BadRequest();
     }
 
 

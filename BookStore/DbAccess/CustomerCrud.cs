@@ -5,6 +5,7 @@ using BookStore.Models;
 using BookStore.DTO;
 using MongoDB.Driver;
 using System.Security.AccessControl;
+using Microsoft.AspNetCore.Mvc;
 
 public class CustomerCrud
 {
@@ -125,14 +126,77 @@ public class CustomerCrud
         return result.FirstOrDefault();
     }
 
-    public async Task<Customer> UpdateCustomer(Customer updatedCustomer)
+    public async Task<Customer> UpdateCustomer(CustomerOperation op)
     {
-        var result = new Customer();
-        if (updatedCustomer.Id.Length == 24)
+        if (op is null || op.CustomerToUpdate is null) return null!;
+        var shouldUpdate = false;
+        Customer updateCustomer = null!;
+        var auth = new CustomerAuthorize() { Email = op.Email, Password = op.Password };
+
+        
+        //is it admin trying to change a user/itself?
+        if (await IsAdmin(auth))
         {
-            result = await customers.FindOneAndReplaceAsync(x => x.Id == updatedCustomer.Id, updatedCustomer);
+            var orginal = await GetCustomerByEmail(op.CustomerToUpdate.Email);
+            updateCustomer = op.CustomerToUpdate;
+            updateCustomer.Id = orginal.Id;
+            if (!String.IsNullOrWhiteSpace(updateCustomer.Password))
+            {
+                updateCustomer.Password =
+                    CustomerHelper.GetHashedPassword(
+                        updateCustomer,
+                        updateCustomer.Password
+                        );
+            }
+            else
+            {
+                updateCustomer.Password = orginal.Password;
+            }
+            shouldUpdate = true;
         }
-        return result;
+        //is it user trying to change its own info?
+        else if (op.Email == op.CustomerToUpdate.Email)
+        {
+            if (await AuthorizeCustomer(auth))
+            {
+                updateCustomer = await GetCustomerByEmail(op.Email);
+                //use may change name(First,Last),password and address
+                if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.FirstName))
+                    updateCustomer.FirstName = op.CustomerToUpdate.FirstName;
+                if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.LastName))
+                    updateCustomer.LastName = op.CustomerToUpdate.LastName;
+                if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.Address))
+                    updateCustomer.Address = op.CustomerToUpdate.Address;
+                if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.Password))
+                {
+                    updateCustomer.Password = CustomerHelper.GetHashedPassword(op.CustomerToUpdate, op.CustomerToUpdate.Password);
+                }
+                shouldUpdate = true;
+            }
+        }
+
+        
+        if (updateCustomer.Id.Length == 24 && shouldUpdate)
+        {
+            updateCustomer = await customers.FindOneAndReplaceAsync(x => x.Id == updateCustomer.Id, updateCustomer);
+        }
+        return updateCustomer;
+    }
+
+    private async Task<bool> AuthorizeCustomer(CustomerAuthorize auth)
+    {
+        var loginOk = false;
+        //get customer object
+        var user = await GetCustomerByEmail(auth.Email);
+        if (user is not null)
+        {
+            //check password
+            var correctPassword = CustomerHelper.ConfirmPassword(user, auth.Password);
+            //check admin flag
+            if (correctPassword) loginOk = true;
+        }
+        //report result
+        return loginOk;
     }
 
     //Takes string Id
