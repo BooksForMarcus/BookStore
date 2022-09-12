@@ -2,6 +2,7 @@
 import "../App.css";
 import { useRecoilState } from "recoil";
 import booksState from "../atoms/booksState";
+import sideImage from '../assets/image1.jpg'
 
 function HomeView() {
     const [book, setBook] = useRecoilState(booksState);
@@ -60,6 +61,7 @@ function HomeView() {
     return (
         <main>
             <div className="side">
+                <img className="side_img" src={sideImage} alt="An image of books" />
             </div>
             <div className="main-wrapper">
                 <h3>Top 5 Nyheter</h3>
