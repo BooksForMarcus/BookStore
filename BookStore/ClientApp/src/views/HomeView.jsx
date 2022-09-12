@@ -14,26 +14,26 @@ function HomeView() {
     };
 
     const GetTopFiveNewBooks = () => {
-        useEffect(() => {
-            { getBooks }
-        }, []);
+        
 
         return book === null ? (
             <div className="card-product">
                 <div className="book-image"></div>
                 <p>Kommer snart</p>
             </div>
-        ) : (
+        ) : 
             book.map((b, i) => {
-                return <div className="card-product">
+                return (<div className="card-product">
                     <div className="book-image"></div>
                     <p key={i}>{b.title}</p>
                 </div>
-            })
+            )}
         );
     }
 
-    
+    useEffect(() => {
+        getBooks 
+    }, []);
 
     return (
         <main>
