@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react'
+﻿import React, { useState, useEffect } from 'react'
 import "../App.css";
 import { useRecoilState } from "recoil";
 import booksState from "../atoms/booksState";
@@ -13,28 +13,34 @@ function HomeView() {
         setBook(json);
     };
 
+    const GetTopFiveNewBooks = () => {
+        return book === null ? (
+            <div className="card-product">
+                <div className="book-image"></div>
+                <p>Kommer snart</p>
+            </div>
+        ) : (
+            book.map((b, i) => {
+                return <div className="card-product">
+                    <div className="book-image"></div>
+                    <p key={i}>{b.title}</p>
+                </div>
+            })
+        );
+    }
+
+    useEffect(() => {
+        { getBooks }
+    }, []);
+
     return (
         <main>
             <div className="side">
-                <button onClick={getBooks}>Böcker</button>
             </div>
             <div className="main-wrapper">
                 <h3>Top 5 Nyheter</h3>
                 <div className="card">
-                    {book === null ? (
-                        <div className="card-product">
-                            <div className="book-image"></div>
-                            <p>Kommer snart</p>
-                        </div>
-                    ) : (
-                        book.map((b, i) => {
-                            return
-                            <div className="card-product">
-                                <div className="book-image"></div>
-                                <p key={i}>{b.Title}</p>
-                            </div>;
-                        })
-                    )}
+                    <GetTopFiveNewBooks />
                 </div>
                 <h3>Top 5 Begagnat</h3>
                 <div className="card">
