@@ -32,6 +32,27 @@ function HomeView() {
         );
     }
 
+
+    const GetTopFiveUsedBooks = () => {
+
+        return book === null ? (
+            <div className="card-product">
+                <div className="book-image"></div>
+                <p>Kommer snart</p>
+            </div>
+        ) :
+            book.map((b, i) => {
+                if (b.soldBy != "store")
+                    return (<div className="card-product">
+                        <div className="book-image"></div>
+                        <p key={b.isbn}>{b.title}</p>
+                        <p key={b.isbn}>{b.price}kr</p>
+                    </div>
+                    )
+            }
+            );
+    }
+
     useEffect(() => {
         getBooks() 
     }, []);
@@ -47,26 +68,7 @@ function HomeView() {
                 </div>
                 <h3>Top 5 Begagnat</h3>
                 <div className="card">
-                    <div className="card-product">
-                        <div className="book-image"></div>
-                        <p>Boktitel</p>
-                    </div>
-                    <div className="card-product">
-                        <div className="book-image"></div>
-                        <p>Boktitel</p>
-                    </div>
-                    <div className="card-product">
-                        <div className="book-image"></div>
-                        <p>Boktitel</p>
-                    </div>
-                    <div className="card-product">
-                        <div className="book-image"></div>
-                        <p>Boktitel</p>
-                    </div>
-                    <div className="card-product">
-                        <div className="book-image"></div>
-                        <p>Boktitel</p>
-                    </div>
+                    <GetTopFiveUsedBooks />
                 </div>
                 <h3>Hitta något nytt!</h3>
                 <div className="card">
