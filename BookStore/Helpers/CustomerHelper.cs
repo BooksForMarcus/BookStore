@@ -52,7 +52,7 @@ public static class CustomerHelper
     /// <param name="customer">The customer.</param>
     /// <param name="password">The password.</param>
     /// <returns><see langword="true"/> if the given password matches the saved one.</returns>
-    public static bool ValidatePassword(Customer customer, string password)
+    public static bool ConfirmPassword(Customer customer, string password)
     {
         if (customer is null || password is null) return false;
 

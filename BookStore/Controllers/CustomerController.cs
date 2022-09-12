@@ -1,6 +1,7 @@
 ﻿namespace BookStore.Controllers;
 
 using BookStore.DbAccess;
+using BookStore.DTO;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +16,10 @@ public class CustomerController : ControllerBase
 
 
     // GET: api/<CustomerController>
-    [HttpGet]
-    public async Task<IEnumerable<Customer>> Get()
+    [HttpPost("admin/getusers")]
+    public async Task<IEnumerable<Customer>> GetUsers(CustomerAuthorize auth)
     {
-        return await _customerCrud.GetAllCustomers();
+        return await _customerCrud.AdminGetAllCustomers(auth);
     }
 
 
@@ -27,8 +28,8 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> Post(Customer customer)
     {
         var result = await _customerCrud.CreateCustomer(customer);
-        if (result) return Ok();
-        else return BadRequest();
+        if (result.Success) return Ok();
+        else return BadRequest(result);
     }
 
     [HttpPut]

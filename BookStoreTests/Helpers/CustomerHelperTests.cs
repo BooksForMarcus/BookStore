@@ -34,12 +34,12 @@ public class CustomerHelperTests
     [InlineData("password123", "password321", false)]
     public void PasswordHashingTest(string pass1,string pass2,bool expected)
     {
-        var testUser = new Customer() { Name="Betty Boop",Email="betty@boop.com"};
+        var testUser = new Customer() { FirstName="Betty",LastName="Boop",Email="betty@boop.com"};
         var password = pass1;
         var hash = GetHashedPassword(testUser, password);
         testUser.Password = hash;
 
-        var actual = ValidatePassword(testUser,pass2);
+        var actual = ConfirmPassword(testUser,pass2);
 
         Assert.Equal(expected, actual);
     }
