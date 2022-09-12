@@ -14,6 +14,10 @@ function HomeView() {
     };
 
     const GetTopFiveNewBooks = () => {
+        useEffect(() => {
+            { getBooks }
+        }, []);
+
         return book === null ? (
             <div className="card-product">
                 <div className="book-image"></div>
@@ -29,9 +33,7 @@ function HomeView() {
         );
     }
 
-    useEffect(() => {
-        { getBooks }
-    }, []);
+    
 
     return (
         <main>
