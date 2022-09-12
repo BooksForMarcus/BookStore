@@ -1,8 +1,10 @@
 ﻿namespace BookStore.Controllers;
 
 using BookStore.DbAccess;
+using BookStore.DTO;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -15,10 +17,10 @@ public class CustomerController : ControllerBase
 
 
     // GET: api/<CustomerController>
-    [HttpGet]
-    public async Task<IEnumerable<Customer>> Get()
+    [HttpPost("admin/getusers")]
+    public async Task<IEnumerable<Customer>> GetUsers(CustomerAuthorize auth)
     {
-        return await _customerCrud.GetAllCustomers();
+        return await _customerCrud.AdminGetAllCustomers(auth);
     }
 
 
@@ -27,16 +29,15 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> Post(Customer customer)
     {
         var result = await _customerCrud.CreateCustomer(customer);
-        if (result) return Ok();
-        else return BadRequest();
+        if (result.Success) return Ok();
+        else return BadRequest(result);
     }
 
-    [HttpPut]
-    public async Task<IActionResult> Put(Customer customer)
+    [HttpPut("updatecustomer")]
+    public async Task<IActionResult> Put(CustomerOperation op)
     {
-        var result = await _customerCrud.UpdateCustomer(customer);
-        if (!String.IsNullOrWhiteSpace(result.Id)) return Ok();
-        return BadRequest();
+        var result = await _customerCrud.UpdateCustomer(op);
+        return result is not null ? Ok() : BadRequest();
     }
 
 
