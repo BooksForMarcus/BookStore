@@ -13,6 +13,7 @@ builder.Services.AddSingleton<MongoDbAccess>();
 builder.Services.AddSingleton<CustomerCrud>();
 builder.Services.AddSingleton<OrderCRUD>();
 builder.Services.AddSingleton<BookCrud>();
+builder.Services.AddSingleton<CategoryCrud>();
 
 builder.Services.AddSwaggerGen(c =>
 {

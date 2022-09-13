@@ -11,10 +11,12 @@ public class MongoDbAccess
     private const string customerCollection = "Customers";
     private const string booksCollection = "Books";
     private const string ordersCollection = "Orders";
+    private const string categoriesCollection = "Categories";
 
     public IMongoCollection<Customer> CustomersCollection { get => MongoConnect<Customer>(customerCollection); }
     public IMongoCollection<Order> OrdersCollection { get => MongoConnect<Order>(ordersCollection); }
     public IMongoCollection<Book> BooksCollection { get => MongoConnect<Book>(booksCollection); }
+    public IMongoCollection<Category> CategoriesCollection { get => MongoConnect<Category>(categoriesCollection); }
 
     public MongoDbAccess()
     {

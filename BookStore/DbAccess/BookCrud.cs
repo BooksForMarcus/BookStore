@@ -1,23 +1,37 @@
 ﻿namespace BookStore.DbAccess;
 using BookStore.Models;
+using BookStore.DTO;
+using BookStore.Helpers;
 using MongoDB.Driver;
+using System.Linq;
 
 public class BookCrud
 {
     private IMongoCollection<Book> books;
+    private IMongoCollection<Customer> customers;
     public BookCrud(MongoDbAccess db)
     {
         books = db.BooksCollection;
+        customers = db.CustomersCollection;
     }
 
     public async Task<bool> CreateBook(Book book)
     {
-        if (!Helpers.ValidateBook.TitleLongerThan3(book.Title))
-        {
-            return false;
-        }
-        await books.InsertOneAsync(book);
-        var result = !String.IsNullOrWhiteSpace(book.Id);
+        //var sameBookSameSeller=books.
+        var findFilter = Builders<Book>.Filter.Eq("SoldBy", book.SoldBy);
+        var findFilter2 = Builders<Book>.Filter.Eq("ISBN", book.ISBN);
+        findFilter &= findFilter2;
+  
+        var sameBookSameSeller = await books.FindAsync(findFilter);
+        var sameBookSameSellerList = await sameBookSameSeller.ToListAsync();
+        int sameBookCount = sameBookSameSellerList.Count;
+
+ 
+        if (sameBookCount == 0)
+            {
+            await books.InsertOneAsync(book);
+            }
+    var result = !String.IsNullOrWhiteSpace(book.Id);
         return result;
     }
     public async Task<List<Book>> GetAllBooks()
@@ -29,7 +43,7 @@ public class BookCrud
     {
         var findFilter = Builders<Book>.Filter.Eq("Id", Id);
         var resp = await books.FindAsync(findFilter);
-        return (Book)resp;// VS föreslog detta..? fattar inte varför behöver castas.
+        return (Book)resp;
     }
     //public   bool  DeleteBook(Guid id)
     //{
@@ -93,10 +107,45 @@ public class BookCrud
         }
         return result;
     }
-
-    public bool AdminVerification()
+    private async Task<Customer> GetCustomerByEmail2(string mail)
     {
+        var result = await customers.FindAsync(x => x.Email == mail);
+        return result.FirstOrDefault();
+    }
+
+
+
+    public async Task<bool> IsAdmin(CustomerAuthorize auth)
+    {
+        var isAdmin = false;
+        //get customer object
+        var user = await GetCustomerByEmail2(auth.Email);
+        if (user is not null)
+        {
+            //check password
+            var correctPassword = CustomerHelper.ConfirmPassword(user, auth.Password);
+            //check admin flag
+            if (correctPassword && user.IsAdmin) isAdmin = true;
+        }
+        //report result
+        return isAdmin;
+    }
+ 
+
+    public async Task<bool> AdminVerificationAsync(BookOperation op)
+    {
+        string pass = op.Password;
+        string user = op.User;
+
+        var auth = new CustomerAuthorize();
+        auth.Email = user;
+        auth.Password = pass;
+        bool returnMe = await IsAdmin(auth);
+     
+ 
+
+
         //This method really needs to be updated with something better!
-        return true;
+        return returnMe;
     }
 }
