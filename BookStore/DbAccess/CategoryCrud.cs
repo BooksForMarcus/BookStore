@@ -22,7 +22,10 @@ public class CategoryCrud
     //}
     public async Task<bool> CreateCategory(Category category)
     {
-
+        if (category.Parent!=null)
+        {
+            category.Name = category.Parent.Name+"."+category.Name;
+        }
         await categories.InsertOneAsync(category);
         var result = !String.IsNullOrWhiteSpace(category.Id);
         return result;

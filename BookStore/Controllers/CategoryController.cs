@@ -47,7 +47,7 @@ public class CategoryController : ControllerBase
 
 
 
-
+    [HttpDelete]
     public async Task<IActionResult> Delete(Category category)
     {
         var result = await _categoryCrud.DeleteCategory(category);
