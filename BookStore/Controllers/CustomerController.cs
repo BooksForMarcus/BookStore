@@ -5,6 +5,7 @@ using BookStore.DTO;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using System.Net.Http.Headers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -22,7 +23,6 @@ public class CustomerController : ControllerBase
     {
         return await _customerCrud.AdminGetAllCustomers(auth);
     }
-
 
     // POST api/<CustomerController>
     [HttpPost]

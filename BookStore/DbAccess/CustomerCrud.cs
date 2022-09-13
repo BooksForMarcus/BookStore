@@ -18,6 +18,11 @@ public class CustomerCrud
         customers = db.CustomersCollection;
     }
 
+    /// <summary>
+    /// Given a admin email a password will return a list containing all users.
+    /// </summary>
+    /// <param name="auth"><see cref="CustomerAuthorize"/> object containing the admin email and password.</param>
+    /// <returns>A <see cref="List{T}"/> where T is <see cref="Customer"/> containing a the customers in the database.</returns>
     public async Task<List<Customer>> AdminGetAllCustomers(CustomerAuthorize auth)
     {
         if (await IsAdmin(auth))
@@ -36,6 +41,13 @@ public class CustomerCrud
         return new List<Customer>();
     }
 
+    /// <summary>
+    /// Determines whether the specified authentication is admin.
+    /// </summary>
+    /// <param name="auth">The authentication object containing login email and password.</param>
+    /// <returns>
+    ///   <see langword="true"/> if the specified authentication is admin; otherwise, <see langword="false"/>.
+    /// </returns>
     public async Task<bool> IsAdmin(CustomerAuthorize auth)
     {
         var isAdmin = false;
@@ -105,7 +117,7 @@ public class CustomerCrud
             mailer.SendMail(
                 customer.Email,
                 $"Välkommen till Bokcirkeln {customer.FirstName}",
-                $"Välkommer till Bokcirkeln\n\nDitt temporära lösenord är: {unhashedPassword}\nKom ihåg att ändra ditt lösen efter första gången du loggat in.\nMvh. Bokcirkeln.");
+                $"Välkommer till Bokcirkeln!<br><br>Ditt temporära lösenord är: {unhashedPassword}<br>Kom ihåg att ändra ditt lösen efter första gången du loggat in.<br><br>Mvh. Bokcirkeln.");
         }
         //check results
         if (createResult.DbCreateSucceeded
