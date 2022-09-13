@@ -2,14 +2,24 @@
 using BookStore.Models;
 using MongoDB.Driver;
 
+using BookStore.DTO;
+using BookStore.Helpers;
+
+
+
 public class CategoryCrud
 {
     private IMongoCollection<Category> categories;
     public CategoryCrud(MongoDbAccess db)
     {
         categories = db.CategoriesCollection;
-    }
 
+    }
+    //public BookCrud(MongoDbAccess db)
+    //{
+    //    books = db.BooksCollection;
+    //    customers = db.CustomersCollection;
+    //}
     public async Task<bool> CreateCategory(Category category)
     {
 
