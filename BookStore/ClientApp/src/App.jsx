@@ -10,10 +10,11 @@ import HomeView from "./views/HomeView";
 import AdminView from "./views/AdminHomeView";
 import LoginView from "./views/LoginView";
 import logo from './assets/boklogo.png'
+import {useRecoilState} from "recoil"
+import userState from "./atoms/userState";
 
 function App() {
-    const [count, setCount] = useState(0);
-
+	const [user, setUser] = useRecoilState(userState);
 
     return (
         <BrowserRouter>
@@ -28,7 +29,7 @@ function App() {
                             <Link to="/admin">ADMIN</Link>
                         </div>
                         <div className="menu-item" >
-                            <Link to="/login">LOGGA IN</Link>
+							<Link to="/login">{user?"Hej "+user.firstName:"LOGGA IN"}</Link>
                         </div>
                     </div>
                 </header>
