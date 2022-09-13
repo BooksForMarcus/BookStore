@@ -2,54 +2,70 @@
 import "../App.css";
 import { useRecoilState } from "recoil";
 import booksState from "../atoms/booksState";
-import sideImage from '../assets/image1.jpg'
+import sideImageone from '../assets/image1.jpg'
+import sideImagetwo from '../assets/image2.jpg'
 
 function HomeView() {
-    const [book, setBook] = useRecoilState(booksState);
+    const [books, setBooks] = useRecoilState(booksState);
+    const oldbooklist = [];
 
     const getBooks = async () => {
         const resp = await fetch("/api/Book");
         const json = await resp.json();
         console.log(json);
-        setBook(json);
+        setBooks(json);
+    };
+
+    const getUsedBooks = () => {
+
+        books.map((b, i) => {
+            if (!b.soldBy === "store")
+                oldbooklist[i] = b;
+        })
     };
 
     const GetTopFiveNewBooks = () => {
+        let k = 0;
 
-        return book === null ? (
+        return books === null ? (
             <div className="card-product">
                 <div className="book-image"></div>
                 <p>Kommer snart</p>
             </div>
         ) : 
-            book.map((b, i) => {
-                if (b.year === 2022 & b.soldBy === "store")
+            books.map((b, i) => {
+                if (k < 4 && b.year === 2022)
                 return (<div className="card-product">
                     <div className="book-image"></div>
-                    <p key={b.isbn}>{b.title}</p>
-                    <p key={b.isbn}>{b.price}kr</p>
+                    <p key={b.id}>{b.title}</p>
+                    <p key={b.id}>{b.price}kr</p>
                 </div>
-            )}
+                    )
+                k++;
+            }
         );
     }
 
 
     const GetTopFiveUsedBooks = () => {
 
-        return book === null ? (
+        let n = -2;
+
+        return books === null ? (
             <div className="card-product">
                 <div className="book-image"></div>
                 <p>Kommer snart</p>
             </div>
-        ) :
-            book.map((b, i) => {
-                if (b.soldBy != "store")
+        ) : books.map((b, i) => {
+            if (n > 5 && b.soldBy != "store")
                     return (<div className="card-product">
                         <div className="book-image"></div>
-                        <p key={b.isbn}>{b.title}</p>
-                        <p key={b.isbn}>{b.price}kr</p>
+                        <p key={b.id}>{b.title}</p>
+                        <p key={b.id}>{b.price}kr</p>
                     </div>
-                    )
+                )
+            n++;
+            console.log(n);
             }
             );
     }
@@ -61,7 +77,8 @@ function HomeView() {
     return (
         <main>
             <div className="side">
-                <img className="side_img" src={sideImage} alt="An image of books" />
+                <img className="side_img" src={sideImageone} alt="An image of books" />
+                <img className="side_img" src={sideImagetwo} alt="An image of a dog reading books" />
             </div>
             <div className="main-wrapper">
                 <h3>Top 5 Nyheter</h3>
