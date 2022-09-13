@@ -195,11 +195,12 @@ public class CustomerCrud
             }
         }
 
-
         if (updateCustomer.Id.Length == 24 && shouldUpdate)
         {
             updateCustomer = await customers.FindOneAndReplaceAsync(x => x.Id == updateCustomer.Id, updateCustomer);
         }
+        //scrub password before returning.
+        updateCustomer.Password = "";
         return updateCustomer;
     }
 
@@ -254,6 +255,7 @@ public class CustomerCrud
                 }
             }
         }
+
         return result;
     }
 
