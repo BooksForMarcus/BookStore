@@ -33,6 +33,11 @@ footer {
     background-color: #ECB390;
 }
 
+.side_img {
+    width: 85%;
+    margin-top: 2em;
+}
+
 .main-wrapper {
     padding-top: 2em;
     display: grid;
