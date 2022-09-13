@@ -70,7 +70,10 @@ function HomeView() {
   };
 
   useEffect(() => {
-    getBooks();
+    if(books===null){
+		console.log("Im gonna fetch the books!")
+		getBooks();
+	} 
   }, []);
 
   return (

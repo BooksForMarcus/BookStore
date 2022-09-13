@@ -2,12 +2,13 @@
 import { useState } from "react";
 import "../App.css";
 import { useRecoilState } from "recoil";
-import userState from "../atoms/userState"
+import userState from "../atoms/userState";
+import { decode as base64_decode, encode as base64_encode } from "base-64";
 
 function LoginView() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user,setUser] = useRecoilState(userState)
+  const [user, setUser] = useRecoilState(userState);
 
   const doLogin = async (e) => {
     e.preventDefault();
@@ -23,16 +24,41 @@ function LoginView() {
       body: newUser,
     };
     //let json = null;
-    let resp = await fetch("/api/customer/login", requestOptions)
-	if(resp.ok){
-		console.log("login ok")
-		let json = await resp.json();
-		console.log(json)
-		setUser(json);
-	}
-	else {
-		console.log("login failed")
-	}
+    let resp = await fetch("/api/customer/login", requestOptions);
+    if (resp.ok) {
+      console.log("login ok");
+      let json = await resp.json();
+      console.log(json);
+      setUser(json);
+    } else {
+      console.log("login failed");
+    }
+  };
+  const newDoLogin = async (e) => {
+    e.preventDefault();
+
+    const baseString = email + ":" + password;
+    const base64basicAuth = base64_encode(baseString);
+
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: "Basic " + base64basicAuth,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
+
+    let resp = await fetch("/api/customer/login", requestOptions);
+    if (resp.ok) {
+      console.log("login ok");
+      let json = await resp.json();
+	  json.password = "Basic "+base64basicAuth
+      console.log(json);
+      setUser(json);
+    } else {
+      console.log("login failed");
+    }
   };
 
   return (
@@ -57,7 +83,7 @@ function LoginView() {
             placeholder="Lösenord"
             id="password"
           ></input>
-          <button className="login-button" type="submit" onClick={doLogin}>
+          <button className="login-button" type="submit" onClick={newDoLogin}>
             Logga in
           </button>
         </form>
