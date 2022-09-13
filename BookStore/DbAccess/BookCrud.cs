@@ -12,7 +12,7 @@ public class BookCrud
 
     public async Task<bool> CreateBook(Book book)
     {
-        if (!Helpers.Validate.TitleLongerThan3(book.Title))
+        if (!Helpers.ValidateBook.TitleLongerThan3(book.Title))
         {
             return false;
         }
