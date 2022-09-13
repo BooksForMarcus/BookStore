@@ -9,4 +9,5 @@ public class CreateCustomerResult
     public bool ValidLastName { get; set; } = false;
     public bool DbCreateSucceeded { get; set; } = false;
     public bool UserObjectWasNull { get; set; } = false;
+    public string DevPass { get; set; } = "";
 }

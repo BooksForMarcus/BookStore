@@ -4,8 +4,7 @@ using BookStore.Helpers;
 using BookStore.Models;
 using BookStore.DTO;
 using MongoDB.Driver;
-using System.Security.AccessControl;
-using Microsoft.AspNetCore.Mvc;
+using static Helpers.EnvironmentHelper;
 
 public class CustomerCrud
 {
@@ -14,7 +13,7 @@ public class CustomerCrud
 
     public CustomerCrud(MongoDbAccess db)
     {
-        _isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+        _isDev = IsDev;
         customers = db.CustomersCollection;
     }
 
@@ -104,6 +103,8 @@ public class CustomerCrud
         //assign random password
         var unhashedPassword = CustomerHelper.GetRandomPassword();
         customer.Password = CustomerHelper.GetHashedPassword(customer, unhashedPassword);
+        //to simplify during dev, pass along the unhashed password
+        if (_isDev) createResult.DevPass = unhashedPassword;
 
         //is everything is ok, try to create the user
         await customers.InsertOneAsync(customer);
@@ -145,7 +146,7 @@ public class CustomerCrud
         Customer updateCustomer = null!;
         var auth = new CustomerAuthorize() { Email = op.Email, Password = op.Password };
 
-        
+
         //is it admin trying to change a user/itself?
         if (await IsAdmin(auth))
         {
@@ -187,7 +188,7 @@ public class CustomerCrud
             }
         }
 
-        
+
         if (updateCustomer.Id.Length == 24 && shouldUpdate)
         {
             updateCustomer = await customers.FindOneAndReplaceAsync(x => x.Id == updateCustomer.Id, updateCustomer);
@@ -204,7 +205,7 @@ public class CustomerCrud
         {
             //check password
             var correctPassword = CustomerHelper.ConfirmPassword(user, auth.Password);
-            //check admin flag
+
             if (correctPassword) loginOk = true;
         }
         //report result
@@ -219,6 +220,26 @@ public class CustomerCrud
         {
             var response = await customers.DeleteOneAsync(x => x.Id == id);
             result = response.IsAcknowledged && response.DeletedCount > 0;
+        }
+        return result;
+    }
+
+    public async Task<Customer> Login(CustomerAuthorize auth)
+    {
+        Customer result = null!;
+        if (auth is not null && !String.IsNullOrEmpty(auth.Email) && !String.IsNullOrWhiteSpace(auth.Password))
+        {
+            var cust = await GetCustomerByEmail(auth.Email);
+            if (cust is not null)
+            {
+                var correctPassword = CustomerHelper.ConfirmPassword(cust, auth.Password);
+                if (correctPassword)
+                {
+                    result = cust;
+                    //scrub password
+                    result.Password = "";
+                }
+            }
         }
         return result;
     }
