@@ -6,9 +6,12 @@ namespace BookStore.DbAccess
     public class OrderCRUD
     {
 		private IMongoCollection<Order> orders;
+		private CustomerCrud customers;
+
 		public OrderCRUD(MongoDbAccess db)
 		{
 			orders = db.OrdersCollection;
+			customers = new CustomerCrud(db);
 		}
 
 		public async Task<bool> CreateOrder(Order order)
@@ -20,7 +23,20 @@ namespace BookStore.DbAccess
 		}
 		public async Task<List<Order>> GetAllOrders()
 		{
-			var resp = (await orders.FindAsync(_ => true)).ToList();
+			//behöver ändras, bara exempel:
+			var auth = new DTO.CustomerAuthorize() { Email = "hej", Password = "hej" };
+			var resp = new List<Order>();
+            var customer = await customers.Login(auth);
+			if (customer is not null && customer.IsAdmin)
+			{
+				//get all orders?
+			}
+			else if(customers is not null)
+			{
+                //get all orders for one customer?
+                resp = (await orders.FindAsync(o=> o.CustomerId ==customer.Id)).ToList();
+            }
+			//var resp = (await orders.FindAsync(_ => true)).ToList();
 			return resp;
 		}
 

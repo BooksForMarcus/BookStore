@@ -33,6 +33,11 @@ footer {
     background-color: #ECB390;
 }
 
+.side_img {
+    width: 85%;
+    margin-top: 2em;
+}
+
 .main-wrapper {
     padding-top: 2em;
     display: grid;
@@ -58,6 +63,75 @@ footer {
     height: 200px;
     width: 150px;
     background-color: #e7d2ac;
+}
+
+/*LoginView*/
+
+.login-view{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.login-wrap{
+    display: grid;
+    place-items: center;
+    padding: 3em;
+}
+
+form {
+    display: grid;
+    place-items: center;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 2em;
+    padding: 1em;
+    border: none;
+    border-bottom: 2px solid #DF7861;
+    background-color: #FCF8E8;
+    outline: none;
+    color: #bb4a31;
+    font-size: 15px;
+}
+
+::placeholder {
+    opacity: 1;
+}
+
+input:focus {
+    border: none;
+    border-bottom: 2px solid #bb4a31;
+    color: #415d51;
+}
+
+.login-button{
+    margin-top: 1.5em;
+}
+
+.add-account-wrap {
+    background-color: #ECB390;
+    display: grid;
+    place-items: center;
+    padding: 3em;
+}
+
+.cr-account {
+    background-color: #ECB390;
+    color: #FCF8E8;
+    border: none;
+    border-bottom: 2px solid #FCF8E8;
+}
+
+.cr-account:focus {
+    background-color: #ECB390;
+    color: #DF7861;
+    border: none;
+    border-bottom: 2px solid #DF7861;
+}
+
+.cr-head-text {
+    color: #FCF8E8;
 }
 
 /*.read-the-docs {
