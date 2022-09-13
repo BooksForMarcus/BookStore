@@ -8,12 +8,15 @@ import { decode as base64_decode, encode as base64_encode } from "base-64";
 function LoginView() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailCreate, setEmailCreate] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [user, setUser] = useRecoilState(userState);
 
-  const doLogin = async (e) => {
+  const createNewCustomer = async (e) => {
     e.preventDefault();
 
-    const newUser = JSON.stringify({ email: email, password: password });
+    const newUser = JSON.stringify({ email: emailCreate, firstName: firstName, lastName: lastName });
     console.log(newUser);
     const requestOptions = {
       method: "POST",
@@ -24,16 +27,16 @@ function LoginView() {
       body: newUser,
     };
     //let json = null;
-    let resp = await fetch("/api/customer/login", requestOptions);
+    let resp = await fetch("/api/customer/", requestOptions);
     if (resp.ok) {
-      console.log("login ok");
+      console.log("create customer ok");
       let json = await resp.json();
       console.log(json);
-      setUser(json);
     } else {
-      console.log("login failed");
+      console.log("customer create failed.");
     }
   };
+
   const newDoLogin = async (e) => {
     e.preventDefault();
 
@@ -73,8 +76,8 @@ function LoginView() {
             label="Email"
             placeholder="Email"
             id="email"
+			required
           ></input>
-          <p>{email}</p>
           <input
             type="password"
             value={password}
@@ -82,6 +85,7 @@ function LoginView() {
             label="Lösenord"
             placeholder="Lösenord"
             id="password"
+			required
           ></input>
           <button className="login-button" type="submit" onClick={newDoLogin}>
             Logga in
@@ -96,7 +100,9 @@ function LoginView() {
             type="email"
             label="Email"
             placeholder="Email"
-            id="email"
+            id="emailCreate"
+			value={emailCreate}
+            onChange={(e) => setEmailCreate(e.target.value)}
             required
           ></input>
           <input
@@ -105,6 +111,8 @@ function LoginView() {
             label="Förnamn"
             placeholder="Förnamn"
             id="firstname"
+			value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             required
           ></input>
           <input
@@ -113,9 +121,11 @@ function LoginView() {
             label="Efternamn"
             placeholder="Efternamn"
             id="lastname"
+			value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             required
           ></input>
-          <button className="login-button" type="submit">
+          <button className="login-button" type="submit" onClick={createNewCustomer}>
             Skapa konto
           </button>
         </form>
