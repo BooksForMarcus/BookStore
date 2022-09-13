@@ -46,16 +46,35 @@ public class CustomerController : ControllerBase
         else return BadRequest(result);
     }
 
-    //Needs xml!
+    /// <summary>
+    /// Updates customer.
+    /// </summary>
+    /// <param name="op">Should contain email and password of the user trying to make
+    /// the change, as well as the customerToUpdate object containing the current information.</param>
+    /// <returns></returns>
+    /// <response code="200">Customer remove/deactivate ok. Will also return the changed customer object.</response>
+    /// <response code="400">Failed to remove/deactivate customer.</response>
+    /// <remarks>IMPORTANT: if done by admin, will use the posted customerToUpdate object to replace the information in the DB.
+    /// If done by non-Admin, will only update password, first name, last name or address fields.</remarks>
     [HttpPut("updatecustomer")]
     public async Task<IActionResult> Put(CustomerOperation op)
     {
         var result = await _customerCrud.UpdateCustomer(op);
-        return result is not null ? Ok() : BadRequest();
+        return result is not null ? Ok(result) : BadRequest();
     }
 
 
-    //Takes a.... write xml!
+    /// <summary>
+    /// If done by an Admin, will remove customer from database, otherwise will set account to IsActive = false
+    /// </summary>
+    /// <param name="op">Should contain email and password of the user trying to make
+    /// the change, as well as the (in the customerToUpdate object) the id of the
+    /// customer to delete.</param>
+    /// <returns></returns>
+    /// <response code="200">Customer remove/deactivate ok.</response>
+    /// <response code="400">Failed to remove/deactivate customer.</response>
+    /// <remarks>The only information used from the customerToUpdate object is the Id,
+    /// the remaining information should be left out. BE ADVISED: admin can *not* remove themselves from DB.</remarks>
     [HttpDelete]
     public async Task<IActionResult> Delete(CustomerOperation op)
     {
