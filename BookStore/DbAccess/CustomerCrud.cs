@@ -5,6 +5,7 @@ using BookStore.Models;
 using BookStore.DTO;
 using MongoDB.Driver;
 using static Helpers.EnvironmentHelper;
+using static System.Reflection.Metadata.BlobBuilder;
 
 public class CustomerCrud
 {
@@ -107,12 +108,18 @@ public class CustomerCrud
         if (_isDev) createResult.DevPass = unhashedPassword;
 
         //is everything is ok, try to create the user
-        await customers.InsertOneAsync(customer);
-        var result = !String.IsNullOrWhiteSpace(customer.Id);
-        if (result) createResult.DbCreateSucceeded = true;
+        if (createResult.MailAvailable
+            && createResult.ValidMail
+            && createResult.ValidFirstName
+            && createResult.ValidLastName)
+        {
+            await customers.InsertOneAsync(customer);
+            var result = !String.IsNullOrWhiteSpace(customer.Id);
+            if (result) createResult.DbCreateSucceeded = true;
+        }
 
         //if in production, send confirmation mail to user with the password
-        if (result && !_isDev)
+        if (createResult.DbCreateSucceeded && !_isDev)
         {
             var mailer = new MailHelper();
             mailer.SendMail(
@@ -212,16 +219,48 @@ public class CustomerCrud
         return loginOk;
     }
 
-    //Takes string Id
-    public async Task<bool> DeleteCustomer(string id)
+    public async Task<bool> DeleteCustomer(CustomerOperation op)
     {
         var result = false;
-        if (id.Length == 24)
+        if (op is null
+           || string.IsNullOrWhiteSpace(op.Email)
+           || string.IsNullOrWhiteSpace(op.Password)
+           || op.CustomerToUpdate is null
+           || string.IsNullOrWhiteSpace(op.CustomerToUpdate.Id)) return result;
+
+        var auth = new CustomerAuthorize() { Email = op.Email, Password = op.Password };
+
+        if (op.CustomerToUpdate.Id.Length == 24)
         {
-            var response = await customers.DeleteOneAsync(x => x.Id == id);
-            result = response.IsAcknowledged && response.DeletedCount > 0;
+            if (await IsAdmin(auth))
+            {
+                var customerToDelete = await GetCustomerById(op.CustomerToUpdate.Id);
+                if (customerToDelete is not null && customerToDelete.Email != auth.Email)
+                {
+                    var response = await customers.DeleteOneAsync(x => x.Id == op.CustomerToUpdate.Id);
+                    result = response.IsAcknowledged && response.DeletedCount > 0;
+                }
+            }
+            else if (await Login(auth) is not null)
+            {
+                var customerToDelete = await GetCustomerById(op.CustomerToUpdate.Id);
+                if (customerToDelete.Email == auth.Email)
+                {
+                    var updatefilter = Builders<Customer>.Filter.Eq("Id", op.CustomerToUpdate.Id);
+
+                    var update = Builders<Customer>.Update.Set("IsActive", false);
+                    var resp = await customers.UpdateOneAsync(updatefilter, update);
+                    result = resp.IsAcknowledged && resp.ModifiedCount > 0;
+                }
+            }
         }
         return result;
+    }
+
+    private async Task<Customer> GetCustomerById(string id)
+    {
+        var result = await customers.FindAsync(c => c.Id == id);
+        return result.FirstOrDefault();
     }
 
     public async Task<Customer> Login(CustomerAuthorize auth)
@@ -233,7 +272,7 @@ public class CustomerCrud
             if (cust is not null)
             {
                 var correctPassword = CustomerHelper.ConfirmPassword(cust, auth.Password);
-                if (correctPassword)
+                if (correctPassword && cust.IsActive)
                 {
                     result = cust;
                     //scrub password
