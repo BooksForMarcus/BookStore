@@ -14,6 +14,20 @@ builder.Services.AddSingleton<CustomerCrud>();
 builder.Services.AddSingleton<OrderCRUD>();
 builder.Services.AddSingleton<BookCrud>();
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1",
+        new Microsoft.OpenApi.Models.OpenApiInfo
+        {
+            Title = "BookStoreForMarcus API - Ver 1",
+            Version = "v1"
+        }
+     );
+
+    var filePath = Path.Combine(System.AppContext.BaseDirectory, "BookStore.xml");
+    c.IncludeXmlComments(filePath);
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
