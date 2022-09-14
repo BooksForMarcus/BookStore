@@ -11,10 +11,15 @@ using Microsoft.AspNetCore.Mvc;
 public class BookController : ControllerBase
 {
     private readonly BookCrud _bookCrud;
- 
+    private readonly CustomerCrud _customerCrud;
 
-    public BookController(BookCrud bookCrud) =>
+
+    public BookController(BookCrud bookCrud, CustomerCrud cc) 
+    {
         _bookCrud = bookCrud;
+        _customerCrud = cc;
+
+    }
 
     //public BookController(BookCrud bookCrud, CustomerCrud customerCrud) 
     //{
@@ -76,10 +81,10 @@ public class BookController : ControllerBase
     [HttpPut("pricechange/")]
     public async Task<IActionResult> PriceChange(BookOperation op)
     {
-        var OKgoahead = await _bookCrud.AdminVerificationAsync(op);
+        //var OKgoahead = await _bookCrud.AdminVerificationAsync(op);
 
         //if (_bookCrud.AdminVerification(op))
-        if (OKgoahead)
+        if (await _customerCrud.IsAdmin(new DTO.CustomerAuthorize() { Email=op.Email,Password=op.Password}))
         {
             var result = await _bookCrud.UpdateBookPrice(op.Book.Id, op.Book.Price);
             if (result) return Ok();

@@ -34,6 +34,8 @@ function LoginView() {
       console.log(json);
     } else {
       console.log("customer create failed.");
+	  let json = await resp.json();
+      console.log(json);
     }
   };
 
@@ -68,7 +70,7 @@ function LoginView() {
     <div className="login-view">
       <div className="login-wrap">
         <h2>Logga in</h2>
-        <form>
+        <form onSubmit={newDoLogin}>
           <input
             type="email"
             value={email}
@@ -87,14 +89,14 @@ function LoginView() {
             id="password"
 			required
           ></input>
-          <button className="login-button" type="submit" onClick={newDoLogin}>
+          <button className="login-button" type="submit">
             Logga in
           </button>
         </form>
       </div>
       <div className="add-account-wrap">
         <h2 className="cr-head-text">Skapa konto</h2>
-        <form>
+        <form onSubmit={createNewCustomer}>
           <input
             className="cr-account"
             type="email"
@@ -125,7 +127,8 @@ function LoginView() {
             onChange={(e) => setLastName(e.target.value)}
             required
           ></input>
-          <button className="login-button" type="submit" onClick={createNewCustomer}>
+          <button className="login-button" type="submit" >
+		  {/*onClick={createNewCustomer} disabled={firstName === null ||firstName.length === 0}*/}
             Skapa konto
           </button>
         </form>
