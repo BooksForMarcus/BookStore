@@ -1,52 +1,51 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Link
+} from "react-router-dom";
 import "./App.css";
-import { useRecoilState } from "recoil";
-import weatherState from "./atoms/weatherState";
+import HomeView from "./views/HomeView";
+import AdminView from "./views/AdminHomeView";
+import LoginView from "./views/LoginView";
+import logo from './assets/boklogo.png'
+import {useRecoilState} from "recoil"
+import userState from "./atoms/userState";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [weather, setWeather] = useRecoilState(weatherState);
+	const [user, setUser] = useRecoilState(userState);
 
-  const getWeather = async () => {
-    const resp = await fetch("/api/weatherforecast");
-    const json = await resp.json();
-    console.log(json);
-    setWeather(json);
-  };
-
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <button onClick={getWeather}>Fetch weather forecast now.</button>
-        {weather === null ? (
-          <p>Nothing fetched yet</p>
-        ) : (
-          weather.map((w, i) => {
-            return <p key={i}>{w.name}</p>;
-          })
-        )}
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <div className="App">
+                <header>
+                    <img className="nav_logo" src={logo} alt="An image of bookstore logo" />
+                    <div className="navbar">
+                        <div className="menu-item" >
+                            <Link to="/">HEM</Link>
+                        </div>
+                        <div className="menu-item" >
+                            <Link to="/admin">ADMIN</Link>
+                        </div>
+                        <div className="menu-item" >
+							<Link to="/login">{user?"Hej "+user.firstName:"LOGGA IN"}</Link>
+                        </div>
+                    </div>
+                </header>
+                <Routes>
+                    <Route path='/' element={<HomeView />} />
+                    <Route path='/admin' element={<AdminView />} />
+                    <Route path='/login' element={<LoginView />} />
+                </Routes>
+                <footer>
+                    {/*<button onClick={() => setCount((count) => count + 1)}>*/}
+                    {/*    count is {count}*/}
+                    {/*</button>*/}
+                </footer>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;
