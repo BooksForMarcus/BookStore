@@ -11,9 +11,17 @@ using Microsoft.AspNetCore.Mvc;
 public class BookController : ControllerBase
 {
     private readonly BookCrud _bookCrud;
+ 
 
     public BookController(BookCrud bookCrud) =>
         _bookCrud = bookCrud;
+
+    //public BookController(BookCrud bookCrud, CustomerCrud customerCrud) 
+    //{
+    //    _bookCrud = bookCrud;
+    //    _customerCrud = customerCrud;
+    //}
+    
 
 
     // GET: api/<BookController>
@@ -68,7 +76,10 @@ public class BookController : ControllerBase
     [HttpPut("pricechange/")]
     public async Task<IActionResult> PriceChange(BookOperation op)
     {
-        if (_bookCrud.AdminVerification())
+        var OKgoahead = await _bookCrud.AdminVerificationAsync(op);
+
+        //if (_bookCrud.AdminVerification(op))
+        if (OKgoahead)
         {
             var result = await _bookCrud.UpdateBookPrice(op.Book.Id, op.Book.Price);
             if (result) return Ok();
