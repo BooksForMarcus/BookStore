@@ -19,16 +19,16 @@ public class CustomerCrud
     }
     public async Task<List<Customer>> GetAllCustomers()
     {
-            var resp = await customers.FindAsync(_ => true);
-            var result = resp.ToList();
+        var resp = await customers.FindAsync(_ => true);
+        var result = resp.ToList();
 
-            //scrub passwords
-            foreach (var customer in result)
-            {
-                customer.Password = "";
-            }
+        //scrub passwords
+        foreach (var customer in result)
+        {
+            customer.Password = "";
+        }
 
-            return result;
+        return result;
     }
 
     /// <summary>
@@ -54,6 +54,19 @@ public class CustomerCrud
             return result;
         }
         return new List<Customer>();
+    }
+    public async Task<List<Customer>> AdminGetAllCustomers()
+    {
+        var resp = await customers.FindAsync(_ => true);
+        var result = resp.ToList();
+
+        //scrub passwords
+        foreach (var customer in result)
+        {
+            customer.Password = "";
+        }
+
+        return result;
     }
 
     /// <summary>
