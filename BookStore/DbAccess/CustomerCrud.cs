@@ -17,12 +17,27 @@ public class CustomerCrud
         _isDev = IsDev;
         customers = db.CustomersCollection;
     }
+    public async Task<List<Customer>> GetAllCustomers()
+    {
+            var resp = await customers.FindAsync(_ => true);
+            var result = resp.ToList();
+
+            //scrub passwords
+            foreach (var customer in result)
+            {
+                customer.Password = "";
+            }
+
+            return result;
+    }
 
     /// <summary>
     /// Given a admin email a password will return a list containing all users.
     /// </summary>
     /// <param name="auth"><see cref="CustomerAuthorize"/> object containing the admin email and password.</param>
     /// <returns>A <see cref="List{T}"/> where T is <see cref="Customer"/> containing a the customers in the database.</returns>
+
+
     public async Task<List<Customer>> AdminGetAllCustomers(CustomerAuthorize auth)
     {
         if (await IsAdmin(auth))
