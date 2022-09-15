@@ -80,7 +80,6 @@ function HomeView() {
              </div>
           );
         n++;
-        console.log(n);
       })
     );
   };
