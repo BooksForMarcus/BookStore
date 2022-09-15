@@ -29,6 +29,17 @@ public class CustomerController : ControllerBase
     {
         return await _customerCrud.AdminGetAllCustomers(auth);
     }
+    [HttpGet("admin/getusers")]
+    public async Task<IEnumerable<Customer>> AdminGetUsers()
+    {
+        var cust = HttpContext.Items["Customer"] as Customer;
+        if (cust is not null && cust.IsAdmin)
+        {   
+            return await _customerCrud.AdminGetAllCustomers();
+        }
+        else
+            return new List<Customer>();
+    }
 
     /// <summary>
     /// Post an object to create a new customer.
