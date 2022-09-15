@@ -27,7 +27,9 @@ function HomeView() {
 
     return books === null ? (
       <div className="card-product">
-        <div className="book-image"></div>
+        <div className="book-image-wrapper">
+            
+        </div>
         <p>Kommer snart</p>
       </div>
     ) : (
@@ -35,9 +37,16 @@ function HomeView() {
         if (k < 4 && b.year === 2022)
           return (
             <div className="card-product" key={b.id}>
-              <div className="book-image"></div>
-              <p>{b.title}</p>
-              <p>{b.price}kr</p>
+            <div className="book-image-wrapper">
+                <img
+                className="book-img"
+                src={b.imageURL}
+                alt="Front image of book"
+                >
+                </img>
+            </div>
+                <p>{b.title}</p>
+                <p>{b.price}kr</p>
             </div>
           );
         k++;
@@ -50,7 +59,7 @@ function HomeView() {
 
     return books === null ? (
       <div className="card-product">
-        <div className="book-image"></div>
+        <div className="book-image-wrapper"></div>
         <p>Kommer snart</p>
       </div>
     ) : (
@@ -58,10 +67,17 @@ function HomeView() {
         if (n > 5 && b.soldBy != "store")
           return (
             <div className="card-product" key={b.id}>
-              <div className="book-image"></div>
-              <p>{b.title}</p>
-              <p>{b.price}kr</p>
-            </div>
+                <div className="book-image-wrapper">
+                    <img
+                    className="book-img"
+                    src={b.imageURL}
+                    alt="Front image of book"
+                    >
+                    </img>
+                </div>
+                <p>{b.title}</p>
+                <p>{b.price}kr</p>
+             </div>
           );
         n++;
         console.log(n);
