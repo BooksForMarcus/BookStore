@@ -69,17 +69,24 @@ footer {
     display: grid;
     place-items: center;
     padding: 1em;
+    align-content: start;
 }
 
-.book-image {
+.book-image-wrapper {
     height: 200px;
     width: 150px;
-    background-color: #e7d2ac;
+    background-color: #FCF8E8;
+    display: grid;
 }
 
+.book-img {
+    display: grid;
+    place-self: center;
+    height: 100%;
+    max-width: 150px;
+}
 /*LoginView*/
-
-.login-view{
+.login-view {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }

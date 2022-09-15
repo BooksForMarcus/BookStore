@@ -8,11 +8,11 @@ using System.Linq;
 public class BookCrud
 {
     private IMongoCollection<Book> books;
-    private IMongoCollection<Customer> customers;
-    public BookCrud(MongoDbAccess db)
+    private CustomerCrud customers;
+    public BookCrud(MongoDbAccess db, CustomerCrud cc)
     {
         books = db.BooksCollection;
-        customers = db.CustomersCollection;
+        customers = cc;
     }
 
     public async Task<bool> CreateBook(Book book)
@@ -43,7 +43,7 @@ public class BookCrud
     {
         var findFilter = Builders<Book>.Filter.Eq("Id", Id);
         var resp = await books.FindAsync(findFilter);
-        return (Book)resp;
+        return resp.FirstOrDefault();
     }
     //public   bool  DeleteBook(Guid id)
     //{
@@ -107,45 +107,45 @@ public class BookCrud
         }
         return result;
     }
-    private async Task<Customer> GetCustomerByEmail2(string mail)
-    {
-        var result = await customers.FindAsync(x => x.Email == mail);
-        return result.FirstOrDefault();
-    }
+    //private async Task<Customer> GetCustomerByEmail2(string mail)
+    //{
+    //    var result = await customers.FindAsync(x => x.Email == mail);
+    //    return result.FirstOrDefault();
+    //}
 
 
 
-    public async Task<bool> IsAdmin(CustomerAuthorize auth)
-    {
-        var isAdmin = false;
-        //get customer object
-        var user = await GetCustomerByEmail2(auth.Email);
-        if (user is not null)
-        {
-            //check password
-            var correctPassword = CustomerHelper.ConfirmPassword(user, auth.Password);
-            //check admin flag
-            if (correctPassword && user.IsAdmin) isAdmin = true;
-        }
-        //report result
-        return isAdmin;
-    }
+    //public async Task<bool> IsAdmin(CustomerAuthorize auth)
+    //{
+    //    var isAdmin = false;
+    //    //get customer object
+    //    var user = await GetCustomerByEmail2(auth.Email);
+    //    if (user is not null)
+    //    {
+    //        //check password
+    //        var correctPassword = CustomerHelper.ConfirmPassword(user, auth.Password);
+    //        //check admin flag
+    //        if (correctPassword && user.IsAdmin) isAdmin = true;
+    //    }
+    //    //report result
+    //    return isAdmin;
+    //}
  
 
-    public async Task<bool> AdminVerificationAsync(BookOperation op)
-    {
-        string pass = op.Password;
-        string user = op.User;
+    //public async Task<bool> AdminVerificationAsync(BookOperation op)
+    //{
+    //    string pass = op.Password;
+    //    string user = op.User;
 
-        var auth = new CustomerAuthorize();
-        auth.Email = user;
-        auth.Password = pass;
-        bool returnMe = await IsAdmin(auth);
+    //    var auth = new CustomerAuthorize();
+    //    auth.Email = user;
+    //    auth.Password = pass;
+    //    bool returnMe = await IsAdmin(auth);
      
  
 
 
-        //This method really needs to be updated with something better!
-        return returnMe;
-    }
+    //    //This method really needs to be updated with something better!
+    //    return returnMe;
+    //}
 }

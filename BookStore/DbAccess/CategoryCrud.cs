@@ -39,7 +39,7 @@ public class CategoryCrud
     {
         var findFilter = Builders<Category>.Filter.Eq("Id", Id);
         var resp = await categories.FindAsync(findFilter);
-        return (Category)resp;
+        return resp.FirstOrDefault();
     }
 
     //public async Task<Book> GetBookByName(string Name)
@@ -57,7 +57,7 @@ public class CategoryCrud
 
         var resp = await categories.FindAsync(findFilter);
 
-        return (List<Category>)resp;
+        return resp.ToList();
     }
 
 
