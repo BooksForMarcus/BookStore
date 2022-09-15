@@ -20,9 +20,10 @@ a {
     text-decoration: inherit;
 }
 
-    a:hover {
-        color: #EDB183;
-    }
+a:hover {
+    color: #EDB183;
+}
+
 
 body {
     margin: 0;

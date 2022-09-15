@@ -56,6 +56,8 @@ footer {
 
 .card {
     display: grid;
+    max-width: 75%;
+    min-width: 75%;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     color: #415d51;
     background-color: #FCF8E8;
