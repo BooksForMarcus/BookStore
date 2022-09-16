@@ -2,7 +2,7 @@
 import { useState } from "react";
 import "../App.css";
 import { useRecoilState } from "recoil";
-import userState from "../atoms/userState";
+import loggedInUserState from "../atoms/loggedInUserState";
 import { decode as base64_decode, encode as base64_encode } from "base-64";
 
 function LoginView() {
@@ -11,7 +11,7 @@ function LoginView() {
   const [emailCreate, setEmailCreate] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [user, setUser] = useRecoilState(userState);
+  const [user, setUser] = useRecoilState(loggedInUserState);
 
   const createNewCustomer = async (e) => {
     e.preventDefault();
