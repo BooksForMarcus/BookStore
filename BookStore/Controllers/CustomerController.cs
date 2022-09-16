@@ -76,13 +76,12 @@ public class CustomerController : ControllerBase
                 Email = cust.Email,
                 Password = cust.Password
             };
-            if (cust.IsAdmin)
+            if (cust.IsAdmin && !string.IsNullOrEmpty(customer.Id))
             {
                 result = (await _customerCrud.AdminUpdateCustomer(op))!;
             }
             else
             {
-                //todo: implement this method for real:
                 result = (await _customerCrud.CustomerUpdateSelf(op))!;
             }
         }
