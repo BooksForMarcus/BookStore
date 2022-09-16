@@ -38,7 +38,7 @@ public class CustomerController : ControllerBase
     }
 
     /// <summary>
-    /// Post an object to create a new customer.
+    /// Post an object to create a new customer (Basic Auth NOT required).
     /// </summary>
     /// <param name="customer">Object containing information about the new customer.</param>
     /// <returns>A List of all the customers.</returns>
@@ -47,6 +47,7 @@ public class CustomerController : ControllerBase
     /// <remarks>The only information used from the posted object is the email,
     /// first name and last name fields, all other fields can(and should) be left out.</remarks>
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> Post(Customer customer)
     {
         var result = await _customerCrud.CreateCustomer(customer);
@@ -57,9 +58,7 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// Updates customer.
     /// </summary>
-    /// <param name="op">Should contain email and password of the user trying to make
-    /// the change, as well as the customerToUpdate object containing the current information.</param>
-    /// <returns></returns>
+    /// <returns>The replaces Customer object on success, otherwise null. ATTENTION: returns the *replaced* object, not the current!</returns>
     /// <response code="200">Customer update ok. Will also return the changed customer object.</response>
     /// <response code="400">Failed to update customer.</response>
     /// <remarks>IMPORTANT: if done by admin, will use the posted customerToUpdate object to replace the information in the DB.
