@@ -126,6 +126,7 @@ public class CustomerController : ControllerBase
         var result = await _customerCrud.Login(auth);
         return result is null ? BadRequest() : Ok(result);
     }
+    [AllowAnonymous]
     [HttpGet("login/")]
     public async Task<IActionResult> GetLogin()
     {
