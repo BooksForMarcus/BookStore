@@ -312,4 +312,31 @@ public class CustomerCrud
         }
         return result;
     }
+
+    public async Task<Customer?> AdminUpdateCustomer(CustomerOperation op)
+    {
+        Customer result = null;
+        if (op is null
+            || op.CustomerToUpdate is null
+            || (op.Email == op.CustomerToUpdate.Email && !op.CustomerToUpdate.IsAdmin)) return result;
+        
+        //if the password field is not empty in customerToUpdate, we encrypt it and add it back.
+        if (!string.IsNullOrWhiteSpace(op.CustomerToUpdate.Password))
+        {
+            var newPassHash = CustomerHelper.GetHashedPassword(op.CustomerToUpdate,op.CustomerToUpdate.Password);
+            op.CustomerToUpdate.Password = newPassHash;
+        }
+        //if the password field is actually emtpy, we need to get the hash from the db
+        else
+        {
+            var old = await GetCustomerById(op.CustomerToUpdate.Id);
+            op.CustomerToUpdate.Password = old.Password;
+        }
+        result = await customers.FindOneAndReplaceAsync(x => x.Id == op.CustomerToUpdate.Id, op.CustomerToUpdate);
+        //scrub!
+        result.Password = "";
+        return result;
+    }
+
+    internal Task<Customer?> CustomerUpdateSelf(CustomerOperation op) => throw new NotImplementedException();
 }

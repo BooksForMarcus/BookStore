@@ -1,10 +1,10 @@
 ﻿import React from 'react'
 import AdminMain from '../components/Admin/AdminMain';
 
-function AdminHomeView() {
+function AdminHomeView({user}) {
     return (
         <div>
-            <AdminMain/>	
+            <AdminMain user={user}/>	
         </div>
     );
 }

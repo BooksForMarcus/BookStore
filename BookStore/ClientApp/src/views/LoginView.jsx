@@ -2,8 +2,8 @@
 import { useState } from "react";
 import "../App.css";
 import { useRecoilState } from "recoil";
-import userState from "../atoms/userState";
 import emailcheck from "../assets/email-transparent-icon-17.png"
+import loggedInUserState from "../atoms/loggedInUserState";
 import { decode as base64_decode, encode as base64_encode } from "base-64";
 import { useNavigate } from 'react-router-dom';
 
@@ -13,10 +13,9 @@ function LoginView() {
   const [emailCreate, setEmailCreate] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [user, setUser] = useRecoilState(userState);
   const [userCreated, setUserCreated] = useState(false);
-
   const navigate = useNavigate();
+  const [user, setUser] = useRecoilState(loggedInUserState);
 
   const createNewCustomer = async (e) => {
     e.preventDefault();
