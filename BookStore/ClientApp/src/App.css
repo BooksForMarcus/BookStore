@@ -84,6 +84,7 @@ footer {
     place-self: center;
     height: 100%;
     max-width: 150px;
+    max-height: 200px;
 }
 /*LoginView*/
 .login-view {
