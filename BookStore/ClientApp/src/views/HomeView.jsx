@@ -37,7 +37,6 @@ function HomeView() {
             if (!usedNumbers.includes(random)) {
                 usedNumbers.push(random);
                 fiveRandomBooks.push(books[random]);
-                break;
             }
         }
         return fiveRandomBooks;
