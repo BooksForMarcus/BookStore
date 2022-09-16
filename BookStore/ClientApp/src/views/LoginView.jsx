@@ -3,7 +3,9 @@ import { useState } from "react";
 import "../App.css";
 import { useRecoilState } from "recoil";
 import userState from "../atoms/userState";
+import emailcheck from "../assets/email-transparent-icon-17.png"
 import { decode as base64_decode, encode as base64_encode } from "base-64";
+import { useNavigate } from 'react-router-dom';
 
 function LoginView() {
   const [email, setEmail] = useState("");
@@ -12,6 +14,9 @@ function LoginView() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [user, setUser] = useRecoilState(userState);
+  const [userCreated, setUserCreated] = useState(false);
+
+  const navigate = useNavigate();
 
   const createNewCustomer = async (e) => {
     e.preventDefault();
@@ -30,6 +35,7 @@ function LoginView() {
     let resp = await fetch("/api/customer/", requestOptions);
     if (resp.ok) {
       console.log("create customer ok");
+      setUserCreated(true)
       let json = await resp.json();
       console.log(json);
     } else {
@@ -61,6 +67,7 @@ function LoginView() {
 	  json.password = "Basic "+base64basicAuth
       console.log(json);
       setUser(json);
+      navigate('/profile');
     } else {
       console.log("login failed");
     }
@@ -94,45 +101,53 @@ function LoginView() {
           </button>
         </form>
       </div>
-      <div className="add-account-wrap">
-        <h2 className="cr-head-text">Skapa konto</h2>
-        <form onSubmit={createNewCustomer}>
-          <input
-            className="cr-account"
-            type="email"
-            label="Email"
-            placeholder="Email"
-            id="emailCreate"
-			value={emailCreate}
-            onChange={(e) => setEmailCreate(e.target.value)}
-            required
-          ></input>
-          <input
-            className="cr-account"
-            type="text"
-            label="Förnamn"
-            placeholder="Förnamn"
-            id="firstname"
-			value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          ></input>
-          <input
-            className="cr-account"
-            type="text"
-            label="Efternamn"
-            placeholder="Efternamn"
-            id="lastname"
-			value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          ></input>
-          <button className="login-button" type="submit" >
-		  {/*onClick={createNewCustomer} disabled={firstName === null ||firstName.length === 0}*/}
-            Skapa konto
-          </button>
-        </form>
-      </div>
+        {!userCreated ? 
+        <div className="add-account-wrap">
+          <h2 className="cr-head-text">Skapa konto</h2>
+          <form onSubmit={createNewCustomer}>
+            <input
+              className="cr-account"
+              type="email"
+              label="Email"
+              placeholder="Email"
+              id="emailCreate"
+              value={emailCreate}
+              onChange={(e) => setEmailCreate(e.target.value)}
+              required
+            ></input>
+            <input
+              className="cr-account"
+              type="text"
+              label="Förnamn"
+              placeholder="Förnamn"
+              id="firstname"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            ></input>
+            <input
+              className="cr-account"
+              type="text"
+              label="Efternamn"
+              placeholder="Efternamn"
+              id="lastname"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            ></input>
+            <button className="login-button" type="submit" >
+        {/*onClick={createNewCustomer} disabled={firstName === null ||firstName.length === 0}*/}
+              Skapa konto
+            </button>
+          </form>
+        </div> : 
+        <div className="add-account-resp-wrap">
+          <h2 className="cr-resp-head-text">Välkommen {firstName}!</h2>
+          <img src={emailcheck} className="cr-resp-img" />
+          <p className="cr-resp-text">Vi har skickat ditt lösenord till {emailCreate}.</p>
+        </div>}
+        
+      
     </div>
   );
 }
