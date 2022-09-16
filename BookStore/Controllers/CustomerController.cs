@@ -1,5 +1,6 @@
 ﻿namespace BookStore.Controllers;
 
+using BookStore.Authorize;
 using BookStore.DbAccess;
 using BookStore.DTO;
 using BookStore.Models;
@@ -9,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using static Helpers.EnvironmentHelper;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class CustomerController : ControllerBase
@@ -19,26 +21,20 @@ public class CustomerController : ControllerBase
         _customerCrud = customerCrud;
 
     /// <summary>
-    /// Post a valid admin e-mail and password to get a list of all the users.
+    /// Gets a list of all the customer. (Basic Auth required).
     /// </summary>
-    /// <param name="auth">Object containing email and password.</param>
     /// <returns>A List of all the customers.</returns>
     /// <response code="200">Call ok.</response>
-    [HttpPost("admin/getusers")]
-    public async Task<IEnumerable<Customer>> GetUsers(CustomerAuthorize auth)
-    {
-        return await _customerCrud.AdminGetAllCustomers(auth);
-    }
     [HttpGet("admin/getusers")]
-    public async Task<IEnumerable<Customer>> AdminGetUsers()
+    public async Task<IActionResult> AdminGetUsers()
     {
         var cust = HttpContext.Items["Customer"] as Customer;
         if (cust is not null && cust.IsAdmin)
-        {   
-            return await _customerCrud.AdminGetAllCustomers();
+        {
+            return Ok(await _customerCrud.AdminGetAllCustomers());
         }
         else
-            return new List<Customer>();
+            return BadRequest(new { error = "Need admin priviledge to access customer list." });
     }
 
     /// <summary>
@@ -64,14 +60,33 @@ public class CustomerController : ControllerBase
     /// <param name="op">Should contain email and password of the user trying to make
     /// the change, as well as the customerToUpdate object containing the current information.</param>
     /// <returns></returns>
-    /// <response code="200">Customer remove/deactivate ok. Will also return the changed customer object.</response>
-    /// <response code="400">Failed to remove/deactivate customer.</response>
+    /// <response code="200">Customer update ok. Will also return the changed customer object.</response>
+    /// <response code="400">Failed to update customer.</response>
     /// <remarks>IMPORTANT: if done by admin, will use the posted customerToUpdate object to replace the information in the DB.
     /// If done by non-Admin, will only update password, first name, last name or address fields.</remarks>
     [HttpPut("updatecustomer")]
-    public async Task<IActionResult> Put(CustomerOperation op)
+    public async Task<IActionResult> Put(Customer customer)
     {
-        var result = await _customerCrud.UpdateCustomer(op);
+        var cust = HttpContext.Items["Customer"] as Customer;
+        Customer result = null;
+        if (cust is not null)
+        {
+            var op = new CustomerOperation
+            {
+                CustomerToUpdate = customer,
+                Email = cust.Email,
+                Password = cust.Password
+            };
+            if (cust.IsAdmin)
+            {
+                result = await _customerCrud.AdminUpdateCustomer(op);
+            }
+            else
+            {
+                //todo: implement this method for real:
+                result = await _customerCrud.CustomerUpdateSelf(op);
+            }
+        }
         return result is not null ? Ok(result) : BadRequest();
     }
 
@@ -109,7 +124,7 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> Login(CustomerAuthorize auth)
     {
         var result = await _customerCrud.Login(auth);
-        return result is null?BadRequest():Ok(result);
+        return result is null ? BadRequest() : Ok(result);
     }
     [HttpGet("login/")]
     public async Task<IActionResult> GetLogin()

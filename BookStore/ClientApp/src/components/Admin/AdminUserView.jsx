@@ -1,14 +1,19 @@
+import { useState } from "react";
 import { useRecoilState } from "recoil";
-import userState from "../../atoms/userState";
+import loggedInUserState from "../../atoms/loggedInUserState";
+import AdminUserEdit from "./AdminUserEdit";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faScrewdriverWrench,faLock,faLightbulb,faCommentDollar } from "@fortawesome/free-solid-svg-icons";
 
 const AdminUserView = ({users,setUsers}) =>{
-	const [user, setUser] = useRecoilState(userState);
+	const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
+	const [userIdToEdit, setUserIdToEdit] = useState(null);
 	
 	const getAllUsers = async () => {
 	const requestOptions = {
 		method: "GET",
 		headers: {
-		  Authorization: user.password,
+		  Authorization: loggedInUser.password,
 		  Accept: "application/json",
 		  "Content-Type": "application/json",
 		},
@@ -25,17 +30,29 @@ const AdminUserView = ({users,setUsers}) =>{
 	  }
 	};
 
-	return ( 
-		<div className="admin-user-view">
-			{users === null && <button onClick={getAllUsers} disabled={user === null}>Fetch all users.</button>}
+	return userIdToEdit===null?( 
+		<div className="admin-user-list">
+			{users === null && <button onClick={getAllUsers} disabled={loggedInUser === null}>Hämta alla kunder.</button>}
 			{users !== null && users.map((user) => {
 				return (
 					<div className="user-list-item" key={user.id}>
-						<p>{user.email}  -  {user.firstName} {user.lastName}</p>
+						<div className="user-list-item-name">
+							<p>{user.email}  -  {user.firstName} {user.lastName}</p>
+						</div>
+						<div className="user-list-item-util">
+							{user.isAdmin && <FontAwesomeIcon icon={faScrewdriverWrench} />}
+							{user.isBlocked && <FontAwesomeIcon icon={faLock} />}
+							{user.isActive && <FontAwesomeIcon icon={faLightbulb} />}
+							{user.isSeller && <FontAwesomeIcon icon={faCommentDollar} />}
+							<button onClick={()=>setUserIdToEdit(user.id)}>Ändra</button>
+
+						</div>
 					</div>
 				);
 			})}
 		</div>
+	 ):(
+		<AdminUserEdit userToEdit={users.find((u)=>u.id===userIdToEdit)} setUserToEdit={setUserIdToEdit} loggedInUser={loggedInUser} users={users} setUsers={setUsers}/>
 	 );
 }
 
