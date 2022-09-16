@@ -1,0 +1,28 @@
+.admin-nav {
+	display: flex;
+	justify-content: space-around;
+	background-color: #688472;
+	border-top: 1px solid #ECB390;
+	border-bottom: 1px solid #ECB390;
+	padding: 0.5em 0em 0.5em 0em;
+}
+button {
+	transition: 1s;
+	scale: 75%;
+}
+button:disabled {
+	opacity: 0.3;
+	background-color: red;
+	cursor: not-allowed;
+}
+button:hover {
+	background-color: #415d51;
+	color: #FCF8E8;
+}
+.admin-user-view {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+.admin-user-view > button {
+	grid-column: 3/4;
+}
