@@ -68,7 +68,7 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> Put(Customer customer)
     {
         var cust = HttpContext.Items["Customer"] as Customer;
-        Customer result = null;
+        Customer result = null!;
         if (cust is not null)
         {
             var op = new CustomerOperation
@@ -79,12 +79,12 @@ public class CustomerController : ControllerBase
             };
             if (cust.IsAdmin)
             {
-                result = await _customerCrud.AdminUpdateCustomer(op);
+                result = (await _customerCrud.AdminUpdateCustomer(op))!;
             }
             else
             {
                 //todo: implement this method for real:
-                result = await _customerCrud.CustomerUpdateSelf(op);
+                result = (await _customerCrud.CustomerUpdateSelf(op))!;
             }
         }
         return result is not null ? Ok(result) : BadRequest();

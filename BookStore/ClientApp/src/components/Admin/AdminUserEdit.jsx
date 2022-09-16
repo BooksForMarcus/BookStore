@@ -19,7 +19,6 @@ const AdminUserEdit= ({userToEdit,setUserToEdit,loggedInUser,users,setUsers}) =>
 	
 	const sendUpdatedUserToApi = async (e) => {
 		e.preventDefault();
-		console.log("In adminUserEdit: loggedInUser: ", loggedInUser);
 		const updatedUser = {
 			id: userToEdit.id,
 			email: email,
@@ -44,9 +43,7 @@ const AdminUserEdit= ({userToEdit,setUserToEdit,loggedInUser,users,setUsers}) =>
 	  
 		  let resp = await fetch("/api/customer/updatecustomer", requestOptions);
 		  if (resp.ok) {
-			console.log("in adminUseredit: resp ok");
 			let json = await resp.json();
-			console.log(json);
 			setUpdateOk(true);
 			var newUsers = users.filter(x=>x.id!==userToEdit.id);
 			newUsers.push(updatedUser);
@@ -87,10 +84,6 @@ const AdminUserEdit= ({userToEdit,setUserToEdit,loggedInUser,users,setUsers}) =>
 				<input type="text" id="password" value={password} onChange={(e)=>setPassword(e.target.value)} />
 				<div className="admin-user-edit-checkbox-area">
 					<div>
-						<label htmlFor="isAdmin">Administratör</label>
-						{userToEdit.id!==loggedInUser.id && <input type="checkbox" id="isAdmin" checked={isAdmin} onChange={(e)=>setIsAdmin(e.target.checked)} />}
-					</div>
-					<div>
 						<label htmlFor="isSeller">Säljare</label>
 						<input type="checkbox" id="isSeller" checked={isSeller} onChange={(e)=>setIsSeller(e.target.checked)} />
 					</div>
@@ -102,10 +95,14 @@ const AdminUserEdit= ({userToEdit,setUserToEdit,loggedInUser,users,setUsers}) =>
 						<label htmlFor="isActive">Konto aktivt</label>
 						<input type="checkbox" id="isActive" checked={isActive} onChange={(e)=>setIsActive(e.target.checked)} />
 					</div>
+					<div>
+						<label htmlFor="isAdmin">Administratör</label>
+						<input type="checkbox" id="isAdmin" checked={isAdmin} onChange={(e)=>setIsAdmin(e.target.checked)} disabled={userToEdit.id===loggedInUser.id} />
+					</div>
 				</div>
+				<button onClick={()=>setUserToEdit(null)}>Stäng</button>
 				<button type="submit">Spara</button>
 			</form>
-			<button onClick={()=>setUserToEdit(null)}>Stäng</button>
 		</div>
 	 );
 }
