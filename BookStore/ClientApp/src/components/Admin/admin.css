@@ -51,7 +51,7 @@ button:hover {
 }
 .user-list-item-util {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 0em 3em;
 }
@@ -84,6 +84,12 @@ button:hover {
   justify-content: center;
   align-items: center;
 }
+.admin-user-edit-button-area{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 .btn-x-mark {
   background: none;
   color: inherit;
@@ -107,13 +113,13 @@ button:hover {
 }
 .update-ok {
   background-color: #71cb16;
-  border: 5px solid #345f08;
-  border-radius: 0.5em;
+  border: 2px solid #345f08;
+  border-radius: 0.1em;
 }
 .update-fail {
   background-color: #e9541a;
-  border: 5px solid #8d2f0a;
-  border-radius: 0.5em;
+  border: 2px solid #8d2f0a;
+  border-radius: 0.1em;
 }
 .admin-user-search-bar {
   display: flex;

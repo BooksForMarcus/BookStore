@@ -5,13 +5,12 @@ const AdminUserSearchBar = ({users,setUsersToShow}) => {
 	  const [searchString, setSearchString] = useState("");
 
 	  useEffect(() => {
-		if(searchString.length>1){
-			if("0123456789".includes(searchString[0])){
-				setUsersToShow(users.filter((u) => u.id.toLowerCase().includes(searchString.toLowerCase())));
-			}
-			else{
-				setUsersToShow(users.filter((u) => u.email.toLowerCase().includes(searchString.toLowerCase())));
-			}
+		const search = searchString.toLowerCase()
+		if(search.length>1){
+			setUsersToShow(users.filter((u)=> u.id.toLowerCase().includes(search) ||
+											  u.firstName.toLowerCase().includes(search) ||
+											  u.lastName.toLowerCase().includes(search) ||
+											  u.email.toLowerCase().includes(search)))
 		}else{
 			setUsersToShow(null);
 		}

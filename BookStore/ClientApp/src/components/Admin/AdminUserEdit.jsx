@@ -67,9 +67,7 @@ const AdminUserEdit= ({userToEdit,setUserToEdit,loggedInUser,users,setUsers}) =>
 
 	return ( 
 		<div className="admin-user-edit">
-		{updateOk===true && <UpdateOk />}
-		{updateOk===false && <UpdateFailed />}
-		<button className="btn-x-mark" onClick={()=>setUserToEdit(null)}><FontAwesomeIcon icon={faXmark}/></button>
+			<button className="btn-x-mark" onClick={()=>setUserToEdit(null)}><FontAwesomeIcon icon={faXmark}/></button>
 			<h2>Ändra användare</h2>
 			<form onSubmit={sendUpdatedUserToApi}>
 				<label htmlFor="email">Email</label>
@@ -100,11 +98,15 @@ const AdminUserEdit= ({userToEdit,setUserToEdit,loggedInUser,users,setUsers}) =>
 						<input type="checkbox" id="isAdmin" checked={isAdmin} onChange={(e)=>setIsAdmin(e.target.checked)} disabled={userToEdit.id===loggedInUser.id} />
 					</div>
 				</div>
-				<button onClick={()=>setUserToEdit(null)}>Stäng</button>
-				<button type="submit">Spara</button>
+				<div className="admin-user-edit-button-area">
+					<button onClick={()=>setUserToEdit(null)}>Stäng</button>
+					<button type="submit">Spara</button>
+				</div>
 			</form>
+			{updateOk===true && <UpdateOk />}
+			{updateOk===false && <UpdateFailed />}
 		</div>
 	 );
-}
-
-export default AdminUserEdit;
+	}
+	
+	export default AdminUserEdit;
