@@ -16,4 +16,5 @@ public class Book
     public decimal Price { get; set; } = 100.0M;
     public int Year { get; set; } = 1;
     public string SoldBy { get; set; } = "";
+    public string ImageURL { get; set; } = "";
 }

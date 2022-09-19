@@ -1,9 +1,10 @@
 ﻿import React from 'react'
+import AdminMain from '../components/Admin/AdminMain';
 
 function AdminHomeView() {
     return (
         <div>
-            <h1>This is the admin home page</h1>
+            <AdminMain/>	
         </div>
     );
 }
