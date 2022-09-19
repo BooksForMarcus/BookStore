@@ -12,6 +12,8 @@ import LoginView from "./views/LoginView";
 import logo from './assets/boklogo.png'
 import {useRecoilState} from "recoil"
 import userState from "./atoms/userState";
+import Search from "./views/Search"
+import Result from "./views/Result"
 
 function App() {
 	const [user, setUser] = useRecoilState(userState);
@@ -21,6 +23,7 @@ function App() {
             <div className="App">
                 <header>
                     <img className="nav_logo" src={logo} alt="An image of bookstore logo" />
+                    <div className="searchBar"><Search /></div>
                     <div className="navbar">
                         <div className="menu-item" >
                             <Link to="/">HEM</Link>
@@ -37,6 +40,7 @@ function App() {
                     <Route path='/' element={<HomeView />} />
                     <Route path='/admin' element={<AdminView />} />
                     <Route path='/login' element={<LoginView />} />
+                    <Route path='/result' element={<Result />} />
                 </Routes>
                 <footer>
                     {/*<button onClick={() => setCount((count) => count + 1)}>*/}

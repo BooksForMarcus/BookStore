@@ -1,57 +1,100 @@
-﻿import React, { useState, useEffect } from 'react'
-import "../App.css";
+﻿import React, { useState } from 'react'
+import "../SearchBar.css";
+import {
+	BrowserRouter,
+	Routes,
+	Route,
+	Link
+} from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { useRecoilState } from "recoil";
+import searchItemState from "../atoms/searchItemState";
 import booksState from "../atoms/booksState";
-
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 function Search() {
-	const [book, setBook] = useState([]);
+	const books = useRecoilValue(booksState);
 	const [search, setSearch] = useState("");
+	const [item, setItem] = useRecoilState(searchItemState);
 
-	const getBooks = async () => {
-		const resp = await fetch("/api/Book");
-		const json = await resp.json();
-		console.log(json);
-		setBook(json);
-	};
-
-	useEffect(() => {
-		getBooks()
-	}, []);
-
-
-	const displayResults = () => {
+	const displayTitleResults = () => {
 		if (search.length > 0) {
 			
 			
 			return <div>
-				{book.filter((val) => {
+				{books.filter((book) => {
 					if (search === '') {
-						return val
-					} else if (val.title.toLowerCase().includes(search.toLowerCase())) {
-						return val.title[0].toLowerCase().includes(search[0].toLowerCase())
-					} 
-				}).map(val => (
+						return book
+					} else if (book.title.toLowerCase().includes(search.toLowerCase())) {
+						return book.title[0].toLowerCase().includes(search[0].toLowerCase())
+					}
+				}).map(book => (
 					<div>
-						<h3>
-							{val.title}
-						</h3>
+						<Link className='dataItem' to='/result' onClick={() => setItem(book)} >
+							<p>{book.title}</p>
+						</Link>
 					</div>
 				))}
 				   </div>
 			}
 		}
 
-	return (
+	const displayAuthorResults = () => {
+		if (search.length > 0) {
 
-		<div>
-			<div className='searchbar'>
-				<input className='search'
-					onChange={(event) => setSearch(event.target.value)}
-					placeholder="search.." />
+
+			return <div>
+				{books.filter((val) => {
+					if (search === '') {
+						return val
+					} else if (val.author.toLowerCase().includes(search.toLowerCase())) {
+						return val.author[0].toLowerCase().includes(search[0].toLowerCase())
+					}
+				}).map(val => (
+					<div>
+						<a className='dataItem'  href="https://www.bokus.com/" >
+							<p>{val.author} (Författare)</p>
+						</a>
+					</div>
+
+				))}
 			</div>
-				{displayResults()}
+		}
+	}
+
+
+		const isResults = () => {
+			if (search.length > 0){
+				return (
+					<div className='dataResult'>{displayTitleResults()} {displayAuthorResults()}</div>)
+			} else return (
+				<div>{displayTitleResults()}</div>)
+	}
+
+		const clearSearchBar = () => {
+			return setSearch('')
+		}
+	
+
+	return (
+		<div>
+		<div className='search'>
+			<div className='searchInputs'>
+				<input type="text"
+					onChange={(event) => setSearch(event.target.value)}
+					placeholder="search.." value={search} />
+				<div className='closeIcon'>
+					{search.length != 0 ? <CloseIcon onClick={clearSearchBar} /> : null}
+				</div>
+				<div className='searchIcon'>
+						<SearchIcon />
+				</div>
+			</div>
+			<div>{isResults()}</div>
+			</div>
+			
 		</div>
     );
 
