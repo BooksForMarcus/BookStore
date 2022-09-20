@@ -34,18 +34,19 @@ namespace BookStore.Controllers
                 return BadRequest(new { error = "Need admin priviledge to access customer list." });
         }
 
-        //[HttpGet("customer/getorders")]
+        [HttpGet("customer/getorder")]
 
-        //public async Task<IActionResult> CustomerGetOrder(Order order)
-        //{
-        //    var cust = HttpContext.Items["Customer"] as Customer;
-        //    if(cust is not null)
-        //    {
-        //        var result = await _orderCRUD.CustomerGetOrder(order);
-        //        return Ok(result);
-        //    }
-        //    return BadRequest();
-        //}
+        public async Task<IActionResult> CustomerGetOrder(string id)
+        {
+            var cust = HttpContext.Items["Customer"] as Customer;
+            if (cust is not null)
+            {
+                var result = await _orderCRUD.CustomerGetOrder(id);
+                if(cust.Id == result.CustomerId)
+                return Ok(result);
+            }
+            return BadRequest();
+        }
 
         /// <summary>
         /// Post an object to create a new order (Basic Auth NOT required).
@@ -57,38 +58,47 @@ namespace BookStore.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Post(Order order)
         {
-            var result = await _orderCRUD.CreateOrder(order);
-            if (result) return Ok();
-            else return BadRequest();
+                var result = await _orderCRUD.CreateOrder(order);
+                if (result)
+                {
+                    return Ok();
+                }
+
+             return BadRequest();
         }
 
-        [HttpPut]
+
+        [HttpPut("orderupdate")]
         public async Task<IActionResult> Put(Order order)
         {
-            var result = await _orderCRUD.UpdateOrder(order);
-            if (!String.IsNullOrWhiteSpace(order.Id)) return Ok();
+            var cust = HttpContext.Items["Customer"] as Customer;
+            if (cust is not null && cust.IsAdmin)
+            {
+                var result = await _orderCRUD.UpdateOrder(order);
+                if (!String.IsNullOrWhiteSpace(order.Id))
+                    return Ok();
+            }
+            else if(cust is not null && cust.Id == order.CustomerId)
+            {
+                var result = await _orderCRUD.UpdateOrder(order);
+                if (!String.IsNullOrWhiteSpace(order.Id))
+                    return Ok();
+            }
+           
             return BadRequest();
         }
 
-        [HttpDelete]
+        [HttpDelete("admin/deleteorder")]
         public async Task<IActionResult> Delete(string id)
         {
+            var cust = HttpContext.Items["Customer"] as Customer;
+            if (cust is not null && cust.IsAdmin)
+            {
+                var result = await _orderCRUD.DeleteOrders(id);
+                if (result) return Ok();
+            }
 
-            var result = await _orderCRUD.DeleteOrders(id);
-            if(result) return Ok();
             return BadRequest();
         }
-
-        //// PUT api/<CustomerController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/<CustomerController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
