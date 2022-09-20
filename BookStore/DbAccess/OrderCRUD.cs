@@ -17,29 +17,23 @@ namespace BookStore.DbAccess
 
 		public async Task<bool> CreateOrder(Order order)
 		{
-			order.Id = "";
 			await orders.InsertOneAsync(order);
 			var result = !String.IsNullOrWhiteSpace(order.Id);
 			return result;
 		}
-		public async Task<List<Order>> GetAllOrders(OrderOperation op)
+		public async Task<List<Order>> GetAllOrders()
 		{
-			//behöver ändras, bara exempel:
-			var auth = new DTO.CustomerAuthorize() { Email = op.Email, Password = op.Password };
-			var resp = new List<Order>();
-            var customer = await customers.Login(auth);
-			if (customer is not null && customer.IsAdmin)
-			{
-				//get all orders?
-				resp = (await orders.FindAsync(_ => true)).ToList();
-			}
-			else if(customers is not null)
-			{
-                //get all orders for one customer?
-                resp = (await orders.FindAsync(o=> o.CustomerId == customer.Id)).ToList();
-            }
-			//var resp = (await orders.FindAsync(_ => true)).ToList();
-			return resp;
+		    var resp = await orders.FindAsync(_ => true);
+			var result = resp.ToList();
+			return result;
+		}
+
+		public async Task<Order> CustomerGetOrder(Order order)
+        {
+			var findFilter = Builders<Order>.Filter.Eq("Id",order.Id);
+			var resp = await orders.FindAsync(findFilter);
+			var result = resp.FirstOrDefault();
+			return result;
 		}
 
 		public async Task<bool> UpdateOrders(Order customerId, Order updatedorder )

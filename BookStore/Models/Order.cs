@@ -9,11 +9,10 @@ namespace BookStore.Models
         public string Id { get; set; } = "";
         public string CustomerId { get; set; } = "";
         public string CustomerName { get; set; } = "";
-        public string Ordernumber { get => Id; }
         public string Date { get; set; } = "";
         public decimal OrderSum { get; set; } = 0;
         public decimal VAT { get; set; } = 0;
-        public object[] books { get; set; } = Array.Empty<Book>();
+        public List<Book> books { get; set; } = new List<Book>();
 
     }
 }

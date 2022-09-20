@@ -1,35 +1,60 @@
-﻿using BookStore.DbAccess;
+﻿using BookStore.Authorize;
+using BookStore.DbAccess;
 using BookStore.DTO;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
     {
         private readonly OrderCRUD _orderCRUD;
+        
 
         public OrderController(OrderCRUD orderCRUD) =>
        _orderCRUD = orderCRUD;
 
-        // GET: api/<CustomerController>
-        [HttpGet]
-        public async Task<IEnumerable<Order>> Get(OrderOperation op)
+        /// <summary>
+        /// Gets a list of all the orders. (Basic Auth required).
+        /// </summary>
+        /// <returns>A list of all the customer.</returns>
+        /// <response code="200">Call ok.</response>
+        [HttpGet("admin/getorders")]
+        public async Task<IActionResult> GetOrders()
         {
-            return await _orderCRUD.GetAllOrders(op);
+            var cust = HttpContext.Items["Customer"] as Customer;
+            if (cust is not null && cust.IsAdmin)
+            {
+                return Ok(await _orderCRUD.GetAllOrders());
+            }
+            else
+                return BadRequest(new { error = "Need admin priviledge to access customer list." });
         }
 
-        //// GET api/<CustomerController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
+        //[HttpGet("customer/getorders")]
+
+        //public async Task<IActionResult> CustomerGetOrder(Order order)
         //{
-        //    return "value";
+        //    var cust = HttpContext.Items["Customer"] as Customer;
+        //    if(cust is not null)
+        //    {
+        //        var result = await _orderCRUD.CustomerGetOrder(order);
+        //        return Ok(result);
+        //    }
+        //    return BadRequest();
         //}
 
-        // POST api/<CustomerController>
+        /// <summary>
+        /// Post an object to create a new order (Basic Auth NOT required).
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns>A List of the order</returns>
+        /// 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Post(Order order)
         {
             var result = await _orderCRUD.CreateOrder(order);
