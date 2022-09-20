@@ -3,17 +3,19 @@ import {
     BrowserRouter,
     Routes,
     Route,
-    Link
+    NavLink
 } from "react-router-dom";
 import "./App.css";
 import HomeView from "./views/HomeView";
 import AdminView from "./views/AdminHomeView";
 import LoginView from "./views/LoginView";
 import logo from './assets/boklogo.png'
+import {useRecoilState} from "recoil"
+import UserProfileView from "./views/UserProfileView";
+import loggedInUserState from "./atoms/loggedInUserState";
 
 function App() {
-    const [count, setCount] = useState(0);
-
+	const [user, setUser] = useRecoilState(loggedInUserState);
 
     return (
         <BrowserRouter>
@@ -22,25 +24,21 @@ function App() {
                     <img className="nav_logo" src={logo} alt="An image of bookstore logo" />
                     <div className="navbar">
                         <div className="menu-item" >
-                            <Link to="/">HEM</Link>
+                            <NavLink to="/" className="menu-link">HEM</NavLink>
                         </div>
                         <div className="menu-item" >
-                            <Link to="/admin">ADMIN</Link>
-                        </div>
-                        <div className="menu-item" >
-                            <Link to="/login">LOGGA IN</Link>
+                            {user ? <NavLink to="/profile">MIN SIDA</NavLink> : <NavLink to="/login">LOGGA IN</NavLink> }
                         </div>
                     </div>
                 </header>
                 <Routes>
                     <Route path='/' element={<HomeView />} />
-                    <Route path='/admin' element={<AdminView />} />
+                    <Route path='/admin' element={<AdminView user={user}/>} />
                     <Route path='/login' element={<LoginView />} />
+                    <Route path='/profile' element={<UserProfileView />} />
                 </Routes>
                 <footer>
-                    {/*<button onClick={() => setCount((count) => count + 1)}>*/}
-                    {/*    count is {count}*/}
-                    {/*</button>*/}
+                    {user && user.isAdmin ? <NavLink to="/admin">ADMIN</NavLink> : <span></span>}
                 </footer>
             </div>
         </BrowserRouter>

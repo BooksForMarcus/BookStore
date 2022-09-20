@@ -1,9 +1,10 @@
 ﻿namespace BookStore.Models;
 
+using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson.Serialization.Attributes;
 
-public class Customer
-{
+public class Customer 
+{ 
     [BsonId]
     [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
     public string Id { get; set; } = "";
@@ -12,8 +13,8 @@ public class Customer
     public string FirstName { get; set; } = "";
     public string LastName { get; set; } = "";
     public string Address { get; set; } = "";
-    public bool IsActive { get; set; }
-    public bool IsBlocked { get; set; }
-    public bool IsAdmin { get; set; }
-    public bool IsSeller { get; set; }
+    public bool IsActive { get; set; } = true;
+    public bool IsBlocked { get; set; } = false;
+    public bool IsAdmin { get; set; } = false;
+    public bool IsSeller { get; set; } = false;
 }

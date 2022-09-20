@@ -1,4 +1,6 @@
+using BookStore.Authorize;
 using BookStore.DbAccess;
+using System.Web.Http.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,7 @@ builder.Services.AddSingleton<MongoDbAccess>();
 builder.Services.AddSingleton<CustomerCrud>();
 builder.Services.AddSingleton<OrderCRUD>();
 builder.Services.AddSingleton<BookCrud>();
+builder.Services.AddSingleton<CategoryCrud>();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -52,5 +55,6 @@ app.MapControllerRoute(
     pattern: "{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("index.html");
+app.UseMiddleware<BasicAuthMiddleware>();
 
 app.Run();

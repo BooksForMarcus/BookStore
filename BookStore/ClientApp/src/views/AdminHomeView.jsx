@@ -1,9 +1,10 @@
 ﻿import React from 'react'
+import AdminMain from '../components/Admin/AdminMain';
 
-function AdminHomeView() {
+function AdminHomeView({user}) {
     return (
         <div>
-            <h1>This is the admin home page</h1>
+            <AdminMain user={user}/>	
         </div>
     );
 }

@@ -2,21 +2,32 @@ header {
     background-color: #688472;
     padding: 1em;
     display: grid;
+	align-items: center;
+	justify-content: center;
     grid-template-columns: 1fr 1fr 1fr;
 }
 
 .nav_logo {
-    width: 200px;
+	grid-column: 1/2;
+    width: 15vw;
     margin: 1.5em 0em 0em 2em;
+	align-self: center;
+	justify-self: start;
 }
 
 .navbar {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+	align-items: center;
+	justify-content: center;
+	grid-column: 2/4;
+    display: flex;
+	align-items: center;
+	justify-content: space-around;
+    /* grid-template-columns: 1fr 1fr 1fr 1fr; */
     margin-top: 7em;
 }
 
-.menu-item {
+.menu-link:active {
+    background-color: #ECB390;
 }
 
 main {
@@ -46,6 +57,8 @@ footer {
 
 .card {
     display: grid;
+    max-width: 75%;
+    min-width: 75%;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     color: #415d51;
     background-color: #FCF8E8;
@@ -57,17 +70,25 @@ footer {
     display: grid;
     place-items: center;
     padding: 1em;
+    align-content: start;
 }
 
-.book-image {
+.book-image-wrapper {
     height: 200px;
     width: 150px;
-    background-color: #e7d2ac;
+    background-color: #FCF8E8;
+    display: grid;
 }
 
-/*LoginView*/
-
-.login-view{
+.book-img {
+    display: grid;
+    place-self: center;
+    height: 100%;
+    max-width: 150px;
+    max-height: 200px;
+}
+/*LoginView + UserProfileView*/
+.login-view {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -107,6 +128,7 @@ input:focus {
 
 .login-button{
     margin-top: 1.5em;
+    width: 100%;
 }
 
 .add-account-wrap {
@@ -132,6 +154,34 @@ input:focus {
 
 .cr-head-text {
     color: #FCF8E8;
+}
+
+.add-account-resp-wrap {
+    background-color: #ECB390;
+    display: grid;
+    place-items: center;
+}
+
+.cr-resp-head-text {
+    color: #FCF8E8;
+}
+
+.cr-resp-text {
+    color: #FCF8E8;
+    font-size: 1.2rem;
+}
+
+.cr-resp-img {
+    max-width: 15%;
+}
+
+.ud-head-text {
+    color: #FCF8E8;
+    margin-bottom: 2em;
+}
+
+.profile-view-links {
+    color: #DF7861;
 }
 
 /*.read-the-docs {
