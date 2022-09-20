@@ -55,15 +55,17 @@ namespace BookStore.Controllers
         /// <returns>A List of the order</returns>
         /// 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Post(Order order)
         {
+            var cust = HttpContext.Items["Customer"] as Customer;
+            if (cust is not null)
+            {
                 var result = await _orderCRUD.CreateOrder(order);
                 if (result)
                 {
                     return Ok();
                 }
-
+            }
              return BadRequest();
         }
 

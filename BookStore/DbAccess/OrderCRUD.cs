@@ -36,13 +36,13 @@ namespace BookStore.DbAccess
 			return result;
 		}
 
-		public async Task<bool> UpdateOrders(Order customerId, Order updatedorder )
-        {
-			var updatefilter = Builders<Order>.Filter.Eq("OrderId", customerId);
-			var update = Builders<Order>.Update.Set("Order", updatedorder);
-			var resp = await orders.UpdateOneAsync(updatefilter, update);
-			return resp.IsAcknowledged;
-		}
+		//public async Task<bool> UpdateOrders(string customerId, string updatedorder )
+  //      {
+		//	var updatefilter = Builders<Order>.Filter.Eq("OrderId", customerId);
+		//	var update = Builders<Order>.Update.Set("Order", updatedorder);
+		//	var resp = await orders.UpdateOneAsync(updatefilter, update);
+		//	return resp.IsAcknowledged;
+		//}
 
 		//public async Task<bool> DeleteOrders(Order deletedOrder)
   //      {
