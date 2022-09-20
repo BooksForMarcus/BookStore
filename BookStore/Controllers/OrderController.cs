@@ -17,7 +17,7 @@ namespace BookStore.Controllers
         [HttpGet]
         public async Task<IEnumerable<Order>> Get()
         {
-            return await _orderCRUD.GetAllOrders();
+            return await _orderCRUD.AdminGetAllOrders();
         }
 
         //// GET api/<CustomerController>/5

@@ -7,13 +7,12 @@ namespace BookStore.Models
         [BsonId]
         [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
         public string Id { get; set; } = "";
-        public string CustomerId { get; set; } = "";
-        public string CustomerName { get; set; } = "";
+        public Customer Customer { get; set; } = new Customer();
         public string Ordernumber { get => Id; }
-        public string Date { get; set; } = "";
+        public DateTime Date { get; set; } = DateTime.Now;
         public decimal OrderSum { get; set; } = 0;
         public decimal VAT { get; set; } = 0;
-        public string[] books { get; set; } = Array.Empty<string>();
+        public Book[] books { get; set; } = Array.Empty<Book>();
 
     }
 }

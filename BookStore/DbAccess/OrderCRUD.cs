@@ -21,7 +21,14 @@ namespace BookStore.DbAccess
 			var result = !String.IsNullOrWhiteSpace(order.Id);
 			return result;
 		}
-		public async Task<List<Order>> GetAllOrders()
+
+        public async Task<List<Order>> AdminGetAllOrders()
+		{
+			var resp = await orders.FindAsync(_ => true);
+			return resp.ToList().OrderBy(o=>o.Date).ToList();
+		}
+
+        public async Task<List<Order>> GetAllOrders()
 		{
 			//behöver ändras, bara exempel:
 			var auth = new DTO.CustomerAuthorize() { Email = "hej", Password = "hej" };
@@ -34,7 +41,7 @@ namespace BookStore.DbAccess
 			else if(customers is not null)
 			{
                 //get all orders for one customer?
-                resp = (await orders.FindAsync(o=> o.CustomerId ==customer.Id)).ToList();
+                resp = (await orders.FindAsync(o=> o.Customer.Id ==customer.Id)).ToList();
             }
 			//var resp = (await orders.FindAsync(_ => true)).ToList();
 			return resp;
