@@ -12,8 +12,7 @@ import LoginView from "./views/LoginView";
 import logo from './assets/boklogo.png'
 import {useRecoilState} from "recoil"
 import userState from "./atoms/userState";
-import Search from "./views/Search"
-import Result from "./views/Result"
+import Search from "./components/Search/BookSearch"
 
 function App() {
 	const [user, setUser] = useRecoilState(userState);
@@ -40,7 +39,6 @@ function App() {
                     <Route path='/' element={<HomeView />} />
                     <Route path='/admin' element={<AdminView />} />
                     <Route path='/login' element={<LoginView />} />
-                    <Route path='/result' element={<Result />} />
                 </Routes>
                 <footer>
                     {/*<button onClick={() => setCount((count) => count + 1)}>*/}

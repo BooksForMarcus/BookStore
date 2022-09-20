@@ -1,23 +1,14 @@
 ﻿import React, { useState } from 'react'
-import "../SearchBar.css";
-import {
-	BrowserRouter,
-	Routes,
-	Route,
-	Link
-} from "react-router-dom";
+import "./SearchBar.css";
 import { useRecoilValue } from "recoil";
-import { useRecoilState } from "recoil";
-import searchItemState from "../atoms/searchItemState";
-import booksState from "../atoms/booksState";
+import booksState from "../../atoms/booksState";
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 
 
-function Search() {
+function BookSearch() {
 	const books = useRecoilValue(booksState);
 	const [search, setSearch] = useState("");
-	const [item, setItem] = useRecoilState(searchItemState);
 
 	const displayTitleResults = () => {
 		if (search.length > 0) {
@@ -31,10 +22,8 @@ function Search() {
 						return book.title[0].toLowerCase().includes(search[0].toLowerCase())
 					}
 				}).map(book => (
-					<div>
-						<Link className='dataItem' to='/result' onClick={() => setItem(book)} >
-							<p>{book.title}</p>
-						</Link>
+					<div className='dataItem'>
+						<p>{book.title}</p>
 					</div>
 				))}
 				   </div>
@@ -53,10 +42,8 @@ function Search() {
 						return val.author[0].toLowerCase().includes(search[0].toLowerCase())
 					}
 				}).map(val => (
-					<div>
-						<a className='dataItem'  href="https://www.bokus.com/" >
-							<p>{val.author} (Författare)</p>
-						</a>
+					<div className='dataItem'>
+						<p>{val.author} : {val.title}</p>
 					</div>
 
 				))}
@@ -100,4 +87,4 @@ function Search() {
 
 }
 
-export default Search;
+export default BookSearch;
