@@ -9,6 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 function BookSearch() {
 	const books = useRecoilValue(booksState);
 	const [search, setSearch] = useState("");
+	const [authorResult, setAutorResult] = useState([]);
 
 	const displayTitleResults = () => {
 		if (search.length > 0) {
@@ -31,9 +32,8 @@ function BookSearch() {
 		}
 
 	const displayAuthorResults = () => {
+
 		if (search.length > 0) {
-
-
 			return <div>
 				{books.filter((val) => {
 					if (search === '') {
@@ -43,14 +43,12 @@ function BookSearch() {
 					}
 				}).map(val => (
 					<div className='dataItem'>
-						<p>{val.author} : {val.title}</p>
+						<p>{val.author} : (författare)</p>
 					</div>
-
 				))}
 			</div>
 		}
 	}
-
 
 		const isResults = () => {
 			if (search.length > 0){
