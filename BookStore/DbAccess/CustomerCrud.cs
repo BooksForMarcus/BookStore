@@ -174,63 +174,64 @@ public class CustomerCrud
         return result.FirstOrDefault();
     }
 
-    public async Task<Customer> UpdateCustomer(CustomerOperation op)
-    {
-        if (op is null || op.CustomerToUpdate is null) return null!;
-        var shouldUpdate = false;
-        Customer updateCustomer = null!;
-        var auth = new CustomerAuthorize() { Email = op.Email, Password = op.Password };
+    //todo: should be remove, kept for now for reference - Thomas
+    //public async Task<Customer> UpdateCustomer(CustomerOperation op)
+    //{
+    //    if (op is null || op.CustomerToUpdate is null) return null!;
+    //    var shouldUpdate = false;
+    //    Customer updateCustomer = null!;
+    //    var auth = new CustomerAuthorize() { Email = op.Email, Password = op.Password };
 
 
-        //is it admin trying to change a user/itself?
-        if (await IsAdmin(auth))
-        {
-            var orginal = await GetCustomerByEmail(op.CustomerToUpdate.Email);
-            updateCustomer = op.CustomerToUpdate;
-            updateCustomer.Id = orginal.Id;
-            if (!String.IsNullOrWhiteSpace(updateCustomer.Password))
-            {
-                updateCustomer.Password =
-                    CustomerHelper.GetHashedPassword(
-                        updateCustomer,
-                        updateCustomer.Password
-                        );
-            }
-            else
-            {
-                updateCustomer.Password = orginal.Password;
-            }
-            shouldUpdate = true;
-        }
-        //is it user trying to change its own info?
-        else if (op.Email == op.CustomerToUpdate.Email)
-        {
-            if (await AuthorizeCustomer(auth))
-            {
-                updateCustomer = await GetCustomerByEmail(op.Email);
-                //use may change name(First,Last),password and address
-                if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.FirstName))
-                    updateCustomer.FirstName = op.CustomerToUpdate.FirstName;
-                if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.LastName))
-                    updateCustomer.LastName = op.CustomerToUpdate.LastName;
-                if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.Address))
-                    updateCustomer.Address = op.CustomerToUpdate.Address;
-                if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.Password))
-                {
-                    updateCustomer.Password = CustomerHelper.GetHashedPassword(op.CustomerToUpdate, op.CustomerToUpdate.Password);
-                }
-                shouldUpdate = true;
-            }
-        }
+    //    //is it admin trying to change a user/itself?
+    //    if (await IsAdmin(auth))
+    //    {
+    //        var orginal = await GetCustomerByEmail(op.CustomerToUpdate.Email);
+    //        updateCustomer = op.CustomerToUpdate;
+    //        updateCustomer.Id = orginal.Id;
+    //        if (!String.IsNullOrWhiteSpace(updateCustomer.Password))
+    //        {
+    //            updateCustomer.Password =
+    //                CustomerHelper.GetHashedPassword(
+    //                    updateCustomer,
+    //                    updateCustomer.Password
+    //                    );
+    //        }
+    //        else
+    //        {
+    //            updateCustomer.Password = orginal.Password;
+    //        }
+    //        shouldUpdate = true;
+    //    }
+    //    //is it user trying to change its own info?
+    //    else if (op.Email == op.CustomerToUpdate.Email)
+    //    {
+    //        if (await AuthorizeCustomer(auth))
+    //        {
+    //            updateCustomer = await GetCustomerByEmail(op.Email);
+    //            //use may change name(First,Last),password and address
+    //            if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.FirstName))
+    //                updateCustomer.FirstName = op.CustomerToUpdate.FirstName;
+    //            if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.LastName))
+    //                updateCustomer.LastName = op.CustomerToUpdate.LastName;
+    //            if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.Address))
+    //                updateCustomer.Address = op.CustomerToUpdate.Address;
+    //            if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.Password))
+    //            {
+    //                updateCustomer.Password = CustomerHelper.GetHashedPassword(op.CustomerToUpdate, op.CustomerToUpdate.Password);
+    //            }
+    //            shouldUpdate = true;
+    //        }
+    //    }
 
-        if (updateCustomer.Id.Length == 24 && shouldUpdate)
-        {
-            updateCustomer = await customers.FindOneAndReplaceAsync(x => x.Id == updateCustomer.Id, updateCustomer);
-        }
-        //scrub password before returning.
-        updateCustomer.Password = "";
-        return updateCustomer;
-    }
+    //    if (updateCustomer.Id.Length == 24 && shouldUpdate)
+    //    {
+    //        updateCustomer = await customers.FindOneAndReplaceAsync(x => x.Id == updateCustomer.Id, updateCustomer);
+    //    }
+    //    //scrub password before returning.
+    //    updateCustomer.Password = "";
+    //    return updateCustomer;
+    //}
 
     private async Task<bool> AuthorizeCustomer(CustomerAuthorize auth)
     {
@@ -311,5 +312,56 @@ public class CustomerCrud
             }
         }
         return result;
+    }
+
+    public async Task<Customer?> AdminUpdateCustomer(CustomerOperation op)
+    {
+        Customer result = null;
+        if (op is null
+            || op.CustomerToUpdate is null
+            || (op.Email == op.CustomerToUpdate.Email && !op.CustomerToUpdate.IsAdmin)) return result;
+
+        //if the password field is not empty in customerToUpdate, we encrypt it and add it back.
+        if (!string.IsNullOrWhiteSpace(op.CustomerToUpdate.Password))
+        {
+            var newPassHash = CustomerHelper.GetHashedPassword(op.CustomerToUpdate, op.CustomerToUpdate.Password);
+            op.CustomerToUpdate.Password = newPassHash;
+        }
+        //if the password field is actually emtpy, we need to get the hash from the db
+        else
+        {
+            var old = await GetCustomerById(op.CustomerToUpdate.Id);
+            op.CustomerToUpdate.Password = old.Password;
+        }
+        result = await customers.FindOneAndReplaceAsync(x => x.Id == op.CustomerToUpdate.Id, op.CustomerToUpdate);
+        //scrub!
+        result.Password = "";
+        return result;
+    }
+
+    internal async Task<Customer?> CustomerUpdateSelf(CustomerOperation op)
+    {
+        var updateCustomer = await GetCustomerByEmail(op.Email);
+        if (updateCustomer is not null)
+        {
+            //user may change name(First,Last),password and address
+            if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.FirstName))
+                updateCustomer.FirstName = op.CustomerToUpdate.FirstName;
+            if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.LastName))
+                updateCustomer.LastName = op.CustomerToUpdate.LastName;
+            if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.Address))
+                updateCustomer.Address = op.CustomerToUpdate.Address;
+            if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.Password))
+            {
+                updateCustomer.Password = CustomerHelper.GetHashedPassword(op.CustomerToUpdate, op.CustomerToUpdate.Password);
+            }
+            if (updateCustomer.Id.Length == 24)
+            {
+                updateCustomer = await customers.FindOneAndReplaceAsync(x => x.Id == updateCustomer.Id, updateCustomer);
+            }
+            //scrub password before returning.
+            updateCustomer.Password = "";
+        }
+        return updateCustomer;
     }
 }

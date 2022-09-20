@@ -28,7 +28,8 @@ header {
 	justify-content: center;
 }
 
-.menu-item {
+.menu-link:active {
+    background-color: #ECB390;
 }
 
 main {
@@ -86,8 +87,9 @@ footer {
     place-self: center;
     height: 100%;
     max-width: 150px;
+    max-height: 200px;
 }
-/*LoginView*/
+/*LoginView + UserProfileView*/
 .login-view {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -128,6 +130,7 @@ input:focus {
 
 .login-button{
     margin-top: 1.5em;
+    width: 100%;
 }
 
 .add-account-wrap {
@@ -153,6 +156,34 @@ input:focus {
 
 .cr-head-text {
     color: #FCF8E8;
+}
+
+.add-account-resp-wrap {
+    background-color: #ECB390;
+    display: grid;
+    place-items: center;
+}
+
+.cr-resp-head-text {
+    color: #FCF8E8;
+}
+
+.cr-resp-text {
+    color: #FCF8E8;
+    font-size: 1.2rem;
+}
+
+.cr-resp-img {
+    max-width: 15%;
+}
+
+.ud-head-text {
+    color: #FCF8E8;
+    margin-bottom: 2em;
+}
+
+.profile-view-links {
+    color: #DF7861;
 }
 
 /*.read-the-docs {
