@@ -13,7 +13,7 @@ namespace BookStore.Models
         public string Date { get; set; } = "";
         public decimal OrderSum { get; set; } = 0;
         public decimal VAT { get; set; } = 0;
-        public string[] books { get; set; } = Array.Empty<string>();
+        public object[] books { get; set; } = Array.Empty<Book>();
 
     }
 }

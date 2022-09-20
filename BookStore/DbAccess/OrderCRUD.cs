@@ -1,4 +1,5 @@
-﻿using BookStore.Models;
+﻿using BookStore.DTO;
+using BookStore.Models;
 using MongoDB.Driver;
 
 namespace BookStore.DbAccess
@@ -21,20 +22,21 @@ namespace BookStore.DbAccess
 			var result = !String.IsNullOrWhiteSpace(order.Id);
 			return result;
 		}
-		public async Task<List<Order>> GetAllOrders()
+		public async Task<List<Order>> GetAllOrders(OrderOperation op)
 		{
 			//behöver ändras, bara exempel:
-			var auth = new DTO.CustomerAuthorize() { Email = "hej", Password = "hej" };
+			var auth = new DTO.CustomerAuthorize() { Email = op.Email, Password = op.Password };
 			var resp = new List<Order>();
             var customer = await customers.Login(auth);
 			if (customer is not null && customer.IsAdmin)
 			{
 				//get all orders?
+				resp = (await orders.FindAsync(_ => true)).ToList();
 			}
 			else if(customers is not null)
 			{
                 //get all orders for one customer?
-                resp = (await orders.FindAsync(o=> o.CustomerId ==customer.Id)).ToList();
+                resp = (await orders.FindAsync(o=> o.CustomerId == customer.Id)).ToList();
             }
 			//var resp = (await orders.FindAsync(_ => true)).ToList();
 			return resp;

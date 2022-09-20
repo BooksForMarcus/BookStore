@@ -1,4 +1,5 @@
 ﻿using BookStore.DbAccess;
+using BookStore.DTO;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,9 +16,9 @@ namespace BookStore.Controllers
 
         // GET: api/<CustomerController>
         [HttpGet]
-        public async Task<IEnumerable<Order>> Get()
+        public async Task<IEnumerable<Order>> Get(OrderOperation op)
         {
-            return await _orderCRUD.GetAllOrders();
+            return await _orderCRUD.GetAllOrders(op);
         }
 
         //// GET api/<CustomerController>/5
