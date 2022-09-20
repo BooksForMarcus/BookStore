@@ -11,6 +11,7 @@ import AdminView from "./views/AdminHomeView";
 import LoginView from "./views/LoginView";
 import logo from './assets/boklogo.png'
 import {useRecoilState} from "recoil"
+import Search from "./components/Search/BookSearch"
 import UserProfileView from "./views/UserProfileView";
 import loggedInUserState from "./atoms/loggedInUserState";
 
@@ -22,6 +23,7 @@ function App() {
             <div className="App">
                 <header>
                     <img className="nav_logo" src={logo} alt="An image of bookstore logo" />
+                    <div className="searchBar"><Search /></div>
                     <div className="navbar">
                         <div className="menu-item" >
                             <NavLink to="/" className="menu-link">HEM</NavLink>
