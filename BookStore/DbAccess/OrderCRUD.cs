@@ -35,12 +35,10 @@ namespace BookStore.DbAccess
 			return result;
 		}
 
-		public async Task<Order> CustomerGetOrder(string id)
+		public async Task<List<Order>> CustomerGetOrder(string id)
         {
-			var findFilter = Builders<Order>.Filter.Eq("CustomerId",id);
-			var resp = await orders.FindAsync(findFilter);
-			var result = resp.FirstOrDefault();
-			return result;
+			var resp = await orders.FindAsync(x=>x.Customer.Id == id);
+			return resp.ToList();
 		}
 
 		//public async Task<bool> UpdateOrders(string customerId, string updatedorder )
@@ -71,7 +69,6 @@ namespace BookStore.DbAccess
 
         public async Task<bool> UpdateOrder(Order updatedOrder)
         {
-
 			var result = await orders.ReplaceOneAsync(o => o.Id == updatedOrder.Id, updatedOrder);
 			return result.IsAcknowledged && result.ModifiedCount > 0;
 		}

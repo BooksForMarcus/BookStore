@@ -12,7 +12,7 @@ namespace BookStore.Controllers
     public class OrderController : ControllerBase
     {
         private readonly OrderCRUD _orderCRUD;
-        
+
 
         public OrderController(OrderCRUD orderCRUD) =>
        _orderCRUD = orderCRUD;
@@ -41,8 +41,7 @@ namespace BookStore.Controllers
             var cust = HttpContext.Items["Customer"] as Customer;
             if (cust is not null)
             {
-                var result = await _orderCRUD.CustomerGetOrder(id);
-                if(cust.Id == result.CustomerId)
+                var result = await _orderCRUD.CustomerGetOrder(cust.Id);
                 return Ok(result);
             }
             return BadRequest();
@@ -66,7 +65,7 @@ namespace BookStore.Controllers
                     return Ok();
                 }
             }
-             return BadRequest();
+            return BadRequest();
         }
 
 
@@ -74,19 +73,12 @@ namespace BookStore.Controllers
         public async Task<IActionResult> Put(Order order)
         {
             var cust = HttpContext.Items["Customer"] as Customer;
-            if (cust is not null && cust.IsAdmin)
+            if (cust is not null && (cust.IsAdmin || cust.Id == order.Customer.Id))
             {
                 var result = await _orderCRUD.UpdateOrder(order);
-                if (!String.IsNullOrWhiteSpace(order.Id))
+                if (result)
                     return Ok();
             }
-            else if(cust is not null && cust.Id == order.CustomerId)
-            {
-                var result = await _orderCRUD.UpdateOrder(order);
-                if (!String.IsNullOrWhiteSpace(order.Id))
-                    return Ok();
-            }
-           
             return BadRequest();
         }
 
