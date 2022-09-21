@@ -5,7 +5,6 @@ using BookStore.Models;
 using BookStore.DTO;
 using MongoDB.Driver;
 using static Helpers.EnvironmentHelper;
-using static System.Reflection.Metadata.BlobBuilder;
 
 public class CustomerCrud
 {
@@ -17,44 +16,7 @@ public class CustomerCrud
         _isDev = IsDev;
         customers = db.CustomersCollection;
     }
-    public async Task<List<Customer>> GetAllCustomers()
-    {
-        var resp = await customers.FindAsync(_ => true);
-        var result = resp.ToList();
 
-        //scrub passwords
-        foreach (var customer in result)
-        {
-            customer.Password = "";
-        }
-
-        return result;
-    }
-
-    /// <summary>
-    /// Given a admin email a password will return a list containing all users.
-    /// </summary>
-    /// <param name="auth"><see cref="CustomerAuthorize"/> object containing the admin email and password.</param>
-    /// <returns>A <see cref="List{T}"/> where T is <see cref="Customer"/> containing a the customers in the database.</returns>
-
-
-    public async Task<List<Customer>> AdminGetAllCustomers(CustomerAuthorize auth)
-    {
-        if (await IsAdmin(auth))
-        {
-            var resp = await customers.FindAsync(_ => true);
-            var result = resp.ToList();
-
-            //scrub passwords
-            foreach (var customer in result)
-            {
-                customer.Password = "";
-            }
-
-            return result;
-        }
-        return new List<Customer>();
-    }
     public async Task<List<Customer>> AdminGetAllCustomers()
     {
         var resp = await customers.FindAsync(_ => true);
@@ -174,81 +136,6 @@ public class CustomerCrud
         return result.FirstOrDefault();
     }
 
-    //todo: should be remove, kept for now for reference - Thomas
-    //public async Task<Customer> UpdateCustomer(CustomerOperation op)
-    //{
-    //    if (op is null || op.CustomerToUpdate is null) return null!;
-    //    var shouldUpdate = false;
-    //    Customer updateCustomer = null!;
-    //    var auth = new CustomerAuthorize() { Email = op.Email, Password = op.Password };
-
-
-    //    //is it admin trying to change a user/itself?
-    //    if (await IsAdmin(auth))
-    //    {
-    //        var orginal = await GetCustomerByEmail(op.CustomerToUpdate.Email);
-    //        updateCustomer = op.CustomerToUpdate;
-    //        updateCustomer.Id = orginal.Id;
-    //        if (!String.IsNullOrWhiteSpace(updateCustomer.Password))
-    //        {
-    //            updateCustomer.Password =
-    //                CustomerHelper.GetHashedPassword(
-    //                    updateCustomer,
-    //                    updateCustomer.Password
-    //                    );
-    //        }
-    //        else
-    //        {
-    //            updateCustomer.Password = orginal.Password;
-    //        }
-    //        shouldUpdate = true;
-    //    }
-    //    //is it user trying to change its own info?
-    //    else if (op.Email == op.CustomerToUpdate.Email)
-    //    {
-    //        if (await AuthorizeCustomer(auth))
-    //        {
-    //            updateCustomer = await GetCustomerByEmail(op.Email);
-    //            //use may change name(First,Last),password and address
-    //            if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.FirstName))
-    //                updateCustomer.FirstName = op.CustomerToUpdate.FirstName;
-    //            if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.LastName))
-    //                updateCustomer.LastName = op.CustomerToUpdate.LastName;
-    //            if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.Address))
-    //                updateCustomer.Address = op.CustomerToUpdate.Address;
-    //            if (!String.IsNullOrWhiteSpace(op.CustomerToUpdate.Password))
-    //            {
-    //                updateCustomer.Password = CustomerHelper.GetHashedPassword(op.CustomerToUpdate, op.CustomerToUpdate.Password);
-    //            }
-    //            shouldUpdate = true;
-    //        }
-    //    }
-
-    //    if (updateCustomer.Id.Length == 24 && shouldUpdate)
-    //    {
-    //        updateCustomer = await customers.FindOneAndReplaceAsync(x => x.Id == updateCustomer.Id, updateCustomer);
-    //    }
-    //    //scrub password before returning.
-    //    updateCustomer.Password = "";
-    //    return updateCustomer;
-    //}
-
-    private async Task<bool> AuthorizeCustomer(CustomerAuthorize auth)
-    {
-        var loginOk = false;
-        //get customer object
-        var user = await GetCustomerByEmail(auth.Email);
-        if (user is not null)
-        {
-            //check password
-            var correctPassword = CustomerHelper.ConfirmPassword(user, auth.Password);
-
-            if (correctPassword) loginOk = true;
-        }
-        //report result
-        return loginOk;
-    }
-
     public async Task<bool> DeleteCustomer(CustomerOperation op)
     {
         var result = false;
@@ -262,7 +149,8 @@ public class CustomerCrud
 
         if (op.CustomerToUpdate.Id.Length == 24)
         {
-            if (await IsAdmin(auth))
+            var login = await Login(auth);
+            if (login is not null && login.IsAdmin)
             {
                 var customerToDelete = await GetCustomerById(op.CustomerToUpdate.Id);
                 if (customerToDelete is not null && customerToDelete.Email != auth.Email)
@@ -271,7 +159,7 @@ public class CustomerCrud
                     result = response.IsAcknowledged && response.DeletedCount > 0;
                 }
             }
-            else if (await Login(auth) is not null)
+            else if (login is not null)
             {
                 var customerToDelete = await GetCustomerById(op.CustomerToUpdate.Id);
                 if (customerToDelete.Email == auth.Email)
@@ -300,10 +188,10 @@ public class CustomerCrud
         if (auth is not null && !String.IsNullOrEmpty(auth.Email) && !String.IsNullOrWhiteSpace(auth.Password))
         {
             var cust = await GetCustomerByEmail(auth.Email);
-            if (cust is not null)
+            if (cust is not null && cust.IsActive && !cust.IsBlocked)
             {
                 var correctPassword = CustomerHelper.ConfirmPassword(cust, auth.Password);
-                if (correctPassword && cust.IsActive)
+                if (correctPassword)
                 {
                     result = cust;
                     //scrub password
@@ -316,7 +204,7 @@ public class CustomerCrud
 
     public async Task<Customer?> AdminUpdateCustomer(CustomerOperation op)
     {
-        Customer result = null;
+        Customer result = null!;
         if (op is null
             || op.CustomerToUpdate is null
             || (op.Email == op.CustomerToUpdate.Email && !op.CustomerToUpdate.IsAdmin)) return result;
