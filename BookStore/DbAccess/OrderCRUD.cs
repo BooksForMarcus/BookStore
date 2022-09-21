@@ -1,4 +1,5 @@
-﻿using BookStore.Models;
+﻿using BookStore.DTO;
+using BookStore.Models;
 using MongoDB.Driver;
 
 namespace BookStore.DbAccess
@@ -16,7 +17,6 @@ namespace BookStore.DbAccess
 
 		public async Task<bool> CreateOrder(Order order)
 		{
-			order.Id = "";
 			await orders.InsertOneAsync(order);
 			var result = !String.IsNullOrWhiteSpace(order.Id);
 			return result;
@@ -30,30 +30,26 @@ namespace BookStore.DbAccess
 
         public async Task<List<Order>> GetAllOrders()
 		{
-			//behöver ändras, bara exempel:
-			var auth = new DTO.CustomerAuthorize() { Email = "hej", Password = "hej" };
-			var resp = new List<Order>();
-            var customer = await customers.Login(auth);
-			if (customer is not null && customer.IsAdmin)
-			{
-				//get all orders?
-			}
-			else if(customers is not null)
-			{
-                //get all orders for one customer?
-                resp = (await orders.FindAsync(o=> o.Customer.Id ==customer.Id)).ToList();
-            }
-			//var resp = (await orders.FindAsync(_ => true)).ToList();
-			return resp;
+		    var resp = await orders.FindAsync(_ => true);
+			var result = resp.ToList();
+			return result;
 		}
 
-		public async Task<bool> UpdateOrders(Order customerId, Order updatedorder )
+		public async Task<Order> CustomerGetOrder(string id)
         {
-			var updatefilter = Builders<Order>.Filter.Eq("OrderId", customerId);
-			var update = Builders<Order>.Update.Set("Order", updatedorder);
-			var resp = await orders.UpdateOneAsync(updatefilter, update);
-			return resp.IsAcknowledged;
+			var findFilter = Builders<Order>.Filter.Eq("CustomerId",id);
+			var resp = await orders.FindAsync(findFilter);
+			var result = resp.FirstOrDefault();
+			return result;
 		}
+
+		//public async Task<bool> UpdateOrders(string customerId, string updatedorder )
+  //      {
+		//	var updatefilter = Builders<Order>.Filter.Eq("OrderId", customerId);
+		//	var update = Builders<Order>.Update.Set("Order", updatedorder);
+		//	var resp = await orders.UpdateOneAsync(updatefilter, update);
+		//	return resp.IsAcknowledged;
+		//}
 
 		//public async Task<bool> DeleteOrders(Order deletedOrder)
   //      {
@@ -75,6 +71,7 @@ namespace BookStore.DbAccess
 
         public async Task<bool> UpdateOrder(Order updatedOrder)
         {
+
 			var result = await orders.ReplaceOneAsync(o => o.Id == updatedOrder.Id, updatedOrder);
 			return result.IsAcknowledged && result.ModifiedCount > 0;
 		}

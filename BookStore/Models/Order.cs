@@ -12,7 +12,6 @@ namespace BookStore.Models
         public DateTime Date { get; set; } = DateTime.Now;
         public decimal OrderSum { get; set; } = 0;
         public decimal VAT { get; set; } = 0;
-        public Book[] books { get; set; } = Array.Empty<Book>();
-
+        public List<Book> books { get; set; } = new List<Book>();
     }
 }
