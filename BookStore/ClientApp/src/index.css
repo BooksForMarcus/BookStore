@@ -1,36 +1,26 @@
 :root {
-    font-family: Arial, Inter, Helvetica, sans-serif;
-    /*font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
-    color-scheme: light dark;*/
-    /*    color: rgba(255, 255, 255, 0.87);*/
-    /*background-color: #fcfbf0;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-text-size-adjust: 100%;*/
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
     font-weight: 500;
     letter-spacing: 1.5px;
     color: #FCF8E8;
-    text-decoration: inherit;
 }
 
 a:hover {
     color: #EDB183;
+    background-color: #688472;
 }
 
 
 body {
     margin: 0;
     background-color: #FCF8E8;
-    /*  display: flex;
-  min-width: 320px;
-  min-height: 100vh;*/
+}
+
+main {
+    display: grid;
 }
 
 h1 {
@@ -69,18 +59,3 @@ button {
     button:focus-visible {
         outline: 4px auto -webkit-focus-ring-color;
     }
-
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #94B49F;
-        background-color: #ffffff;
-    }
-
-    a:hover {
-        color: #747bff;
-    }
-
-    button {
-        background-color: #f9f9f9;
-    }
-}
