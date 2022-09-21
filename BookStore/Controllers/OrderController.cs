@@ -49,7 +49,7 @@ namespace BookStore.Controllers
         }
 
         /// <summary>
-        /// Post an object to create a new order (Basic Auth NOT required).
+        /// Post an object to create a new order.
         /// </summary>
         /// <param name="order"></param>
         /// <returns>A List of the order</returns>
