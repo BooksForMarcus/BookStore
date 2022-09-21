@@ -10,5 +10,3 @@ public class Category
     public Category? Parent { get; set; }
 
 }
-
-
