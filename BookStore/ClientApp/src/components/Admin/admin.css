@@ -35,7 +35,7 @@ button:hover {
   display: grid;
   grid-template-columns: 4fr 1fr;
   align-items: center;
-  width: 100%;
+  max-width: 100%;
   padding: 0.5em;
   border-bottom: 1px solid #ecb390;
 }
@@ -48,6 +48,9 @@ button:hover {
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
   padding: 0em 3em;
+}
+.user-list-item-info>p {
+	font-size: calc(0.4em + 0.5vw);
 }
 .user-list-item-util {
   display: flex;
