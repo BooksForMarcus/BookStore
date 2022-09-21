@@ -9,11 +9,9 @@ import CloseIcon from '@mui/icons-material/Close';
 function BookSearch() {
 	const books = useRecoilValue(booksState);
 	const [search, setSearch] = useState("");
-	const [authorResult, setAutorResult] = useState([]);
 
 	const displayTitleResults = () => {
 		if (search.length > 0) {
-			
 			
 			return <div>
 				{books.filter((book) => {
@@ -33,20 +31,23 @@ function BookSearch() {
 
 	const displayAuthorResults = () => {
 
+		var authorResult = [];
+		
 		if (search.length > 0) {
 			return <div>
 				{books.filter((val) => {
 					if (search === '') {
 						return val
-					} else if (val.author.toLowerCase().includes(search.toLowerCase())) {
+					} else if (val.author.toLowerCase().includes(search.toLowerCase()) && !authorResult.includes(val.author)) {
+						authorResult.push(val.author)
 						return val.author[0].toLowerCase().includes(search[0].toLowerCase())
 					}
 				}).map(val => (
-					<div className='dataItem'>
-						<p>{val.author} : (författare)</p>
-					</div>
+						<div className='dataItem'>
+							<p>{val.author} : (författare)</p>
+						</div>
 				))}
-			</div>
+					</div >
 		}
 	}
 
@@ -61,25 +62,23 @@ function BookSearch() {
 		const clearSearchBar = () => {
 			return setSearch('')
 		}
-	
 
 	return (
 		<div>
-		<div className='search'>
-			<div className='searchInputs'>
-				<input type="text"
-					onChange={(event) => setSearch(event.target.value)}
-					placeholder="search.." value={search} />
-				<div className='closeIcon'>
-					{search.length != 0 ? <CloseIcon onClick={clearSearchBar} /> : null}
-				</div>
-				<div className='searchIcon'>
+			<div className='search'>
+				<div className='searchInputs'>
+					<input type="text"
+						onChange={(event) => setSearch(event.target.value)}
+						placeholder="Sök.." value={search} />
+					<div className='closeIcon'>
+						{search.length != 0 ? <CloseIcon onClick={clearSearchBar} /> : null}
+					</div>
+					<div className='searchIcon'>
 						<SearchIcon />
+					</div>
 				</div>
+					<div>{isResults()}</div>
 			</div>
-			<div>{isResults()}</div>
-			</div>
-			
 		</div>
     );
 
