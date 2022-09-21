@@ -22,7 +22,7 @@ public class BookHelperTests
     }
     [Theory]
     [InlineData(750.77, 91)]
-    [InlineData(-100, -1)]
+    [InlineData(-100, 0)]
     [InlineData(200005.3f, -1)]
     [InlineData(25, 13)]
     [InlineData(11111, 265)]
