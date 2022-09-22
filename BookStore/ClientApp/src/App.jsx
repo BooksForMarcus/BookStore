@@ -9,6 +9,7 @@ import "./App.css";
 import HomeView from "./views/HomeView";
 import AdminView from "./views/AdminHomeView";
 import LoginView from "./views/LoginView";
+import BookView from "./views/BookView";
 import logo from './assets/boklogo.png'
 import {useRecoilState} from "recoil"
 import Search from "./components/Search/BookSearch"
@@ -48,6 +49,7 @@ function App() {
                         <Route path='/admin' element={<AdminView user={user}/>} />
                         <Route path='/login' element={<LoginView />} />
                         <Route path='/profile' element={<UserProfileView />} />
+                        <Route path='/book' element={<BookView />} />
                     </Routes>
                 </main>
                 <footer>
