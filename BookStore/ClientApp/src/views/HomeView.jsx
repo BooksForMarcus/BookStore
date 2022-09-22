@@ -135,7 +135,7 @@ function HomeView() {
   }, []);
 
   return (
-    <main>
+    <div className="main-container">
       <div className="side">
         <img className="side_img" src={sideImageone} alt="An image of books" />
         <img
@@ -158,7 +158,7 @@ function HomeView() {
           <ShowRandomBooks />
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 
