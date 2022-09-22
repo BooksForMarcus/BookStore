@@ -6,6 +6,9 @@ header {
 	justify-content: center;
     grid-template-columns: 1fr 1fr 1fr;
 }
+.App{
+	position: relative;
+}
 
 .nav_logo {
     width: 15vw;
@@ -93,6 +96,7 @@ footer {
 .login-view {
     display: grid;
     grid-template-columns: 1fr 1fr;
+	position: relative;
 }
 
 .login-wrap{
