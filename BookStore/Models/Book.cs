@@ -17,5 +17,6 @@ public class Book
     public int Year { get; set; } = 1;
     public string SoldBy { get; set; } = "";
     public string ImageURL { get; set; } = "";
-    public int Pages { get; set; }
+    public int Pages { get; set; } = 1;
+    public int Weight { get; set; } = 1;
 }
