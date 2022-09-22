@@ -30,7 +30,7 @@ header {
 }
 
 .nav-modal {
-    display: none;
+    display: grid;
     z-index: 1;
     position: absolute;
     background-color: #688472;
@@ -40,10 +40,6 @@ header {
     padding: 1.5em;
     place-self: center;
     align-self: start;
-}
-
-.nav-modal:focus-within .nav-item-search:hover {
-        display: grid;
 }
 
 .searchBar {

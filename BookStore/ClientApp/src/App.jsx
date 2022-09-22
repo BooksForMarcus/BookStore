@@ -22,7 +22,8 @@ function App() {
         <BrowserRouter>
             <div className="App">
                 <header>
-                    <img className="nav_logo" src={logo} alt="An image of bookstore logo" />
+                    <NavLink className="nav_logo" to="/"><img className="nav_logo" src={logo} alt="An image of bookstore logo" /></NavLink>
+                    <div className="searchBar"><Search /></div>
                     <div className="navbar">
                         <div className="menu-item" >
                             <NavLink to="/" className="menu-link">HEM</NavLink>
@@ -31,7 +32,10 @@ function App() {
                             <NavLink to="/">KATEGORIER</NavLink>
                         </div>
                         <div className="menu-item" >
-                            <span className="nav-item-search" to="/">SÖK</span>
+                            <span className="nav-item-search" to="/">SÃ–K</span>
+                            {/* <div className="nav-modal">
+                                <div className="searchBar"><Search /></div>
+                            </div> */}
                         </div>
                         <div className="menu-item" >
                             {user ? <NavLink to="/profile">MIN SIDA</NavLink> : <NavLink to="/login">LOGGA IN</NavLink>}
@@ -39,9 +43,6 @@ function App() {
                     </div>
                 </header>
                 <main>
-                    <div className="nav-modal">
-                        <div className="searchBar"><Search /></div>
-                    </div>
                     <Routes>
                         <Route path='/' element={<HomeView />} />
                         <Route path='/admin' element={<AdminView user={user}/>} />
