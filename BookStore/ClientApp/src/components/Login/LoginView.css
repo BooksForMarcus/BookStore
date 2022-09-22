@@ -53,3 +53,11 @@
   .creation-error-message >svg{
 		font-size: 3em;
   }
+p.error{
+	color: red;
+	font-size: 0.7em;
+	position: relative;
+	bottom: 2em;
+	margin: 0em;
+	padding: 0em;
+}
