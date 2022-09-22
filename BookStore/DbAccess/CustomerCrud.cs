@@ -71,6 +71,8 @@ public class CustomerCrud
         customer.IsAdmin = false;
         customer.IsActive = true;
 
+        //we dont want emails to be cap sensitive.
+        customer.Email = customer.Email.ToLower();
         //mail ok?
         var checkMail = CustomerHelper.ValidEmail(customer.Email);
         if (!String.IsNullOrEmpty(checkMail))
@@ -187,6 +189,8 @@ public class CustomerCrud
         LoginResponse result = new();
         if (auth is not null && !String.IsNullOrEmpty(auth.Email) && !String.IsNullOrWhiteSpace(auth.Password))
         {
+            //we dont wan't mails to be cap sensitive
+            auth.Email = auth.Email.ToLower();
             var cust = await GetCustomerByEmail(auth.Email);
             if (cust is not null)
             {
@@ -194,7 +198,7 @@ public class CustomerCrud
                 result.ValidPassword = CustomerHelper.ConfirmPassword(cust, auth.Password);
             }
             if (result.ValidPassword) result.IsBlocked = cust!.IsBlocked;
-            if(result.ValidPassword && !result.IsBlocked)
+            if (result.ValidPassword && !result.IsBlocked)
             {
                 result.Success = true;
                 //scrub password
