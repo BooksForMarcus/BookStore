@@ -150,7 +150,7 @@ public class CustomerCrud
         if (op.CustomerToUpdate.Id.Length == 24)
         {
             var login = await Login(auth);
-            if (login is not null && login.IsAdmin)
+            if (login is not null && login.User.IsAdmin)
             {
                 var customerToDelete = await GetCustomerById(op.CustomerToUpdate.Id);
                 if (customerToDelete is not null && customerToDelete.Email != auth.Email)
@@ -182,21 +182,24 @@ public class CustomerCrud
         return result.FirstOrDefault();
     }
 
-    public async Task<Customer> Login(CustomerAuthorize auth)
+    public async Task<LoginResponse> Login(CustomerAuthorize auth)
     {
-        Customer result = null!;
+        LoginResponse result = new();
         if (auth is not null && !String.IsNullOrEmpty(auth.Email) && !String.IsNullOrWhiteSpace(auth.Password))
         {
             var cust = await GetCustomerByEmail(auth.Email);
-            if (cust is not null && cust.IsActive && !cust.IsBlocked)
+            if (cust is not null)
             {
-                var correctPassword = CustomerHelper.ConfirmPassword(cust, auth.Password);
-                if (correctPassword)
-                {
-                    result = cust;
-                    //scrub password
-                    result.Password = "";
-                }
+                result.UserFound = true;
+                result.ValidPassword = CustomerHelper.ConfirmPassword(cust, auth.Password);
+            }
+            if (result.ValidPassword) result.IsBlocked = cust!.IsBlocked;
+            if(result.ValidPassword && !result.IsBlocked)
+            {
+                result.Success = true;
+                //scrub password
+                cust.Password = "";
+                result.User = cust;
             }
         }
         return result;

@@ -1,0 +1,55 @@
+.login-view-overlay {
+  background-color: #00000044;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 100vw;
+  position: absolute;
+  top: 0em;
+  left: 0em;
+  z-index: 100;
+  place-content: center;
+}
+.login-error-message-container {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.login-error-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ecb390;
+  padding: 3em;
+  box-shadow: 5px 5px 10px #000000;
+  border-radius: 0.2em;
+}
+.login-error-message >svg{
+	  font-size: 3em;
+}
+.creation-error-message-container {
+	grid-column: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+  }
+  .creation-error-message {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 3em;
+	box-shadow: 5px 5px 10px #000000;
+	border-radius: 0.2em;
+	z-index: 110;
+	background-color: #fcf8e8;
+  }
+  .creation-error-message >svg{
+		font-size: 3em;
+  }

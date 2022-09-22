@@ -5,6 +5,9 @@ header {
     align-items:end;
     padding: 2em;
 }
+.App{
+	position: relative;
+}
 
 .nav_logo {
     display: grid;
@@ -109,6 +112,7 @@ footer {
 .login-view {
     display: grid;
     grid-template-columns: 1fr 1fr;
+	position: relative;
 }
 
 .login-wrap{

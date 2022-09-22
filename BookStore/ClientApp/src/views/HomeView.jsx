@@ -11,7 +11,6 @@ function HomeView() {
   const getBooks = async () => {
         const resp = await fetch("/api/Book");
         const json = await resp.json();
-        console.log(json);
         setBooks(json);
     };
 
@@ -131,7 +130,6 @@ function HomeView() {
 
   useEffect(() => {
     if(books===null){
-		console.log("Im gonna fetch the books!")
 		getBooks();
 	} 
   }, []);
