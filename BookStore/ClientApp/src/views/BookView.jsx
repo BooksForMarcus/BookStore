@@ -1,61 +1,32 @@
 ﻿import React, { useState, useEffect } from "react";
 import "../App.css";
-import { useRecoilState } from "recoil";
-import booksState from "../atoms/booksState";
 import { useLocation } from "react-router-dom";
+import logo from '../assets/boklogo.png'
 
 function BookView() {
-   /*  const [books, setBooks] = useRecoilState(booksState);
     const loc = useLocation();
-
-    const getBook = () => {
-        var book = books.filter((b) => b.id == loc.state.id);
-        return book;
-    }; */
-
-
-    const ShowBook = () => {
-
-        return book === null ? (
-            <div className="card-product">
-                <div className="book-image-wrapper"></div>
-                <p>Kommer snart</p>
-            </div>
-        ) : (
-            getBook().map((b, i) => {
-                return (
-                    <div className="card-product" key={b.id}>
-                        <div className="book-image-wrapper">
-                            <img
-                                className="book-img"
-                                src={b.imageURL}
-                                alt="Front image of book"
-                            >
-                            </img>
-                        </div>
-                        <p>{b.title}</p>
-                        <p>{b.price}kr</p>
-                    </div>
-                );
-            })
-        );
-    };
-
-   /*  useEffect(() => {
-        getBook();
-    }, []); */
+    var book = loc.state;
 
     return (
         <div className="main-container">
             <div className="side"></div>
-            <div className="bookView-main-wrapper">
-               {/* <ShowBook /> */}
-               <div className="bookView-image-wrapper">
+            <div className="bookView-main-wrapper"> 
+                {!book.imageURL ? 
+                <div className="bookView-image-wrapper">
                     <h4>Bild</h4>
-               </div>
-               <div>
-               <h1>En medellång titel här</h1>
-               <h2>av Författare</h2>
+                </div> :
+                <div className="bookView-image-wrapper">
+                    <img
+                    className="bookView-img"
+                    src={book.imageURL}
+                    alt="Front image of book"
+                    >
+                    </img>
+                </div>
+                }
+                <div>
+                    <h1 className="bookview-title">{book.title}</h1>
+                    <h2 className="bookview-author">av {book.author }</h2>
                <div className="book-info-wrapper">
                     <div className="book-info-l">
                         <p className="book-info">Utgivningsår:</p>
@@ -65,17 +36,21 @@ function BookView() {
                         <p className="book-info">ISBN:</p>
                     </div>
                     <div className="book-info-l">
-                        <p className="book-info">2022</p>
-                        <p className="book-info">Svenska</p>
-                        <p className="book-info">100 st</p>
-                        <p className="book-info">346 gram</p>
-                        <p className="book-info">9789189359772</p>
+                        <p className="book-info">{book.year}</p>
+                        <p className="book-info">{book.language}</p>
+                        <p className="book-info">{book.pages} st</p>
+                        <p className="book-info">{book.weight} gram</p>
+                        <p className="book-info">{book.isbn}</p>
                     </div>
                     <div className="book-info-r">
                         <span className="book-info-seller">SÄLJS AV</span>
-                        <span className="book-info">Bokcirkeln</span>
-                        <span className="book-info-price">100 kr</span>
-                        <button>Lägg i varukorgen</button>
+                        {book.soldBy != "store" ? 
+                        <span className="book-info">{book.soldBy}</span> 
+                        :
+                        <img className="store_logo" src={logo} alt="An image of bookstore logo" />
+                        }
+                        <span className="book-info-price">{book.price} kr</span>
+                        <button disabled>Lägg i varukorgen</button>
                     </div>
                </div>
                </div>

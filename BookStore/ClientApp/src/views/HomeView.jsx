@@ -5,7 +5,6 @@ import booksState from "../atoms/booksState";
 import sideImageone from "../assets/image1.jpg";
 import sideImagetwo from "../assets/image2.jpg";
 import { Link } from "react-router-dom";
-import BookView from "./BookView";
 
 function HomeView() {
   const [books, setBooks] = useRecoilState(booksState);
@@ -60,8 +59,8 @@ function HomeView() {
       getFiveNewBooks().map((b, i) => {
           return (
             <Link
-            to="/book"
-            state={b}
+                  to="/book"
+                  state={b}
             className="card-product-link" key={b.id}>
             <div className="card-product">
                 <div className="book-image-wrapper">
