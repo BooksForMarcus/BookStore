@@ -51,6 +51,7 @@ const AdminUserView = ({ users, setUsers }) => {
       userToEdit={users.find((u) => u.id === userIdToEdit)}
       setUserToEdit={setUserIdToEdit}
       loggedInUser={loggedInUser}
+	  setLoggedInUser={setLoggedInUser}
       users={users}
       setUsers={setUsers}
     />
