@@ -66,17 +66,17 @@ public class CustomerController : ControllerBase
     [HttpPut("updatecustomer")]
     public async Task<IActionResult> Put(Customer customer)
     {
-        var cust = HttpContext.Items["Customer"] as Customer;
+        var auth = HttpContext.Items["Customer"] as Customer;
         Customer result = null!;
-        if (cust is not null)
+        if (auth is not null)
         {
             var op = new CustomerOperation
             {
                 CustomerToUpdate = customer,
-                Email = cust.Email,
-                Password = cust.Password
+                Id = auth.Id,
+                IsAdmin = auth.IsAdmin
             };
-            if (cust.IsAdmin && !string.IsNullOrEmpty(customer.Id))
+            if (auth.IsAdmin && !string.IsNullOrEmpty(customer.Id))
             {
                 result = (await _customerCrud.AdminUpdateCustomer(op))!;
             }
@@ -101,11 +101,21 @@ public class CustomerController : ControllerBase
     /// <remarks>The only information used from the customerToUpdate object is the Id,
     /// the remaining information should be left out. BE ADVISED: admin can *not* remove themselves from DB.</remarks>
     [HttpDelete]
-    public async Task<IActionResult> Delete(CustomerOperation op)
+    public async Task<IActionResult> Delete(Customer customerToDelete)
     {
-        var result = await _customerCrud.DeleteCustomer(op);
-        if (result) return Ok();
-        else return BadRequest();
+        var auth = HttpContext.Items["Customer"] as Customer;
+        if ((auth.IsAdmin && auth.Id != customerToDelete.Id) || (!auth.IsAdmin && auth.Id == customerToDelete.Id))
+        {
+            var op = new CustomerOperation()
+            {
+                Id = auth.Id,
+                IsAdmin = auth.IsAdmin,
+                CustomerToUpdate = customerToDelete
+            };
+            var result = await _customerCrud.DeleteCustomer(op);
+            if (result) return Ok();
+        }
+        return BadRequest();
     }
 
     /// <summary>
