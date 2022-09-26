@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 using BookStore.DTO;
 using BookStore.Helpers;
-
+using MongoDB.Bson;
 
 
 public class CategoryCrud
@@ -22,78 +22,81 @@ public class CategoryCrud
     //}
     public async Task<bool> CreateCategory(Category category)
     {
-        if (category.Parent!=null)
+        //Guid guidOutput; // skräpvariabel, gör ingenting...
+        //if (!Guid.TryParse(category.Id, out guidOutput))
+        //{
+        //    category.Id = Guid.NewGuid().ToString("N");
+        //}
+
+        ObjectId id = ObjectId.GenerateNewId();
+        category.Id = id.ToString();
+
+        var findFilter = Builders<Category>.Filter.Eq("Name", category.Name);
+        var sameName = await categories.FindAsync(findFilter);
+        var sameNameList = await sameName.ToListAsync();
+        int sameNameCount = sameNameList.Count;
+
+        if (sameNameCount == 0)
         {
-            category.Name = category.Parent.Name+"."+category.Name;
+            await categories.InsertOneAsync(category);
         }
-        await categories.InsertOneAsync(category);
-        var result = !String.IsNullOrWhiteSpace(category.Id);
-        return result;
+        var findFilter3 = Builders<Category>.Filter.Eq("Id", category.Id);
+
+        var result = await categories.Find(findFilter3).ToListAsync();
+        var myResult = result.FirstOrDefault();
+        var categoryFound = (myResult != null);
+        return categoryFound;
+        //var result = !String.IsNullOrWhiteSpace(category.Id);
+        return true;
     }
     public async Task<List<Category>> GetAllCategories()
     {
         var resp = await categories.FindAsync(_ => true);
         return resp.ToList();
     }
-    public async Task<Category> GetCategory(Guid Id)
+    public async Task<Category?> GetCategory(string Id)
     {
-        var findFilter = Builders<Category>.Filter.Eq("Id", Id);
-        var resp = await categories.FindAsync(findFilter);
-        return resp.FirstOrDefault();
+        if (Id.Length != 24)
+        {
+            return null;
+        }
+        else
+        {
+            var findFilter = Builders<Category>.Filter.Eq("Id", Id);
+            ////var findFilter = Builders<Category?>.Filter.Eq("Id", Id.ToString());
+            var resp = categories.Find(findFilter);
+
+            return resp.FirstOrDefault();
+        }
+
+        //var findFilter = Builders<Category?>.Filter.Eq("Id", Id.ToString());
+        ////var findFilter = Builders<Category?>.Filter.Eq("Id", Id.ToString());
+        //var resp = categories.Find(findFilter);
+        //return resp.FirstOrDefault();
     }
-
-    //public async Task<Book> GetBookByName(string Name)
-    //{
-    //    var findFilter = Builders<Category>.Filter.Eq("Name", Name);
-    //    var resp = await categories.FindAsync(findFilter);
-    //    return (Category)resp; 
-    //}
-
-    public async Task<List<Category>> GetCategoriesByParent(Category category)
+    public Category? GetMyCategory (string Id)
     {
+        //var resp = categories.Find(_ => true);
 
-        var resp0 = await categories.FindAsync(_ => true);
-        var findFilter = Builders<Category>.Filter.Eq("Parent", category);
+        //if (Id.Length != 24 || ! int.TryParse(Id, out int dummy)) //TODO: kolla så att id är 24d hex?
+        if (Id.Length != 24 )                                       // annars failar  med error 500 i nästa steg om 24char, men inte ett hextal?
+        {
+            return null;
+        }
+        else
+        {
+            var findFilter = Builders<Category>.Filter.Eq("Id", Id);
+            ////var findFilter = Builders<Category?>.Filter.Eq("Id", Id.ToString());
+            var resp = categories.Find(findFilter);
 
-        var resp = await categories.FindAsync(findFilter);
-
-        return resp.ToList();
+            return resp.FirstOrDefault();
+        }
     }
-
-
-
-
-
-
-
-
     public async Task<bool> DeleteCategory(Category category)
     {
-        //var resp = await books.FindAsync(_ => true);
-        //return resp.ToList();
-
         var deletefilter = Builders<Category>.Filter.Eq("Id", category.Id);
         var resp = await categories.DeleteOneAsync(deletefilter);
         return resp.IsAcknowledged;
-
-        //return true; //don't, actually.
-    }
-
-
-
-
-
-
-
-    //public bool AdminVerification(BookOperation op)
-    public bool AdminVerification()
-    {
-
-
-        //if (op.User=="Admin" && op.Pass)
-
-        //This method really needs to be updated with something better!
-        return true;
     }
 
 }
