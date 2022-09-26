@@ -3,124 +3,113 @@
 using BookStore.DbAccess;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
-//using System.Web.Http;
-
+using BookStore.Authorize;
+ 
+[Authorize]
 [Route("api/[controller]")]
-//[Route("api/[controller]")]
 [ApiController]
 public class BookController : ControllerBase
 {
     private readonly BookCrud _bookCrud;
     private readonly CustomerCrud _customerCrud;
+    private readonly CategoryCrud _categoryCrud;
 
-
-    public BookController(BookCrud bookCrud, CustomerCrud cc) 
+    public BookController(BookCrud bookCrud, CustomerCrud cc, CategoryCrud cac) 
     {
         _bookCrud = bookCrud;
         _customerCrud = cc;
+        _categoryCrud = cac;
 
     }
-
-    //public BookController(BookCrud bookCrud, CustomerCrud customerCrud) 
-    //{
-    //    _bookCrud = bookCrud;
-    //    _customerCrud = customerCrud;
-    //}
-    
-
-
-    // GET: api/<BookController>
+    /// <summary>
+    /// Hämtar boklista. Ingen login krävs.
+    /// </summary>
+    /// <returns>lista med böcker</returns>
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IEnumerable<Book>> Get()
     {
         return await _bookCrud.GetAllBooks();
     }
-
-    //[Route("api/[controller]/one/{id:guid}/")]
-    //[Route("{id:guid}")]
-    //public async Task<Book> Get(Guid id)
-    //{
-    //    return await _bookCrud.GetBook(id);
-    //}
-
-    //// GET api/<CustomerController>/5
-    //[HttpGet("{id}")]
-    //public string Get(int id)
-    //{
-    //    return "value";
-    //}
-
-    // POST api/<CustomerController>
+    /// <summary>
+    /// Skapa Bok. Måste vara admin och/eller stå som säljare av boken.
+    /// </summary>
+    /// <param name="book"> Boken att skapa</param>
+    /// <returns>???????</returns>
+    /// <response code="200">Boken skapad</response>
+    /// <response code="400">Boken inte skapad</response>
+    /// <response code="500">Programmeraren har klantat sig</response> 
+ 
     [HttpPost]
     public async Task<IActionResult> Post(Book book)
     {
 
-        var result = await _bookCrud.CreateBook(book);
-        if (result) return Ok();
-        else return BadRequest();
+        var cust = HttpContext.Items["Customer"] as Customer;
+        if (cust.IsAdmin || cust.Id == book.SoldById)
+        {
+            var result = await _bookCrud.CreateBook(book);
+            if (!String.IsNullOrEmpty(result)) return Ok(result);
+            else return BadRequest("Bok ej skapad");
+        }
+        else
+        { 
+            return BadRequest(new { error = "You cannot create books for sellers other than yourself unless you are an Admin\n" +
+                "(and you probably shouldn't even if you are)" });
+        }
     }
 
-    //// PUT api/<CustomerController>/5
-    //[HttpPut("{id}")]
-    //public void Put(int id, [FromBody] string value)
-    //{
-    //}
+    /// <summary>
+    /// Redigera Bok. Måste vara admin och/eller stå som säljare av boken.
+    /// </summary>
+    /// <param name="book">boken i fråga</param>
+    /// <returns></returns>
+    /// <response code="200">Boken redigerad</response>
+    /// <response code="400">Boken inte redigerad</response>
+    /// <response code="500">Programmeraren har klantat sig</response> 
     [HttpPut]
     public async Task<IActionResult> Put(Book book)
     {
-        var result = await _bookCrud.UpdateBook(book);
-        if (!String.IsNullOrWhiteSpace(result.Id)) return Ok();
-        return BadRequest();
-    }
-
-
-
-    //pattern: "{controller}/{action=Index}/{id?}");
-    //kan man göra så här?
-
-    [HttpPut("pricechange/")]
-    public async Task<IActionResult> PriceChange(BookOperation op)
-    {
-        //var OKgoahead = await _bookCrud.AdminVerificationAsync(op);
-
-        //if (_bookCrud.AdminVerification(op))
-        if (await _customerCrud.IsAdmin(new DTO.CustomerAuthorize() { Email=op.Email,Password=op.Password}))
+        var cust = HttpContext.Items["Customer"] as Customer;
+        if (cust.IsAdmin || cust.Id == book.SoldById)
         {
-            var result = await _bookCrud.UpdateBookPrice(op.Book.Id, op.Book.Price);
-            if (result) return Ok();
-            return BadRequest();
+            var result = await _bookCrud.UpdateBook(book);
+            if (!String.IsNullOrEmpty(result)) return Ok(result);
+            else return BadRequest("book not updated");
+
         }
-        return Forbid();
+        else
+        {
+            return BadRequest(new
+            {
+                error = "You cannot update books for sellers other than yourself unless you are an Admin\n" +
+                "(and you probably shouldn't even if you are)"
+            });
+        }
     }
-
-    //[Route("api/[controller]/stock/{id}/")]
-
-    //public async Task<IActionResult> Put(Guid id, [FromBody] int newStock)
-    //{
-    //    var result = await _bookCrud.UpdateBookInventory(id, newStock);
-    //    if (result) return Ok();
-    //    return BadRequest();
-    //}
-
+    /// <summary>
+    ///  Delete book. Users can only delete their own books.
+    /// </summary>
+    /// <param name="book"></param>
+    /// <returns></returns>
+    /// <response code="200">Boken deleted</response>
+    /// <response code="400">Boken not deleted</response>
+    /// <response code="500">Programmeraren has clanted himself</response> 
+    /// <remarks>endast Idfältet & SoldbyId måste skickas</remarks>
     [HttpDelete]
-    //public async Task<IActionResult> Delete(Guid id)
-    //{
-    //    var result = await _bookCrud.DeleteBook(id);
-    //    if (result) return Ok();
-    //    return BadRequest();
-    //}
-
     public async Task<IActionResult> Delete(Book book)
     {
-        var result = await _bookCrud.DeleteBook(book);
-        if (result) return Ok();
-        return BadRequest();
-    }
+        var cust = HttpContext.Items["Customer"] as Customer;
+        if (cust.IsAdmin || cust.Id == book.SoldById)
+        {
+            var result = await _bookCrud.DeleteBook(book);
+            if (result) return Ok("deleted");
+            else return BadRequest("not deleted");
 
-    //// DELETE api/<CustomerController>/5
-    //[HttpDelete("{id}")]
-    //public void Delete(int id)
-    //{
-    //}
+        }
+        else
+        {
+            return BadRequest(new { error = "You can only delete your own books, if nonadmin" });
+        }
+    }
 }
 
