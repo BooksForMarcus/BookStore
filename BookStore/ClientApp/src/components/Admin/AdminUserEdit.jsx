@@ -4,6 +4,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import UpdateOk from "./UpdateOk";
 import UpdateFailed from "./UpdateFailed";
 import getBasicAuthString from "../../getBasicAuthString";
+import ModalBaseFull from "../Modal/ModalBaseFull";
 
 
 const AdminUserEdit = ({
@@ -26,6 +27,7 @@ const AdminUserEdit = ({
   const [isBlocked, setIsBlocked] = useState(userToEdit.isBlocked);
   const [isActive, setIsActive] = useState(userToEdit.isActive);
   const [updateOk, setUpdateOk] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const sendUpdatedUserToApi = async (e) => {
     e.preventDefault();
@@ -77,14 +79,46 @@ const AdminUserEdit = ({
       setUpdateOk(false);
     }
   };
+  const deleteUser = async () => {
+	  const userToDelete =JSON.stringify({id: userToEdit.id});
+	const requestOptions = {
+	  method: "DELETE",
+	  headers: {
+		Authorization: loggedInUser.password,
+		Accept: "application/json",
+		"Content-Type": "application/json",
+	  },
+	  body: userToDelete
+	};
+	let resp = await fetch(
+	  "/api/customer/",
+	  requestOptions
+	);
+	if (resp.ok) {
+	  let newUsers = users.filter((x) => x.id !== userToEdit.id);
+	  setUsers(newUsers);
+	  setUserToEdit(null);
+	}
+  }
 
   return (
     <div className="admin-user-edit">
+	{showDeleteConfirm && (
+		<ModalBaseFull>
+			<div className="modal-card">
+				<h2 className="modal-card-header">Är du säker på att du vill ta bort den här kunden?</h2>
+				<div className="modal-card-footer">
+					<button type="button" className="btn-danger" onClick={deleteUser}>Radera</button>
+					<button type="button" className="btn-call-to-action" onClick={(e) =>{setShowDeleteConfirm(false)}}>Ångra</button>
+				</div>
+			</div>
+		</ModalBaseFull>
+	)}
       <button className="btn-x-mark" onClick={() => setUserToEdit(null)}>
         <FontAwesomeIcon icon={faXmark} />
       </button>
-      <h2>Ändra användare</h2>
       <form onSubmit={sendUpdatedUserToApi}>
+      	<h2>Ändra användare</h2>
         <label htmlFor="email">Email</label>
         <input
           type="text"
@@ -181,8 +215,9 @@ const AdminUserEdit = ({
           </div>
         </div>
         <div className="admin-user-edit-button-area">
-          <button onClick={() => setUserToEdit(null)}>Stäng</button>
-          <button type="submit">Spara</button>
+          <button type="button" className="btn-call-to-action" onClick={() => setUserToEdit(null)}>Stäng</button>
+          <button className="btn-warning" type="submit">Spara</button>
+		  <button type="button" className="btn-danger" onClick={(e)=>{e.preventDefault;setShowDeleteConfirm(true)}}>Radera</button>
         </div>
       </form>
       {updateOk === true && <UpdateOk />}
