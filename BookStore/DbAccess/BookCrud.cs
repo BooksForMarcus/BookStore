@@ -19,20 +19,15 @@ public class BookCrud
         categories = cac;
     }
 
-    public async Task<bool> CreateBook(Book book)
+    public async Task<string> CreateBook(Book book)
     {
-        //Guid guidOutput; // skräpvariabel, gör ingenting...
-        //if (!Guid.TryParse(book.Id, out guidOutput))
-        //{
-        //    book.Id = Guid.NewGuid().ToString("N");
-        //}
+        // Ignorera skräpdata från swagger
 
-        ObjectId id = ObjectId.GenerateNewId();
-        book.Id = id.ToString();
+        book.Id = String.Empty;
 
         // filter för dubletter med samma isbn & säljare
 
-        var findFilter = Builders<Book>.Filter.Eq("SoldBy", book.SoldBy);
+        var findFilter = Builders<Book>.Filter.Eq("SoldById", book.SoldById);
         var findFilter2 = Builders<Book>.Filter.Eq("ISBN", book.ISBN);
         findFilter &= findFilter2;
 
@@ -40,34 +35,21 @@ public class BookCrud
         var sameBookSameSellerList = await sameBookSameSeller.ToListAsync();
         int sameBookCount = sameBookSameSellerList.Count;
 
-        //!string.IsNullOrWhiteSpace(newBook.Id));
         // ta bort dubletter i kategorilistan
+
         book.Categories = book.Categories.Distinct().ToArray();
+
         //Ta bort referenser till kategorier som inte finns
 
         book.Categories = book.Categories.Where(x => (categories.GetMyCategory(x)) != null).ToArray();
 
-
-        //book.Categories = book.Categories.Where(x => (categories.GetCategory(x)) != null).ToArray();
-
-
-
-
-        //Console.WriteLine("sameBookCount ", sameBookCount);
         if (sameBookCount == 0)
         {
-
             await books.InsertOneAsync(book);
         }
         var result = !String.IsNullOrWhiteSpace(book.Id);
-        //var findFilter3 = Builders<Book>.Filter.Eq("Id", book.Id);
 
-        //var result = await books.Find(findFilter3).ToListAsync();
-        //var myResult = result.FirstOrDefault();
-        //var bookFound = (myResult != null);
-        //return bookFound;
-        return result;
-        return true;
+        return book.Id;
     }
 
 
@@ -76,41 +58,30 @@ public class BookCrud
         var resp = await books.FindAsync(_ => true);
         return resp.ToList();
     }
-    public async Task<Book> GetBook(Guid Id)
-    {
-        var findFilter = Builders<Book>.Filter.Eq("Id", Id);
-        var resp = await books.FindAsync(findFilter);
-        return resp.FirstOrDefault();
-    }
- 
-    public async Task<bool> DeleteBook(  Book book)
-    {
-        //var resp = await books.FindAsync(_ => true);
-        //return resp.ToList();
 
+    // VVVVVVV Används ej just nu, men kanske behövs sen..?
+
+    //public async Task<Book> GetBook(string Id)
+    //{
+    //    var findFilter = Builders<Book>.Filter.Eq("Id", Id);
+    //    var resp = await books.FindAsync(findFilter);
+    //    return resp.FirstOrDefault();
+    //}
+
+    public async Task<bool> DeleteBook(Book book)
+    {
         var deletefilter = Builders<Book>.Filter.Eq("Id", book.Id);
         var resp = await books.DeleteOneAsync(deletefilter);
         return resp.IsAcknowledged;
-
-        //return true; //don't, actually.
     }
 
- 
-
-    public async Task<bool> UpdateBook(Book updateBook)
+    public async Task<string> UpdateBook(Book updateBook)
     {
-        //var result = new Book();
-        var result = true;
-
-        if (updateBook.Id.Length == 24)
-        //if (updateBook.Id.Length == 32)
-
+        if (updateBook.Id.Length == 24)     //TODO as before, more checks here?
         {
-
             var newBook = await books.FindOneAndReplaceAsync(b => b.Id == updateBook.Id, updateBook);
-            result = (newBook != null && !string.IsNullOrWhiteSpace(newBook.Id));
+            return updateBook.Id;
         }
-        return result;
+        return String.Empty;
     }
- 
 }

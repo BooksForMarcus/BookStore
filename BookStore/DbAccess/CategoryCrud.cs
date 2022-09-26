@@ -15,21 +15,10 @@ public class CategoryCrud
         categories = db.CategoriesCollection;
 
     }
-    //public BookCrud(MongoDbAccess db)
-    //{
-    //    books = db.BooksCollection;
-    //    customers = db.CustomersCollection;
-    //}
-    public async Task<bool> CreateCategory(Category category)
-    {
-        //Guid guidOutput; // skräpvariabel, gör ingenting...
-        //if (!Guid.TryParse(category.Id, out guidOutput))
-        //{
-        //    category.Id = Guid.NewGuid().ToString("N");
-        //}
 
-        ObjectId id = ObjectId.GenerateNewId();
-        category.Id = id.ToString();
+    public async Task<string> CreateCategory(Category category)
+    {
+        category.Id = String.Empty;
 
         var findFilter = Builders<Category>.Filter.Eq("Name", category.Name);
         var sameName = await categories.FindAsync(findFilter);
@@ -40,14 +29,7 @@ public class CategoryCrud
         {
             await categories.InsertOneAsync(category);
         }
-        var findFilter3 = Builders<Category>.Filter.Eq("Id", category.Id);
-
-        var result = await categories.Find(findFilter3).ToListAsync();
-        var myResult = result.FirstOrDefault();
-        var categoryFound = (myResult != null);
-        return categoryFound;
-        //var result = !String.IsNullOrWhiteSpace(category.Id);
-        return true;
+        return category.Id;
     }
     public async Task<List<Category>> GetAllCategories()
     {
@@ -63,30 +45,24 @@ public class CategoryCrud
         else
         {
             var findFilter = Builders<Category>.Filter.Eq("Id", Id);
-            ////var findFilter = Builders<Category?>.Filter.Eq("Id", Id.ToString());
             var resp = categories.Find(findFilter);
 
             return resp.FirstOrDefault();
         }
-
-        //var findFilter = Builders<Category?>.Filter.Eq("Id", Id.ToString());
-        ////var findFilter = Builders<Category?>.Filter.Eq("Id", Id.ToString());
-        //var resp = categories.Find(findFilter);
-        //return resp.FirstOrDefault();
     }
-    public Category? GetMyCategory (string Id)
+    public Category? GetMyCategory(string Id)
     {
-        //var resp = categories.Find(_ => true);
+        //TODO: kolla så att id är 24d hex, inte bara length 24?
+        // annars failar  med error 500 i nästa steg om 24char, men inte ett hextal?
 
-        //if (Id.Length != 24 || ! int.TryParse(Id, out int dummy)) //TODO: kolla så att id är 24d hex?
-        if (Id.Length != 24 )                                       // annars failar  med error 500 i nästa steg om 24char, men inte ett hextal?
+        if (Id.Length != 24)
         {
             return null;
         }
         else
         {
             var findFilter = Builders<Category>.Filter.Eq("Id", Id);
-            ////var findFilter = Builders<Category?>.Filter.Eq("Id", Id.ToString());
+
             var resp = categories.Find(findFilter);
 
             return resp.FirstOrDefault();
@@ -94,11 +70,26 @@ public class CategoryCrud
     }
     public async Task<bool> DeleteCategory(Category category)
     {
-        var deletefilter = Builders<Category>.Filter.Eq("Id", category.Id);
-        var resp = await categories.DeleteOneAsync(deletefilter);
-        return resp.IsAcknowledged;
+
+        if (category.Id.Length == 24)
+        {
+            var deletefilter = Builders<Category>.Filter.Eq("Id", category.Id);
+            var resp = await categories.DeleteOneAsync(deletefilter);
+            return resp.IsAcknowledged;
+        }
+        return false;
     }
 
+    public async Task<string> UpdateCategory(Category updateCategory)
+    {
+        if (updateCategory.Id.Length == 24)
+        {
+            var newCategory = await categories.FindOneAndReplaceAsync(b => b.Id == updateCategory.Id, updateCategory);
+            return updateCategory.Id;
+        }
+
+        return String.Empty;
+    }
 }
 
 

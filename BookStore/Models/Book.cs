@@ -15,7 +15,7 @@ public class Book
     public int NumInstock { get; set; } = 1;
     public decimal Price { get; set; } = 100.0M;
     public int Year { get; set; } = 1;
-    public string SoldBy { get; set; } = "";
+    public string SoldById { get; set; } = "";
     public string ImageURL { get; set; } = "";
     public int Pages { get; set; } = 1;
     public int Weight { get; set; } = 1;

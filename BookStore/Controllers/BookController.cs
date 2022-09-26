@@ -4,10 +4,9 @@ using BookStore.DbAccess;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using BookStore.Authorize;
-//using System.Web.Http;
-
+ 
+[Authorize]
 [Route("api/[controller]")]
-//[Route("api/[controller]")]
 [ApiController]
 public class BookController : ControllerBase
 {
@@ -33,40 +32,34 @@ public class BookController : ControllerBase
         return await _bookCrud.GetAllBooks();
     }
     /// <summary>
-    /// Skapa Bok. Endast Admin.
+    /// Skapa Bok. Måste vara admin och/eller stå som säljare av boken.
     /// </summary>
     /// <param name="book"> Boken att skapa</param>
     /// <returns>???????</returns>
     /// <response code="200">Boken skapad</response>
     /// <response code="400">Boken inte skapad</response>
     /// <response code="500">Programmeraren har klantat sig</response> 
+ 
     [HttpPost]
     public async Task<IActionResult> Post(Book book)
     {
 
         var cust = HttpContext.Items["Customer"] as Customer;
-        if (cust is not null && cust.IsAdmin)
+        if (cust.IsAdmin || cust.Id == book.SoldById)
         {
             var result = await _bookCrud.CreateBook(book);
-            if (result) return Ok();
-            else return BadRequest();
-
+            if (!String.IsNullOrEmpty(result)) return Ok(result);
+            else return BadRequest("Bok ej skapad");
         }
         else
-        {
-            return BadRequest(new { error = "Need admin priviledge to create book." });
+        { 
+            return BadRequest(new { error = "You cannot create books for sellers other than yourself unless you are an Admin\n" +
+                "(and you probably shouldn't even if you are)" });
         }
-
-        //////////////////
-        ////var result = await _bookCrud.CreateBook(book);
-        ////if (result) return Ok();
-        ////else return BadRequest();
-
-        return Ok();
     }
 
     /// <summary>
-    /// Redigera Bok.Endast Admin
+    /// Redigera Bok. Måste vara admin och/eller stå som säljare av boken.
     /// </summary>
     /// <param name="book">boken i fråga</param>
     /// <returns></returns>
@@ -77,53 +70,46 @@ public class BookController : ControllerBase
     public async Task<IActionResult> Put(Book book)
     {
         var cust = HttpContext.Items["Customer"] as Customer;
-        if (cust is not null && cust.IsAdmin)
+        if (cust.IsAdmin || cust.Id == book.SoldById)
         {
             var result = await _bookCrud.UpdateBook(book);
-            if (result) return Ok();
-            else return BadRequest();
+            if (!String.IsNullOrEmpty(result)) return Ok(result);
+            else return BadRequest("book not updated");
 
         }
         else
         {
-            return BadRequest(new { error = "Need admin priviledge to edit book." });
+            return BadRequest(new
+            {
+                error = "You cannot update books for sellers other than yourself unless you are an Admin\n" +
+                "(and you probably shouldn't even if you are)"
+            });
         }
-
-
-        ////var result = await _bookCrud.UpdateBook(book);
-        ////if (result !=null && !String.IsNullOrWhiteSpace(result.Id)) return Ok();
-        return BadRequest();
     }
-
-
+    /// <summary>
+    ///  Delete book. Users can only delete their own books.
+    /// </summary>
+    /// <param name="book"></param>
+    /// <returns></returns>
+    /// <response code="200">Boken deleted</response>
+    /// <response code="400">Boken not deleted</response>
+    /// <response code="500">Programmeraren has clanted himself</response> 
+    /// <remarks>endast Idfältet & SoldbyId måste skickas</remarks>
     [HttpDelete]
- 
-
     public async Task<IActionResult> Delete(Book book)
     {
         var cust = HttpContext.Items["Customer"] as Customer;
-        if (cust is not null && cust.IsAdmin)
+        if (cust.IsAdmin || cust.Id == book.SoldById)
         {
             var result = await _bookCrud.DeleteBook(book);
-            if (result) return Ok();
-            else return BadRequest();
+            if (result) return Ok("deleted");
+            else return BadRequest("not deleted");
 
         }
         else
         {
-            return BadRequest(new { error = "Need admin priviledge to delete book." });
+            return BadRequest(new { error = "You can only delete your own books, if nonadmin" });
         }
-
-
-        ////var result = await _bookCrud.DeleteBook(book);
-        ////if (result) return Ok();
-        return BadRequest();
     }
-
-    //// DELETE api/<CustomerController>/5
-    //[HttpDelete("{id}")]
-    //public void Delete(int id)
-    //{
-    //}
 }
 
