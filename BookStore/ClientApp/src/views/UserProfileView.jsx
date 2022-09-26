@@ -4,6 +4,7 @@ import "../App.css";
 import { useRecoilState } from "recoil";
 import loggedInUserState from "../atoms/loggedInUserState";
 import getBasicAuthString from "../getBasicAuthString";
+import ModalBaseFull from "../components/Modal/ModalBaseFull";
 
 function UserProfileView() {
   const [user, setUser] = useRecoilState(loggedInUserState);
@@ -15,7 +16,26 @@ function UserProfileView() {
   const [address, setAddress] = useState(
     !user || user.address === "string" ? "" : user.address
   );
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const navigate = useNavigate();
+
+  const deleteUser = async () => {
+    const userToDelete = JSON.stringify({ id: user.id });
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        Authorization: user.password,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: userToDelete,
+    };
+    let resp = await fetch("/api/customer/", requestOptions);
+    if (resp.ok) {
+      setUser(null);
+      navigate("/");
+    }
+  };
 
   const updateCustomer = async (e) => {
     e.preventDefault();
@@ -72,7 +92,11 @@ function UserProfileView() {
   return (
     <div className="login-view">
       <div className="login-wrap">
-        {user !== null && <h2>Hej {user.firstName[0].toUpperCase()+user.firstName.slice(1)}</h2>}
+        {user !== null && (
+          <h2>
+            Hej {user.firstName[0].toUpperCase() + user.firstName.slice(1)}
+          </h2>
+        )}
         {user && user.IsAdmin ? (
           <NavLink to="/admin">ADMIN</NavLink>
         ) : (
@@ -80,6 +104,33 @@ function UserProfileView() {
         )}
       </div>
       <div className="add-account-wrap">
+        {showDeleteConfirm && (
+          <ModalBaseFull>
+            <div className="modal-card">
+              <h2 className="modal-card-header">
+                Är du säker på att du vill ta bort ditt konto?
+              </h2>
+              <div className="modal-card-footer">
+                <button
+                  type="button"
+                  className="btn-danger"
+                  onClick={deleteUser}
+                >
+                  Radera
+                </button>
+                <button
+                  type="button"
+                  className="btn-call-to-action"
+                  onClick={(e) => {
+                    setShowDeleteConfirm(false);
+                  }}
+                >
+                  Ångra
+                </button>
+              </div>
+            </div>
+          </ModalBaseFull>
+        )}
         <h2 className="ud-head-text">Uppdatera din uppgifter</h2>
         <form onSubmit={updateCustomer}>
           <input
@@ -138,16 +189,20 @@ function UserProfileView() {
             placeholder="Bekräfta nytt lösenord"
             id="confirm-password"
             value={confirmPassword}
-			pattern={password}
-			title="Måste vara samma som lösenordet."
+            pattern={password}
+            title="Måste vara samma som lösenordet."
             onChange={(e) => setConfirmPassword(e.target.value)}
-			required={password !== ""}
+            required={password !== ""}
           ></input>
-          <button
-            className="login-button"
-            type="submit"
-          >
+          <button className="btn-warning" type="submit">
             Uppdatera
+          </button>
+          <button
+            type="button"
+            className="btn-danger"
+            onClick={() => setShowDeleteConfirm(true)}
+          >
+            Ta bort konto
           </button>
         </form>
       </div>

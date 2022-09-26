@@ -1,26 +1,25 @@
 :root {
-
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
-    font-weight: 500;
-    letter-spacing: 1.5px;
-    color: #FCF8E8;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: #fcf8e8;
 }
 
 a:hover {
-    color: #EDB183;
-    background-color: #688472;
+  color: #edb183;
+  background-color: #688472;
 }
 
 body {
-    margin: 0;
-    background-color: #FCF8E8;
+  margin: 0;
+  background-color: #fcf8e8;
 }
 
 main {
-    display: grid;
+  display: grid;
 }
 
 h1 {
@@ -66,4 +65,25 @@ button:disabled {
   opacity: 0.3;
   background-color: red;
   cursor: not-allowed;
+}
+button.btn-danger {
+  background-color: #f11c1c;
+  transition: 0.5s;
+}
+button.btn-danger:hover {
+  background-color: #cd0606;
+}
+.btn-warning {
+  background-color: #f1c11c;
+  transition: 0.5s;
+}
+.btn-warning:hover {
+  background-color: #cd9e06;
+}
+.btn-call-to-action {
+  background-color: #06b50f;
+  transition: 0.5s;
+}
+.btn-call-to-action:hover {
+  background-color: #07770c;
 }
