@@ -15,6 +15,8 @@ import {useRecoilState} from "recoil"
 import Search from "./components/Search/BookSearch"
 import UserProfileView from "./views/UserProfileView";
 import loggedInUserState from "./atoms/loggedInUserState";
+import SearchResults from "./components/Search/SearchResults";
+import BookResult from "./components/Search/BookResult"
 
 function App() {
 	const [user, setUser] = useRecoilState(loggedInUserState);
@@ -49,7 +51,10 @@ function App() {
                         <Route path='/admin' element={<AdminView user={user}/>} />
                         <Route path='/login' element={<LoginView />} />
                         <Route path='/profile' element={<UserProfileView />} />
+                        <Route path='/search_result' element={<SearchResults />} />
+                        <Route path='/search_book' element={<BookResult />} />
                         <Route path='/book' element={<BookView />} />
+
                     </Routes>
                 </main>
                 <footer>
