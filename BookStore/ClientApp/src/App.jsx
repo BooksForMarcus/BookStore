@@ -16,10 +16,23 @@ import Search from "./components/Search/BookSearch"
 import UserProfileView from "./views/UserProfileView";
 import loggedInUserState from "./atoms/loggedInUserState";
 import SearchResults from "./components/Search/SearchResults";
-import BookResult from "./components/Search/BookResult"
+import BookResult from "./components/Search/BookResult";
+import { useEffect } from "react";
+import booksState from "./atoms/booksState";
 
 function App() {
 	const [user, setUser] = useRecoilState(loggedInUserState);
+	const [books, setBooks] = useRecoilState(booksState);
+	
+	const getBooks = async () => {
+		const resp = await fetch("/api/Book");
+		const json = await resp.json();
+		setBooks(json);
+	};
+	
+	useEffect(() => {
+		if(books === null) getBooks();
+	}, []);
 
     return (
         <BrowserRouter>

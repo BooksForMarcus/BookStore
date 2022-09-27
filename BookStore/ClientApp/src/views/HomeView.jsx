@@ -9,11 +9,11 @@ import { Link } from "react-router-dom";
 function HomeView() {
   const [books, setBooks] = useRecoilState(booksState);
 
-  const getBooks = async () => {
-        const resp = await fetch("/api/Book");
-        const json = await resp.json();
-        setBooks(json);
-    };
+//   const getBooks = async () => {
+//         const resp = await fetch("/api/Book");
+//         const json = await resp.json();
+//         setBooks(json);
+//     };
 
     const getFiveNewBooks = () => {
         var newBooks = books.filter((b) => b.year == 2022 && b.soldById == "store");
@@ -144,11 +144,11 @@ function HomeView() {
         );
     };
 
-  useEffect(() => {
-    if(books===null){
-		getBooks();
-	} 
-  }, []);
+//   useEffect(() => {
+//     if(books===null){
+// 		getBooks();
+// 	} 
+//   }, []);
 
   return (
     <div className="main-container">
