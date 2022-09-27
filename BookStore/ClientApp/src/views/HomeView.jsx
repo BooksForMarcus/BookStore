@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 import { useRecoilState } from "recoil";
 import booksState from "../atoms/booksState";
@@ -16,13 +16,13 @@ function HomeView() {
     };
 
     const getFiveNewBooks = () => {
-        var newBooks = books.filter((b) => b.year == 2022 && b.soldBy == "store");
+        var newBooks = books.filter((b) => b.year == 2022 && b.soldById == "store");
         var firstFiveNewBooks = newBooks.slice(0, 5);
         return firstFiveNewBooks;
   };
 
   const getFiveUsedBooks = () => {
-        var usedBooks = books.filter((b) => b.soldBy != "store");
+        var usedBooks = books.filter((b) => b.soldById != "store");
         var firstFiveUsedBooks = usedBooks.slice(0, 5);
         return firstFiveUsedBooks;
   };
