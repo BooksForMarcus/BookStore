@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 using BookStore.DTO;
 using BookStore.Helpers;
-
+using MongoDB.Bson;
 
 
 public class CategoryCrud
@@ -15,87 +15,81 @@ public class CategoryCrud
         categories = db.CategoriesCollection;
 
     }
-    //public BookCrud(MongoDbAccess db)
-    //{
-    //    books = db.BooksCollection;
-    //    customers = db.CustomersCollection;
-    //}
-    public async Task<bool> CreateCategory(Category category)
+
+    public async Task<string> CreateCategory(Category category)
     {
-        if (category.Parent!=null)
+        category.Id = String.Empty;
+
+        var findFilter = Builders<Category>.Filter.Eq("Name", category.Name);
+        var sameName = await categories.FindAsync(findFilter);
+        var sameNameList = await sameName.ToListAsync();
+        int sameNameCount = sameNameList.Count;
+
+        if (sameNameCount == 0)
         {
-            category.Name = category.Parent.Name+"."+category.Name;
+            await categories.InsertOneAsync(category);
         }
-        await categories.InsertOneAsync(category);
-        var result = !String.IsNullOrWhiteSpace(category.Id);
-        return result;
+        return category.Id;
     }
     public async Task<List<Category>> GetAllCategories()
     {
         var resp = await categories.FindAsync(_ => true);
         return resp.ToList();
     }
-    public async Task<Category> GetCategory(Guid Id)
+    public async Task<Category?> GetCategory(string Id)
     {
-        var findFilter = Builders<Category>.Filter.Eq("Id", Id);
-        var resp = await categories.FindAsync(findFilter);
-        return (Category)resp;
+        if (Id.Length != 24)
+        {
+            return null;
+        }
+        else
+        {
+            var findFilter = Builders<Category>.Filter.Eq("Id", Id);
+            var resp = categories.Find(findFilter);
+
+            return resp.FirstOrDefault();
+        }
     }
-
-    //public async Task<Book> GetBookByName(string Name)
-    //{
-    //    var findFilter = Builders<Category>.Filter.Eq("Name", Name);
-    //    var resp = await categories.FindAsync(findFilter);
-    //    return (Category)resp; 
-    //}
-
-    public async Task<List<Category>> GetCategoriesByParent(Category category)
+    public Category? GetMyCategory(string Id)
     {
+        //TODO: kolla så att id är 24d hex, inte bara length 24?
+        // annars failar  med error 500 i nästa steg om 24char, men inte ett hextal?
 
-        var resp0 = await categories.FindAsync(_ => true);
-        var findFilter = Builders<Category>.Filter.Eq("Parent", category);
+        if (Id.Length != 24)
+        {
+            return null;
+        }
+        else
+        {
+            var findFilter = Builders<Category>.Filter.Eq("Id", Id);
 
-        var resp = await categories.FindAsync(findFilter);
+            var resp = categories.Find(findFilter);
 
-        return (List<Category>)resp;
+            return resp.FirstOrDefault();
+        }
     }
-
-
-
-
-
-
-
-
     public async Task<bool> DeleteCategory(Category category)
     {
-        //var resp = await books.FindAsync(_ => true);
-        //return resp.ToList();
 
-        var deletefilter = Builders<Category>.Filter.Eq("Id", category.Id);
-        var resp = await categories.DeleteOneAsync(deletefilter);
-        return resp.IsAcknowledged;
-
-        //return true; //don't, actually.
+        if (category.Id.Length == 24)
+        {
+            var deletefilter = Builders<Category>.Filter.Eq("Id", category.Id);
+            var resp = await categories.DeleteOneAsync(deletefilter);
+            return resp.IsAcknowledged;
+        }
+        return false;
     }
 
-
-
-
-
-
-
-    //public bool AdminVerification(BookOperation op)
-    public bool AdminVerification()
+    public async Task<string> UpdateCategory(Category updateCategory)
     {
+        if (updateCategory.Id.Length == 24)
+        {
+            var newCategory = await categories.FindOneAndReplaceAsync(b => b.Id == updateCategory.Id, updateCategory);
+            return updateCategory.Id;
+        }
 
-
-        //if (op.User=="Admin" && op.Pass)
-
-        //This method really needs to be updated with something better!
-        return true;
+        return String.Empty;
     }
-
 }
 
 

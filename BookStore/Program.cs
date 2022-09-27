@@ -1,4 +1,6 @@
+using BookStore.Authorize;
 using BookStore.DbAccess;
+using System.Web.Http.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,5 +55,6 @@ app.MapControllerRoute(
     pattern: "{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("index.html");
+app.UseMiddleware<BasicAuthMiddleware>();
 
 app.Run();

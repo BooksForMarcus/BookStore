@@ -1,7 +1,9 @@
 ﻿namespace BookStore.Controllers;
 
+using BookStore.Authorize;
 using BookStore.DbAccess;
 using BookStore.DTO;
+using BookStore.Helpers;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -9,6 +11,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using static Helpers.EnvironmentHelper;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class CustomerController : ControllerBase
@@ -19,19 +22,24 @@ public class CustomerController : ControllerBase
         _customerCrud = customerCrud;
 
     /// <summary>
-    /// Post a valid admin e-mail and password to get a list of all the users.
+    /// Gets a list of all the customer. (Basic Auth required).
     /// </summary>
-    /// <param name="auth">Object containing email and password.</param>
     /// <returns>A List of all the customers.</returns>
     /// <response code="200">Call ok.</response>
-    [HttpPost("admin/getusers")]
-    public async Task<IEnumerable<Customer>> GetUsers(CustomerAuthorize auth)
+    [HttpGet("admin/getusers")]
+    public async Task<IActionResult> AdminGetUsers()
     {
-        return await _customerCrud.AdminGetAllCustomers(auth);
+        var cust = HttpContext.Items["Customer"] as Customer;
+        if (cust is not null && cust.IsAdmin)
+        {
+            return Ok(await _customerCrud.AdminGetAllCustomers());
+        }
+        else
+            return BadRequest(new { error = "Need admin priviledge to access customer list." });
     }
 
     /// <summary>
-    /// Post an object to create a new customer.
+    /// Post an object to create a new customer (Basic Auth NOT required).
     /// </summary>
     /// <param name="customer">Object containing information about the new customer.</param>
     /// <returns>A List of all the customers.</returns>
@@ -40,6 +48,7 @@ public class CustomerController : ControllerBase
     /// <remarks>The only information used from the posted object is the email,
     /// first name and last name fields, all other fields can(and should) be left out.</remarks>
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> Post(Customer customer)
     {
         var result = await _customerCrud.CreateCustomer(customer);
@@ -50,17 +59,33 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// Updates customer.
     /// </summary>
-    /// <param name="op">Should contain email and password of the user trying to make
-    /// the change, as well as the customerToUpdate object containing the current information.</param>
-    /// <returns></returns>
-    /// <response code="200">Customer remove/deactivate ok. Will also return the changed customer object.</response>
-    /// <response code="400">Failed to remove/deactivate customer.</response>
+    /// <returns>The replaces Customer object on success, otherwise null. ATTENTION: returns the *replaced* object, not the current!</returns>
+    /// <response code="200">Customer update ok. Will also return the changed customer object.</response>
+    /// <response code="400">Failed to update customer.</response>
     /// <remarks>IMPORTANT: if done by admin, will use the posted customerToUpdate object to replace the information in the DB.
     /// If done by non-Admin, will only update password, first name, last name or address fields.</remarks>
     [HttpPut("updatecustomer")]
-    public async Task<IActionResult> Put(CustomerOperation op)
+    public async Task<IActionResult> Put(Customer customer)
     {
-        var result = await _customerCrud.UpdateCustomer(op);
+        var auth = HttpContext.Items["Customer"] as Customer;
+        Customer result = null!;
+        if (auth is not null)
+        {
+            var op = new CustomerOperation
+            {
+                CustomerToUpdate = customer,
+                Id = auth.Id,
+                IsAdmin = auth.IsAdmin
+            };
+            if (auth.IsAdmin && !string.IsNullOrEmpty(customer.Id))
+            {
+                result = (await _customerCrud.AdminUpdateCustomer(op))!;
+            }
+            else
+            {
+                result = (await _customerCrud.CustomerUpdateSelf(op))!;
+            }
+        }
         return result is not null ? Ok(result) : BadRequest();
     }
 
@@ -68,20 +93,28 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// If done by an Admin, will remove customer from database, otherwise will set account to IsActive = false
     /// </summary>
-    /// <param name="op">Should contain email and password of the user trying to make
-    /// the change, as well as the (in the customerToUpdate object) the id of the
-    /// customer to delete.</param>
+    /// <param name="customerToDelete">Only field used from customer object is Id.</param>
     /// <returns></returns>
     /// <response code="200">Customer remove/deactivate ok.</response>
     /// <response code="400">Failed to remove/deactivate customer.</response>
     /// <remarks>The only information used from the customerToUpdate object is the Id,
     /// the remaining information should be left out. BE ADVISED: admin can *not* remove themselves from DB.</remarks>
     [HttpDelete]
-    public async Task<IActionResult> Delete(CustomerOperation op)
+    public async Task<IActionResult> Delete(Customer customerToDelete)
     {
-        var result = await _customerCrud.DeleteCustomer(op);
-        if (result) return Ok();
-        else return BadRequest();
+        var auth = HttpContext.Items["Customer"] as Customer;
+        if ((auth.IsAdmin && auth.Id != customerToDelete.Id) || (!auth.IsAdmin && auth.Id == customerToDelete.Id))
+        {
+            var op = new CustomerOperation()
+            {
+                Id = auth.Id,
+                IsAdmin = auth.IsAdmin,
+                CustomerToUpdate = customerToDelete
+            };
+            var result = await _customerCrud.DeleteCustomer(op);
+            if (result) return Ok();
+        }
+        return BadRequest();
     }
 
     /// <summary>
@@ -98,8 +131,9 @@ public class CustomerController : ControllerBase
     public async Task<IActionResult> Login(CustomerAuthorize auth)
     {
         var result = await _customerCrud.Login(auth);
-        return result is null?BadRequest():Ok(result);
+        return result is null ? BadRequest() : Ok(result);
     }
+    [AllowAnonymous]
     [HttpGet("login/")]
     public async Task<IActionResult> GetLogin()
     {
@@ -125,5 +159,14 @@ public class CustomerController : ControllerBase
         }
         var result = await _customerCrud.Login(auth);
         return result is null ? BadRequest() : Ok(result);
+    }
+    
+    [HttpPost("forgotpassword/")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ForgotPassword(Customer forgetful)
+    {   
+        var result = await _customerCrud.PasswordReset(forgetful);
+        if (result && EnvironmentHelper.IsDev) return Ok(new {password=forgetful.Password});
+        else return result ? Ok() : BadRequest();
     }
 }

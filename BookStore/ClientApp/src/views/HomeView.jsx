@@ -1,83 +1,157 @@
-﻿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../App.css";
 import { useRecoilState } from "recoil";
 import booksState from "../atoms/booksState";
 import sideImageone from "../assets/image1.jpg";
 import sideImagetwo from "../assets/image2.jpg";
+import { Link } from "react-router-dom";
 
 function HomeView() {
   const [books, setBooks] = useRecoilState(booksState);
-  const oldbooklist = [];
 
   const getBooks = async () => {
-    const resp = await fetch("/api/Book");
-    const json = await resp.json();
-    console.log(json);
-    setBooks(json);
+        const resp = await fetch("/api/Book");
+        const json = await resp.json();
+        setBooks(json);
+    };
+
+    const getFiveNewBooks = () => {
+        var newBooks = books.filter((b) => b.year == 2022 && b.soldById == "store");
+        var firstFiveNewBooks = newBooks.slice(0, 5);
+        return firstFiveNewBooks;
   };
 
-  const getUsedBooks = () => {
-    books.map((b, i) => {
-      if (!b.soldBy === "store") oldbooklist[i] = b;
-    });
+  const getFiveUsedBooks = () => {
+        var usedBooks = books.filter((b) => b.soldById != "store");
+        var firstFiveUsedBooks = usedBooks.slice(0, 5);
+        return firstFiveUsedBooks;
   };
 
-  const GetTopFiveNewBooks = () => {
-    let k = 0;
+  const getRandomBooks = (books) => {
+        if (books.length <= 5) return books
+
+        let fiveRandomBooks = [];
+        let usedNumbers = [];
+        for (let i = 0; i < 5; i++) {
+            let random = getRandomNumber(0, books.length);
+            if (!usedNumbers.includes(random)) {
+                usedNumbers.push(random);
+                fiveRandomBooks.push(books[random]);
+            }
+        }
+        return fiveRandomBooks;
+  };
+
+  const getRandomNumber = (min, max) => {
+        return Math.floor(Math.random() * (max - min) + min);
+  };
+
+  const ShowTopFiveNewBooks = () => {
 
     return books === null ? (
       <div className="card-product">
-        <div className="book-image"></div>
+        <div className="book-image-wrapper">
+            
+        </div>
         <p>Kommer snart</p>
       </div>
     ) : (
-      books.map((b, i) => {
-        if (k < 4 && b.year === 2022)
+      getFiveNewBooks().map((b, i) => {
           return (
-            <div className="card-product" key={b.id}>
-              <div className="book-image"></div>
-              <p>{b.title}</p>
-              <p>{b.price}kr</p>
+            <Link
+                  to="/book"
+                  state={b}
+            className="card-product-link" key={b.id}>
+            <div className="card-product">
+                <div className="book-image-wrapper">
+                    <img
+                    className="book-img"
+                    src={b.imageURL}
+                    alt="Front image of book"
+                    >
+                    </img>
+                </div>
+                <span className="card-product-title">{b.title}</span>
+                <span className="card-product-price">{b.price} kr</span>
             </div>
+            </Link>
           );
-        k++;
       })
     );
   };
 
-  const GetTopFiveUsedBooks = () => {
-    let n = -2;
+  const ShowTopFiveUsedBooks = () => {
 
-    return books === null ? (
+      return books === null ? (
       <div className="card-product">
-        <div className="book-image"></div>
+        <div className="book-image-wrapper"></div>
         <p>Kommer snart</p>
       </div>
     ) : (
-      books.map((b, i) => {
-        if (n > 5 && b.soldBy != "store")
+      getFiveUsedBooks().map((b, i) => {
           return (
-            <div className="card-product" key={b.id}>
-              <div className="book-image"></div>
-              <p>{b.title}</p>
-              <p>{b.price}kr</p>
-            </div>
+            <Link
+            to="/book"
+            state={b}
+            className="card-product-link" key={b.id}>
+            <div className="card-product">
+                <div className="book-image-wrapper">
+                    <img
+                    className="book-img"
+                    src={b.imageURL}
+                    alt="Front image of book"
+                    >
+                    </img>
+                </div>
+                <span className="card-product-title">{b.title}</span>
+                <span className="card-product-price">{b.price} kr</span>
+             </div>
+             </Link>
           );
-        n++;
-        console.log(n);
       })
     );
   };
+
+    const ShowRandomBooks = () => {
+
+        return books === null ? (
+            <div className="card-product">
+                <div className="book-image-wrapper"></div>
+                <p>Kommer snart</p>
+            </div>
+        ) : (
+            getRandomBooks(books).map((b, i) => {
+                return (
+                  <Link
+                    to="/book"
+                    state={b}
+                    className="card-product-link" key={b.id}>
+                    <div className="card-product">
+                        <div className="book-image-wrapper">
+                            <img
+                                className="book-img"
+                                src={b.imageURL}
+                                alt="Front image of book"
+                            >
+                            </img>
+                        </div>
+                        <span className="card-product-title">{b.title}</span>
+                        <span className="card-product-price">{b.price} kr</span>
+                    </div>
+                    </Link>
+                );
+            })
+        );
+    };
 
   useEffect(() => {
     if(books===null){
-		console.log("Im gonna fetch the books!")
 		getBooks();
 	} 
   }, []);
 
   return (
-    <main>
+    <div className="main-container">
       <div className="side">
         <img className="side_img" src={sideImageone} alt="An image of books" />
         <img
@@ -89,37 +163,18 @@ function HomeView() {
       <div className="main-wrapper">
         <h3>Top 5 Nyheter</h3>
         <div className="card">
-          <GetTopFiveNewBooks />
+          <ShowTopFiveNewBooks />
         </div>
         <h3>Top 5 Begagnat</h3>
         <div className="card">
-          <GetTopFiveUsedBooks />
+          <ShowTopFiveUsedBooks />
         </div>
         <h3>Hitta något nytt!</h3>
         <div className="card">
-          <div className="card-product">
-            <div className="book-image"></div>
-            <p>Boktitel</p>
-          </div>
-          <div className="card-product">
-            <div className="book-image"></div>
-            <p>Boktitel</p>
-          </div>
-          <div className="card-product">
-            <div className="book-image"></div>
-            <p>Boktitel</p>
-          </div>
-          <div className="card-product">
-            <div className="book-image"></div>
-            <p>Boktitel</p>
-          </div>
-          <div className="card-product">
-            <div className="book-image"></div>
-            <p>Boktitel</p>
-          </div>
+          <ShowRandomBooks />
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 

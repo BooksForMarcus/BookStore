@@ -1,9 +1,14 @@
-﻿import React from "react";
+import React from "react";
 import { useState } from "react";
 import "../App.css";
+import "../components/Login/LoginView.css";
+import emailcheck from "../assets/email-transparent-icon-17.png";
 import { useRecoilState } from "recoil";
-import userState from "../atoms/userState";
+import loggedInUserState from "../atoms/loggedInUserState";
 import { decode as base64_decode, encode as base64_encode } from "base-64";
+import { useNavigate } from "react-router-dom";
+import LoginInViewOverLay from "../components/Login/LoginViewOverlay";
+import ForgottenPasswordModal from "../components/Login/ForgottenPasswordModal";
 
 function LoginView() {
   const [email, setEmail] = useState("");
@@ -11,12 +16,21 @@ function LoginView() {
   const [emailCreate, setEmailCreate] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [user, setUser] = useRecoilState(userState);
+  const [userCreated, setUserCreated] = useState(false);
+  const navigate = useNavigate();
+  const [user, setUser] = useRecoilState(loggedInUserState);
+  const [loginError, setLoginError] = useState(null);
+  const [creationError, setCreationError] = useState(null);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const createNewCustomer = async (e) => {
     e.preventDefault();
 
-    const newUser = JSON.stringify({ email: emailCreate, firstName: firstName, lastName: lastName });
+    const newUser = JSON.stringify({
+      email: emailCreate,
+      firstName: firstName,
+      lastName: lastName,
+    });
     console.log(newUser);
     const requestOptions = {
       method: "POST",
@@ -30,10 +44,14 @@ function LoginView() {
     let resp = await fetch("/api/customer/", requestOptions);
     if (resp.ok) {
       console.log("create customer ok");
+      setUserCreated(true);
       let json = await resp.json();
       console.log(json);
     } else {
       console.log("customer create failed.");
+      let json = await resp.json();
+      console.log(json);
+      setCreationError(json);
     }
   };
 
@@ -54,21 +72,33 @@ function LoginView() {
 
     let resp = await fetch("/api/customer/login", requestOptions);
     if (resp.ok) {
-      console.log("login ok");
       let json = await resp.json();
-	  json.password = "Basic "+base64basicAuth
-      console.log(json);
-      setUser(json);
-    } else {
-      console.log("login failed");
+      if (json.success) {
+        json.user.password = "Basic " + base64basicAuth;
+        console.log("login ok: ", json.user);
+        setUser(json.user);
+        navigate("/profile");
+      } else {
+        setLoginError(json);
+      }
     }
+  };
+  const errorState = {
+    loginError,
+    setLoginError,
+    creationError,
+    setCreationError,
   };
 
   return (
     <div className="login-view">
+      {showForgotPassword === true && <ForgottenPasswordModal setShowForgotPassword={setShowForgotPassword}/>}
+      {(loginError || creationError) && (
+        <LoginInViewOverLay errorState={errorState} />
+      )}
       <div className="login-wrap">
         <h2>Logga in</h2>
-        <form>
+        <form onSubmit={newDoLogin}>
           <input
             type="email"
             value={email}
@@ -76,7 +106,7 @@ function LoginView() {
             label="Email"
             placeholder="Email"
             id="email"
-			required
+            required
           ></input>
           <input
             type="password"
@@ -85,51 +115,65 @@ function LoginView() {
             label="Lösenord"
             placeholder="Lösenord"
             id="password"
-			required
+            required
           ></input>
-          <button className="login-button" type="submit" onClick={newDoLogin}>
+          <button className="login-button btn-call-to-action" type="submit">
             Logga in
           </button>
-        </form>
-      </div>
-      <div className="add-account-wrap">
-        <h2 className="cr-head-text">Skapa konto</h2>
-        <form>
-          <input
-            className="cr-account"
-            type="email"
-            label="Email"
-            placeholder="Email"
-            id="emailCreate"
-			value={emailCreate}
-            onChange={(e) => setEmailCreate(e.target.value)}
-            required
-          ></input>
-          <input
-            className="cr-account"
-            type="text"
-            label="Förnamn"
-            placeholder="Förnamn"
-            id="firstname"
-			value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          ></input>
-          <input
-            className="cr-account"
-            type="text"
-            label="Efternamn"
-            placeholder="Efternamn"
-            id="lastname"
-			value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          ></input>
-          <button className="login-button" type="submit" onClick={createNewCustomer}>
-            Skapa konto
+          <button type="button" onClick={() => setShowForgotPassword(true)}>
+            Glömt lösenord
           </button>
         </form>
       </div>
+      {!userCreated ? (
+        <div className="add-account-wrap">
+          <h2 className="cr-head-text">Skapa konto</h2>
+          <form onSubmit={createNewCustomer}>
+            <input
+              className="cr-account"
+              type="email"
+              label="Email"
+              placeholder="Email"
+              id="emailCreate"
+              value={emailCreate}
+              onChange={(e) => setEmailCreate(e.target.value)}
+              required
+            ></input>
+            <input
+              className="cr-account"
+              type="text"
+              label="Förnamn"
+              placeholder="Förnamn"
+              id="firstname"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            ></input>
+            <input
+              className="cr-account"
+              type="text"
+              label="Efternamn"
+              placeholder="Efternamn"
+              id="lastname"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            ></input>
+            <button className="login-button" type="submit">
+              {/*onClick={createNewCustomer} disabled={firstName === null ||firstName.length === 0}*/}
+              Skapa konto
+            </button>
+          </form>
+        </div>
+      ) : (
+        <div className="add-account-resp-wrap">
+          <h2 className="cr-resp-head-text">Välkommen {firstName}!</h2>
+          <img src={emailcheck} className="cr-resp-img" />
+          <p className="cr-resp-text">
+            Vi har skickat ditt lösenord till {emailCreate}.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

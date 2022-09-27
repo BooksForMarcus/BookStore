@@ -3,45 +3,62 @@ import {
     BrowserRouter,
     Routes,
     Route,
-    Link
+    NavLink
 } from "react-router-dom";
 import "./App.css";
 import HomeView from "./views/HomeView";
 import AdminView from "./views/AdminHomeView";
 import LoginView from "./views/LoginView";
+import BookView from "./views/BookView";
 import logo from './assets/boklogo.png'
 import {useRecoilState} from "recoil"
-import userState from "./atoms/userState";
+import Search from "./components/Search/BookSearch"
+import UserProfileView from "./views/UserProfileView";
+import loggedInUserState from "./atoms/loggedInUserState";
+import SearchResults from "./components/Search/SearchResults";
+import BookResult from "./components/Search/BookResult"
 
 function App() {
-	const [user, setUser] = useRecoilState(userState);
+	const [user, setUser] = useRecoilState(loggedInUserState);
 
     return (
         <BrowserRouter>
             <div className="App">
                 <header>
-                    <img className="nav_logo" src={logo} alt="An image of bookstore logo" />
+                    <NavLink className="nav_logo" to="/"><img className="nav_logo" src={logo} alt="An image of bookstore logo" /></NavLink>
+                    <div className="searchBar"><Search /></div>
                     <div className="navbar">
                         <div className="menu-item" >
-                            <Link to="/">HEM</Link>
+                            <NavLink to="/" className="menu-link">HEM</NavLink>
                         </div>
                         <div className="menu-item" >
-                            <Link to="/admin">ADMIN</Link>
+                            <NavLink to="/">KATEGORIER</NavLink>
                         </div>
                         <div className="menu-item" >
-							<Link to="/login">{user?"Hej "+user.firstName:"LOGGA IN"}</Link>
+                            <span className="nav-item-search" to="/">SÖK</span>
+                            {/* <div className="nav-modal">
+                                <div className="searchBar"><Search /></div>
+                            </div> */}
+                        </div>
+                        <div className="menu-item" >
+                            {user ? <NavLink to="/profile">MIN SIDA</NavLink> : <NavLink to="/login">LOGGA IN</NavLink>}
                         </div>
                     </div>
                 </header>
-                <Routes>
-                    <Route path='/' element={<HomeView />} />
-                    <Route path='/admin' element={<AdminView />} />
-                    <Route path='/login' element={<LoginView />} />
-                </Routes>
+                <main>
+                    <Routes>
+                        <Route path='/' element={<HomeView />} />
+                        <Route path='/admin' element={<AdminView user={user}/>} />
+                        <Route path='/login' element={<LoginView />} />
+                        <Route path='/profile' element={<UserProfileView />} />
+                        <Route path='/search_result' element={<SearchResults />} />
+                        <Route path='/search_book' element={<BookResult />} />
+                        <Route path='/book' element={<BookView />} />
+
+                    </Routes>
+                </main>
                 <footer>
-                    {/*<button onClick={() => setCount((count) => count + 1)}>*/}
-                    {/*    count is {count}*/}
-                    {/*</button>*/}
+                    {user && user.isAdmin ? <NavLink to="/admin">ADMIN</NavLink> : <span></span>}
                 </footer>
             </div>
         </BrowserRouter>
