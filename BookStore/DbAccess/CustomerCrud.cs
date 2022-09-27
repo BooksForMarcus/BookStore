@@ -150,8 +150,8 @@ public class CustomerCrud
         {
             if (op.IsAdmin && op.Id != op.CustomerToUpdate.Id)
             {
-                    var response = await customers.DeleteOneAsync(x => x.Id == op.CustomerToUpdate.Id);
-                    result = response.IsAcknowledged && response.DeletedCount > 0;
+                var response = await customers.DeleteOneAsync(x => x.Id == op.CustomerToUpdate.Id);
+                result = response.IsAcknowledged && response.DeletedCount > 0;
             }
             else if (op.Id == op.CustomerToUpdate.Id)
             {
@@ -250,5 +250,41 @@ public class CustomerCrud
             updateCustomer.Password = "";
         }
         return updateCustomer;
+    }
+
+    public async Task<bool> PasswordReset(Customer forgetful)
+    {
+
+        var result = false;
+        if (!string.IsNullOrWhiteSpace(forgetful.Email) &&
+            !string.IsNullOrEmpty(CustomerHelper.ValidEmail(forgetful.Email)))
+        {
+            var customer = await GetCustomerByEmail(forgetful.Email);
+            if (customer is not null)
+            {
+                var mailer = new MailHelper();
+                var newPass = CustomerHelper.GetRandomPassword();
+                var newPassHash = CustomerHelper.GetHashedPassword(customer, newPass);
+                var updatefilter = Builders<Customer>.Filter.Eq("Id", customer.Id);
+                var update = Builders<Customer>.Update.Set("Password", newPassHash);
+                var resp = await customers.UpdateOneAsync(updatefilter, update);
+                result = resp.IsAcknowledged && resp.ModifiedCount > 0;
+                if (result)
+                {
+                    if (EnvironmentHelper.IsDev)
+                    {
+                        forgetful.Password = newPass;
+                    }
+                    else
+                    {
+                        mailer.SendMail(
+                            customer.Email,
+                            $"Ditt nya lösenord till Bokcirkeln",
+                            $"Hej {customer.FirstName}!<br><br>Ditt nya lösenord är: {newPass}<br><br>Mvh. Bokcirkeln.");
+                    }
+                }
+            }
+        }
+        return result;
     }
 }

@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { useState } from "react";
 import "../App.css";
 import "../components/Login/LoginView.css";
@@ -8,6 +8,7 @@ import loggedInUserState from "../atoms/loggedInUserState";
 import { decode as base64_decode, encode as base64_encode } from "base-64";
 import { useNavigate } from "react-router-dom";
 import LoginInViewOverLay from "../components/Login/LoginViewOverlay";
+import ForgottenPasswordModal from "../components/Login/ForgottenPasswordModal";
 
 function LoginView() {
   const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ function LoginView() {
   const [user, setUser] = useRecoilState(loggedInUserState);
   const [loginError, setLoginError] = useState(null);
   const [creationError, setCreationError] = useState(null);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const createNewCustomer = async (e) => {
     e.preventDefault();
@@ -49,7 +51,7 @@ function LoginView() {
       console.log("customer create failed.");
       let json = await resp.json();
       console.log(json);
-	  setCreationError(json);
+      setCreationError(json);
     }
   };
 
@@ -70,22 +72,30 @@ function LoginView() {
 
     let resp = await fetch("/api/customer/login", requestOptions);
     if (resp.ok) {
-		let json = await resp.json();
+      let json = await resp.json();
       if (json.success) {
         json.user.password = "Basic " + base64basicAuth;
-        console.log("login ok: ",json.user);
+        console.log("login ok: ", json.user);
         setUser(json.user);
         navigate("/profile");
       } else {
-		setLoginError(json);
+        setLoginError(json);
       }
     }
   };
-  const errorState = {loginError, setLoginError, creationError, setCreationError};
+  const errorState = {
+    loginError,
+    setLoginError,
+    creationError,
+    setCreationError,
+  };
 
   return (
     <div className="login-view">
-      {(loginError || creationError) && <LoginInViewOverLay errorState={errorState}/>}
+      {showForgotPassword === true && <ForgottenPasswordModal setShowForgotPassword={setShowForgotPassword}/>}
+      {(loginError || creationError) && (
+        <LoginInViewOverLay errorState={errorState} />
+      )}
       <div className="login-wrap">
         <h2>Logga in</h2>
         <form onSubmit={newDoLogin}>
@@ -107,8 +117,11 @@ function LoginView() {
             id="password"
             required
           ></input>
-          <button className="login-button" type="submit">
+          <button className="login-button btn-call-to-action" type="submit">
             Logga in
+          </button>
+          <button type="button" onClick={() => setShowForgotPassword(true)}>
+            Glömt lösenord
           </button>
         </form>
       </div>
