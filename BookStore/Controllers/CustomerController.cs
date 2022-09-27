@@ -92,9 +92,7 @@ public class CustomerController : ControllerBase
     /// <summary>
     /// If done by an Admin, will remove customer from database, otherwise will set account to IsActive = false
     /// </summary>
-    /// <param name="op">Should contain email and password of the user trying to make
-    /// the change, as well as the (in the customerToUpdate object) the id of the
-    /// customer to delete.</param>
+    /// <param name="customerToDelete">Only field used from customer object is Id.</param>
     /// <returns></returns>
     /// <response code="200">Customer remove/deactivate ok.</response>
     /// <response code="400">Failed to remove/deactivate customer.</response>
