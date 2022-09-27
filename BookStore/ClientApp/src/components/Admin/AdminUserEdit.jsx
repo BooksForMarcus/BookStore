@@ -108,8 +108,8 @@ const AdminUserEdit = ({
 			<div className="modal-card">
 				<h2 className="modal-card-header">Är du säker på att du vill ta bort den här kunden?</h2>
 				<div className="modal-card-footer">
-					<button type="button" className="btn-danger" onClick={deleteUser}>Radera</button>
-					<button type="button" className="btn-call-to-action" onClick={(e) =>{setShowDeleteConfirm(false)}}>Ångra</button>
+					<button type="button" onClick={deleteUser}>Radera</button>
+					<button type="button" onClick={(e) =>{setShowDeleteConfirm(false)}}>Avbryt</button>
 				</div>
 			</div>
 		</ModalBaseFull>
@@ -215,8 +215,8 @@ const AdminUserEdit = ({
           </div>
         </div>
         <div className="admin-user-edit-button-area">
-          <button type="button" className="btn-call-to-action" onClick={() => setUserToEdit(null)}>Stäng</button>
-          <button className="btn-warning" type="submit">Spara</button>
+          <button type="button" onClick={() => setUserToEdit(null)}>Stäng</button>
+          <button type="submit">Spara</button>
 		  <button type="button" className="btn-danger" onClick={(e)=>{e.preventDefault;setShowDeleteConfirm(true)}}>Radera</button>
         </div>
       </form>

@@ -113,19 +113,17 @@ function UserProfileView() {
               <div className="modal-card-footer">
                 <button
                   type="button"
-                  className="btn-danger"
                   onClick={deleteUser}
                 >
                   Radera
                 </button>
                 <button
                   type="button"
-                  className="btn-call-to-action"
                   onClick={(e) => {
                     setShowDeleteConfirm(false);
                   }}
                 >
-                  Ångra
+                  Avbryt
                 </button>
               </div>
             </div>

@@ -17,7 +17,7 @@ function SearchResults() {
 				{books.filter((book) => {
 					if (searchWord === '') {
 						return book
-					} else return book.title[0].toLowerCase().includes(searchWord[0].toLowerCase())
+					} else return book.title.toLowerCase().includes(searchWord.toLowerCase())
 						
 				}).map(book => (
                     <div className="main-container">
@@ -80,7 +80,7 @@ function SearchResults() {
 				{books.filter((book) => {
 					if (searchWord === '') {
 						return book
-					} else return book.author[0].toLowerCase().includes(searchWord[0].toLowerCase())
+					} else return book.author.toLowerCase().includes(searchWord.toLowerCase())
 				}).map(book => (
                     <div className="main-container">
                         <div className="side"></div>
