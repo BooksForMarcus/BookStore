@@ -32,7 +32,7 @@ function BookSearch() {
 						
 				}).map(book => (
 					<div className='dataItem' key={book.id}>
-						{book.soldBy === 'kund' ?
+						{book.soldById === 'kund' ?
 							<NavLink className='dataItem' to='/search_book' onClick={() => setItem(book.title) + clearSearchBar()}>
 								<p>{book.title}: begagnad</p>
 							</NavLink>
