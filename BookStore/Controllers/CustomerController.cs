@@ -3,6 +3,7 @@
 using BookStore.Authorize;
 using BookStore.DbAccess;
 using BookStore.DTO;
+using BookStore.Helpers;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -158,5 +159,14 @@ public class CustomerController : ControllerBase
         }
         var result = await _customerCrud.Login(auth);
         return result is null ? BadRequest() : Ok(result);
+    }
+    
+    [HttpPost("forgotpassword/")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ForgotPassword(Customer forgetful)
+    {   
+        var result = await _customerCrud.PasswordReset(forgetful);
+        if (result && EnvironmentHelper.IsDev) return Ok(new {password=forgetful.Password});
+        else return result ? Ok() : BadRequest();
     }
 }

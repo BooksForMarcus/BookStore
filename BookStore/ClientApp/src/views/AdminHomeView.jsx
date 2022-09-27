@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import AdminMain from '../components/Admin/AdminMain';
 
 function AdminHomeView({user}) {
