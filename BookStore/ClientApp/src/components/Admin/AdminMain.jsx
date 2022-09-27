@@ -2,20 +2,25 @@ import "./admin.css";
 import AdminNav from "./AdminNav";
 import { useState } from "react";
 import AdminUserView from "./AdminUserView";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const AdminMain = ({user}) => {
+const AdminMain = (user) => {
   const [nav, setNav] = useState("users");
   const [users, setUsers] = useState(null);
-  
-  return user!==null && user.isAdmin?(
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user===null || !user.isAdmin) {
+      navigate("/login");
+    }
+  }, []);
+
+  return (
     <div className="admin-main">
       <AdminNav setNav={setNav} />
       {nav === "users" && <AdminUserView users={users} setUsers={setUsers} />}
     </div>
-  ):(
-	<div className="admin-main">
-		Please log in with admin account.
-	</div>
   );
 };
 

@@ -71,6 +71,8 @@ public class CustomerCrud
         customer.IsAdmin = false;
         customer.IsActive = true;
 
+        //we dont want emails to be cap sensitive.
+        customer.Email = customer.Email.ToLower();
         //mail ok?
         var checkMail = CustomerHelper.ValidEmail(customer.Email);
         if (!String.IsNullOrEmpty(checkMail))
@@ -140,29 +142,21 @@ public class CustomerCrud
     {
         var result = false;
         if (op is null
-           || string.IsNullOrWhiteSpace(op.Email)
-           || string.IsNullOrWhiteSpace(op.Password)
+           || string.IsNullOrWhiteSpace(op.Id)
            || op.CustomerToUpdate is null
            || string.IsNullOrWhiteSpace(op.CustomerToUpdate.Id)) return result;
 
-        var auth = new CustomerAuthorize() { Email = op.Email, Password = op.Password };
-
         if (op.CustomerToUpdate.Id.Length == 24)
         {
-            var login = await Login(auth);
-            if (login is not null && login.IsAdmin)
+            if (op.IsAdmin && op.Id != op.CustomerToUpdate.Id)
             {
-                var customerToDelete = await GetCustomerById(op.CustomerToUpdate.Id);
-                if (customerToDelete is not null && customerToDelete.Email != auth.Email)
-                {
                     var response = await customers.DeleteOneAsync(x => x.Id == op.CustomerToUpdate.Id);
                     result = response.IsAcknowledged && response.DeletedCount > 0;
-                }
             }
-            else if (login is not null)
+            else if (op.Id == op.CustomerToUpdate.Id)
             {
                 var customerToDelete = await GetCustomerById(op.CustomerToUpdate.Id);
-                if (customerToDelete.Email == auth.Email)
+                if (customerToDelete is not null)
                 {
                     var updatefilter = Builders<Customer>.Filter.Eq("Id", op.CustomerToUpdate.Id);
 
@@ -182,21 +176,26 @@ public class CustomerCrud
         return result.FirstOrDefault();
     }
 
-    public async Task<Customer> Login(CustomerAuthorize auth)
+    public async Task<LoginResponse> Login(CustomerAuthorize auth)
     {
-        Customer result = null!;
+        LoginResponse result = new();
         if (auth is not null && !String.IsNullOrEmpty(auth.Email) && !String.IsNullOrWhiteSpace(auth.Password))
         {
+            //we dont wan't mails to be cap sensitive
+            auth.Email = auth.Email.ToLower();
             var cust = await GetCustomerByEmail(auth.Email);
-            if (cust is not null && cust.IsActive && !cust.IsBlocked)
+            if (cust is not null && cust.IsActive)
             {
-                var correctPassword = CustomerHelper.ConfirmPassword(cust, auth.Password);
-                if (correctPassword)
-                {
-                    result = cust;
-                    //scrub password
-                    result.Password = "";
-                }
+                result.UserFound = true;
+                result.ValidPassword = CustomerHelper.ConfirmPassword(cust, auth.Password);
+            }
+            if (result.ValidPassword) result.IsBlocked = cust!.IsBlocked;
+            if (result.ValidPassword && !result.IsBlocked)
+            {
+                result.Success = true;
+                //scrub password
+                cust.Password = "";
+                result.User = cust;
             }
         }
         return result;
@@ -207,7 +206,7 @@ public class CustomerCrud
         Customer result = null!;
         if (op is null
             || op.CustomerToUpdate is null
-            || (op.Email == op.CustomerToUpdate.Email && !op.CustomerToUpdate.IsAdmin)) return result;
+            || !op.IsAdmin) return result;
 
         //if the password field is not empty in customerToUpdate, we encrypt it and add it back.
         if (!string.IsNullOrWhiteSpace(op.CustomerToUpdate.Password))
@@ -229,7 +228,7 @@ public class CustomerCrud
 
     internal async Task<Customer?> CustomerUpdateSelf(CustomerOperation op)
     {
-        var updateCustomer = await GetCustomerByEmail(op.Email);
+        var updateCustomer = await GetCustomerById(op.Id);
         if (updateCustomer is not null)
         {
             //user may change name(First,Last),password and address

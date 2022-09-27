@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import booksState from "../atoms/booksState";
 import sideImageone from "../assets/image1.jpg";
 import sideImagetwo from "../assets/image2.jpg";
+import { Link } from "react-router-dom";
 
 function HomeView() {
   const [books, setBooks] = useRecoilState(booksState);
@@ -11,7 +12,6 @@ function HomeView() {
   const getBooks = async () => {
         const resp = await fetch("/api/Book");
         const json = await resp.json();
-        console.log(json);
         setBooks(json);
     };
 
@@ -58,18 +58,23 @@ function HomeView() {
     ) : (
       getFiveNewBooks().map((b, i) => {
           return (
-            <div className="card-product" key={b.id}>
-            <div className="book-image-wrapper">
-                <img
-                className="book-img"
-                src={b.imageURL}
-                alt="Front image of book"
-                >
-                </img>
+            <Link
+                  to="/book"
+                  state={b}
+            className="card-product-link" key={b.id}>
+            <div className="card-product">
+                <div className="book-image-wrapper">
+                    <img
+                    className="book-img"
+                    src={b.imageURL}
+                    alt="Front image of book"
+                    >
+                    </img>
+                </div>
+                <span className="card-product-title">{b.title}</span>
+                <span className="card-product-price">{b.price} kr</span>
             </div>
-                <p>{b.title}</p>
-                <p>{b.price}kr</p>
-            </div>
+            </Link>
           );
       })
     );
@@ -85,7 +90,11 @@ function HomeView() {
     ) : (
       getFiveUsedBooks().map((b, i) => {
           return (
-            <div className="card-product" key={b.id}>
+            <Link
+            to="/book"
+            state={b}
+            className="card-product-link" key={b.id}>
+            <div className="card-product">
                 <div className="book-image-wrapper">
                     <img
                     className="book-img"
@@ -94,9 +103,10 @@ function HomeView() {
                     >
                     </img>
                 </div>
-                <p>{b.title}</p>
-                <p>{b.price}kr</p>
+                <span className="card-product-title">{b.title}</span>
+                <span className="card-product-price">{b.price} kr</span>
              </div>
+             </Link>
           );
       })
     );
@@ -112,7 +122,11 @@ function HomeView() {
         ) : (
             getRandomBooks(books).map((b, i) => {
                 return (
-                    <div className="card-product" key={b.id}>
+                  <Link
+                    to="/book"
+                    state={b}
+                    className="card-product-link" key={b.id}>
+                    <div className="card-product">
                         <div className="book-image-wrapper">
                             <img
                                 className="book-img"
@@ -121,9 +135,10 @@ function HomeView() {
                             >
                             </img>
                         </div>
-                        <p>{b.title}</p>
-                        <p>{b.price}kr</p>
+                        <span className="card-product-title">{b.title}</span>
+                        <span className="card-product-price">{b.price} kr</span>
                     </div>
+                    </Link>
                 );
             })
         );
@@ -131,7 +146,6 @@ function HomeView() {
 
   useEffect(() => {
     if(books===null){
-		console.log("Im gonna fetch the books!")
 		getBooks();
 	} 
   }, []);
