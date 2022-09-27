@@ -83,7 +83,7 @@ public class CustomerCrud
 
         //check if mail is already in use?
         var userWithGivenEmail = await GetCustomerByEmail(customer.Email);
-        if (userWithGivenEmail is null) createResult.MailAvailable = true;
+        if (userWithGivenEmail is null || !userWithGivenEmail.IsActive) createResult.MailAvailable = true;
 
         //names ok?
         customer.FirstName = customer.FirstName.Trim();
@@ -105,8 +105,22 @@ public class CustomerCrud
             && createResult.ValidFirstName
             && createResult.ValidLastName)
         {
-            await customers.InsertOneAsync(customer);
-            var result = !String.IsNullOrWhiteSpace(customer.Id);
+            var result = false;
+            if (userWithGivenEmail is not null)
+            {
+                //if the user already exists, but is not active, we can reactivate it.
+                var filter = Builders<Customer>.Filter.Eq(c => c.Email, customer.Email);
+                var update = Builders<Customer>.Update.Set("IsActive", true);
+                var resp = await customers.UpdateOneAsync(filter, update);
+                result = resp.IsAcknowledged && resp.ModifiedCount == 1;
+            }
+            else
+            {
+                //if the user does not exist, we can create a new one
+                await customers.InsertOneAsync(customer);
+                result = !String.IsNullOrWhiteSpace(customer.Id);
+
+            }
             if (result) createResult.DbCreateSucceeded = true;
         }
 
