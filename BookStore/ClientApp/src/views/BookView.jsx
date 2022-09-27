@@ -2,13 +2,16 @@
 import "../App.css";
 import { useLocation } from "react-router-dom";
 import logo from '../assets/boklogo.png'
-
+import booksState from "../atoms/booksState";
+import { useRecoilState } from "recoil";
 function BookView() {
     const loc = useLocation();
     var book = loc.state;
+	const [books, setBooks] = useRecoilState(booksState);
 
     return (
-        <div className="main-container">
+		<div className="main-container">
+		{console.log(books)}
             <div className="side"></div>
             <div className="bookView-main-wrapper"> 
                 {!book.imageURL ? 
