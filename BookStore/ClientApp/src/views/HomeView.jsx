@@ -5,11 +5,10 @@ import booksState from "../atoms/booksState";
 import sideImageone from "../assets/image1.jpg";
 import sideImagetwo from "../assets/image2.jpg";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
 
 function HomeView() {
     const [books, setBooks] = useRecoilState(booksState);
-    const [book, setBook] = useRecoilState(bookState);
+/*    const [book, setBook] = useRecoilState(bookState);*/
 
 //   const getBooks = async () => {
 //         const resp = await fetch("/api/Book");

@@ -13,7 +13,7 @@ function BookView() {
     var bookId = window.location.pathname.split("/").pop();
 
     const getBook = async () => {
-        const resp = await fetch(`/api/Book/${bookId}`);
+        const resp = await fetch(`/api/Book/${bookdata}`);
         const json = await resp.json();
         setBook(json);
         console.log(book);
