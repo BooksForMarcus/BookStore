@@ -2,16 +2,30 @@
 import "../App.css";
 import { useLocation } from "react-router-dom";
 import logo from '../assets/boklogo.png'
-import booksState from "../atoms/booksState";
+import bookState from "../atoms/bookState";
 import { useRecoilState } from "recoil";
+import { useParams } from "react-router-dom";
 function BookView() {
     const loc = useLocation();
-    var book = loc.state;
-	const [books, setBooks] = useRecoilState(booksState);
+
+    var bookdata = loc.state;
+    const [book, setBook] = useRecoilState(bookState);
+    var bookId = window.location.pathname.split("/").pop();
+
+    const getBook = async () => {
+        const resp = await fetch(`/api/Book/${bookId}`);
+        const json = await resp.json();
+        setBook(json);
+        console.log(book);
+
+    };
+
+    useEffect(() => {
+        if (book === null) getBook();
+    }, []);
 
     return (
-		<div className="main-container">
-		{console.log(books)}
+        <div className="main-container">
             <div className="side"></div>
             <div className="bookView-main-wrapper"> 
                 {!book.imageURL ? 
