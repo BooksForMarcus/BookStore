@@ -27,7 +27,6 @@ function BookView() {
   return (
     <div className="main-container">
       <div className="side"></div>
-      {book !== null && <BookDetails book={book} />}
       {book !== null ? <BookDetails book={book} /> : <span>Loading...</span>}
     </div>
   );

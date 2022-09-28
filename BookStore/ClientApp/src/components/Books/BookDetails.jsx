@@ -1,3 +1,5 @@
+import logo from "../../assets/boklogo.png"
+
 const BookDetails = ({ book }) => {
   return (
     <div className="bookView-main-wrapper">
