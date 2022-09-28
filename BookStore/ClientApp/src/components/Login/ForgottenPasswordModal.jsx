@@ -19,8 +19,13 @@ const ForgottenPasswordModal = ({setShowForgotPassword}) => {
 		console.log(requestOptions)
 		let resp = await fetch("/api/customer/forgotpassword", requestOptions);
 		if (resp.ok) {
-			const json = await resp.json();
-			console.log(json);
+			console.log(resp)
+			try {
+				let json = await resp.json();
+				console.log(json);
+			} catch (error) {
+				console.log(error);
+			}
 			setShowForgotPassword(false);
 		} else {
 			setError((<p>Kunde inte återställa lösenord,<br></br> kontrollera att du har skrivit in rätt email.</p>));

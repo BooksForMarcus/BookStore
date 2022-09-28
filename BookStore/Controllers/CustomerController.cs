@@ -162,6 +162,6 @@ public class CustomerController : ControllerBase
     {
         var result = await _customerCrud.PasswordReset(forgetful);
         if (result && EnvironmentHelper.IsDev) return Ok(new {password=forgetful.Password});
-        else return result ? Ok() : BadRequest();
+        else return result ? Ok(new { response= "mail sent."}) : BadRequest();
     }
 }
