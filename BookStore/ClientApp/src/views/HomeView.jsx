@@ -7,7 +7,8 @@ import sideImagetwo from "../assets/image2.jpg";
 import { Link } from "react-router-dom";
 
 function HomeView() {
-  const [books, setBooks] = useRecoilState(booksState);
+    const [books, setBooks] = useRecoilState(booksState);
+/*    const [book, setBook] = useRecoilState(bookState);*/
 
 //   const getBooks = async () => {
 //         const resp = await fetch("/api/Book");
@@ -59,7 +60,7 @@ function HomeView() {
       getFiveNewBooks().map((b, i) => {
           return (
             <Link
-                  to="/book"
+                  to={`book/${b.id}`}
                   state={b}
             className="card-product-link" key={b.id}>
             <div className="card-product">
@@ -91,7 +92,7 @@ function HomeView() {
       getFiveUsedBooks().map((b, i) => {
           return (
             <Link
-            to="/book"
+            to={`book/${b.id}`}
             state={b}
             className="card-product-link" key={b.id}>
             <div className="card-product">
@@ -123,7 +124,7 @@ function HomeView() {
             getRandomBooks(books).map((b, i) => {
                 return (
                   <Link
-                    to="/book"
+                    to={`book/${b.id}`}
                     state={b}
                     className="card-product-link" key={b.id}>
                     <div className="card-product">

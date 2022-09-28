@@ -61,12 +61,12 @@ public class BookCrud
 
     // VVVVVVV Används ej just nu, men kanske behövs sen..?
 
-    //public async Task<Book> GetBook(string Id)
-    //{
-    //    var findFilter = Builders<Book>.Filter.Eq("Id", Id);
-    //    var resp = await books.FindAsync(findFilter);
-    //    return resp.FirstOrDefault();
-    //}
+    public async Task<Book> GetBook(string Id)
+    {
+        var findFilter = Builders<Book>.Filter.Eq("Id", Id);
+        var resp = await books.FindAsync(findFilter);
+        return resp.FirstOrDefault();
+    }
 
     public async Task<bool> DeleteBook(Book book)
     {

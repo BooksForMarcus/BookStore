@@ -111,5 +111,30 @@ public class BookController : ControllerBase
             return BadRequest(new { error = "You can only delete your own books, if nonadmin" });
         }
     }
+
+    /// <summary>
+    /// Hämtar bok. Ingen login krävs.
+    /// </summary>
+    /// <returns>lista med böcker</returns>
+    [HttpGet("{id}")]
+    [AllowAnonymous]
+    public async Task<ActionResult<Book>> Get(string id)
+    {
+        var book = await _bookCrud.GetBook(id);
+
+        if (book == null)
+        {
+            return NotFound();
+        }
+        return book;
+    }
+    /// <summary>
+    /// Skapa Bok. Måste vara admin och/eller stå som säljare av boken.
+    /// </summary>
+    /// <param name="book"> Boken att skapa</param>
+    /// <returns>???????</returns>
+    /// <response code="200">Boken skapad</response>
+    /// <response code="400">Boken inte skapad</response>
+    /// <response code="500">Programmeraren har klantat sig</response> 
 }
 
