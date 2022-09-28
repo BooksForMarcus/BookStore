@@ -108,7 +108,7 @@ const AdminUserEdit = ({
 			<div className="modal-card">
 				<h2 className="modal-card-header">Är du säker på att du vill ta bort den här kunden?</h2>
 				<div className="modal-card-footer">
-					<button type="button" onClick={deleteUser}>Radera</button>
+					<button type="button" onClick={deleteUser} className="btn-danger">Radera</button>
 					<button type="button" onClick={(e) =>{setShowDeleteConfirm(false)}}>Avbryt</button>
 				</div>
 			</div>

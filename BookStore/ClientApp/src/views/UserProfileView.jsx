@@ -113,6 +113,7 @@ function UserProfileView() {
               <div className="modal-card-footer">
                 <button
                   type="button"
+				  className="btn-danger"
                   onClick={deleteUser}
                 >
                   Radera
