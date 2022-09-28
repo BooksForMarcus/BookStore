@@ -128,11 +128,32 @@ public class CustomerController : ControllerBase
         return result is null ? BadRequest() : Ok(result);
     }
 
+    [AllowAnonymous]
     [HttpGet("login/")]
     public async Task<IActionResult> GetLogin()
     {
-        Customer? auth = HttpContext.Items["Customer"] as Customer;
-        return auth is null ? BadRequest() : Ok(auth);
+        HttpContext httpContext = HttpContext.Request.HttpContext;
+
+        string authHeader = httpContext.Request.Headers["Authorization"];
+        var auth = new CustomerAuthorize();
+        if (authHeader != null && authHeader.StartsWith("Basic"))
+        {
+            string encodedUsernamePassword = authHeader.Substring("Basic ".Length).Trim();
+            Encoding encoding = Encoding.GetEncoding("iso-8859-1");
+            string usernamePassword = encoding.GetString(Convert.FromBase64String(encodedUsernamePassword));
+
+            int seperatorIndex = usernamePassword.IndexOf(':');
+
+            auth.Email = usernamePassword.Substring(0, seperatorIndex);
+            auth.Password = usernamePassword.Substring(seperatorIndex + 1);
+        }
+        else
+        {
+            //Handle what happens if that isn't the case
+            throw new Exception("The authorization header is either empty or isn't Basic.");
+        }
+        var result = await _customerCrud.Login(auth);
+        return result is null ? BadRequest() : Ok(result);
     }
 
     [HttpPost("forgotpassword/")]
