@@ -21,13 +21,17 @@
 	background-color: #fcf8e8;
 	border-radius: 8px;
 	padding: 2em;
-	display: grid;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	/*display: grid;
 	grid-template-rows: 1fr 1fr 1fr;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-areas: 
 		"header header header"
 		"body body body"
-		"footer footer footer";
+		"footer footer footer";*/
 	box-shadow: 5px 5px 10px #00000080;
 }
 .modal-card-header{

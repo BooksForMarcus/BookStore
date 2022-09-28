@@ -57,7 +57,7 @@ function BookSearch() {
 
     if (search.length > 0) {
       return (
-        <div>
+        <div className="search-bar">
           {books
             .filter((val) => {
               if (search === "") {
