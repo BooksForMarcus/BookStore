@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 
 const AdminBookEdit = ({book,setBookToEdit}) => {
@@ -57,6 +59,7 @@ const AdminBookEdit = ({book,setBookToEdit}) => {
 				<label htmlFor="imgUrl">Bild URL</label>
 				<input type="text" name="imgUrl" id="imgUrl" value={imgUrl} onChange={(e)=>setImgUrl(e.target.value)}/>
 			</div>
+			<button type="button" onClick={()=>console.log("Kategori button got clicked")}><FontAwesomeIcon icon={faCommentDollar} />Kategorier</button>
 
 
 			</form>
