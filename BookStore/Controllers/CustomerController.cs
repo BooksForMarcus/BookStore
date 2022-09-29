@@ -6,10 +6,7 @@ using BookStore.DTO;
 using BookStore.Helpers;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
-using System.Net.Http.Headers;
 using System.Text;
-using static Helpers.EnvironmentHelper;
 
 [Authorize]
 [Route("api/[controller]")]
@@ -62,7 +59,7 @@ public class CustomerController : ControllerBase
     /// <returns>The replaces Customer object on success, otherwise null. ATTENTION: returns the *replaced* object, not the current!</returns>
     /// <response code="200">Customer update ok. Will also return the changed customer object.</response>
     /// <response code="400">Failed to update customer.</response>
-    /// <remarks>IMPORTANT: if done by admin, will use the posted customerToUpdate object to replace the information in the DB.
+    /// <remarks>IMPORTANT: if done by admin, will use the posted <see cref="Customer"/> object to replace the information in the DB.
     /// If done by non-Admin, will only update password, first name, last name or address fields.</remarks>
     [HttpPut("updatecustomer")]
     public async Task<IActionResult> Put(Customer customer)
@@ -89,12 +86,10 @@ public class CustomerController : ControllerBase
         return result is not null ? Ok(result) : BadRequest();
     }
 
-
     /// <summary>
     /// If done by an Admin, will remove customer from database, otherwise will set account to IsActive = false
     /// </summary>
     /// <param name="customerToDelete">Only field used from customer object is Id.</param>
-    /// <returns></returns>
     /// <response code="200">Customer remove/deactivate ok.</response>
     /// <response code="400">Failed to remove/deactivate customer.</response>
     /// <remarks>The only information used from the customerToUpdate object is the Id,
@@ -121,7 +116,6 @@ public class CustomerController : ControllerBase
     /// Attempts to login with an object containing email and password.
     /// </summary>
     /// <param name="auth">Object containing email and password.</param>
-    /// <returns></returns>
     /// <response code="200">Login in ok.</response>
     /// <response code="400">Login failed.</response>
     /// <remarks>Attempts to login using the given email and password,
@@ -133,6 +127,7 @@ public class CustomerController : ControllerBase
         var result = await _customerCrud.Login(auth);
         return result is null ? BadRequest() : Ok(result);
     }
+
     [AllowAnonymous]
     [HttpGet("login/")]
     public async Task<IActionResult> GetLogin()
@@ -160,13 +155,13 @@ public class CustomerController : ControllerBase
         var result = await _customerCrud.Login(auth);
         return result is null ? BadRequest() : Ok(result);
     }
-    
+
     [HttpPost("forgotpassword/")]
     [AllowAnonymous]
     public async Task<IActionResult> ForgotPassword(Customer forgetful)
-    {   
+    {
         var result = await _customerCrud.PasswordReset(forgetful);
         if (result && EnvironmentHelper.IsDev) return Ok(new {password=forgetful.Password});
-        else return result ? Ok() : BadRequest();
+        else return result ? Ok(new { response= "mail sent."}) : BadRequest();
     }
 }

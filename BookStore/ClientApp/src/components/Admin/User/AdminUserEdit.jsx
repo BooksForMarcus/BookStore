@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import UpdateOk from "./UpdateOk";
-import UpdateFailed from "./UpdateFailed";
-import getBasicAuthString from "../../getBasicAuthString";
-import ModalBaseFull from "../Modal/ModalBaseFull";
+import UpdateOk from "../UpdateOk";
+import UpdateFailed from "../UpdateFailed";
+import getBasicAuthString from "../../../getBasicAuthString";
+import ModalBaseFull from "../../Modal/ModalBaseFull";
 
 
 const AdminUserEdit = ({
@@ -108,7 +108,7 @@ const AdminUserEdit = ({
 			<div className="modal-card">
 				<h2 className="modal-card-header">Är du säker på att du vill ta bort den här kunden?</h2>
 				<div className="modal-card-footer">
-					<button type="button" onClick={deleteUser}>Radera</button>
+					<button type="button" onClick={deleteUser} className="btn-danger">Radera</button>
 					<button type="button" onClick={(e) =>{setShowDeleteConfirm(false)}}>Avbryt</button>
 				</div>
 			</div>

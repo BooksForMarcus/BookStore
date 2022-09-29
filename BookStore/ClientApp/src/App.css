@@ -60,6 +60,7 @@ header {
 .main-container {
     display: grid;
     grid-template-columns: 1fr 4fr;
+	position: relative;
 }
 
 .main-wrapper {
@@ -310,4 +311,9 @@ input:focus {
     color: #DF7861;
     font-weight: bold;
     margin-bottom: 1em ;
+}
+.searchBar{
+	position: absolute;
+	top: 19em;
+	z-index: 2;
 }

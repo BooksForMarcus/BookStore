@@ -70,7 +70,7 @@ function SearchResults() {
                             </div>
                     </Link>
 				))}
-			</div >
+			</div>
 		}
 	}
 

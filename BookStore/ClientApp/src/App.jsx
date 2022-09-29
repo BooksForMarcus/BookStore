@@ -22,13 +22,14 @@ import booksState from "./atoms/booksState";
 function App() {
 	const [user, setUser] = useRecoilState(loggedInUserState);
 	const [books, setBooks] = useRecoilState(booksState);
+	const [showSearch,setShowSearch] = useState(false);
 	
 	const getBooks = async () => {
 		const resp = await fetch("/api/Book");
 		const json = await resp.json();
 		setBooks(json);
 	};
-	
+
 	useEffect(() => {
 		if(books === null) getBooks();
 	}, []);
@@ -38,7 +39,6 @@ function App() {
             <div className="App">
                 <header>
                     <NavLink className="nav_logo" to="/"><img className="nav_logo" src={logo} alt="An image of bookstore logo" /></NavLink>
-                    <div className="searchBar"><Search /></div>
                     <div className="navbar">
                         <div className="menu-item" >
                             <NavLink to="/" className="menu-link">HEM</NavLink>
@@ -47,7 +47,7 @@ function App() {
                             <NavLink to="/">KATEGORIER</NavLink>
                         </div>
                         <div className="menu-item" >
-                            <span className="nav-item-search" to="/">SÖK</span>
+                            <span className="nav-item-search" to="/" onClick={()=>setShowSearch(true)}>SÖK</span>
                             {/* <div className="nav-modal">
                                 <div className="searchBar"><Search /></div>
                             </div> */}
@@ -58,6 +58,7 @@ function App() {
                     </div>
                 </header>
                 <main>
+                    {showSearch && <div className="searchBar"><Search /></div>}
                     <Routes>
                         <Route path='/' element={<HomeView />} />
                         <Route path='/admin' element={<AdminView user={user}/>} />
