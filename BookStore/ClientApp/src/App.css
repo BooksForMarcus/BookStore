@@ -107,6 +107,11 @@ footer {
     place-items: center;
 }
 
+.card-product-result{
+    display: grid;
+    grid-template-rows: 3fr 1fr 1fr 1fr;
+    place-items: center;
+}
 .book-image-wrapper {
     height: 200px;
     width: 150px;
@@ -235,6 +240,11 @@ input:focus {
 
 .profile-view-links {
     color: #DF7861;
+}
+
+.profileNav-wrap {
+    display: grid;
+    place-items: center;
 }
 
 /*====== BookView ======*/
