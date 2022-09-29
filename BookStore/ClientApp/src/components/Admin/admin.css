@@ -139,3 +139,35 @@ button:hover {
   align-items: center;
   width: 1fr;
 }
+.admin-book-list{
+}
+.admin-book-list-item {
+  display: grid;
+  grid-template-columns: 1fr repeat(3, 2fr) 1fr;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  transition: 0.4s;
+}
+div.admin-book-list-item{
+	  border-bottom: 1px solid #ecb390;
+	  margin: 0em 3em;
+	  padding: 0em 1em;
+	  cursor: pointer;
+}
+div.admin-book-list-item:hover {
+  background-color: #415d51;
+  color: #fcf8e8;
+}
+header.admin-book-list-item {
+	max-width: 100%;
+	padding: 0em 4em;
+}
+
+.admin-book-edit{
+	margin: 1em 3em;
+}
+.admin-book-edit-container{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}

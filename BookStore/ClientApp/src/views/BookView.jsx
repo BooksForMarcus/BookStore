@@ -18,7 +18,6 @@ function BookView() {
   };
 
   useEffect(() => {
-	
     if (book === null || book.id !== bookId) {
       if (bookdata !== null) setBook(bookdata);
       else getBook();
