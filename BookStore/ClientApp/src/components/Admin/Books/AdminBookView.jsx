@@ -14,6 +14,8 @@ function AdminBookView() {
         <AdminBookList books={books} setBookToEdit={setBookToEdit} />
       ) : (
         <AdminBookEdit
+          books={books}
+          setBooks={setBooks}
           book={books.find((b) => b.id === bookToEdit)}
           setBookToEdit={setBookToEdit}
         />

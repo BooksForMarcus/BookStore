@@ -1,6 +1,6 @@
 const AdminBookListItem = ({book,setBookToEdit}) => {
 	return (
-		<div className="admin-book-list-item" onClick={()=>setBookToEdit!==undefined?setBookToEdit(book.id):null}>
+		<div key={book.id} className="admin-book-list-item" onClick={()=>setBookToEdit!==undefined?setBookToEdit(book.id):null}>
 			<p>{book.isbn}</p>
 			<p>{book.title}</p>
 			<p>{book.author}</p>

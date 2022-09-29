@@ -18,20 +18,30 @@ import loggedInUserState from "./atoms/loggedInUserState";
 import SearchResults from "./components/Search/SearchResults";
 import { useEffect } from "react";
 import booksState from "./atoms/booksState";
+import categoriesState from "./atoms/categoriesState";
 
 function App() {
 	const [user, setUser] = useRecoilState(loggedInUserState);
 	const [books, setBooks] = useRecoilState(booksState);
 	const [showSearch,setShowSearch] = useState(false);
+	const [categories, setCategories] = useRecoilState(categoriesState);
 	
 	const getBooks = async () => {
 		const resp = await fetch("/api/Book");
 		const json = await resp.json();
+		json.sort((a,b) => a.title.localeCompare(b.title));
 		setBooks(json);
+	};
+	const getCategories = async () => {
+		const resp = await fetch("/api/category");
+		const json = await resp.json();
+		json.sort((a,b) => a.name.localeCompare(b.name));
+		setCategories(json);
 	};
 
 	useEffect(() => {
 		if(books === null) getBooks();
+		if(categories === null) getCategories();
 	}, []);
 
     return (
