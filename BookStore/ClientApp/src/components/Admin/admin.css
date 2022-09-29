@@ -170,4 +170,38 @@ header.admin-book-list-item {
 .admin-book-edit-container{
 	display: grid;
 	grid-template-columns: 1fr 1fr;
+	align-items: baseline;
+	justify-items: left;
 }
+.admin-book-edit-container input{
+	margin: 0.5em;
+}
+.admin-book-edit-category-area{
+	position: relative;
+}
+.admin-book-edit-categories-list{
+	position: absolute;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	left: 1.7em;
+	top:2.75em;
+	border: 2px solid #ecb390;
+	background-color: white;
+	width: max-content;
+}
+.admin-book-edit-container-btn-area{
+	grid-column: 1/3;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.category-list-item{
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	margin: 0em 0.5em;
+	justify-content: left;
+	align-items: center;
+	padding: 0.5em;
+}
+

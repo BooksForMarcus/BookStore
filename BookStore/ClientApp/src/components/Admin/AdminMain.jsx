@@ -12,7 +12,6 @@ const AdminMain = ({user}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-	console.log("AdminMain useEffectm user is ", user);
     if (user === null || (user!==null && user.isAdmin === false)) {
       navigate("/login");
     }

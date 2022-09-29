@@ -31,7 +31,6 @@ function LoginView() {
       firstName: firstName,
       lastName: lastName,
     });
-    console.log(newUser);
     const requestOptions = {
       method: "POST",
       headers: {
@@ -43,7 +42,6 @@ function LoginView() {
     //let json = null;
     let resp = await fetch("/api/customer/", requestOptions);
     if (resp.ok) {
-      console.log("create customer ok");
       setUserCreated(true);
       let json = await resp.json();
       console.log(json);
@@ -75,7 +73,6 @@ function LoginView() {
       let json = await resp.json();
       if (json.success) {
         json.user.password = "Basic " + base64basicAuth;
-        console.log("login ok: ", json.user);
         setUser(json.user);
         navigate("/profile");
       } else {

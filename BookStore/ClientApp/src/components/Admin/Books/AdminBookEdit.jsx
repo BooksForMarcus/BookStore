@@ -1,8 +1,17 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilState } from "recoil";
+import categoriesState from "../../../atoms/categoriesState";
+import CategoryListItem from "./CategoryListItem";
+import UpdateFailed from "../UpdateFailed";
+import UpdateOk from "../UpdateOk";
+import loggedInUserState from "../../../atoms/loggedInUserState";
 
-const AdminBookEdit = ({ book, setBookToEdit }) => {
+const AdminBookEdit = ({ books,setBooks,book, setBookToEdit }) => {
+	const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
+  const [allCategories, setAllCategories] = useRecoilState(categoriesState);
+  const [categories, setCategories] = useState(book.categories);
   const [title, setTitle] = useState(book.title);
   const [author, setAuthor] = useState(book.author);
   const [isbn, setIsbn] = useState(book.isbn);
@@ -13,11 +22,54 @@ const AdminBookEdit = ({ book, setBookToEdit }) => {
   const [weight, setWeight] = useState(book.weight);
   const [pages, setPages] = useState(book.pages);
   const [imgUrl, setImgUrl] = useState(book.imageURL);
+  const [showCategories, setShowCategories] = useState(false);
+  const [updateOk, setUpdateOk] = useState(null);
 
+ const updateBook = async (e) => {
+	e.preventDefault();
+	const updatedBook = {
+	  ...book,
+	  title,
+	  author,
+	  isbn,
+	  numInstock,
+	  soldById,
+	  price,
+	  language,
+	  weight,
+	  pages,
+	  imageURL: imgUrl,
+	  categories
+	};
+	const requestOptions = {
+		method: "PUT",
+		headers: {
+		  Authorization: loggedInUser.password,
+		  Accept: "application/json",
+		  "Content-Type": "application/json",
+		},
+		body: JSON.stringify(updatedBook),
+	  };
+  
+	  let resp = await fetch("/api/book", requestOptions);
+	  if (resp.ok) {
+		let json = await resp.json();
+		setUpdateOk(true);
+		var newBooks = books.filter((b) => b.id !== updatedBook.id);
+		newBooks.push(updatedBook);
+		newBooks.sort((a, b) => a.title.localeCompare(b.title));
+		setBooks(newBooks);
+	  } else {
+		setUpdateOk(false);
+	  }
+	};
+  
+  
+ 
   return (
     <div className="admin-book-edit">
       <h3>{title}</h3>
-      <form className="admin-book-edit-container">
+      <form onSubmit={updateBook} className="admin-book-edit-container">
         <div>
           <label htmlFor="author">Titel</label>
           <input
@@ -25,9 +77,28 @@ const AdminBookEdit = ({ book, setBookToEdit }) => {
             name="title"
             id="title"
             value={title}
-			required
+            required
             onChange={(e) => setTitle(e.target.value)}
           />
+        </div>
+        <div className="admin-book-edit-category-area">
+          <button
+            type="button"
+            onClick={() => setShowCategories(!showCategories)}
+          >
+            <FontAwesomeIcon icon={faBars} /> Kategorier
+          </button>
+          {showCategories && (
+            <div className="admin-book-edit-categories-list">
+              {allCategories.map((category) => (
+                <CategoryListItem
+                  category={category}
+                  categories={categories}
+                  setCategories={setCategories}
+                />
+              ))}
+            </div>
+          )}
         </div>
         <div>
           <label htmlFor="author">Författare</label>
@@ -119,8 +190,17 @@ const AdminBookEdit = ({ book, setBookToEdit }) => {
             onChange={(e) => setImgUrl(e.target.value)}
           />
         </div>
+        <div className="admin-book-edit-container-btn-area">
+		<button type="submit">
+            Uppdatera
+          </button>
+          <button type="button" onClick={() => setBookToEdit(null)}>
+            Stäng
+          </button>
+        </div>
       </form>
-      <button onClick={() => setBookToEdit(null)}>stäng</button>
+	  {updateOk === true && <UpdateOk />}
+      {updateOk === false && <UpdateFailed />}
     </div>
   );
 };
