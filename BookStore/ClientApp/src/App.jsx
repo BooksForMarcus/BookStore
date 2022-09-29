@@ -16,7 +16,6 @@ import Search from "./components/Search/BookSearch"
 import UserProfileView from "./views/UserProfileView";
 import loggedInUserState from "./atoms/loggedInUserState";
 import SearchResults from "./components/Search/SearchResults";
-import BookResult from "./components/Search/BookResult";
 import { useEffect } from "react";
 import booksState from "./atoms/booksState";
 
@@ -66,8 +65,7 @@ function App() {
                         <Route path='/login' element={<LoginView />} />
                         <Route path='/profile' element={<UserProfileView />} />
                         <Route path='/search_result' element={<SearchResults />} />
-                        <Route path='/search_book' element={<BookResult />} />
-                        <Route path='/book/:bookid' element={<BookView />} />
+                        <Route path='/book' element={<BookView />} />
 
                     </Routes>
                 </main>
