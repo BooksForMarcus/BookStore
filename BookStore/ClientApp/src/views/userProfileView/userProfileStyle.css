@@ -1,0 +1,17 @@
+.profile-nav {
+    display: grid;
+    margin-top: 3em;
+}
+
+.profile-navlink {
+   color: #df7861;
+   font-weight: bolder;
+   font-size: larger;
+   margin-bottom: 1em;
+}
+
+.profile-navlink:hover {
+    cursor: pointer;
+    color: #688472;
+    background-color: #fcf8e8;
+}

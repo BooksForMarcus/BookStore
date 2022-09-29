@@ -242,6 +242,11 @@ input:focus {
     color: #DF7861;
 }
 
+.profileNav-wrap {
+    display: grid;
+    place-items: center;
+}
+
 /*====== BookView ======*/
 
 .bookView-main-container {
