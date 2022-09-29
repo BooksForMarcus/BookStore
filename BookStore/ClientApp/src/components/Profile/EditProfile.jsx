@@ -1,12 +1,12 @@
-﻿import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import "../App.css";
+import "../../App.css";
 import { useRecoilState } from "recoil";
-import loggedInUserState from "../atoms/loggedInUserState";
-import getBasicAuthString from "../getBasicAuthString";
-import ModalBaseFull from "../components/Modal/ModalBaseFull";
+import loggedInUserState from "../../atoms/loggedInUserState";
+import getBasicAuthString from "../../getBasicAuthString";
+import ModalBaseFull from "../Modal/ModalBaseFull";
 
-function UserProfileView() {
+function EditProfile() {
   const [user, setUser] = useRecoilState(loggedInUserState);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -90,19 +90,6 @@ function UserProfileView() {
   }, []);
 
   return (
-    <div className="login-view">
-      <div className="login-wrap">
-        {user !== null && (
-          <h2>
-            Hej {user.firstName[0].toUpperCase() + user.firstName.slice(1)}
-          </h2>
-        )}
-        {user && user.IsAdmin ? (
-          <NavLink to="/admin">ADMIN</NavLink>
-        ) : (
-          <span></span>
-        )}
-      </div>
       <div className="add-account-wrap">
         {showDeleteConfirm && (
           <ModalBaseFull>
@@ -205,8 +192,7 @@ function UserProfileView() {
           </button>
         </form>
       </div>
-    </div>
   );
 }
 
-export default UserProfileView;
+export default EditProfile;
