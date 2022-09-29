@@ -1,17 +1,19 @@
 import "./admin.css";
 import AdminNav from "./AdminNav";
 import { useState } from "react";
-import AdminUserView from "./AdminUserView";
+import AdminUserView from "./User/AdminUserView";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import AdminBookView from "./Books/AdminBookView";
 
-const AdminMain = (user) => {
+const AdminMain = ({user}) => {
   const [nav, setNav] = useState("users");
   const [users, setUsers] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user === null || user.isAdmin === false) {
+	console.log("AdminMain useEffectm user is ", user);
+    if (user === null || (user!==null && user.isAdmin === false)) {
       navigate("/login");
     }
   }, []);
@@ -20,6 +22,7 @@ const AdminMain = (user) => {
     <div className="admin-main">
       <AdminNav setNav={setNav} />
       {nav === "users" && <AdminUserView users={users} setUsers={setUsers} />}
+	  {nav === "books" && <AdminBookView/>}
     </div>
   );
 };

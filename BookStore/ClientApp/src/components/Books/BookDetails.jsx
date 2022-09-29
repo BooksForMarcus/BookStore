@@ -1,6 +1,26 @@
-import logo from "../../assets/boklogo.png"
+import { useRecoilState } from "recoil";
+import cartState from "../../atoms/cartState";
+
+import logo from "../../assets/boklogo.png";
 
 const BookDetails = ({ book }) => {
+  const [cart, setCart] = useRecoilState(cartState);
+
+  const addToCart = () => {
+    if (!cart.some((cartBook) => cartBook.id === book.id)) {
+      setCart([...cart, { ...book, numInstock: 1 }]);
+    } else {
+      setCart(
+        cart.map((cartBook) => {
+          return cartBook.id === book.id
+		  	//? cartBook.numInstock++ <-- This is not allowed
+            ? { ...cartBook, numInstock: cartBook.numInstock + 1 }
+            : cartBook;
+        })
+      );
+    }
+  };
+
   return (
     <div className="bookView-main-wrapper">
       {!book.imageURL ? (
@@ -47,7 +67,7 @@ const BookDetails = ({ book }) => {
               />
             )}
             <span className="book-info-price">{book.price} kr</span>
-            <button disabled>Lägg i varukorgen</button>
+            <button onClick={addToCart}>Lägg i varukorgen</button>
           </div>
         </div>
       </div>

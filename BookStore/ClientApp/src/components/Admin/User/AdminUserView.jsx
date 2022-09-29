@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import loggedInUserState from "../../atoms/loggedInUserState";
+import loggedInUserState from "../../../atoms/loggedInUserState";
 import AdminUserEdit from "./AdminUserEdit";
 import AdminUserList from "./AdminUserList";
 import AdminUserSearchBar from "./AdminUserSearchBar";
