@@ -20,7 +20,7 @@ function SearchResults() {
 					} else return book.title.toLowerCase().includes(searchWord.toLowerCase())
 				}).map(book => (
                     <Link
-                        to="/book"
+                        to={`book/${book.id}`}
                         state={book}
                         className="card-product-link" key={book.id}>
                             <div className="card-product-result">
@@ -52,7 +52,7 @@ function SearchResults() {
 					} else return book.author.toLowerCase().includes(searchWord.toLowerCase())
 				}).map(book => (
                     <Link
-                        to="/book"
+                        to={`book/${book.id}`}
                         state={book}
                         className="card-product-link" key={book.id}>
                             <div className="card-product-result">

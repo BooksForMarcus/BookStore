@@ -79,6 +79,7 @@ function App() {
                         <Route path='/profile' element={<UserProfileView />} />
                         <Route path='/search_result' element={<SearchResults />} />
                         <Route path='/book/:bookid' element={<BookView />} />
+                        <Route path='/search_result/book/:bookid' element={<BookView />} />
 
                     </Routes>
                 </main>
