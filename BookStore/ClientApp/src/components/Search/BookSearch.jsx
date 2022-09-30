@@ -31,7 +31,7 @@ function BookSearch() {
                 {book.soldById === "kund" ? (
                   <Link
                     className="dataItem"
-                    to="/book"
+                    to={`book/${book.id}`}
                     state={book}
                     onClick={() => clearSearchBar()}>
                     <div>
@@ -41,7 +41,7 @@ function BookSearch() {
                 ) : (
                   <Link
                   className="dataItem"
-                  to="/book"
+                  to={`book/${book.id}`}
                   state={book}
                   onClick={() => clearSearchBar()}>
                   <div>
