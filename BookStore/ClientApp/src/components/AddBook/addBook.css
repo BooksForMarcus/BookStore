@@ -19,11 +19,8 @@
     display: grid;
     place-items: center;
     grid-area: container-2;
-    grid-template-columns: 2.5fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-column-gap: 3em;
-    grid-template-areas: 
-    "category"
-    "category";
 }
 
 .cr-book-title {

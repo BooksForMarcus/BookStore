@@ -162,7 +162,6 @@ const AddBookView = () => {
             value={numInstock}
             onChange={(e) => setNumInstock(e.target.value)}
           ></input>
-          <div></div>
           <input
             className="cr-book"
             type="number"
