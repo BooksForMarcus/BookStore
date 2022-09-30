@@ -12,7 +12,7 @@ const AdminBookList = ({books,setBookToEdit}) => {
         <h3>I lager</h3>
       </header>
       {books !== null &&
-        books.map((b) => <AdminBookListItem book={b} setBookToEdit={setBookToEdit}/>)}
+        books.map((b) => <AdminBookListItem key={"admin"+b.id} book={b} setBookToEdit={setBookToEdit}/>)}
     </div>
   );
 };

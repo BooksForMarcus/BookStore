@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import loggedInUserState from "../../atoms/loggedInUserState";
 import getBasicAuthString from "../../getBasicAuthString";
 import ModalBaseFull from "../Modal/ModalBaseFull";
+import EditCategories from "../ManageBooks/EditCategories";
 
 const AddBookView = () => {
 
@@ -28,20 +29,19 @@ const AddBookView = () => {
    const AddBook = async (e) => {
     e.preventDefault();
 
-
     const newBook = JSON.stringify({
-        isbn: isbn,
-        author: author,
-        title: title,
-        language: language,
-        categories: categories,
-        numInstock: numInstock,
-        price: price,
-        year: year,
+        isbn,
+        author,
+        title,
+        language,
+        categories,
+        numInstock,
+        price,
+        year,
         soldById: user.id,
-        imageURL: imageURL,
-        pages: pages,
-        weight: weight,
+        imageURL,
+        pages,
+        weight,
     });
 
     console.log(newBook);
@@ -67,6 +67,9 @@ const AddBookView = () => {
       setBookCreateError(json);
     }
   };
+  useEffect(() => {
+	console.log("categories changed",categories);
+  },[categories]);
 
   return (
     <div>
@@ -122,7 +125,7 @@ const AddBookView = () => {
           ></input>
           </div>
           <div className="cr-container-2">
-            <div className="cr-category-container"></div>
+			<EditCategories categories={categories} setCategories={setCategories} />
             <input
             className="cr-book"
             type="string"
