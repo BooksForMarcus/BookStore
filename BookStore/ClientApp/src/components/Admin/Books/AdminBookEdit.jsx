@@ -2,15 +2,14 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
-import categoriesState from "../../../atoms/categoriesState";
-import CategoryListItem from "./CategoryListItem";
+import CategoryListItem from "../../ManageBooks/CategoryListItem";
 import UpdateFailed from "../UpdateFailed";
 import UpdateOk from "../UpdateOk";
 import loggedInUserState from "../../../atoms/loggedInUserState";
+import EditCategories from "../../ManageBooks/EditCategories";
 
 const AdminBookEdit = ({ books,setBooks,book, setBookToEdit }) => {
-	const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
-  const [allCategories, setAllCategories] = useRecoilState(categoriesState);
+const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
   const [categories, setCategories] = useState(book.categories);
   const [title, setTitle] = useState(book.title);
   const [author, setAuthor] = useState(book.author);
@@ -22,7 +21,6 @@ const AdminBookEdit = ({ books,setBooks,book, setBookToEdit }) => {
   const [weight, setWeight] = useState(book.weight);
   const [pages, setPages] = useState(book.pages);
   const [imgUrl, setImgUrl] = useState(book.imageURL);
-  const [showCategories, setShowCategories] = useState(false);
   const [updateOk, setUpdateOk] = useState(null);
 
  const updateBook = async (e) => {
@@ -81,7 +79,7 @@ const AdminBookEdit = ({ books,setBooks,book, setBookToEdit }) => {
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-        <div className="admin-book-edit-category-area">
+        {/*<div className="admin-book-edit-category-area">
           <button
             type="button"
             onClick={() => setShowCategories(!showCategories)}
@@ -99,7 +97,8 @@ const AdminBookEdit = ({ books,setBooks,book, setBookToEdit }) => {
               ))}
             </div>
           )}
-        </div>
+        </div>*/}
+		<EditCategories categories={categories} setCategories={setCategories}/>
         <div>
           <label htmlFor="author">Författare</label>
           <input
