@@ -25,6 +25,7 @@ public class BasicAuthMiddleware
             var password = credentials[1];
 
             // authenticate credentials with user service and attach user to http context
+            //important change comment
             var auth = new CustomerAuthorize() { Email = username, Password = password };
             var resp = await customerCrud.Login(auth);
             if (resp.Success)
