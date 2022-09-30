@@ -78,7 +78,7 @@ function App() {
                         <Route path='/login' element={<LoginView />} />
                         <Route path='/profile' element={<UserProfileView />} />
                         <Route path='/search_result' element={<SearchResults />} />
-                        <Route path='/book' element={<BookView />} />
+                        <Route path='/book/:bookid' element={<BookView />} />
 
                     </Routes>
                 </main>

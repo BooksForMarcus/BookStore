@@ -180,9 +180,6 @@ header.admin-book-list-item {
 	position: relative;
 	z-index: 10;
 }
-.admin-book-edit-category-area>button{
-	z-index: 10;
-}
 .admin-book-edit-categories-list{
 	position: absolute;
 	display: grid;
