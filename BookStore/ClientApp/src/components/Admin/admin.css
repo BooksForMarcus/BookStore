@@ -178,16 +178,18 @@ header.admin-book-list-item {
 }
 .admin-book-edit-category-area{
 	position: relative;
+	z-index: 10;
 }
 .admin-book-edit-categories-list{
 	position: absolute;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	left: 1.7em;
-	top:2.75em;
+	top:2.8em;
 	border: 2px solid #ecb390;
 	background-color: white;
 	width: max-content;
+	z-index: 5;
 }
 .admin-book-edit-container-btn-area{
 	grid-column: 1/3;

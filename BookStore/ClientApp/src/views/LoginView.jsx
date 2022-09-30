@@ -9,6 +9,7 @@ import { decode as base64_decode, encode as base64_encode } from "base-64";
 import { useNavigate } from "react-router-dom";
 import LoginInViewOverLay from "../components/Login/LoginViewOverlay";
 import ForgottenPasswordModal from "../components/Login/ForgottenPasswordModal";
+import { useEffect } from "react";
 
 function LoginView() {
   const [email, setEmail] = useState("");
@@ -23,6 +24,12 @@ function LoginView() {
   const [creationError, setCreationError] = useState(null);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
 
+ useEffect(() => {
+	if (localStorage.getItem("user") !== null) {
+	  navigate("/profile");
+	}
+ },[user]); 
+ 
   const createNewCustomer = async (e) => {
     e.preventDefault();
 
@@ -74,6 +81,7 @@ function LoginView() {
       if (json.success) {
         json.user.password = "Basic " + base64basicAuth;
         setUser(json.user);
+		localStorage.setItem("user", JSON.stringify(json.user));
         navigate("/profile");
       } else {
         setLoginError(json);
