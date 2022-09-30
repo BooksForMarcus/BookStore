@@ -8,17 +8,17 @@ const BookDetails = ({ book }) => {
 
   const addToCart = () => {
     let cartUpdate = [];
-	if (!cart.some((cartBook) => cartBook.id === book.id)) {
-		cartUpdate=[...cart, { ...book, numInstock: 1 }]
+    if (!cart.some((cartBook) => cartBook.id === book.id)) {
+      cartUpdate = [...cart, { ...book, numInstock: 1 }];
     } else {
-		cartUpdate = cart.map((cartBook) => {
-			return cartBook.id === book.id
-			  ? { ...cartBook, numInstock: cartBook.numInstock + 1 }
-			  : cartBook;
-		  })
+      cartUpdate = cart.map((cartBook) => {
+        return cartBook.id === book.id
+          ? { ...cartBook, numInstock: cartBook.numInstock + 1 }
+          : cartBook;
+      });
     }
-	setCart(cartUpdate);
-	localStorage.setItem("cart", JSON.stringify(cartUpdate));
+    setCart(cartUpdate);
+    localStorage.setItem("cart", JSON.stringify(cartUpdate));
   };
 
   return (
@@ -68,10 +68,15 @@ const BookDetails = ({ book }) => {
             )}
             <span className="book-info-price">{book.price} kr</span>
             <button
-			 onClick={addToCart}
-			 disabled ={cart.some((cartBook) => cartBook.id === book.id) && cart.find((cartBook) => cartBook.id === book.id).numInstock >= book.numInstock}
-			 >
-			 Lägg i varukorgen</button>
+              onClick={addToCart}
+              disabled={
+                cart.some((cartBook) => cartBook.id === book.id) &&
+                cart.find((cartBook) => cartBook.id === book.id).numInstock >=
+                  book.numInstock
+              }
+            >
+              Lägg i varukorgen
+            </button>
           </div>
         </div>
       </div>

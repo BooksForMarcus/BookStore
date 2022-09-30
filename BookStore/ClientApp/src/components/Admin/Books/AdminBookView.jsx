@@ -3,6 +3,7 @@ import booksState from "../../../atoms/booksState";
 import AdminBookList from "./AdminBookList";
 import AdminBookEdit from "./AdminBookEdit";
 import { useState } from "react";
+import BookCrud from "../../AddBook/BookCrud";
 
 function AdminBookView() {
   const [books, setBooks] = useRecoilState(booksState);
@@ -13,12 +14,13 @@ function AdminBookView() {
       {bookToEdit === null ? (
         <AdminBookList books={books} setBookToEdit={setBookToEdit} />
       ) : (
-        <AdminBookEdit
-          books={books}
+		<BookCrud isEdit={true} book={books.find((b) => b.id === bookToEdit)} setBookToEdit={setBookToEdit}/>
+        /*<AdminBookEdit
+          //books={books}
           setBooks={setBooks}
           book={books.find((b) => b.id === bookToEdit)}
           setBookToEdit={setBookToEdit}
-        />
+        />*/
       )}
     </div>
   );
