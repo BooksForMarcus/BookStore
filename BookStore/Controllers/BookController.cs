@@ -40,9 +40,8 @@ public class BookController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(Book book)
     {
-
         var cust = HttpContext.Items["Customer"] as Customer;
-        if (cust!.IsAdmin || cust.Id == book.SoldById)
+        if (cust!.IsAdmin || (cust.Id == book.SoldById && cust.IsSeller))
         {
             var result = await _bookCrud.CreateBook(book);
             if (!String.IsNullOrEmpty(result)) return Ok(result);
