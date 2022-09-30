@@ -3,9 +3,9 @@
 header {
     background-color: #688472;
     display: grid;
-    grid-template-columns: 1fr;
-    align-items:end;
-    padding: 2em;
+    grid-template-columns: 1fr 2fr 2fr;
+    padding-top: 2em;
+    width: 100%;
 }
 .App{
 	position: relative;
@@ -14,45 +14,23 @@ header {
 .nav_logo {
     display: grid;
     place-self: center;
-    width: 18rem;
+    width: 14rem;
 }
 
 .navbar {
     display: inline-grid;
-    align-items: center;
+    align-content: start;
     place-items: center;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-self: end;
+    grid-template-columns: 1fr 1fr 1fr;
+    width:75%;
 }
-
 /*===== Searchbar =====*/
-
-.nav-item-search {
-    color: #FCF8E8;
-}
-
-.nav-item-search:hover {
-    color: #EDB183;
-    background-color: #688472;
-    cursor: pointer;
-}
-
-.nav-modal {
-    display: grid;
-    z-index: 1;
-    position: absolute;
-    background-color: #688472;
-    opacity: 80%;
-    width: 50%;
-    height: 5em;
-    padding: 1.5em;
-    place-self: center;
-    align-self: start;
-}
-
 .searchBar {
+    display: grid;
     place-self: center;
-    align-items: center;
-    justify-content: center;
+    align-self: end;
+    justify-self: end;
 }
 
 /*===== Main shared =====*/
@@ -316,9 +294,4 @@ input:focus {
     color: #DF7861;
     font-weight: bold;
     margin-bottom: 1em ;
-}
-.searchBar{
-	position: absolute;
-	top: 19em;
-	z-index: 2;
 }
