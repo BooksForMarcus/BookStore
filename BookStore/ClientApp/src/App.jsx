@@ -40,6 +40,9 @@ function App() {
 	};
 
 	useEffect(() => {
+		if(localStorage.getItem("user")!==null){
+			setUser(JSON.parse(localStorage.getItem("user")));
+		}
 		if(books === null) getBooks();
 		if(categories === null) getCategories();
 	}, []);
