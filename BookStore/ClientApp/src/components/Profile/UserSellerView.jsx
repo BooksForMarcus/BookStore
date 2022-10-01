@@ -20,7 +20,7 @@ function UserSellerView() {
 
         return books === null ? (
             <div className="seller-book-listitem">
-                <p>Du har inga böcker till salu :-(</p>
+                <p>Laddar in böcker...</p>
             </div>
         ) : (
             getSellersBooks().map((b, i) => {

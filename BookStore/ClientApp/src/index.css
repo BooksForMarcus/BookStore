@@ -66,19 +66,28 @@ button:disabled {
   background-color: red;
   cursor: not-allowed;
 }
+
+.green-button {
+  background-color: #688472;
+}
+
+.green-button:hover {
+  background-color: #54705e;
+}
+
 button.btn-danger {
-  background-color: #f11c1c;
+  background-color: #cb1b04;
   transition: 0.5s;
 }
 button.btn-danger:hover {
-  background-color: #cd0606;
+  background-color: #ff1b1b;
 }
 .btn-warning {
-  background-color: #f1c11c;
+  background-color: #ee9e14;
   transition: 0.5s;
 }
 .btn-warning:hover {
-  background-color: #cd9e06;
+  background-color: #f5bf0f;
 }
 .btn-call-to-action {
   background-color: #06b50f;

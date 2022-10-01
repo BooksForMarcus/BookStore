@@ -20,8 +20,9 @@ function UserProfileView() {
   },[user]);
 
   return (
-    <div className="login-view">
-      <div className="login-wrap">
+    <div className="userprofile-view">
+      <div className="side"></div>
+      <div className="userprofile-wrap">
         {user !== null && (
           <div>
             <h1>

@@ -136,7 +136,7 @@ footer {
 .login-wrap{
     display: grid;
     place-items: center;
-    padding: 3em;
+    padding: 1em;
 }
 
 form {
@@ -144,22 +144,52 @@ form {
     place-items: center;
 }
 
+label {
+    width: 100%;
+    position: relative;
+}
+
 input {
     width: 100%;
     margin-bottom: 2em;
-    padding: 1em;
+    padding-top: 1.4em;
+    padding-left: 1.4em;
+    padding-bottom: 0.8em;
     border: none;
     border-bottom: 2px solid #DF7861;
     background-color: #FCF8E8;
     outline: none;
-    color: #bb4a31;
+    color: #f2f1ec;
     font-size: 15px;
 }
 
 input:focus {
     border: none;
     border-bottom: 2px solid #bb4a31;
-    color: #bb4a31;
+    color: #f2f1ec;
+}
+
+input::placeholder{
+    opacity:0;
+}
+
+.fl-label {
+    position: absolute;
+    top: -0.8em;
+    left: 1.2em;
+    padding: 0.2em;
+    transform:translateY(30px);
+    font-size:0.9em;
+    color:  #FCF8E8;
+    transition-duration:300ms;
+}
+
+label:focus-within > .fl-label,
+input:not(:placeholder-shown) + .fl-label{
+    color: #FCF8E8;
+    transform:translateY(1em);
+    margin-top: 0.3em;
+    font-size:0.7em;
 }
 
 .login-button{
@@ -171,7 +201,7 @@ input:focus {
     background-color: #ECB390;
     display: grid;
     place-items: center;
-    padding: 3em;
+    padding: 1em;
 }
 
 .cr-account {
@@ -183,7 +213,7 @@ input:focus {
 
 .cr-account:focus {
     background-color: #ECB390;
-    color: #DF7861;
+    color: #fcfbf6;
     border: none;
     border-bottom: 2px solid #DF7861;
 }
