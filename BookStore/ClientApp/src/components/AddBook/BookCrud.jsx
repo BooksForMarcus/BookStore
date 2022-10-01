@@ -235,19 +235,21 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
           <span className="cr-book-fl-label">Pris</span>
           </label>
         </div>
-        <button type="submit" onClick={() => setShowBookCreated(true)}>
-          {isEdit ? "Uppdatera bok" : "Lägg upp bok"}
-        </button>
-        {isEdit && (
-          <button type="button" onClick={() => setBookToEdit(null)}>
-            Stäng
-          </button>
-        )}
-        {isEdit && (
-          <button type="button" onClick={() => setShowDeleteConfirm(true)}>
-            Ta bort bok
-          </button>
-        )}
+		<div className="btn-area">
+			<button type="submit" onClick={() => setShowBookCreated(true)}>
+			{isEdit ? "Uppdatera bok" : "Lägg upp bok"}
+			</button>
+			{isEdit && (
+			<button type="button" onClick={() => setBookToEdit(null)}>
+				Stäng
+			</button>
+			)}
+			{isEdit && (
+			<button type="button" onClick={() => setShowDeleteConfirm(true)}>
+				Ta bort bok
+			</button>
+			)}
+		</div>
       </form>
     </div>
   );

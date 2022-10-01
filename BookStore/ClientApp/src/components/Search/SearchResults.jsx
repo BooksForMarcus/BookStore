@@ -13,7 +13,9 @@ function SearchResults() {
 	const displayBooksResults = () => {
 
 		if (searchWord.length > 0) {
-			return <div className='card'>
+			return <div>
+			<h3>Titlar</h3>
+			<div className='search-result-area'>
 				{books.filter((book) => {
 					if (searchWord === '') {
 						return book
@@ -39,13 +41,17 @@ function SearchResults() {
                     </Link>
 				))}
 			</div>
+				
+				</div>
+			
 		}
 	}
 
 	const displayAuthorResults = () => {
 
 		if (searchWord.length > 0) {
-			return <div className='card'>
+			return <div>
+			<h3>Författare</h3><div className='search-result-area'>
 				{books.filter((book) => {
 					if (searchWord === '') {
 						return book
@@ -70,6 +76,7 @@ function SearchResults() {
                             </div>
                     </Link>
 				))}
+			</div>
 			</div>
 		}
 	}

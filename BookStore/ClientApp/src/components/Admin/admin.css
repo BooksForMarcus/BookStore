@@ -139,6 +139,9 @@ button:hover {
   align-items: center;
   width: 1fr;
 }
+.admin-book-view{
+	padding: 0em 3em;
+}
 .admin-book-list{
 }
 .admin-book-list-item {
