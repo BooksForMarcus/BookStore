@@ -17,7 +17,6 @@ const CategoryListItem = ({ category, categories, setCategories }) => {
 
   return (
     <div className="category-list-item" key={category.id}>
-      {/*console.log(category.id, book.categories.some((c) => c === category.id),book)*/}
       <input
         type="checkbox"
         checked={checked}
