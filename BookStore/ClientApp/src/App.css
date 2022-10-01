@@ -9,6 +9,7 @@ header {
 }
 .App{
 	position: relative;
+	min-height: 100vh;
 }
 
 .nav_logo {
@@ -35,6 +36,9 @@ header {
 
 /*===== Main shared =====*/
 
+main{
+	min-height: 78vh;
+}
 .main-container {
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -89,6 +93,8 @@ footer {
     display: grid;
     grid-template-rows: 3fr 1fr 1fr 1fr;
     place-items: center;
+	padding: 2em;
+	width: 15em;
 }
 .book-image-wrapper {
     height: 200px;
@@ -360,4 +366,12 @@ input:not(:placeholder-shown) + .red-fl-label{
     color: #DF7861;
     font-weight: bold;
     margin-bottom: 1em ;
+}
+.btn-area{
+	display: flex;
+	margin: 1em;
+}
+.search-result-area{
+	display: flex;
+	flex-wrap: wrap;
 }
