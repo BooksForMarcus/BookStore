@@ -15,3 +15,50 @@
     color: #688472;
     background-color: #fcf8e8;
 }
+
+/*===== SellerView =====*/
+
+.seller-profile-head-text {
+    color: #fcf8e8;
+    margin: 2em 0em;
+}
+
+.seller-profile-booklist {
+    width: 100%;
+    background-color: #fcf8e8;
+    margin-bottom: 2em;
+}
+
+.seller-profile-booklist-h {
+    background-color: #415d51;
+    color: #fcf8e8;
+    padding: 1em;
+    font-weight: bolder;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr;
+}
+
+.seller-profile-booklist-h-text {
+    margin-left: 1em;
+}
+
+.seller-profile-booklist-h-titletext {
+    padding-left: 0em;
+}
+
+.seller-book-listitem {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr;
+    border-bottom: solid 1px #e3e4da;
+}
+
+.seller-book-listitem-text , .seller-book-listitem-title {
+    color:#415d51;
+    padding: 0.5em 3em 0.5em 1em;
+    width: 100%;
+}
+
+.seller-book-listitem-title:hover {
+    color: #df7861;
+    background-color: #fcf8e8;
+}
