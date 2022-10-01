@@ -1,3 +1,16 @@
+.userprofile-view {
+    display: grid;
+    grid-template-columns: 1fr 1fr 4fr;
+	position: relative;
+}
+
+.userprofile-wrap {
+    display: grid;
+    align-self: start;
+    place-items: center;
+    padding: 1em;
+}
+
 .profile-nav {
     display: grid;
     margin-top: 3em;

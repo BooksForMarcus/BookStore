@@ -111,107 +111,129 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
   return (
     <div>
       <form className="add-book-wrap" onSubmit={isEdit ? updateBook : addBook}>
-		<input
-          className="cr-book-title"
-          type="text"
-          label="Boktitel"
-          placeholder="Boktitel"
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
+        <label htmlFor="title">
+		      <input
+            className="cr-book-title"
+            type="text"
+            placeholder="Boktitel"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
         ></input>
+        <span className="cr-book-fl-label">Boktitel</span>
+        </label>
         <div className="cr-container-1">
+          <label htmlFor="author">
           <input
             className="cr-book"
             type="text"
-            label="Författare"
             placeholder="Författare"
             id="author"
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
             required
           ></input>
+          <span className="cr-book-fl-label">Författare</span>
+          </label>
+          <label htmlFor="isbn">
           <input
             className="cr-book"
             type="text"
-            label="ISBN"
             placeholder="ISBN"
             id="isbn"
             value={isbn}
             onChange={(e) => setIsbn(e.target.value)}
             required
           ></input>
+          <span className="cr-book-fl-label">ISBN</span>
+          </label>
+          <label htmlFor="imageURL">
           <input
             className="cr-book"
             type="url"
-            label="Bildlänk (URL)"
             placeholder="Bildlänk (URL)"
             id="imageURL"
             value={imageURL}
             onChange={(e) => setImageURL(e.target.value)}
           ></input>
+          <span className="cr-book-fl-label">Bildlänk (URL)</span>
+          </label>
+          <label htmlFor="language">
           <input
             className="cr-book"
             type="text"
-            label="Språk"
             placeholder="Språk"
             id="language"
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
           ></input>
+          <span className="cr-book-fl-label">Språk</span>
+          </label>
         </div>
         <div className="cr-container-2">
+          <div className="cr-category-container">
           <EditCategories
             categories={categories}
             setCategories={setCategories}
           />
+          </div>
+          <label htmlFor="year">
           <input
             className="cr-book"
             type="number"
-            label="Utgivningsår"
             placeholder="Utgivningsår"
             id="year"
             value={year}
             onChange={(e) => setYear(e.target.value)}
           ></input>
+          <span className="cr-book-fl-label">Utgivningsår</span>
+          </label>
+          <label htmlFor="pages">
           <input
             className="cr-book"
             type="number"
-            label="Antal sidor"
             placeholder="Antal sidor"
             id="pages"
             value={pages}
             onChange={(e) => setPages(e.target.value)}
           ></input>
+          <span className="cr-book-fl-label">Antal sidor</span>
+          </label>
+          <label htmlFor="weight">
           <input
             className="cr-book"
             type="number"
-            label="Vikt (gram)"
             placeholder="Vikt (gram)"
             id="weight"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
           ></input>
+          <span className="cr-book-fl-label">Vikt (gram)</span>
+          </label>
+          <label htmlFor="numInstock">
           <input
             className="cr-book"
             type="number"
-            label="Antal"
             placeholder="Antal"
             id="numInstock"
             value={numInstock}
             onChange={(e) => setNumInstock(e.target.value)}
           ></input>
+          <span className="cr-book-fl-label">Antal</span>
+          </label>
+          <label htmlFor="price">
           <input
             className="cr-book"
             type="number"
-            label="Pris"
             placeholder="Pris"
             id="price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
           ></input>
+          <span className="cr-book-fl-label">Pris</span>
+          </label>
         </div>
         <button type="submit" onClick={() => setShowBookCreated(true)}>
           {isEdit ? "Uppdatera bok" : "Lägg upp bok"}
