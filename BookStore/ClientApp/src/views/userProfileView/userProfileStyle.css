@@ -75,3 +75,9 @@
     color: #df7861;
     background-color: #fcf8e8;
 }
+
+.seller-book-listitem-empty {
+    width: 100%;
+    height: 2em;
+    background-color: #fcf8e8;
+}
