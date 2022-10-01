@@ -159,7 +159,7 @@ input {
 input:focus {
     border: none;
     border-bottom: 2px solid #bb4a31;
-    color: #415d51;
+    color: #bb4a31;
 }
 
 .login-button{
