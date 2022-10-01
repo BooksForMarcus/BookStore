@@ -19,7 +19,7 @@ function UserSellerView() {
     const ListBooks = () => {
 
         return books === null ? (
-            <div className="seller-book-listitem">
+            <div className="seller-book-listitem-empty">
                 <p>Laddar in böcker...</p>
             </div>
         ) : (

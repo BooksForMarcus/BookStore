@@ -131,7 +131,7 @@ footer {
     align-self: start;
 }
 
-/*===== LoginView + UserProfileView =====*/
+/*===== LoginView =====*/
 
 .login-view {
     display: grid;
@@ -141,8 +141,10 @@ footer {
 
 .login-wrap{
     display: grid;
-    place-items: center;
+    place-items: start;
+    justify-items: center;
     padding: 1em;
+    padding-bottom: 4em;
 }
 
 form {
@@ -155,6 +157,8 @@ label {
     position: relative;
 }
 
+/*===== Default Light inputfields - Use on red or green background=====*/
+
 input {
     width: 100%;
     margin-bottom: 2em;
@@ -165,14 +169,14 @@ input {
     border-bottom: 2px solid #DF7861;
     background-color: #FCF8E8;
     outline: none;
-    color: #f2f1ec;
+    color: #DF7861;
     font-size: 15px;
 }
 
 input:focus {
     border: none;
     border-bottom: 2px solid #bb4a31;
-    color: #f2f1ec;
+    color: #DF7861;
 }
 
 input::placeholder{
@@ -198,16 +202,62 @@ input:not(:placeholder-shown) + .fl-label{
     font-size:0.7em;
 }
 
+/*===== Red inputfields - Use on light background =====*/
+
+.red-input {
+    color:#DF7861;
+}
+
+.red-input:focus {
+    border: none;
+    border-bottom: 2px solid #bb4a31;
+    color: #DF7861;
+}
+
+.red-fl-label {
+    position: absolute;
+    top: -0.8em;
+    left: 1.2em;
+    padding: 0.2em;
+    transform:translateY(30px);
+    font-size:0.9em;
+    transition-duration:300ms;
+    color:#415d51;
+}
+
+label:focus-within > .red-fl-label,
+input:not(:placeholder-shown) + .red-fl-label{
+    color: #415d51;
+    transform:translateY(1em);
+    margin-top: 0.3em;
+    font-size:0.7em;
+}
+
 .login-button{
     margin-top: 1.5em;
     width: 100%;
 }
 
+.login-forgott-password {
+    color: #DF7861;
+    margin-top: 2em;
+    font-size: 0.9em;
+
+}
+
+.login-forgott-password:hover {
+    color: #c3604a;
+    cursor: pointer;
+    
+}
+
 .add-account-wrap {
     background-color: #ECB390;
     display: grid;
-    place-items: center;
+    place-items: start;
+    justify-items: center;
     padding: 1em;
+    padding-bottom: 4em;
 }
 
 .cr-account {
@@ -245,20 +295,6 @@ input:not(:placeholder-shown) + .fl-label{
 
 .cr-resp-img {
     max-width: 15%;
-}
-
-.ud-head-text {
-    color: #FCF8E8;
-    margin-bottom: 2em;
-}
-
-.profile-view-links {
-    color: #DF7861;
-}
-
-.profileNav-wrap {
-    display: grid;
-    place-items: center;
 }
 
 /*====== BookView ======*/
