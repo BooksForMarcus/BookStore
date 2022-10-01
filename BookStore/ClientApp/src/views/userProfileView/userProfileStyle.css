@@ -29,11 +29,15 @@
     background-color: #fcf8e8;
 }
 
+.h2-light {
+    margin: 2em 0em;
+}
+
 /*===== SellerView =====*/
 
 .seller-profile-head-text {
     color: #fcf8e8;
-    margin: 2em 0em;
+    margin-bottom: 2em;
 }
 
 .seller-profile-booklist {
@@ -48,11 +52,12 @@
     padding: 1em;
     font-weight: bolder;
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr 1fr;
+    grid-template-columns: 4fr 1fr 2fr 1fr;
 }
 
 .seller-profile-booklist-h-text {
-    margin-left: 1em;
+    display: grid;
+    place-self: center;
 }
 
 .seller-profile-booklist-h-titletext {
@@ -61,19 +66,37 @@
 
 .seller-book-listitem {
     display: grid;
-    grid-template-columns: 3fr 1fr 1fr 1fr;
+    grid-template-columns: 4fr 1fr 2fr 1fr;
     border-bottom: solid 1px #e3e4da;
 }
 
 .seller-book-listitem-text , .seller-book-listitem-title {
     color:#415d51;
-    padding: 0.5em 3em 0.5em 1em;
+    padding: 1em 3em 1em 1em;
     width: 100%;
+}
+
+.seller-book-listitem-text-status {
+    display: grid;
+    place-self: center;
+    font-size: 0.9em;
+    color:#415d51;
 }
 
 .seller-book-listitem-title:hover {
     color: #df7861;
     background-color: #fcf8e8;
+}
+
+.seller-book-listitem-icon {
+    margin-top: 1em;
+    color:#688472;
+}
+
+.seller-book-listitem-icon:hover {
+    margin-top: 1em;
+    color:#415d51;
+    cursor: pointer;
 }
 
 .seller-book-listitem-empty {
