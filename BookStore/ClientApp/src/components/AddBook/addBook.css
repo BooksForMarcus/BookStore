@@ -5,6 +5,7 @@
     "container-1"
     "container-2";
 	margin: 0em 3%;
+	padding:0;
 }
 
 .cr-container-1 {
@@ -48,6 +49,7 @@ input::placeholder{
 .cr-book-title {
     grid-area: title;
     width: 100%;
+	justify-self: center;
 }
 
 .cr-book-fl-label {
