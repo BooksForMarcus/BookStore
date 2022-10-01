@@ -14,7 +14,7 @@ function SearchResults() {
 
 		if (searchWord.length > 0) {
 			return <div>
-			<h3>Titlar</h3>
+			<h3>Titel träffar:</h3>
 			<div className='search-result-area'>
 				{books.filter((book) => {
 					if (searchWord === '') {
@@ -51,7 +51,7 @@ function SearchResults() {
 
 		if (searchWord.length > 0) {
 			return <div>
-			<h3>Författare</h3><div className='search-result-area'>
+			<h3>Författar träffar:</h3><div className='search-result-area'>
 				{books.filter((book) => {
 					if (searchWord === '') {
 						return book

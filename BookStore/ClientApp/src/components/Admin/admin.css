@@ -106,6 +106,7 @@ button:hover {
   position: absolute;
   right: 5%;
   top: 0;
+  border-radius: 50%;
 }
 .update-box {
   display: flex;
@@ -140,7 +141,6 @@ button:hover {
   width: 1fr;
 }
 .admin-book-view{
-	padding: 0em 3em;
 }
 .admin-book-list{
 }
