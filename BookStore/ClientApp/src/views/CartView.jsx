@@ -1,4 +1,5 @@
 import React from "react";
+import '../components/Cart/CartView.css'
 import { useRecoilValue, useRecoilState } from "recoil";
 import booksState from "../atoms/booksState";
 import bookState from "../atoms/bookState";
@@ -14,7 +15,9 @@ function CartView () {
     const [cart, setCart] = useRecoilState(cartState)
     const [user, setUser] = useRecoilState(loggedInUserState);
     const [OrderCreated, setOrderCreated] = useState();
-      const navigate = useNavigate();
+
+     
+    const navigate = useNavigate();
       useEffect(() => {
         if (user === null) {
           navigate("/login");
@@ -33,9 +36,7 @@ function CartView () {
           );
     } else{
         setCart(cart.filter((cartBook) => cartBook.id !== book.id));
-        if(cart.map((cartbook) => cartbook === null)){
-            return cart;
-        }
+
     }
       
    };
@@ -75,6 +76,8 @@ function CartView () {
   };
 
 
+
+
    const displayCart = () =>{
     return <div>
         {cart.map(book => (
@@ -88,6 +91,7 @@ function CartView () {
                     <p className="book-info">Utgivningsår:</p>
                     <p className="book-info">Språk:</p>
                     <p className="book-info">Antal:</p>
+                    <p className="book-info">Pris:</p>
                 </div>
                 <div className="book-info-l">
                     <p className="book-info">{book.year}</p>
@@ -108,7 +112,9 @@ function CartView () {
            </div>
         </div>
         ))}
-                            <button onClick={createNewOrder}>Skapa order</button>
+        <div>
+            <button onClick={createNewOrder}>Skapa order</button>
+        </div>
     </div>
    }
    
