@@ -35,7 +35,7 @@ public class DbSeeder
     private async Task SeedOrders()
     {
         var orders = db.GetCollection<Order>(ordersCollection);
-        if (IsCollectionMissing(ordersCollection) || IsCollectionEmpty(ordersCollection))
+        if (IsDbMissing() || IsCollectionMissing(ordersCollection) || IsCollectionEmpty(ordersCollection))
         {
             var ordersList = ImportJsonList<Order>(ordersFile);
             await orders.InsertManyAsync((List<Order>)ordersList);
@@ -44,7 +44,7 @@ public class DbSeeder
     private async Task SeedCategories()
     {
         var categories = db.GetCollection<Category>(categoriesCollection);
-        if (IsCollectionMissing(categoriesCollection) || IsCollectionEmpty(categoriesCollection))
+        if (IsDbMissing() || IsCollectionMissing(categoriesCollection) || IsCollectionEmpty(categoriesCollection))
         {
             var categoriesList = ImportJsonList<Category>(categoriesFile);
             await categories.InsertManyAsync((List<Category>)categoriesList);
@@ -53,7 +53,7 @@ public class DbSeeder
     private async Task SeedBooks()
     {
         var books = db.GetCollection<Book>(booksCollection);
-        if (IsCollectionMissing(booksCollection) || IsCollectionEmpty(booksCollection))
+        if (IsDbMissing() || IsCollectionMissing(booksCollection) || IsCollectionEmpty(booksCollection))
         {
             var booksList = ImportJsonList<Book>(booksFile);
             await books.InsertManyAsync((List<Book>)booksList);
