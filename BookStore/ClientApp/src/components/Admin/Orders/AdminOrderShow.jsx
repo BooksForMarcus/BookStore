@@ -46,7 +46,7 @@ const AdminOrderShow = ({ order, setNav }) => {
 		<p className="admin-order-items-number">{order.vat} kr</p>
 	  </div>
       <div className="btn-area">
-        <button onClick={() => setNav("list")}>Tillbaka</button>
+        <button onClick={() => setNav("list")}>Stäng</button>
       </div>
     </div>
   );

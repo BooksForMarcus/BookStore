@@ -9,8 +9,8 @@ const AdminOrderList = ({orders,setNav}) => {
         <h3>Beställare</h3>
         <h3>Status</h3>
       </header>
-      {orders !== null &&
-        orders.map((o) => <AdminOrderListItem key={"admin"+o.id} order={o} setNav={setNav}/>)}
+      {orders !== null ?
+        orders.map(o => <AdminOrderListItem key={"admin"+o.id} order={o} setNav={setNav}/>):null}
     </div>
   );
 };

@@ -23,6 +23,6 @@ namespace BookStore.Models
         
         [JsonConverter(typeof(JsonStringEnumConverter))]  // System.Text.Json.Serialization
         [BsonRepresentation(BsonType.String)]
-        public OrderStatus Status { get; set; } = OrderStatus.Shipped;
+        public OrderStatus Status { get; set; } = OrderStatus.Pending;
     }
 }

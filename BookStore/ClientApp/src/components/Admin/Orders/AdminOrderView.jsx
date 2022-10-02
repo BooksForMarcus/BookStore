@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useRecoilState } from "recoil";
 import loggedInUserState from "../../../atoms/loggedInUserState";
 import AdminOrderList from "./AdminOrderList";
@@ -21,7 +21,6 @@ const AdminOrderView = ({orders,setOrders}) => {
     let resp = await fetch("/api/order/admin/getorders", requestOptions);
     if (resp.ok) {
       let json = await resp.json();
-	  console.log(json);
       setOrders(json);
     } else {
       //maybe do something here?
@@ -33,7 +32,7 @@ const AdminOrderView = ({orders,setOrders}) => {
       <h1>Admin order nav ph</h1>
       {orders === null && <button onClick={getAllOrders}>Hämta alla ordrar.</button>}
 	  {orders !== null && nav==="list" && <AdminOrderList orders={orders} setNav={setNav}/>}
-	  {orders !== null && nav.includes("show-") && <AdminOrderShow order={orders.find(o=>o.id = nav.slice(5))} setNav={setNav}/>}
+	  {orders !== null && nav.includes("show-") && <AdminOrderShow order={orders.find(o=>o.ordernumber === nav.split("-")[1])} setNav={setNav}/>}
     </div>
   );
 };
