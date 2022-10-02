@@ -62,7 +62,7 @@ public class CategoryController : ControllerBase
     public async Task<IActionResult> Delete(Category category)
     {
         var cust = HttpContext.Items["Customer"] as Customer;
-        if ( cust.IsAdmin)
+        if (cust.IsAdmin)
         {
             var result = await _categoryCrud.DeleteCategory(category);
             if (result) return Ok("deleted");
@@ -97,6 +97,28 @@ public class CategoryController : ControllerBase
             return BadRequest(" you are not admin, get out!");
         }
     }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCat(string id) 
+    {
+        var cust = HttpContext.Items["Customer"] as Customer;
+        if (cust.IsAdmin)
+        {
+            var myCat = _categoryCrud.GetMyCategory(id);
+            if (myCat != null)
+            {
+                var result = await _categoryCrud.DeleteCategory(myCat);
+                if (result) return Ok(id + " deleted");
+                else return BadRequest("la categoria non era cancellato");
+            }
+            return BadRequest("null luck");
+        }
+        else
+        {
+            return BadRequest(new { error = "Need admin priviledge to delete category." });
+        }
+ 
+    }
+
 
 }
 

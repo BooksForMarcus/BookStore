@@ -39,7 +39,7 @@ function AdminCategoryView() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
-            <button onClick={() => fetch("/api/category", requestOptionsCreate)}>Create</button>
+            <button onClick={() => fetch("/api/category/", requestOptionsCreate)}>Create</button>
             <AdminCategoryList categories={allCategories} />
  
  
