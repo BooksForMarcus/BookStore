@@ -9,7 +9,7 @@ public class DbSeeder
 {
     private readonly MongoClient client = new MongoClient("mongodb://localhost:27017");
     private readonly IMongoDatabase db;
-    private const string databaseName = "BookstoreXYZ";
+    private const string databaseName = "Bookstore";
     private const string customerCollection = "Customers";
     private const string booksCollection = "Books";
     private const string ordersCollection = "Orders";
