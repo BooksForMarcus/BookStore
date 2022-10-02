@@ -3,12 +3,23 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import booksState from "../atoms/booksState";
 import bookState from "../atoms/bookState";
 import cartState from "../atoms/cartState";
+import loggedInUserState from "../atoms/loggedInUserState";
+import {useState, useEffect} from "react";
 
 
 
 function CartView () {
    const book = useRecoilValue(bookState)
     const [cart, setCart] = useRecoilState(cartState)
+    const [user, setUser] = useRecoilState(loggedInUserState);
+    const [OrderCreated, setOrderCreated] = useState();
+
+    useEffect(() => {
+        if (user === null || (user!==null && user.isAdmin === false)) {
+          navigate("/login");
+        }
+      }, []);
+    
 
    const removeFromCart = () => {
     if (cart.some((cartBook) => cartBook.numInstock >= 2)) {
@@ -27,6 +38,31 @@ function CartView () {
     }
       
    };
+
+   const createNewOrder = async (e) => {
+    e.preventDefault();
+    console.log(cart);
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Authorization: user.password,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cart),
+    };
+    let resp = await fetch("/api/order/", requestOptions);
+    if (resp.ok) {
+      console.log("create order ok");
+      setOrderCreated(true);
+      let json = await resp.json();
+      console.log(json);
+    } else {
+      console.log("customer create failed.");
+      let json = await resp.json();
+      console.log(json);
+    }
+  };
 
 
    const displayCart = () =>{
@@ -57,6 +93,7 @@ function CartView () {
                     }
                     <span className="book-info-price">{book.price * book.numInstock} kr</span>
                     <button onClick={removeFromCart}>Ta bort från varukorgen</button>
+                    <button onClick={createNewOrder}>Skapa order</button>
                 </div>
            </div>
            </div>
