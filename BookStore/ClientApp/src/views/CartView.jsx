@@ -5,6 +5,7 @@ import bookState from "../atoms/bookState";
 import cartState from "../atoms/cartState";
 import loggedInUserState from "../atoms/loggedInUserState";
 import {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -13,9 +14,9 @@ function CartView () {
     const [cart, setCart] = useRecoilState(cartState)
     const [user, setUser] = useRecoilState(loggedInUserState);
     const [OrderCreated, setOrderCreated] = useState();
-
-    useEffect(() => {
-        if (user === null || (user!==null && user.isAdmin === false)) {
+      const navigate = useNavigate();
+      useEffect(() => {
+        if (user === null) {
           navigate("/login");
         }
       }, []);
@@ -30,7 +31,7 @@ function CartView () {
                 : cartBook;
             })
           );
-    } else {
+    } else{
         setCart(cart.filter((cartBook) => cartBook.id !== book.id));
         if(cart.map((cartbook) => cartbook === null)){
             return cart;
@@ -39,9 +40,18 @@ function CartView () {
       
    };
 
+   const newCart = () => {
+    return { 
+    customer: user,
+    orderSum: cart.price,
+    books: cart
+    };
+   };
+
    const createNewOrder = async (e) => {
     e.preventDefault();
-    console.log(cart);
+    const newOrder = newCart();
+    console.log(newOrder);
     const requestOptions = {
       method: "POST",
       headers: {
@@ -49,7 +59,7 @@ function CartView () {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(cart),
+      body: JSON.stringify(newOrder),
     };
     let resp = await fetch("/api/order/", requestOptions);
     if (resp.ok) {
@@ -93,12 +103,12 @@ function CartView () {
                     }
                     <span className="book-info-price">{book.price * book.numInstock} kr</span>
                     <button onClick={removeFromCart}>Ta bort från varukorgen</button>
-                    <button onClick={createNewOrder}>Skapa order</button>
                 </div>
            </div>
            </div>
         </div>
         ))}
+                            <button onClick={createNewOrder}>Skapa order</button>
     </div>
    }
    
