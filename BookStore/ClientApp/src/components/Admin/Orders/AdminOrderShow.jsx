@@ -32,7 +32,7 @@ const AdminOrderShow = ({ order, setNav }) => {
 		<h4>á pris</h4>
 		<h4>Radsumma</h4>
 		{order.books.map(b =>(
-			<div className="admin-order-item">
+			<div key={"order-book-"+b.id} className="admin-order-item">
 				<p>{b.id}</p>
 				<p>{b.title}</p>
 				<p>{b.numInstock}</p>

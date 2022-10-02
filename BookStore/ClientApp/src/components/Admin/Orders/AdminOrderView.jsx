@@ -30,7 +30,7 @@ const AdminOrderView = ({orders,setOrders}) => {
 
   return (
     <div>
-      <h1>Admin order view ph</h1>
+      <h1>Admin order nav ph</h1>
       {orders === null && <button onClick={getAllOrders}>Hämta alla ordrar.</button>}
 	  {orders !== null && nav==="list" && <AdminOrderList orders={orders} setNav={setNav}/>}
 	  {orders !== null && nav.includes("show-") && <AdminOrderShow order={orders.find(o=>o.id = nav.slice(5))} setNav={setNav}/>}

@@ -282,7 +282,6 @@ input[type="radio"] {
 	padding: 1em;
 	font-size: larger;
 	place-items: center;
-	text-justify: center;
 }
 .admin-order-show-container>h1{
 	grid-area: order-number;

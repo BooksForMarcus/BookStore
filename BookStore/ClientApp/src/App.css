@@ -377,6 +377,7 @@ input:not(:placeholder-shown) + .red-fl-label{
 .btn-area{
 	display: flex;
 	margin: 1em;
+	justify-content: center;
 }
 .search-result-area{
 	display: flex;
