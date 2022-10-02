@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import "./SearchBar.css";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -8,12 +8,12 @@ import searchWordState from "../../atoms/searchWordState";
 import searchItemState from "../../atoms/searchItemState";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
+import { Link } from "react-router-dom";
 
 function BookSearch() {
   const books = useRecoilValue(booksState);
   const [search, setSearch] = useState("");
   const [searchWord, setSearchWord] = useRecoilState(searchWordState);
-  const [item, setItem] = useRecoilState(searchItemState);
 
   const displayTitleResults = () => {
     if (search.length > 0) {
@@ -29,21 +29,25 @@ function BookSearch() {
             .map((book) => (
               <div className="dataItem" key={book.id}>
                 {book.soldById === "kund" ? (
-                  <NavLink
+                  <Link
                     className="dataItem"
-                    to="/search_book"
-                    onClick={() => setItem(book.title) + clearSearchBar()}
-                  >
-                    <p>{book.title}: begagnad</p>
-                  </NavLink>
+                    to={`book/${book.id}`}
+                    state={book}
+                    onClick={() => clearSearchBar()}>
+                    <div>
+                      <p>{book.title}: Begagnad</p>
+                    </div>
+                  </Link>
                 ) : (
-                  <NavLink
-                    className="dataItem"
-                    to="/search_book"
-                    onClick={() => setItem(book.title) + clearSearchBar()}
-                  >
+                  <Link
+                  className="dataItem"
+                  to={`book/${book.id}`}
+                  state={book}
+                  onClick={() => clearSearchBar()}>
+                  <div>
                     <p>{book.title}</p>
-                  </NavLink>
+                  </div>
+                </Link>
                 )}
               </div>
             ))}
@@ -59,23 +63,24 @@ function BookSearch() {
       return (
         <div className="search-bar">
           {books
-            .filter((val) => {
+            .filter((book) => {
               if (search === "") {
-                return val;
-              } else if (!authorResult.includes(val.author)) {
-                authorResult.push(val.author);
+                return book;
+              } else if (!authorResult.includes(book.author)) {
+                authorResult.push(book.author);
 
-                return val.author.toLowerCase().includes(search.toLowerCase());
+                return book.author.toLowerCase().includes(search.toLowerCase());
               }
             })
-            .map((val) => (
-              <div className="dataItem" key={val.id}>
+            .map((book) => (
+              <div className="dataItem" key={book.id}>
                 <NavLink
                   className="dataItem"
-                  to="/search_book"
-                  onClick={() => setItem(val.author) + clearSearchBar()}
-                >
-                  <p>{val.author} : (författare)</p>
+                  to="/search_result"
+                  onClick={() => setSearchWord(book.author) + clearSearchBar()}>
+                  <div>
+                    <p>{book.author}: författare</p>
+                  </div>
                 </NavLink>
               </div>
             ))}

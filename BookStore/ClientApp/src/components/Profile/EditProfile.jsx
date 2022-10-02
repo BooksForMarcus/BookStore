@@ -1,12 +1,12 @@
-﻿import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import "../App.css";
+import "../../App.css";
 import { useRecoilState } from "recoil";
-import loggedInUserState from "../atoms/loggedInUserState";
-import getBasicAuthString from "../getBasicAuthString";
-import ModalBaseFull from "../components/Modal/ModalBaseFull";
+import loggedInUserState from "../../atoms/loggedInUserState";
+import getBasicAuthString from "../../getBasicAuthString";
+import ModalBaseFull from "../Modal/ModalBaseFull";
 
-function UserProfileView() {
+function EditProfile() {
   const [user, setUser] = useRecoilState(loggedInUserState);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -90,19 +90,6 @@ function UserProfileView() {
   }, []);
 
   return (
-    <div className="login-view">
-      <div className="login-wrap">
-        {user !== null && (
-          <h2>
-            Hej {user.firstName[0].toUpperCase() + user.firstName.slice(1)}
-          </h2>
-        )}
-        {user && user.IsAdmin ? (
-          <NavLink to="/admin">ADMIN</NavLink>
-        ) : (
-          <span></span>
-        )}
-      </div>
       <div className="add-account-wrap">
         {showDeleteConfirm && (
           <ModalBaseFull>
@@ -131,60 +118,70 @@ function UserProfileView() {
           </ModalBaseFull>
         )}
         <h2 className="ud-head-text">Uppdatera din uppgifter</h2>
-        <form onSubmit={updateCustomer}>
-          <input
-            className="cr-account"
-            type="email"
-            label="Email"
-            placeholder="Email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          ></input>
+          <form onSubmit={updateCustomer}>
+            <label htmlFor="email">
+                <input
+                  className="cr-account"
+                  type="email"
+                  placeholder="Email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                ></input>
+                <span className="fl-label">Email</span>
+            </label>
+            <label htmlFor="firstname">
           <input
             className="cr-account"
             type="text"
-            label="Förnamn"
             placeholder="Förnamn"
             id="firstname"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
           ></input>
+          <span className="fl-label">Förnamn</span>
+          </label>
+          <label htmlFor="lastname">
           <input
             className="cr-account"
             type="text"
             label="Efternamn"
-            placeholder="Efternamn"
             id="lastname"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
           ></input>
+          <span className="fl-label">Efternamn</span>
+          </label>
+          <label htmlFor="address">
           <input
             className="cr-account"
             type="text"
-            label="Adress"
             placeholder="Adress"
             id="address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
           ></input>
+          <span className="fl-label">Adress</span>
+          </label>
+          <label htmlFor="password">
           <input
             className="cr-account"
             type="password"
-            label="Lösenord"
             placeholder="Nytt lösenord"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></input>
+          <span className="fl-label">Nytt lösenord</span>
+          </label>
+          <label htmlFor="confirm-password">
           <input
             className="cr-account"
             type="password"
-            label="Bekräfta lösenord"
             placeholder="Bekräfta nytt lösenord"
             id="confirm-password"
             value={confirmPassword}
@@ -193,20 +190,22 @@ function UserProfileView() {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required={password !== ""}
           ></input>
-          <button className="btn-warning" type="submit">
+          <span className="fl-label">Bekräfta nytt lösenord</span>
+          </label>
+          <div className="edit-user-buttons">
+          <button className="green-button" type="submit">
             Uppdatera
           </button>
           <button
             type="button"
-            className="btn-danger"
             onClick={() => setShowDeleteConfirm(true)}
           >
             Ta bort konto
           </button>
+          </div>
         </form>
       </div>
-    </div>
   );
 }
 
-export default UserProfileView;
+export default EditProfile;

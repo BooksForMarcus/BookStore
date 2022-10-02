@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import UpdateOk from "./UpdateOk";
-import UpdateFailed from "./UpdateFailed";
-import getBasicAuthString from "../../getBasicAuthString";
-import ModalBaseFull from "../Modal/ModalBaseFull";
+import UpdateOk from "../UpdateOk";
+import UpdateFailed from "../UpdateFailed";
+import getBasicAuthString from "../../../getBasicAuthString";
+import ModalBaseFull from "../../Modal/ModalBaseFull";
 
 
 const AdminUserEdit = ({

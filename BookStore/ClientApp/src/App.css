@@ -3,60 +3,42 @@
 header {
     background-color: #688472;
     display: grid;
-    grid-template-columns: 1fr;
-    align-items:end;
-    padding: 2em;
+    grid-template-columns: 1fr 2fr 2fr;
+    padding-top: 2em;
+    width: 100%;
 }
 .App{
 	position: relative;
+	min-height: 100vh;
 }
 
 .nav_logo {
     display: grid;
     place-self: center;
-    width: 18rem;
+    width: 14rem;
 }
 
 .navbar {
     display: inline-grid;
-    align-items: center;
+    align-content: start;
     place-items: center;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-self: end;
+    grid-template-columns: 1fr 1fr 1fr;
+    width:75%;
 }
-
 /*===== Searchbar =====*/
-
-.nav-item-search {
-    color: #FCF8E8;
-}
-
-.nav-item-search:hover {
-    color: #EDB183;
-    background-color: #688472;
-    cursor: pointer;
-}
-
-.nav-modal {
-    display: grid;
-    z-index: 1;
-    position: absolute;
-    background-color: #688472;
-    opacity: 80%;
-    width: 50%;
-    height: 5em;
-    padding: 1.5em;
-    place-self: center;
-    align-self: start;
-}
-
 .searchBar {
+    display: grid;
     place-self: center;
-    align-items: center;
-    justify-content: center;
+    align-self: end;
+    justify-self: end;
 }
 
 /*===== Main shared =====*/
 
+main{
+	min-height: 79.5vh;
+}
 .main-container {
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -74,6 +56,7 @@ header {
 footer {
     background-color: #688472;
     padding: 2em;
+	max-height: 3vh;
 }
 
 
@@ -107,6 +90,13 @@ footer {
     place-items: center;
 }
 
+.card-product-result{
+    display: grid;
+    grid-template-rows: 3fr 1fr 1fr 1fr;
+    place-items: center;
+	padding: 2em;
+	width: 15em;
+}
 .book-image-wrapper {
     height: 200px;
     width: 150px;
@@ -142,7 +132,7 @@ footer {
     align-self: start;
 }
 
-/*===== LoginView + UserProfileView =====*/
+/*===== LoginView =====*/
 
 .login-view {
     display: grid;
@@ -152,8 +142,13 @@ footer {
 
 .login-wrap{
     display: grid;
-    place-items: center;
-    padding: 3em;
+    place-items: start;
+    justify-items: center;
+    padding: 1em;
+    padding-bottom: 4em;
+}
+.login-wrap >h2{
+	align-self: end;
 }
 
 form {
@@ -161,22 +156,85 @@ form {
     place-items: center;
 }
 
+label {
+    width: 100%;
+    position: relative;
+}
+
+/*===== Default Light inputfields - Use on red or green background=====*/
+
 input {
     width: 100%;
     margin-bottom: 2em;
-    padding: 1em;
+    padding-top: 1.4em;
+    padding-left: 1.4em;
+    padding-bottom: 0.8em;
     border: none;
     border-bottom: 2px solid #DF7861;
     background-color: #FCF8E8;
     outline: none;
-    color: #bb4a31;
+    color: #DF7861;
     font-size: 15px;
 }
 
 input:focus {
     border: none;
     border-bottom: 2px solid #bb4a31;
+    color: #DF7861;
+}
+
+input::placeholder{
+    opacity:0;
+}
+
+.fl-label {
+    position: absolute;
+    top: -0.8em;
+    left: 1.2em;
+    padding: 0.2em;
+    transform:translateY(30px);
+    font-size:0.9em;
+    color:  #FCF8E8;
+    transition-duration:300ms;
+}
+
+label:focus-within > .fl-label,
+input:not(:placeholder-shown) + .fl-label{
+    color: #FCF8E8;
+    transform:translateY(1em);
+    margin-top: 0.3em;
+    font-size:0.7em;
+}
+
+/*===== Red inputfields - Use on light background =====*/
+
+.red-input {
+    color:#DF7861;
+}
+
+.red-input:focus {
+    border: none;
+    border-bottom: 2px solid #bb4a31;
+    color: #DF7861;
+}
+
+.red-fl-label {
+    position: absolute;
+    top: -0.8em;
+    left: 1.2em;
+    padding: 0.2em;
+    transform:translateY(30px);
+    font-size:0.9em;
+    transition-duration:300ms;
+    color:#415d51;
+}
+
+label:focus-within > .red-fl-label,
+input:not(:placeholder-shown) + .red-fl-label{
     color: #415d51;
+    transform:translateY(1em);
+    margin-top: 0.3em;
+    font-size:0.7em;
 }
 
 .login-button{
@@ -184,11 +242,29 @@ input:focus {
     width: 100%;
 }
 
+.login-forgott-password {
+    color: #DF7861;
+    margin-top: 2em;
+    font-size: 0.9em;
+
+}
+
+.login-forgott-password:hover {
+    color: #c3604a;
+    cursor: pointer;
+    
+}
+
 .add-account-wrap {
     background-color: #ECB390;
     display: grid;
-    place-items: center;
-    padding: 3em;
+    place-items: start;
+    justify-items: center;
+    padding: 1em;
+    padding-bottom: 4em;
+}
+.add-account-wrap >h2{
+	align-self: end;
 }
 
 .cr-account {
@@ -200,7 +276,7 @@ input:focus {
 
 .cr-account:focus {
     background-color: #ECB390;
-    color: #DF7861;
+    color: #fcfbf6;
     border: none;
     border-bottom: 2px solid #DF7861;
 }
@@ -226,15 +302,6 @@ input:focus {
 
 .cr-resp-img {
     max-width: 15%;
-}
-
-.ud-head-text {
-    color: #FCF8E8;
-    margin-bottom: 2em;
-}
-
-.profile-view-links {
-    color: #DF7861;
 }
 
 /*====== BookView ======*/
@@ -307,8 +374,11 @@ input:focus {
     font-weight: bold;
     margin-bottom: 1em ;
 }
-.searchBar{
-	position: absolute;
-	top: 19em;
-	z-index: 2;
+.btn-area{
+	display: flex;
+	margin: 1em;
+}
+.search-result-area{
+	display: flex;
+	flex-wrap: wrap;
 }

@@ -13,27 +13,38 @@ import BookView from "./views/BookView";
 import logo from './assets/boklogo.png'
 import {useRecoilState} from "recoil"
 import Search from "./components/Search/BookSearch"
-import UserProfileView from "./views/UserProfileView";
+import UserProfileView from "./views/userProfileView/UserProfileView";
 import loggedInUserState from "./atoms/loggedInUserState";
 import SearchResults from "./components/Search/SearchResults";
-import BookResult from "./components/Search/BookResult";
 import { useEffect } from "react";
 import booksState from "./atoms/booksState";
-import CartView from "./views/CartView";
+import categoriesState from "./atoms/categoriesState";
 
 function App() {
 	const [user, setUser] = useRecoilState(loggedInUserState);
 	const [books, setBooks] = useRecoilState(booksState);
 	const [showSearch,setShowSearch] = useState(false);
+	const [categories, setCategories] = useRecoilState(categoriesState);
 	
 	const getBooks = async () => {
 		const resp = await fetch("/api/Book");
 		const json = await resp.json();
+		json.sort((a,b) => a.title.localeCompare(b.title));
 		setBooks(json);
+	};
+	const getCategories = async () => {
+		const resp = await fetch("/api/category");
+		const json = await resp.json();
+		json.sort((a,b) => a.name.localeCompare(b.name));
+		setCategories(json);
 	};
 
 	useEffect(() => {
+		if(localStorage.getItem("user")!==null){
+			setUser(JSON.parse(localStorage.getItem("user")));
+		}
 		if(books === null) getBooks();
+		if(categories === null) getCategories();
 	}, []);
 
     return (
@@ -41,18 +52,13 @@ function App() {
             <div className="App">
                 <header>
                     <NavLink className="nav_logo" to="/"><img className="nav_logo" src={logo} alt="An image of bookstore logo" /></NavLink>
+                    <div className="searchBar"><Search /></div>
                     <div className="navbar">
                         <div className="menu-item" >
                             <NavLink to="/" className="menu-link">HEM</NavLink>
                         </div>
                         <div className="menu-item" >
                             <NavLink to="/">KATEGORIER</NavLink>
-                        </div>
-                        <div className="menu-item" >
-                            <span className="nav-item-search" to="/" onClick={()=>setShowSearch(true)}>SÖK</span>
-                            {/* <div className="nav-modal">
-                                <div className="searchBar"><Search /></div>
-                            </div> */}
                         </div>
                         <div className="menu-item" >
                             {user ? <NavLink to="/profile">MIN SIDA</NavLink> : <NavLink to="/login">LOGGA IN</NavLink>}
@@ -63,16 +69,14 @@ function App() {
                     </div>
                 </header>
                 <main>
-                    {showSearch && <div className="searchBar"><Search /></div>}
                     <Routes>
                         <Route path='/' element={<HomeView />} />
                         <Route path='/admin' element={<AdminView user={user}/>} />
                         <Route path='/login' element={<LoginView />} />
                         <Route path='/profile' element={<UserProfileView />} />
                         <Route path='/search_result' element={<SearchResults />} />
-                        <Route path='/search_book' element={<BookResult />} />
                         <Route path='/book/:bookid' element={<BookView />} />
-                        <Route path='/cart' element={<CartView />} />
+                        <Route path='/search_result/book/:bookid' element={<BookView />} />
 
                     </Routes>
                 </main>

@@ -9,6 +9,7 @@ import { decode as base64_decode, encode as base64_encode } from "base-64";
 import { useNavigate } from "react-router-dom";
 import LoginInViewOverLay from "../components/Login/LoginViewOverlay";
 import ForgottenPasswordModal from "../components/Login/ForgottenPasswordModal";
+import { useEffect } from "react";
 
 function LoginView() {
   const [email, setEmail] = useState("");
@@ -23,6 +24,12 @@ function LoginView() {
   const [creationError, setCreationError] = useState(null);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
 
+ useEffect(() => {
+	if (localStorage.getItem("user") !== null) {
+	  navigate("/profile");
+	}
+ },[user]); 
+ 
   const createNewCustomer = async (e) => {
     e.preventDefault();
 
@@ -31,7 +38,6 @@ function LoginView() {
       firstName: firstName,
       lastName: lastName,
     });
-    console.log(newUser);
     const requestOptions = {
       method: "POST",
       headers: {
@@ -43,7 +49,6 @@ function LoginView() {
     //let json = null;
     let resp = await fetch("/api/customer/", requestOptions);
     if (resp.ok) {
-      console.log("create customer ok");
       setUserCreated(true);
       let json = await resp.json();
       console.log(json);
@@ -75,8 +80,8 @@ function LoginView() {
       let json = await resp.json();
       if (json.success) {
         json.user.password = "Basic " + base64basicAuth;
-        console.log("login ok: ", json.user);
         setUser(json.user);
+		localStorage.setItem("user", JSON.stringify(json.user));
         navigate("/profile");
       } else {
         setLoginError(json);
@@ -99,66 +104,78 @@ function LoginView() {
       <div className="login-wrap">
         <h2>Logga in</h2>
         <form onSubmit={newDoLogin}>
+        <label htmlFor="email">
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            label="Email"
             placeholder="Email"
             id="email"
+            className="red-input"
             required
           ></input>
+          <span className="red-fl-label">Email</span>
+          </label>
+          <label htmlFor="password">
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            label="Lösenord"
             placeholder="Lösenord"
             id="password"
+            className="red-input"
             required
           ></input>
-          <button className="login-button btn-call-to-action" type="submit">
+          <span className="red-fl-label">Lösenord</span>
+          </label>
+          <button className="login-button" type="submit">
             Logga in
           </button>
-          <button type="button" onClick={() => setShowForgotPassword(true)}>
+          <span className="login-forgott-password" onClick={() => setShowForgotPassword(true)}>
             Glömt lösenord
-          </button>
+          </span>
         </form>
       </div>
       {!userCreated ? (
         <div className="add-account-wrap">
           <h2 className="cr-head-text">Skapa konto</h2>
           <form onSubmit={createNewCustomer}>
+          <label htmlFor="email">
             <input
               className="cr-account"
               type="email"
-              label="Email"
               placeholder="Email"
               id="emailCreate"
               value={emailCreate}
               onChange={(e) => setEmailCreate(e.target.value)}
               required
             ></input>
+            <span className="fl-label">Email</span>
+            </label>
+            <label htmlFor="firstname">
             <input
               className="cr-account"
               type="text"
-              label="Förnamn"
               placeholder="Förnamn"
               id="firstname"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               required
             ></input>
+            <span className="fl-label">Förnamn</span>
+            </label>
+            <label htmlFor="lastname">
             <input
               className="cr-account"
               type="text"
-              label="Efternamn"
               placeholder="Efternamn"
               id="lastname"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               required
             ></input>
+            <span className="fl-label">Efternamn</span>
+            </label>
             <button className="login-button" type="submit">
               {/*onClick={createNewCustomer} disabled={firstName === null ||firstName.length === 0}*/}
               Skapa konto

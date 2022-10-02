@@ -7,18 +7,18 @@ const BookDetails = ({ book }) => {
   const [cart, setCart] = useRecoilState(cartState);
 
   const addToCart = () => {
+    let cartUpdate = [];
     if (!cart.some((cartBook) => cartBook.id === book.id)) {
-      setCart([...cart, { ...book, numInstock: 1 }]);
+      cartUpdate = [...cart, { ...book, numInstock: 1 }];
     } else {
-      setCart(
-        cart.map((cartBook) => {
-          return cartBook.id === book.id
-		  	//? cartBook.numInstock++ <-- This is not allowed
-            ? { ...cartBook, numInstock: cartBook.numInstock + 1 }
-            : cartBook;
-        })
-      );
+      cartUpdate = cart.map((cartBook) => {
+        return cartBook.id === book.id
+          ? { ...cartBook, numInstock: cartBook.numInstock + 1 }
+          : cartBook;
+      });
     }
+    setCart(cartUpdate);
+    localStorage.setItem("cart", JSON.stringify(cartUpdate));
   };
 
   return (
@@ -67,7 +67,16 @@ const BookDetails = ({ book }) => {
               />
             )}
             <span className="book-info-price">{book.price} kr</span>
-            <button onClick={addToCart}>Lägg i varukorgen</button>
+            <button
+              onClick={addToCart}
+              disabled={
+                cart.some((cartBook) => cartBook.id === book.id) &&
+                cart.find((cartBook) => cartBook.id === book.id).numInstock >=
+                  book.numInstock
+              }
+            >
+              Lägg i varukorgen
+            </button>
           </div>
         </div>
       </div>
