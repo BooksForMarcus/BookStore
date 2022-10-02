@@ -42,7 +42,7 @@ input {
     padding-bottom: 0.8em;
 }
 
-input::placeholder{
+.add-book-wrap input::placeholder{
     opacity:0;
 }
 
