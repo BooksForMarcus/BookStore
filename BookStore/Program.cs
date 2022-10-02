@@ -37,6 +37,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    await new DbSeeder().Seed();
 }
 
 // Configure the HTTP request pipeline.
