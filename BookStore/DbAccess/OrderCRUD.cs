@@ -38,7 +38,7 @@ namespace BookStore.DbAccess
 			return result;
 		}
 
-		public async Task<List<Order>> CustomerGetOrder(string id)
+		public async Task<List<Order>> CustomerGetOrders(string id)
         {
 			var resp = await orders.FindAsync(x=>x.Customer.Id == id);
 			return resp.ToList();

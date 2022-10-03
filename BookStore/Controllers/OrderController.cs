@@ -34,14 +34,14 @@ namespace BookStore.Controllers
                 return BadRequest(new { error = "Need admin priviledge to access customer list." });
         }
 
-        [HttpGet("customer/getorder")]
+        [HttpGet("customer/getorders")]
 
-        public async Task<IActionResult> CustomerGetOrder(string id)
+        public async Task<IActionResult> CustomerGetOrders()
         {
             var cust = HttpContext.Items["Customer"] as Customer;
             if (cust is not null)
             {
-                var result = await _orderCRUD.CustomerGetOrder(cust.Id);
+                var result = await _orderCRUD.CustomerGetOrders(cust.Id);
                 return Ok(result);
             }
             return BadRequest();
@@ -62,10 +62,10 @@ namespace BookStore.Controllers
                 var result = await _orderCRUD.CreateOrder(order);
                 if (result)
                 {
-                    return Ok();
+                    return Ok(new {message= "Order created." });
                 }
             }
-            return BadRequest();
+            return BadRequest(new { message = "Order creation failed." });
         }
 
 

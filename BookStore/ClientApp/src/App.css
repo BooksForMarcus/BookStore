@@ -54,9 +54,20 @@ main{
 /*===== Footer =====*/
 
 footer {
+    display: grid;
+    place-items: center;
     background-color: #688472;
-    padding: 2em;
+    padding: 3em;
 	max-height: 3vh;
+}
+
+.contact-link {
+    color: #FCF8E8;
+}
+
+.contact-link:hover{
+    color: #ECB390;
+    cursor: pointer;
 }
 
 
