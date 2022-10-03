@@ -59,12 +59,22 @@ function UserProfileView() {
               ) : (
                 <span></span>
               )}
-			  <span
+              <span
                 className="profile-navlink"
                 onClick={() => {localStorage.clear(); setUser(null);}}
               >
                 LOGGA UT
               </span>
+              {user && !user.isSeller ? (
+                <div className="profile-email-contact-container" onClick={() => window.location = 'mailto:yourmail@gmail.com'}>
+              <span className="profile-email-contact-link" >
+                  Kontakta oss för att bli säljare
+              </span>
+              </div>
+              ):
+              (
+                <span></span>
+              )}
             </div>
           </div>
         )}

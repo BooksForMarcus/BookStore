@@ -29,6 +29,22 @@
     background-color: #fcf8e8;
 }
 
+.profile-email-contact-container {
+    margin-top: 5em;
+    width: 100%;
+}
+
+.profile-email-contact-container:hover {
+    cursor: pointer;
+}
+
+.profile-email-contact-link {
+    background-color: #688472;
+    color: #fcf8e8;
+    padding: 1em;
+    
+}
+
 .h2-light {
     margin-bottom: 2em;
 }
