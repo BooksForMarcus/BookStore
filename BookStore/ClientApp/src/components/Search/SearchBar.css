@@ -1,6 +1,8 @@
 .searchInputs {
 	margin-top: 1px;
 	display: flex;
+	justify-content: center;
+	align-items: center;
   }
   
   .search input {
@@ -11,18 +13,23 @@
 	border-bottom-right-radius: 0px;
 	font-size: 18px;
 	padding: 5px;
-	height: 30px;
+	height: 2em;
 	width: 300px;
+	margin: 2em 0em;
   }
 
 .searchIcon {
-	height: 30px;
-	width: 30px;
+	height: 2.25em;
+	width: 2.25em;
 	padding: 5px;
 	margin-left: 2px;
 	background-color: #fcf8e8;
 	display: grid;
 	place-items: center;
+}
+.searchIcon > svg {
+	align-self: center;
+	justify-self: center;
 }
 
 	.searchIcon:hover {
@@ -30,8 +37,8 @@
 	}
 
 .closeIcon {
-	height: 30px;
-	width: 30px;
+	height: 2.25em;
+	width: 2.25em;
 	padding: 5px;
 	background-color:white;
 	display: grid;

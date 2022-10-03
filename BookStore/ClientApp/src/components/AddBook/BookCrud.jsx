@@ -7,31 +7,34 @@ import getBasicAuthString from "../../getBasicAuthString";
 import ModalBaseFull from "../Modal/ModalBaseFull";
 import EditCategories from "../ManageBooks/EditCategories";
 import booksState from "../../atoms/booksState";
+import { useNavigate } from "react-router-dom";
 
 const BookCrud = ({ isEdit, book, setBookToEdit }) => {
   const [books, setBooks] = useRecoilState(booksState);
-  const bookId = isEdit ? book.id : "";
+  let bookId = isEdit === true && book!==undefined ? book.id : "";
   const [user, setUser] = useRecoilState(loggedInUserState);
-  const [isbn, setIsbn] = useState(isEdit ? book.isbn : "");
-  const [author, setAuthor] = useState(isEdit ? book.author : "");
-  const [title, setTitle] = useState(isEdit ? book.title : "");
-  const [language, setLanguage] = useState(isEdit ? book.language : "");
-  const [categories, setCategories] = useState(isEdit ? book.categories : []);
-  const [numInstock, setNumInstock] = useState(isEdit ? book.numInstock : 0);
-  const [price, setPrice] = useState(isEdit ? book.price : 0);
-  const [year, setYear] = useState(isEdit ? book.year : 0);
-  const [imageURL, setImageURL] = useState(isEdit ? book.imageURL : "");
-  const [pages, setPages] = useState(isEdit ? book.pages : 0);
-  const [weight, setWeight] = useState(isEdit ? book.weight : 0);
+  const [isbn, setIsbn] = useState(isEdit && book!==undefined ? book.isbn : "");
+  const [author, setAuthor] = useState(isEdit && book!==undefined ? book.author : "");
+  const [title, setTitle] = useState(isEdit && book!==undefined ? book.title : "");
+  const [language, setLanguage] = useState(isEdit && book!==undefined ? book.language : "");
+  const [categories, setCategories] = useState(isEdit && book!==undefined ? book.categories : []);
+  const [numInstock, setNumInstock] = useState(isEdit && book!==undefined ? book.numInstock : 0);
+  const [price, setPrice] = useState(isEdit && book!==undefined ? book.price : 0);
+  const [year, setYear] = useState(isEdit && book!==undefined ? book.year : 0);
+  const [imageURL, setImageURL] = useState(isEdit && book!==undefined ? book.imageURL : "");
+  const [pages, setPages] = useState(isEdit && book!==undefined ? book.pages : 0);
+  const [weight, setWeight] = useState(isEdit && book!==undefined ? book.weight : 0);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [showBookCreated, setShowBookCreated] = useState(false);
-  const [bookCreated, setBookCreated] = useState(false);
-  const [bookCreateError, setBookCreateError] = useState(null);
-  const bookSoldById = isEdit
-    ? book.soldById
-    : user.isAdmin
-    ? "store"
-    : user.id;
+  const [bookCreated, setBookCreated] = useState(null);
+  const navigate = useNavigate();
+  let bookSoldById =
+    user !== null && isEdit
+      ? book.soldById
+      : user !== null && user.isAdmin
+      ? "store"
+      : user !== null
+      ? user.id
+      : null;
 
   const buildBook = () => {
     return {
@@ -50,13 +53,32 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
       soldById: bookSoldById,
     };
   };
+  useEffect(() => {
+    bookId = isEdit ? book.id : "";
+    setIsbn(isEdit ? book.isbn : "");
+    setAuthor(isEdit ? book.author : "");
+    setTitle(isEdit ? book.title : "");
+    setLanguage(isEdit ? book.language : "");
+    setCategories(isEdit ? book.categories : []);
+    setNumInstock(isEdit ? book.numInstock : 0);
+    setPrice(isEdit ? book.price : 0);
+    setYear(isEdit ? book.year : 0);
+    setImageURL(isEdit ? book.imageURL : "");
+    setPages(isEdit ? book.pages : 0);
+    setWeight(isEdit ? book.weight : 0);
+    bookSoldById = isEdit ? book.soldById : user.isAdmin ? "store" : user.id;
+  }, [book]);
+
+  useEffect(() => {
+    if (user === null) {
+      navigate("/login");
+    }
+  }, [user]);
 
   const addBook = async (e) => {
     e.preventDefault();
 
     const newBook = buildBook();
-
-    console.log(newBook);
     const requestOptions = {
       method: "POST",
       headers: {
@@ -64,27 +86,30 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newBook)
+      body: JSON.stringify(newBook),
     };
 
     let resp = await fetch("/api/Book/", requestOptions);
     if (resp.ok) {
       console.log("Book created");
-      setBookCreated(true);
-	  setBooks([...books, newBook].sort((a, b) => a.title.localeCompare(b.title)));
+      setBookCreated("ok");
       let json = await resp.json();
-      console.log(json);
+      newBook.id = json;
+      setBooks(
+        [...books, newBook].sort((a, b) => a.title.localeCompare(b.title))
+      );
     } else {
       console.log("Book create failed.");
       let json = await resp.json();
       console.log(json);
-      setBookCreateError(json);
+      setBookCreated("fail");
     }
   };
 
   const updateBook = async (e) => {
     e.preventDefault();
     const updatedBook = buildBook();
+    console.log(updatedBook);
     const requestOptions = {
       method: "PUT",
       headers: {
@@ -92,7 +117,7 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedBook)
+      body: JSON.stringify(updatedBook),
     };
 
     let resp = await fetch("/api/book", requestOptions);
@@ -107,12 +132,64 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
       //setUpdateOk(false);
     }
   };
+  const deleteBook = async (e) => {
+    const bookToDelete = buildBook();
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        Authorization: user.password,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bookToDelete),
+    };
+    let resp = await fetch("/api/book/", requestOptions);
+    if (resp.ok) {
+      let newBooks = books.filter((b) => b.id !== bookToDelete.id);
+      setBooks(newBooks);
+      setBookToEdit(null);
+    }
+  };
 
   return (
     <div>
+      {showDeleteConfirm && (
+        <ModalBaseFull>
+          <div className="modal-card">
+            <h3>Är du säker på att du vill ta bort den här boken?</h3>
+            <div className="btn-area">
+              <button type="button" className="btn-danger" onClick={deleteBook}>
+                Ja
+              </button>
+              <button type="button" onClick={() => setShowDeleteConfirm(false)}>
+                Nej
+              </button>
+            </div>
+          </div>
+        </ModalBaseFull>
+      )}
+      {bookCreated != null && (
+        <ModalBaseFull>
+          <div className="modal-card">
+            <h3>
+              {bookCreated === "ok"
+                ? "Boken har lagts till"
+                : "Kunde inte lägga till boken"}
+            </h3>
+            <button
+              type="button"
+              onClick={() => setBookCreated(null)}
+              className="btn-call-to-action"
+            >
+              Ok
+            </button>
+          </div>
+        </ModalBaseFull>
+      )}
+
       <form className="add-book-wrap" onSubmit={isEdit ? updateBook : addBook}>
         <label htmlFor="title">
-		      <input
+          <input
             className="cr-book-title"
             type="text"
             placeholder="Boktitel"
@@ -120,136 +197,140 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-        ></input>
-        <span className="cr-book-fl-label">Boktitel</span>
+          ></input>
+          <span className="cr-book-fl-label">Boktitel</span>
         </label>
         <div className="cr-container-1">
           <label htmlFor="author">
-          <input
-            className="cr-book"
-            type="text"
-            placeholder="Författare"
-            id="author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            required
-          ></input>
-          <span className="cr-book-fl-label">Författare</span>
+            <input
+              className="cr-book"
+              type="text"
+              placeholder="Författare"
+              id="author"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+              required
+            ></input>
+            <span className="cr-book-fl-label">Författare</span>
           </label>
           <label htmlFor="isbn">
-          <input
-            className="cr-book"
-            type="text"
-            placeholder="ISBN"
-            id="isbn"
-            value={isbn}
-            onChange={(e) => setIsbn(e.target.value)}
-            required
-          ></input>
-          <span className="cr-book-fl-label">ISBN</span>
+            <input
+              className="cr-book"
+              type="text"
+              placeholder="ISBN"
+              id="isbn"
+              value={isbn}
+              onChange={(e) => setIsbn(e.target.value)}
+              required
+            ></input>
+            <span className="cr-book-fl-label">ISBN</span>
           </label>
           <label htmlFor="imageURL">
-          <input
-            className="cr-book"
-            type="url"
-            placeholder="Bildlänk (URL)"
-            id="imageURL"
-            value={imageURL}
-            onChange={(e) => setImageURL(e.target.value)}
-          ></input>
-          <span className="cr-book-fl-label">Bildlänk (URL)</span>
+            <input
+              className="cr-book"
+              type="url"
+              placeholder="Bildlänk (URL)"
+              id="imageURL"
+              value={imageURL}
+              onChange={(e) => setImageURL(e.target.value)}
+            ></input>
+            <span className="cr-book-fl-label">Bildlänk (URL)</span>
           </label>
           <label htmlFor="language">
-          <input
-            className="cr-book"
-            type="text"
-            placeholder="Språk"
-            id="language"
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-          ></input>
-          <span className="cr-book-fl-label">Språk</span>
+            <input
+              className="cr-book"
+              type="text"
+              placeholder="Språk"
+              id="language"
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+            ></input>
+            <span className="cr-book-fl-label">Språk</span>
           </label>
         </div>
         <div className="cr-container-2">
           <div className="cr-category-container">
-          <EditCategories
-            categories={categories}
-            setCategories={setCategories}
-          />
+            <EditCategories
+              categories={categories}
+              setCategories={setCategories}
+            />
           </div>
           <label htmlFor="year">
-          <input
-            className="cr-book"
-            type="number"
-            placeholder="Utgivningsår"
-            id="year"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-          ></input>
-          <span className="cr-book-fl-label">Utgivningsår</span>
+            <input
+              className="cr-book"
+              type="number"
+              placeholder="Utgivningsår"
+              id="year"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            ></input>
+            <span className="cr-book-fl-label">Utgivningsår</span>
           </label>
           <label htmlFor="pages">
-          <input
-            className="cr-book"
-            type="number"
-            placeholder="Antal sidor"
-            id="pages"
-            value={pages}
-            onChange={(e) => setPages(e.target.value)}
-          ></input>
-          <span className="cr-book-fl-label">Antal sidor</span>
+            <input
+              className="cr-book"
+              type="number"
+              placeholder="Antal sidor"
+              id="pages"
+              value={pages}
+              onChange={(e) => setPages(e.target.value)}
+            ></input>
+            <span className="cr-book-fl-label">Antal sidor</span>
           </label>
           <label htmlFor="weight">
-          <input
-            className="cr-book"
-            type="number"
-            placeholder="Vikt (gram)"
-            id="weight"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-          ></input>
-          <span className="cr-book-fl-label">Vikt (gram)</span>
+            <input
+              className="cr-book"
+              type="number"
+              placeholder="Vikt (gram)"
+              id="weight"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
+            ></input>
+            <span className="cr-book-fl-label">Vikt (gram)</span>
           </label>
           <label htmlFor="numInstock">
-          <input
-            className="cr-book"
-            type="number"
-            placeholder="Antal"
-            id="numInstock"
-            value={numInstock}
-            onChange={(e) => setNumInstock(e.target.value)}
-          ></input>
-          <span className="cr-book-fl-label">Antal</span>
+            <input
+              className="cr-book"
+              type="number"
+              placeholder="Antal"
+              id="numInstock"
+              value={numInstock}
+              onChange={(e) => setNumInstock(e.target.value)}
+            ></input>
+            <span className="cr-book-fl-label">Antal</span>
           </label>
           <label htmlFor="price">
-          <input
-            className="cr-book"
-            type="number"
-            placeholder="Pris"
-            id="price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          ></input>
-          <span className="cr-book-fl-label">Pris</span>
+            <input
+              className="cr-book"
+              type="number"
+              placeholder="Pris"
+              id="price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              required
+            ></input>
+            <span className="cr-book-fl-label">Pris</span>
           </label>
         </div>
-		<div className="btn-area">
-			<button type="submit" onClick={() => setShowBookCreated(true)}>
-			{isEdit ? "Uppdatera bok" : "Lägg upp bok"}
-			</button>
-			{isEdit && (
-			<button type="button" onClick={() => setBookToEdit(null)}>
-				Stäng
-			</button>
-			)}
-			{isEdit && (
-			<button type="button" onClick={() => setShowDeleteConfirm(true)}>
-				Ta bort bok
-			</button>
-			)}
-		</div>
+        <div className="btn-area">
+          <button type="submit" onClick={() => setShowBookCreated(true)}>
+            {isEdit ? "Uppdatera bok" : "Lägg upp bok"}
+          </button>
+          {isEdit && (
+            <button type="button" onClick={() => setBookToEdit(null)}>
+              Stäng
+            </button>
+          )}
+          {isEdit && (
+            <button
+              type="button"
+              className="btn-danger"
+              onClick={() => setShowDeleteConfirm(true)}
+            >
+              Ta bort bok
+            </button>
+          )}
+        </div>
       </form>
     </div>
   );
