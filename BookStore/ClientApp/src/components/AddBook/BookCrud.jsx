@@ -7,11 +7,11 @@ import getBasicAuthString from "../../getBasicAuthString";
 import ModalBaseFull from "../Modal/ModalBaseFull";
 import EditCategories from "../ManageBooks/EditCategories";
 import booksState from "../../atoms/booksState";
-import { ConstructionOutlined } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const BookCrud = ({ isEdit, book, setBookToEdit }) => {
   const [books, setBooks] = useRecoilState(booksState);
-  const bookId = isEdit === true && book!==undefined ? book.id : "";
+  let bookId = isEdit === true && book!==undefined ? book.id : "";
   const [user, setUser] = useRecoilState(loggedInUserState);
   const [isbn, setIsbn] = useState(isEdit && book!==undefined ? book.isbn : "");
   const [author, setAuthor] = useState(isEdit && book!==undefined ? book.author : "");
@@ -26,11 +26,15 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
   const [weight, setWeight] = useState(isEdit && book!==undefined ? book.weight : 0);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [bookCreated, setBookCreated] = useState(null);
-  const bookSoldById = isEdit && book!==undefined 
-    ? book.soldById
-    : user.isAdmin
-    ? "store"
-    : user.id;
+  const navigate = useNavigate();
+  let bookSoldById =
+    user !== null && isEdit
+      ? book.soldById
+      : user !== null && user.isAdmin
+      ? "store"
+      : user !== null
+      ? user.id
+      : null;
 
   const buildBook = () => {
     return {
@@ -49,6 +53,27 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
       soldById: bookSoldById,
     };
   };
+  useEffect(() => {
+    bookId = isEdit ? book.id : "";
+    setIsbn(isEdit ? book.isbn : "");
+    setAuthor(isEdit ? book.author : "");
+    setTitle(isEdit ? book.title : "");
+    setLanguage(isEdit ? book.language : "");
+    setCategories(isEdit ? book.categories : []);
+    setNumInstock(isEdit ? book.numInstock : 0);
+    setPrice(isEdit ? book.price : 0);
+    setYear(isEdit ? book.year : 0);
+    setImageURL(isEdit ? book.imageURL : "");
+    setPages(isEdit ? book.pages : 0);
+    setWeight(isEdit ? book.weight : 0);
+    bookSoldById = isEdit ? book.soldById : user.isAdmin ? "store" : user.id;
+  }, [book]);
+
+  useEffect(() => {
+    if (user === null) {
+      navigate("/login");
+    }
+  }, [user]);
 
   const addBook = async (e) => {
     e.preventDefault();
@@ -69,9 +94,7 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
       console.log("Book created");
       setBookCreated("ok");
       let json = await resp.json();
-      console.log(json);
       newBook.id = json;
-      console.log("in book create:", newBook);
       setBooks(
         [...books, newBook].sort((a, b) => a.title.localeCompare(b.title))
       );

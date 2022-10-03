@@ -117,7 +117,7 @@ function EditProfile() {
             </div>
           </ModalBaseFull>
         )}
-        <h2 className="ud-head-text">Uppdatera din uppgifter</h2>
+        <h2 className="h2-light">Uppdatera din uppgifter</h2>
           <form onSubmit={updateCustomer}>
             <label htmlFor="email">
                 <input
