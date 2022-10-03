@@ -37,7 +37,7 @@ header {
 /*===== Main shared =====*/
 
 main{
-	min-height: 79.5vh;
+	min-height: 77vh;
 }
 .main-container {
     display: grid;
