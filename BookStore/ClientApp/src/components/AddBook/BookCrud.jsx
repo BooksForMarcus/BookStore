@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const BookCrud = ({ isEdit, book, setBookToEdit }) => {
   const [books, setBooks] = useRecoilState(booksState);
-  const bookId = isEdit === true && book!==undefined ? book.id : "";
+  let bookId = isEdit === true && book!==undefined ? book.id : "";
   const [user, setUser] = useRecoilState(loggedInUserState);
   const [isbn, setIsbn] = useState(isEdit && book!==undefined ? book.isbn : "");
   const [author, setAuthor] = useState(isEdit && book!==undefined ? book.author : "");
@@ -25,12 +25,8 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
   const [pages, setPages] = useState(isEdit && book!==undefined ? book.pages : 0);
   const [weight, setWeight] = useState(isEdit && book!==undefined ? book.weight : 0);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [showBookCreated, setShowBookCreated] = useState(false);
   const [bookCreated, setBookCreated] = useState(false);
-  const [bookCreateError, setBookCreateError] = useState(null);
   const navigate = useNavigate();
-
-
   let bookSoldById =
     user !== null && isEdit
       ? book.soldById
