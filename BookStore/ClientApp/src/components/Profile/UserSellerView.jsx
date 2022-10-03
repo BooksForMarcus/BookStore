@@ -39,7 +39,13 @@ function UserSellerView() {
             <span className="seller-book-listitem-text-status">
               {b.price} sek
             </span>
-            <span className="seller-book-listitem-text-status">Status</span>
+            <span className="seller-book-listitem-text-status">
+              {b.numInstock} st
+            </span>
+            {b.numInstock === 0 ? 
+            (<span className="seller-book-listitem-text-status">Såld</span>)
+            :
+            (<span className="seller-book-listitem-text-status">Pågående</span>)}
             <span
               className="seller-book-listitem-icon"
               onClick={() => setBookToEdit(b)}
@@ -73,7 +79,8 @@ function UserSellerView() {
         <div className="seller-profile-booklist-h">
           <span className="seller-profile-booklist-h-titletext">Titel</span>
           <span className="seller-profile-booklist-h-text">Pris</span>
-          <span className="seller-profile-booklist-h-text">Status</span>
+          <span className="seller-profile-booklist-h-text">Antal</span>
+          <span className="seller-profile-booklist-h-status">Status</span>
         </div>
         <ListBooks />
       </div>
