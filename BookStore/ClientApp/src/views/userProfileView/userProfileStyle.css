@@ -29,24 +29,19 @@
     background-color: #fcf8e8;
 }
 
+.h2-light {
+    margin-bottom: 2em;
+}
+
 .profile-email-contact-container {
-    margin-top: 5em;
-    width: 100%;
+    padding: 1em;
+    color: #fcf8e8;
+    margin-top: 4em;
+    background-color: #688472;
 }
 
 .profile-email-contact-container:hover {
     cursor: pointer;
-}
-
-.profile-email-contact-link {
-    background-color: #688472;
-    color: #fcf8e8;
-    padding: 1em;
-    
-}
-
-.h2-light {
-    margin-bottom: 2em;
 }
 
 /*===== SellerView =====*/
@@ -73,7 +68,7 @@
     padding: 1em;
     font-weight: bolder;
     display: grid;
-    grid-template-columns: 4fr 1fr 1fr 2fr 1fr;
+    grid-template-columns: 4fr 1fr 2fr 1fr;
 }
 
 .seller-profile-booklist-h-text {
@@ -85,15 +80,9 @@
     padding-left: 0em;
 }
 
-.seller-profile-booklist-h-status {
-    display: grid;
-    place-self: center;
-    margin-left: 0.5em;
-}
-
 .seller-book-listitem {
     display: grid;
-    grid-template-columns: 4fr 1fr 1fr 2fr 1fr;
+    grid-template-columns: 4fr 1fr 2fr 1fr;
     border-bottom: solid 1px #e3e4da;
 }
 
@@ -116,9 +105,8 @@
 }
 
 .seller-book-listitem-icon {
-    margin: 1em;
+    margin-top: 1em;
     color:#688472;
-    place-self: end;
 }
 
 .seller-book-listitem-icon:hover {
@@ -131,4 +119,50 @@
     width: 100%;
     height: 2em;
     background-color: #fcf8e8;
+}
+
+/*===== UserOrderView =====*/
+
+.user-order-wrap {
+    width: 80%;
+}
+
+.user-order-profile-list-h {
+    background-color: #415d51;
+    color: #fcf8e8;
+    padding: 1em;
+    font-weight: bolder;
+    display: grid;
+    grid-template-columns: 5fr 2fr 2fr 2fr;
+    width: 100%;
+}
+
+.user-order-user-list {
+    background-color: #fcf8e8;
+    color: #415d51;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 5fr 2fr 2fr 2fr;
+    width: 100%;
+    margin-bottom: 2em;
+}
+
+.user-order-profile-booklist-h-text {
+    display: grid;
+    place-self: start;
+}
+
+.user-order-profile-booklist-h-text-center, .user-order-profile-user-order-listitem-center {
+    place-self: center;
+}
+
+.seller-book-listitem-icon {
+    margin-top: 1em;
+    color:#688472;
+}
+
+.seller-book-listitem-icon:hover {
+    margin-top: 1em;
+    color:#415d51;
+    cursor: pointer;
 }

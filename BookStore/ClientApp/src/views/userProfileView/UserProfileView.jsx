@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 import loggedInUserState from "../../atoms/loggedInUserState";
 import EditProfile from "../../components/Profile/EditProfile";
 import UserSellerView from "../../components/Profile/UserSellerView";
+import UserProfileOrderView from "../../components/Profile/UserProfileOrderView";
 
 function UserProfileView() {
 	
@@ -81,7 +82,7 @@ function UserProfileView() {
       </div>
       <div className="add-account-wrap">
         {nav === "details" && <EditProfile />}
-        {/* {nav === "orders" && <UserOrders />} */}
+        {nav === "orders" && <UserProfileOrderView />}
         {nav === "sellbooks" && <UserSellerView />}
       </div>
     </div>
