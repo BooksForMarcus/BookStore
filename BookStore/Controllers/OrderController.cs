@@ -62,10 +62,10 @@ namespace BookStore.Controllers
                 var result = await _orderCRUD.CreateOrder(order);
                 if (result)
                 {
-                    return Ok();
+                    return Ok(new {message= "Order created." });
                 }
             }
-            return BadRequest();
+            return BadRequest(new { message = "Order creation failed." });
         }
 
 

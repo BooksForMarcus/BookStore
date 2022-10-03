@@ -19,13 +19,15 @@ import SearchResults from "./components/Search/SearchResults";
 import { useEffect } from "react";
 import booksState from "./atoms/booksState";
 import categoriesState from "./atoms/categoriesState";
-import CartView from "./views/CartView";
+import CartView from "./views/CartView/CartView";
+import cartState from "./atoms/cartState";
 
 function App() {
 	const [user, setUser] = useRecoilState(loggedInUserState);
 	const [books, setBooks] = useRecoilState(booksState);
 	const [showSearch,setShowSearch] = useState(false);
 	const [categories, setCategories] = useRecoilState(categoriesState);
+	const [cart, setCart] = useRecoilState(cartState);
 	
 	const getBooks = async () => {
 		const resp = await fetch("/api/Book");
@@ -43,6 +45,9 @@ function App() {
 	useEffect(() => {
 		if(localStorage.getItem("user")!==null){
 			setUser(JSON.parse(localStorage.getItem("user")));
+		}
+		if(localStorage.getItem("cart")!==null){
+			setCart(JSON.parse(localStorage.getItem("cart")));
 		}
 		if(books === null) getBooks();
 		if(categories === null) getCategories();
