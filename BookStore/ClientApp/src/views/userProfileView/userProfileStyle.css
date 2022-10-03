@@ -129,6 +129,10 @@
     display: grid;
 }
 
+.user-order-profile-booklist {
+    display: grid;
+}
+
 .user-order-profile-list-h {
     background-color: #415d51;
     color: #fcf8e8;
@@ -149,6 +153,10 @@
     border-bottom: solid #e3e4da 1px;
 }
 
+.user-order-user-list:hover {
+    cursor: pointer;
+}
+
 .user-order-profile-booklist-h-text {
     display: grid;
     place-self: start;
@@ -158,13 +166,83 @@
     place-self: center;
 }
 
-.seller-book-listitem-icon {
-    margin-top: 1em;
-    color:#688472;
+.user-order-details-container {
+    display: grid;
+    background-color: #fcf8e8;
+    padding: 2em;
 }
 
-.seller-book-listitem-icon:hover {
-    margin-top: 1em;
-    color:#415d51;
-    cursor: pointer;
+.user-order-details-container-1 {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+.user-order-details-date {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.user-order-details-status {
+    font-size: larger;
+    color: #fcf8e8;
+    background-color: #688472;
+    width: fit-content;
+    padding: 0.6em;
+}
+
+.user-order-details-container-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 2em 2em;
+}
+
+.user-order-details-container-3 {
+    border-top: #aaceb7 solid 1px;
+}
+
+.user-book-order-details-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    border-bottom: #e3e4da solid 1px;
+}
+
+.user-order-details-item {
+    font-weight: bolder;
+    color:#df7861;
+}
+
+.user-order-book-item {
+    color: #415d51;
+    margin: 2em 1em;
+}
+
+.user-order-image-wrapper {
+    place-self: end;
+    width: 50%;
+    margin: 1em 2em 1em 0em;
+}
+.user-order-img{
+    width: 70%;
+}
+
+.user-order-details-container-4 {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    place-items: center;
+    margin: 2em;
+}
+
+.user-order-details-item-sum {
+    margin-bottom: 0;
+    place-self: center;
+}
+
+.user-order-details-totalSum {
+    place-self: center;
+}
+
+.user-order-details-close {
+    margin-top: 2em;
+    place-self: center;
+    width: 50%;
 }
