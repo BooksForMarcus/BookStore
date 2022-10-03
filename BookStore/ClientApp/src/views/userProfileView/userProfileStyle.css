@@ -69,6 +69,12 @@
     padding-left: 0em;
 }
 
+.seller-profile-booklist-h-status {
+    display: grid;
+    place-self: center;
+    margin-left: 0.5em;
+}
+
 .seller-book-listitem {
     display: grid;
     grid-template-columns: 4fr 1fr 1fr 2fr 1fr;
@@ -94,8 +100,9 @@
 }
 
 .seller-book-listitem-icon {
-    margin-top: 1em;
+    margin: 1em;
     color:#688472;
+    place-self: end;
 }
 
 .seller-book-listitem-icon:hover {
