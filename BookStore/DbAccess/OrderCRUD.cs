@@ -17,6 +17,9 @@ namespace BookStore.DbAccess
 
 		public async Task<bool> CreateOrder(Order order)
 		{
+			//make sure to strip id from sources such as swagger
+			order.Id = String.Empty;
+
 			await orders.InsertOneAsync(order);
 			var result = !String.IsNullOrWhiteSpace(order.Id);
 			return result;
