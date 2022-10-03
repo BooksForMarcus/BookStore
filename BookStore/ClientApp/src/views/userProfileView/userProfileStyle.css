@@ -57,7 +57,7 @@
     padding: 1em;
     font-weight: bolder;
     display: grid;
-    grid-template-columns: 4fr 1fr 2fr 1fr;
+    grid-template-columns: 4fr 1fr 1fr 2fr 1fr;
 }
 
 .seller-profile-booklist-h-text {
@@ -71,7 +71,7 @@
 
 .seller-book-listitem {
     display: grid;
-    grid-template-columns: 4fr 1fr 2fr 1fr;
+    grid-template-columns: 4fr 1fr 1fr 2fr 1fr;
     border-bottom: solid 1px #e3e4da;
 }
 
