@@ -64,7 +64,6 @@ public class DbSeeder
     private List<T> ImportJsonList<T>(string fileName)
     {
         var fileTxt = File.ReadAllText(path + fileName);
-        //var list = Deserialize(fileTxt, typeof(List<T>));
         var list2 = BsonSerializer.Deserialize<List<T>>(fileTxt);
         return list2 as List<T>;
     }
