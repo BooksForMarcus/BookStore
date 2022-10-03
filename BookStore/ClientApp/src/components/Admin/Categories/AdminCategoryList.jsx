@@ -9,6 +9,11 @@ import { useEffect } from "react";
 const AdminCategoryList = ({ categories, setCategories }) => {
  
     const [name, setName] = useState("");
+    const [toggle, setToggle] = useState(false);
+
+
+
+ 
 
     async function refresh() {
 
@@ -18,8 +23,10 @@ const AdminCategoryList = ({ categories, setCategories }) => {
 
             const json = await resp.json();
             json.sort((a, b) => a.name.localeCompare(b.title));
+ 
             setCategories(json);
-            //window.location.reload();
+            setToggle(!toggle);
+ 
         } else {
 
         }
@@ -46,7 +53,7 @@ const AdminCategoryList = ({ categories, setCategories }) => {
 
                 }
             })
-        //setCategories(getCategories);
+ 
          
     };
 
@@ -70,7 +77,7 @@ const AdminCategoryList = ({ categories, setCategories }) => {
                 },
                 body: JSON.stringify({Id: param, Name: param2}),
              })
-        //setCategories(getCategories)
+ 
         console.log("error ");
         refresh();
     };

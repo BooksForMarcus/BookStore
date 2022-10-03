@@ -9,14 +9,33 @@ import AdminCategoryList from "./AdminCategoryList"
 function AdminCategoryView() {
 
 
-  
+    const [toggle, SetToggle] = useState(false);
     const [allCategories, setAllCategories] = useRecoilState(categoriesState);
     const [name, setName] = useState("");
     const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
- 
+
+    const getCategories = async () => {
+        const resp = await fetch("/api/category");
+        const json = await resp.json();
+        json.sort((a, b) => a.name.localeCompare(b.name));
+        setAllCategories(json);
+        //SetToggle(!toggle);
+    };
+
     const createThisCategory = {
         name
     }
+
+
+ 
+
+    useEffect(() => {
+        //Runs on the first render
+        //And any time any dependency value changes
+        getCategories();
+    }, [allCategories]);//loop 8..?
+
+   
 
     const requestOptionsCreate = {
         method: "POST",
