@@ -30,10 +30,15 @@
 }
 
 .h2-light {
-    margin: 2em 0em;
+    margin-bottom: 2em;
 }
 
 /*===== SellerView =====*/
+
+.seller-wrap {
+    display: grid;
+    place-items: center;
+}
 
 .seller-profile-head-text {
     color: #fcf8e8;

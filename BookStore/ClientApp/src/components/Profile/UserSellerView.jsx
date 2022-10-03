@@ -14,18 +14,12 @@ function UserSellerView() {
 
     const [user, setUser] = useRecoilState(loggedInUserState);
     const [books, setBooks] = useRecoilState(booksState);
-    const [isEdit, setIsEdit] = useState(false);
+    var [bookToEdit, setBookToEdit] = useState(null);
 
     const getSellersBooks = () => {
         var sellersBooks = books.filter((b) => b.soldById == user.id);
         return sellersBooks;
     };
-
-    const editBook = (book) => {
-        e.preventDefault
-        setIsEdit(true)
-        
-    }
 
     const ListBooks = () => {
 
@@ -46,18 +40,24 @@ function UserSellerView() {
                         </Link>
                         <span className="seller-book-listitem-text-status">{b.price} sek</span>
                         <span className="seller-book-listitem-text-status">Status</span>
-                        <span className="seller-book-listitem-icon" onClick={(e)=>{e.preventDefault;setToggleEdit(true)}}><FontAwesomeIcon icon={faPen} /></span>
+                        <span className="seller-book-listitem-icon" onClick={()=>setBookToEdit(b)}><FontAwesomeIcon icon={faPen} /></span>
                     </div>
                 );
             })
         );
     };
 
+    useEffect(() => { setBookToEdit(bookToEdit) });
+
 
   return (
-      <div className="profileNav-wrap">
+      <div className="seller-wrap">
         <h2 className="h2-light">Sälj böcker</h2>
-          <BookCrud isEdit={false} />
+        {bookToEdit === null ? (
+        <BookCrud isEdit={false} />
+      ) : (
+		<BookCrud isEdit={true} book={bookToEdit} setBookToEdit={setBookToEdit}/>
+      )}
           <h2 className="seller-profile-head-text">Försäljningar</h2>
           <div className="seller-profile-booklist">
               <div className="seller-profile-booklist-h">
