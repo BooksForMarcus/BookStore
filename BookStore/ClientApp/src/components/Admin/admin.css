@@ -143,7 +143,7 @@ button:hover {
 }
 .jonas-tr {
 	display: grid;
-	grid-template-columns: 5fr 1fr 5fr 1fr;
+	grid-template-columns: 20em 7em 20em 3em;
 
 	max-width: 100%;
  
@@ -154,7 +154,20 @@ button:hover {
 }
 .jonas-input2 {
 	display: inline;
-	font-size: 16px;
+/*	font-size: 16px;*/
+/*	background-color: white;
+	color: black;*/
+
+	    width: 90%;
+    margin-bottom: 0em;
+    padding: 0em;
+    border: none;
+    border-bottom: 2px solid #DF7861;
+/*    background-color: #FCF8E8;*/
+    outline: none;
+/*    color: #bb4a31;*/
+    font-size: 15px;
+
 }
 .admin-book-list {
 }

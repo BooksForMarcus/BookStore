@@ -3,14 +3,17 @@ import { useRecoilState } from "recoil";
 import loggedInUserState from "../../../atoms/loggedInUserState";
 import { useState } from "react";
 import { useEffect } from "react";
- 
+
+import deleteImg from  "../../../assets/delete.png";
+import editImg from "../../../assets/edit.png";
  
 
 const AdminCategoryList = ({ categories, setCategories }) => {
  
     const [name, setName] = useState("");
     const [toggle, setToggle] = useState(false);
-
+ 
+//
 
 
  
@@ -93,10 +96,11 @@ const AdminCategoryList = ({ categories, setCategories }) => {
                 categories.map((b) =>
                     <div className="jonas-tr" key={b.id}>
                         <div>{b.name} </div>
-                        <div> <button className="jonas-input" onClick={event => handleClick(event, b.id)}   >DELETE</button></div>
+                        {/*<NavLink className="nav_logo" to="/"><img className="nav_logo" src={logo} alt="An image of bookstore logo" /></NavLink>*/}
+                        <div> <img src={deleteImg} className="jonas-input" onClick={event => handleClick(event, b.id)} /></div>
                         {/*<div><input className="jonas-input2" type="text" name={b.id} id={b.id} value={myName} onChange={(e) => setName(e.target.value)} /></div>*/}
-                        <div><input className="jonas-input2" type="text" name={b.id} id={b.id}   onChange={(e) => setName(e.target.value)} /></div>
-                        <div>  <button className="jonas-input" onClick={event => handleClick2(event, b.id, name)}   >Edit</button></div>
+                        <div><input   className="jonas-input2" type="text" name={b.id} id={b.id} onChange={(e) => setName(e.target.value)} /></div>
+                        <div>  <img src={editImg} className="jonas-input" onClick={event => handleClick2(event, b.id, name)} /></div>
  
                     </div>)
 }
