@@ -19,6 +19,7 @@ import SearchResults from "./components/Search/SearchResults";
 import { useEffect } from "react";
 import booksState from "./atoms/booksState";
 import categoriesState from "./atoms/categoriesState";
+import CartView from "./views/CartView";
 
 function App() {
 	const [user, setUser] = useRecoilState(loggedInUserState);
@@ -63,6 +64,9 @@ function App() {
                         <div className="menu-item" >
                             {user ? <NavLink to="/profile">MIN SIDA</NavLink> : <NavLink to="/login">LOGGA IN</NavLink>}
                         </div>
+                        <div className="menu-item" >
+                            <NavLink to="/cart">KUNDVAGN</NavLink>
+                        </div>
                     </div>
                 </header>
                 <main>
@@ -74,6 +78,7 @@ function App() {
                         <Route path='/search_result' element={<SearchResults />} />
                         <Route path='/book/:bookid' element={<BookView />} />
                         <Route path='/search_result/book/:bookid' element={<BookView />} />
+                        <Route path='/cart' element={<CartView />} />
 
                     </Routes>
                 </main>

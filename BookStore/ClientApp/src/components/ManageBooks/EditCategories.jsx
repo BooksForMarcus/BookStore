@@ -23,6 +23,7 @@ const EditCategories = ({categories,setCategories}) => {
             <div className="admin-book-edit-categories-list">
               {allCategories.map((category) => (
                 <CategoryListItem
+				  key={"admin" + category.id}
                   category={category}
                   categories={categories}
                   setCategories={setCategories}

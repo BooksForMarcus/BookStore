@@ -1,0 +1,56 @@
+[{
+  "_id": {
+    "$oid": "63316a657b1919c7fde45a4e"
+  },
+  "Name": "Fantasy"
+},{
+  "_id": {
+    "$oid": "63358285b128c42d48872f63"
+  },
+  "Name": "Skönlitteratur"
+},{
+  "_id": {
+    "$oid": "6335829ab128c42d48872f64"
+  },
+  "Name": "Biografi"
+},{
+  "_id": {
+    "$oid": "633582aab128c42d48872f65"
+  },
+  "Name": "Ungdom"
+},{
+  "_id": {
+    "$oid": "633582b8b128c42d48872f66"
+  },
+  "Name": "Kropp & själ"
+},{
+  "_id": {
+    "$oid": "633582c7b128c42d48872f67"
+  },
+  "Name": "Mat & dryck"
+},{
+  "_id": {
+    "$oid": "633582d5b128c42d48872f68"
+  },
+  "Name": "Romantik"
+},{
+  "_id": {
+    "$oid": "633582efb128c42d48872f69"
+  },
+  "Name": "Science fiction"
+},{
+  "_id": {
+    "$oid": "633582fbb128c42d48872f6a"
+  },
+  "Name": "Poesi"
+},{
+  "_id": {
+    "$oid": "63358305b128c42d48872f6b"
+  },
+  "Name": "Deckare"
+},{
+  "_id": {
+    "$oid": "63358310b128c42d48872f6c"
+  },
+  "Name": "Barn"
+}]
