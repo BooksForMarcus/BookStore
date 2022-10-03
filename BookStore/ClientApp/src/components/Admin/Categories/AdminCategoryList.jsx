@@ -4,14 +4,28 @@ import loggedInUserState from "../../../atoms/loggedInUserState";
 import { useState } from "react";
 import { useEffect } from "react";
  
-
-
- 
-
  
 
 const AdminCategoryList = ({ categories, setCategories }) => {
+ 
     const [name, setName] = useState("");
+
+    async function refresh() {
+
+        let resp = await fetch("/api/category");
+        if (resp.ok) {
+
+
+            const json = await resp.json();
+            json.sort((a, b) => a.name.localeCompare(b.title));
+            setCategories(json);
+            //window.location.reload();
+        } else {
+
+        }
+    }
+ 
+
     function fetchDelete(id) {
         fetch('/api/category/' + { id } + '',
             {
@@ -33,7 +47,7 @@ const AdminCategoryList = ({ categories, setCategories }) => {
                 }
             })
         //setCategories(getCategories);
-
+         
     };
 
     const getCategories = async () => {
@@ -58,9 +72,11 @@ const AdminCategoryList = ({ categories, setCategories }) => {
              })
         //setCategories(getCategories)
         console.log("error ");
+        refresh();
     };
-
+ 
     const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
+ 
     return (
  
         <div style={{ width: '100%'  }} className="jonas-fult">
