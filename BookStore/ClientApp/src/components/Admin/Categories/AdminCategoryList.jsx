@@ -8,33 +8,7 @@ import { useEffect } from "react";
 
  
 
-//const requestOptionsDelete = {
-//    method: "DELETE",
-//    headers: {
-        //Authorization: loggedInUser.password,
-        //Accept: "application/json",
-        //"Content-Type": "application/json",
-//    },
-//    body: JSON.stringify(deleteThisCategory),
-//};
-
-//function deletion(spaghettiStrand)
-//{
-//    deleteThisCategory = spaghettiStrand;
-//    fetch("/api/category", requestOptionsDelete);
-//}
-// body: JSON.stringify({ id: b.id, name: b.name } ),}  )      }>DELETE</button> </div>)}
-//var deleteThisCategory=null;
-
-//function fetchDelete(id){
-//    fetch('/api/category/' + id + '' ,
-//        {
-//            method: "DELETE",
-//            headers: {
-//                Authorization: loggedInUser.password
-//            }
-//        }
-//}
+ 
 
 const AdminCategoryList = ({ categories, setCategories }) => {
     const [name, setName] = useState("");
@@ -92,8 +66,7 @@ const AdminCategoryList = ({ categories, setCategories }) => {
         <div style={{ width: '100%'  }} className="jonas-fult">
 
             {categories !== null &&
-                //categories.map((b) => <div key={b.id}>{b.id}...{b.name}<button onClick={fetchDelete( b.id )}   >DELETE</button> </div>)
-                //categories.map((b) => <div key={b.id}>{b.id}...{b.name}<button onClick={console.log("hej")}   >DELETE</button> </div>)
+ 
                 categories.map((b) =>
                     <div className="jonas-tr" key={b.id}>
                         <div>{b.name} </div>

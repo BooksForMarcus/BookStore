@@ -144,12 +144,9 @@ button:hover {
 .jonas-tr {
 	display: grid;
 	grid-template-columns: 5fr 1fr 5fr 1fr;
- 
-	/*justify-content:right;*/
-	/*align-items: center;*/
+
 	max-width: 100%;
-	/*transition: 0.4s;*/
-	/*	border-bottom: 2px solid #DF7861;*/
+ 
 }
 .jonas-input {
 	display: inline;
