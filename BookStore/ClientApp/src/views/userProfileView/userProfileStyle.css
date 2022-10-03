@@ -29,6 +29,22 @@
     background-color: #fcf8e8;
 }
 
+.profile-email-contact-container {
+    margin-top: 5em;
+    width: 100%;
+}
+
+.profile-email-contact-container:hover {
+    cursor: pointer;
+}
+
+.profile-email-contact-link {
+    background-color: #688472;
+    color: #fcf8e8;
+    padding: 1em;
+    
+}
+
 .h2-light {
     margin-bottom: 2em;
 }
@@ -57,7 +73,7 @@
     padding: 1em;
     font-weight: bolder;
     display: grid;
-    grid-template-columns: 4fr 1fr 2fr 1fr;
+    grid-template-columns: 4fr 1fr 1fr 2fr 1fr;
 }
 
 .seller-profile-booklist-h-text {
@@ -69,9 +85,15 @@
     padding-left: 0em;
 }
 
+.seller-profile-booklist-h-status {
+    display: grid;
+    place-self: center;
+    margin-left: 0.5em;
+}
+
 .seller-book-listitem {
     display: grid;
-    grid-template-columns: 4fr 1fr 2fr 1fr;
+    grid-template-columns: 4fr 1fr 1fr 2fr 1fr;
     border-bottom: solid 1px #e3e4da;
 }
 
@@ -94,8 +116,9 @@
 }
 
 .seller-book-listitem-icon {
-    margin-top: 1em;
+    margin: 1em;
     color:#688472;
+    place-self: end;
 }
 
 .seller-book-listitem-icon:hover {

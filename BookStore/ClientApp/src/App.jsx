@@ -84,6 +84,9 @@ function App() {
                 </main>
                 <footer>
                     {user && user.isAdmin ? <NavLink to="/admin">ADMIN</NavLink> : <span></span>}
+                    <span className="contact-link" onClick={() => window.location = 'mailto:yourmail@gmail.com'}>
+                        KONTAKTA OSS
+                    </span>
                 </footer>
             </div>
         </BrowserRouter>
