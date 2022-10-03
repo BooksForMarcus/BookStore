@@ -30,6 +30,7 @@
 }
 
 .h2-light {
+    place-self: center;
     margin-bottom: 2em;
 }
 
@@ -125,6 +126,7 @@
 
 .user-order-wrap {
     width: 80%;
+    display: grid;
 }
 
 .user-order-profile-list-h {
@@ -144,7 +146,7 @@
     display: grid;
     grid-template-columns: 5fr 2fr 2fr 2fr;
     width: 100%;
-    margin-bottom: 2em;
+    border-bottom: solid #e3e4da 1px;
 }
 
 .user-order-profile-booklist-h-text {
