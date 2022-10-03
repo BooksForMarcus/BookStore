@@ -68,6 +68,26 @@ public class BookCrud
         return resp.FirstOrDefault();
     }
 
+    public async Task<bool> DeleteAllInCategory(string Id)
+    {
+        var findFilter = Builders<Book>.Filter.AnyEq("Categories", Id);
+        var resp = await books.FindAsync(findFilter);
+        if (resp != null)
+        {
+            var theBooks = resp.ToList();
+            var theBooks2 = theBooks.ToArray();// herrejesus...
+
+            for (int i = 0; i < theBooks2.Length; i++)
+            {
+  
+                var newCats = theBooks2[i].Categories.Where(x => x != Id).ToArray();
+                theBooks2[i].Categories = newCats;
+            }
+            return true;
+        }
+        return false;
+    }
+
     public async Task<bool> DeleteBook(Book book)
     {
         var deletefilter = Builders<Book>.Filter.Eq("Id", book.Id);
