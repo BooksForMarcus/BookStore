@@ -12,10 +12,14 @@ namespace BookStore.Models
         public string Id { get; set; } = "";
         public Customer Customer { get; set; } = new Customer();
         public string Ordernumber { get => Id; }
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+        [BsonRepresentation(BsonType.DateTime)]
         public DateTime Date { get; set; } = DateTime.Now;
+
         
         [BsonRepresentation(BsonType.Decimal128)]
         public decimal OrderSum { get; set; } = 0;
+
         
         [BsonRepresentation(BsonType.Decimal128)]
         public decimal VAT { get; set; } = 0;

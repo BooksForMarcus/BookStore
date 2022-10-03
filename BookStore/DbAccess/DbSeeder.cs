@@ -1,6 +1,7 @@
 ﻿namespace BookStore.DbAccess;
 
 using BookStore.Models;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
 using static System.Text.Json.JsonSerializer;
@@ -63,8 +64,9 @@ public class DbSeeder
     private List<T> ImportJsonList<T>(string fileName)
     {
         var fileTxt = File.ReadAllText(path + fileName);
-        var list = Deserialize(fileTxt, typeof(List<T>));
-        return list as List<T>;
+        //var list = Deserialize(fileTxt, typeof(List<T>));
+        var list2 = BsonSerializer.Deserialize<List<T>>(fileTxt);
+        return list2 as List<T>;
     }
 
     private async Task SeedCustomers()
