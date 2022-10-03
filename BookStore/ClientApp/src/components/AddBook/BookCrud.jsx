@@ -25,7 +25,7 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
   const [pages, setPages] = useState(isEdit && book!==undefined ? book.pages : 0);
   const [weight, setWeight] = useState(isEdit && book!==undefined ? book.weight : 0);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [bookCreated, setBookCreated] = useState(false);
+  const [bookCreated, setBookCreated] = useState(null);
   const navigate = useNavigate();
   let bookSoldById =
     user !== null && isEdit
@@ -94,9 +94,7 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
       console.log("Book created");
       setBookCreated("ok");
       let json = await resp.json();
-      console.log(json);
       newBook.id = json;
-      console.log("in book create:", newBook);
       setBooks(
         [...books, newBook].sort((a, b) => a.title.localeCompare(b.title))
       );
