@@ -29,6 +29,9 @@ function AdminCategoryView() {
     };
 
     return (
+
+
+
         <div className="admin-category-view">
             <h1>Admin Category View placeholder</h1>
             <label htmlFor="CategoryName">Kategorinamn</label>
@@ -40,7 +43,7 @@ function AdminCategoryView() {
                 onChange={(e) => setName(e.target.value)}
             />
             <button onClick={() => fetch("/api/category/", requestOptionsCreate)}>Create</button>
-            <AdminCategoryList categories={allCategories} />
+            <AdminCategoryList categories={allCategories} setCategories={setAllCategories} />
  
  
             

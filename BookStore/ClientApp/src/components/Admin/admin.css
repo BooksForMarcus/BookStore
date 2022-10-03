@@ -19,6 +19,8 @@ button:hover {
   background-color: #415d51;
   color: #fcf8e8;
 }
+
+ 
 .admin-user-list {
   display: grid;
   grid-template-columns: 1fr;
@@ -139,7 +141,25 @@ button:hover {
   align-items: center;
   width: 1fr;
 }
-.admin-book-list{
+.jonas-tr {
+	display: grid;
+	grid-template-columns: 5fr 1fr 5fr 1fr;
+ 
+	/*justify-content:right;*/
+	/*align-items: center;*/
+	max-width: 100%;
+	/*transition: 0.4s;*/
+	/*	border-bottom: 2px solid #DF7861;*/
+}
+.jonas-input {
+	display: inline;
+	font-size: 12px;
+}
+.jonas-input2 {
+	display: inline;
+	font-size: 16px;
+}
+.admin-book-list {
 }
 .admin-book-list-item {
   display: grid;
