@@ -19,12 +19,7 @@ function UserSellerView() {
     var sellersBooks = books.filter((b) => b.soldById == user.id);
     return sellersBooks;
   };
-  useEffect(() => {
-    if (user === null) {
-      navigate("/login");
-    }
-  }, [user]);
-
+  
   const ListBooks = () => {
     return books === null ? (
       <div className="seller-book-listitem-empty">
