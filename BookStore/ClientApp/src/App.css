@@ -23,9 +23,28 @@ header {
     align-content: start;
     place-items: center;
     justify-self: end;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     width:75%;
 }
+
+.menu-item {
+    padding-right: 2em;
+}
+
+.menu-item-cart {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    margin-right: 4em;
+    font-size: 2rem;
+}
+
+.menu-cart-amount {
+    font-size: 1.2rem;
+    margin-left: 0.5em;
+    color: #ECB390;
+}
+
 /*===== Searchbar =====*/
 .searchBar {
     display: grid;
