@@ -16,6 +16,7 @@ builder.Services.AddSingleton<CustomerCrud>();
 builder.Services.AddSingleton<OrderCRUD>();
 builder.Services.AddSingleton<BookCrud>();
 builder.Services.AddSingleton<CategoryCrud>();
+builder.Services.AddSingleton<OrderProcessor>();
 
 builder.Services.AddSwaggerGen(c =>
 {
