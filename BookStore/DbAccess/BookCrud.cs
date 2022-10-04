@@ -10,6 +10,7 @@ public class BookCrud
 {
     private IMongoCollection<Book> books;
     private CustomerCrud customers;
+    private CategoryCrud cats; // for debug
     private CategoryCrud categories;
 
     public BookCrud(MongoDbAccess db, CustomerCrud cc, CategoryCrud cac)
@@ -67,10 +68,84 @@ public class BookCrud
         return resp.FirstOrDefault();
     }
 
-    public async Task<bool> DeleteAllInCategory(string Id)
+    public async Task<string> DeleteAllInCategoryTest(string Id)
     {
         var findFilter = Builders<Book>.Filter.AnyEq("Categories", Id);
+
         var resp = await books.FindAsync(findFilter);
+
+        if (resp != null)
+        {
+            var theBooks = resp.ToList();
+            var theBooks2 = theBooks.ToArray();// herrejesus...
+            string returnMe = " ";
+            for (int i = 0; i < theBooks2.Length; i++)
+            {
+                returnMe += theBooks[i].Title + "before:";
+                for (int j = 0; j < theBooks[i].Categories.Length; j++)
+                {
+                    //returnMe += cats.GetMyCategory(theBooks[i].Categories[j]).Name;   
+                    returnMe +=  theBooks[i].Categories[j]+" ";
+                }
+                returnMe +=    " after: ";
+                var newCats = theBooks2[i].Categories.Where(x => x != Id).ToArray();
+                for (int k = 0; k < newCats.Length; k++)
+                {
+                    //returnMe += cats.GetMyCategory(newCats[k]).Name;
+                    returnMe +=  newCats[k] +" ";
+                }
+                //var newCats = theBooks2[i].Categories.Where(x => x != Id).ToArray();
+                theBooks2[i].Categories = newCats;
+                returnMe += " afterafter: ";
+                for (int l = 0; l < theBooks[i].Categories.Length; l++)
+                {
+                    //returnMe += cats.GetMyCategory(theBooks[i].Categories[j]).Name;   
+                    returnMe += theBooks[i].Categories[l]   ;
+                }
+                returnMe += " id:"+theBooks[i].Id+"        ";
+                ////var deletefilter = Builders<Book>.Filter.Eq("Id", theBooks2[i].Id);
+                ////books.ReplaceOne()
+                //await books.FindOneAndReplaceAsync(b => b.Id == theBooks2[i].Id, theBooks2[i]);
+
+            }
+            return returnMe;
+        }
+        return "false";
+    }
+
+    //public async Task<bool> DeleteAllInCategoryDebug(string Id)
+    //{
+    //    var findFilter = Builders<Book>.Filter.AnyEq("Categories", Id);
+
+    //    var resp = await books.FindAsync(findFilter);
+
+    //    if (resp != null)
+    //    {
+    //        var theBooks = resp.ToList();
+    //        var theBooks2 = theBooks.ToArray();// herrejesus...
+
+    //        for (int i = 0; i < theBooks2.Length; i++)
+    //        {
+
+    //            //var newCats = theBooks2[i].Categories.Where(x => x != Id).ToArray();
+    //            var newCats = theBooks2[i].Categories.Where(x => x != Id).ToArray();
+    //            theBooks2[i].Categories = newCats;
+    //            //var deletefilter = Builders<Book>.Filter.Eq("Id", theBooks2[i].Id);
+    //            //books.ReplaceOne()
+    //            //await books.FindOneAndReplaceAsync(b => b.Id == theBooks2[i].Id, theBooks2[i]);
+    //            await UpdateBook(theBooks2[i]);
+    //        }
+    //        return true;
+    //    }
+    //    return false;
+    //}
+
+    public async Task<bool> DeleteAllRefsToCategory(string Id)
+    {
+        var findFilter = Builders<Book>.Filter.AnyEq("Categories", Id);
+
+        var resp = await books.FindAsync(findFilter);
+
         if (resp != null)
         {
             var theBooks = resp.ToList();
@@ -78,12 +153,16 @@ public class BookCrud
 
             for (int i = 0; i < theBooks2.Length; i++)
             {
-  
+
+                //var newCats = theBooks2[i].Categories.Where(x => x != Id).ToArray();
                 var newCats = theBooks2[i].Categories.Where(x => x != Id).ToArray();
                 theBooks2[i].Categories = newCats;
                 //var deletefilter = Builders<Book>.Filter.Eq("Id", theBooks2[i].Id);
                 //books.ReplaceOne()
-                await books.FindOneAndReplaceAsync(b => b.Id == theBooks2[i].Id, theBooks2[i]);
+                //await books.FindOneAndReplaceAsync(b => b.Id == theBooks2[i].Id, theBooks2[i]);
+                var status = await UpdateBook(theBooks2[i]);
+                Console.WriteLine(status);//var är konsolen?
+                if (String.IsNullOrEmpty(status)) return false;
             }
             return true;
         }
