@@ -52,7 +52,6 @@ public class BookCrud
         return book.Id;
     }
 
-
     public async Task<List<Book>> GetAllBooks()
     {
         var resp = await books.FindAsync(_ => true);
