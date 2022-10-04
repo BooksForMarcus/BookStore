@@ -412,6 +412,11 @@ input:not(:placeholder-shown) + .red-fl-label{
     width: 30%;
 }
 
+.out-of-stock-text {
+    margin-top: 0.7em;
+    color:#DF7861;
+}
+
 .btn-area{
 	display: flex;
 	margin: 1em;
