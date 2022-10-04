@@ -114,10 +114,12 @@ public class BookController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAllInCat(string id)
     {
-        var result = await _bookCrud.DeleteAllInCategory(id);
-        if (result)
+        //var result = await _bookCrud.DeleteAllInCategoryTest(id);
+        var result = await _bookCrud.DeleteAllRefsToCategory(id);
+        //if (result!="false")
+         if (result )
         {
-            return Ok("referenser till kategorin försvunna");
+            return Ok( );
         }
         return BadRequest("Något gick fel. Referenser till kategorin ej försvunna");
     }

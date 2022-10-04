@@ -48,6 +48,17 @@ const AdminCategoryList = ({ categories, setCategories }) => {
     const handleClick = (event, param) => {
         console.log(event);
         console.log(param);
+
+        fetch('/api/book/' + param + '',
+            {
+                method: "DELETE",
+                headers: {
+                    Authorization: loggedInUser.password,
+
+                }
+            })
+
+
         fetch('/api/category/' +   param   + '',
             {
                 method: "DELETE",

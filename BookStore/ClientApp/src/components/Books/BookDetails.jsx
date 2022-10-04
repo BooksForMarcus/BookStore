@@ -1,10 +1,12 @@
 import { useRecoilState } from "recoil";
 import cartState from "../../atoms/cartState";
-
+import begstamp from "../../assets/begagnad-stamp.png";
 import logo from "../../assets/boklogo.png";
+import { useState } from "react";
 
 const BookDetails = ({ book }) => {
   const [cart, setCart] = useRecoilState(cartState);
+  const [showNotInStock, setShowNotInStock] = useState(false);
 
   const addToCart = () => {
     let cartUpdate = [];
@@ -56,16 +58,20 @@ const BookDetails = ({ book }) => {
             <p className="book-info">{book.isbn}</p>
           </div>
           <div className="book-info-r">
-            <span className="book-info-seller">SÄLJS AV</span>
-            {book.soldBy != "store" ? (
-              <span className="book-info">{book.soldBy}</span>
-            ) : (
+            {book.soldById !== "store" ? (
+              <img
+                className="beg-stamp-bookView"
+                src={begstamp}
+                alt="Image of reused secondhand stamp"
+              />) : (
+              <div className="book-info-seller">
+              <span className="book-info-seller-text">SÄLJS AV</span>
               <img
                 className="store_logo"
                 src={logo}
                 alt="An image of bookstore logo"
               />
-            )}
+              </div>)}
             <span className="book-info-price">{book.price} kr</span>
             <button
               onClick={addToCart}
@@ -75,8 +81,19 @@ const BookDetails = ({ book }) => {
                   book.numInstock
               }
             >
-              Lägg i varukorgen
+              {cart.find((cartBook) => cartBook.id === book.id) 
+              ? (<span>{cart.find((cartBook) => cartBook.id === book.id).numInstock}st i varukorgen</span>)
+              :
+              (<span>Lägg i varukorgen</span>)
+              }
             </button>
+            {cart.some((cartBook) => cartBook.id === book.id) &&
+              cart.find((cartBook) => cartBook.id === book.id).numInstock >=
+              book.numInstock ? (
+                <span className="out-of-stock-text">Nu finns det inte fler av denna vara i lager</span>
+              ) : (
+                <span></span>
+              )}
           </div>
         </div>
       </div>
