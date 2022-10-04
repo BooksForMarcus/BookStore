@@ -110,7 +110,13 @@ public class CustomerCrud
             {
                 //if the user already exists, but is not active, we can reactivate it.
                 var filter = Builders<Customer>.Filter.Eq(c => c.Email, customer.Email);
-                var update = Builders<Customer>.Update.Set("IsActive", true);
+                var updateIsActive = Builders<Customer>.Update.Set("IsActive", true);
+                var updateFirstName = Builders<Customer>.Update.Set("FirstName", customer.FirstName);
+                var updateLastName = Builders<Customer>.Update.Set("LastName", customer.LastName);
+                var updatePassword = Builders<Customer>.Update.Set("Password", customer.Password);
+                var updateAddress = Builders<Customer>.Update.Set("Address", customer.Address);
+                var update = Builders<Customer>.Update.Combine(updateIsActive, updateFirstName, updateLastName, updatePassword, updateAddress);
+
                 var resp = await customers.UpdateOneAsync(filter, update);
                 result = resp.IsAcknowledged && resp.ModifiedCount == 1;
             }
