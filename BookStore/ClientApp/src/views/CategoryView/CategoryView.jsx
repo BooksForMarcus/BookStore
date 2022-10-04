@@ -42,7 +42,6 @@ function CategoryView() {
               </option>
             ))}
           </select>
-          <p>{category}</p>
         </div>
       ) : (
         <h1>Loading...</h1>
