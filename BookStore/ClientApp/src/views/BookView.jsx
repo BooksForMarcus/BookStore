@@ -1,14 +1,12 @@
 ﻿import React, { useState, useEffect } from "react";
 import "../App.css";
 import { useLocation } from "react-router-dom";
-import bookState from "../atoms/bookState";
-import { useRecoilState } from "recoil";
 import BookDetails from "../components/Books/BookDetails";
 function BookView() {
   const loc = useLocation();
 
   var bookdata = loc.state;
-  const [book, setBook] = useRecoilState(bookState);
+  const [book, setBook] = useState(null);
   var bookId = window.location.pathname.split("/").pop();
 
   const getBook = async () => {

@@ -45,6 +45,17 @@
     cursor: pointer;
 }
 
+/*===== EditUserProfileView =====*/
+
+.edit-user-response{
+    color:#688472;
+    font-weight: bolder;
+}
+
+.edit-user-buttons {
+    margin-top: 2em;
+}
+
 /*===== SellerView =====*/
 
 .seller-wrap {
@@ -69,7 +80,7 @@
     padding: 1em;
     font-weight: bolder;
     display: grid;
-    grid-template-columns: 4fr 1fr 2fr 1fr;
+    grid-template-columns: 4fr 1fr 2fr 1fr 1fr;
 }
 
 .seller-profile-booklist-h-text {
@@ -81,19 +92,24 @@
     padding-left: 0em;
 }
 
+.seller-profile-booklist-h-status {
+    place-self: center;
+    margin-left: 1em;
+}
+
 .seller-book-listitem {
     display: grid;
-    grid-template-columns: 4fr 1fr 2fr 1fr;
+    grid-template-columns: 4fr 1fr 2fr 1fr 1fr;
     border-bottom: solid 1px #e3e4da;
 }
 
-.seller-book-listitem-text , .seller-book-listitem-title {
+ .seller-book-listitem-title {
     color:#415d51;
     padding: 1em 3em 1em 1em;
     width: 100%;
 }
 
-.seller-book-listitem-text-status {
+.seller-book-listitem-text-status, .seller-book-listitem-text{
     display: grid;
     place-self: center;
     font-size: 0.9em;
@@ -106,7 +122,7 @@
 }
 
 .seller-book-listitem-icon {
-    margin-top: 1em;
+    place-self: center;
     color:#688472;
 }
 

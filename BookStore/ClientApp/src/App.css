@@ -331,21 +331,19 @@ input:not(:placeholder-shown) + .red-fl-label{
     display: grid;
     place-items: center;
     background-color: #504e4d;
-    height: 21em;
-    width: 12em;
+    height: 50%;
 }
 
 .bookView-image-wrapper {
     display: grid;
     place-items: center;
-    padding: 1em;
-    height: 21em;
-    width: 12em;
+    height: 50%;
+    margin-top: 2em;
 }
 
 .book-info-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr 3fr;
+    grid-template-columns: 1fr 1fr 2fr;
 }
 
 .bookview-title {
@@ -375,16 +373,26 @@ input:not(:placeholder-shown) + .red-fl-label{
 }
 
 .store_logo{
-    width: 25%;
+    width: 40%;
     -webkit-filter: invert(100%);
 }
 
-.book-info-seller {
+.book-info-seller-text {
     letter-spacing: 1.5px;
     color: #DF7861;
     font-weight: bold;
     margin-bottom: 1em ;
 }
+
+.book-info-seller {
+    display: grid;
+    place-items: center;
+}
+
+.beg-stamp-bookView {
+    width: 30%;
+}
+
 .btn-area{
 	display: flex;
 	margin: 1em;

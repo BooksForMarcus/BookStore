@@ -17,6 +17,7 @@ function EditProfile() {
     !user || user.address === "string" ? "" : user.address
   );
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showUpdateConfirm, setShowUpdateConfirm] = useState(false);
   const navigate = useNavigate();
 
   const deleteUser = async () => {
@@ -74,6 +75,7 @@ function EditProfile() {
         oldUser.password = basicAuthString;
       }
       setUser(oldUser);
+      setShowUpdateConfirm(true);
     } else {
       let json = await resp.json();
     }
@@ -100,7 +102,7 @@ function EditProfile() {
               <div className="modal-card-footer">
                 <button
                   type="button"
-				  className="btn-danger"
+				          className="btn-danger"
                   onClick={deleteUser}
                 >
                   Radera
@@ -192,6 +194,8 @@ function EditProfile() {
           ></input>
           <span className="fl-label">Bekräfta nytt lösenord</span>
           </label>
+          {showUpdateConfirm && 
+          <span className="edit-user-response">Din profil är nu uppdaterad!</span>}
           <div className="edit-user-buttons">
           <button className="green-button" type="submit">
             Uppdatera
