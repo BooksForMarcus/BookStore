@@ -16,6 +16,8 @@ import booksState from "./atoms/booksState";
 import categoriesState from "./atoms/categoriesState";
 import CartView from "./views/CartView/CartView";
 import cartState from "./atoms/cartState";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faBagShopping} from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   const [user, setUser] = useRecoilState(loggedInUserState);
@@ -92,8 +94,9 @@ function App() {
                 <NavLink to="/login">LOGGA IN</NavLink>
               )}
             </div>
-            <div className="menu-item">
-              <NavLink to="/cart">KUNDVAGN</NavLink>
+            <div className="menu-item-cart">
+              <NavLink to="/cart">{<FontAwesomeIcon icon={faBagShopping} />}</NavLink>
+              <span className="menu-cart-amount">({cart.length})</span>
             </div>
           </div>
         </header>
