@@ -151,7 +151,7 @@ button:hover {
 }
 .jonas-tr {
 	display: grid;
-	grid-template-columns: 20em 7em 20em 3em;
+	grid-template-columns: 20em 7em 10em 20em 3em;
 
 	max-width: 100%;
  
@@ -409,4 +409,45 @@ justify-self: start;
 }
 .admin-order-items-vat{
 	grid-column: 4;
+}
+.jonas-button {
+	display: inline-block;
+	color: #fcf8e8;
+	background-color: #df7861;
+	transition: border-color 0.25s;
+	font-size: 0.9rem;
+	border-radius: 3px;
+	border: 1px solid transparent;
+	padding: 0.1em 0.4em;
+
+	/*	color: #fcf8e8;
+	border-radius: 8px;
+	border: 1px solid transparent;
+	padding: 0.6em 1.2em;
+	font-size: 1.3rem;
+	font-weight: 500;
+	font-family: inherit;
+	background-color: #df7861;
+	cursor: pointer;
+	transition: border-color 0.25s;*/
+}
+.jonas-input3 {
+	display: inline;
+	/*	font-size: 16px;*/
+	/*	background-color: white;
+	color: black;*/
+
+	width: 20em;
+	margin-bottom: 0em;
+	padding: 0em;
+	border: none;
+	border-bottom: 2px solid #DF7861;
+	/*    background-color: #FCF8E8;*/
+	outline: none;
+	/*    color: #bb4a31;*/
+	font-size: 15px;
+}
+.admin-category-view {
+	margin-left: 25%;
+	margin-top: 5%;
 }
