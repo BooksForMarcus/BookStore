@@ -19,7 +19,7 @@ const AdminUserSearchBar = ({users,setUsersToShow}) => {
 
 	return (
 		<div className="admin-user-search-bar">
-			<input type="text" value={searchString} onChange={(e)=>setSearchString(e.target.value.trim())} placeholder="Sök efter kund (minst 2 tecken)..." />
+			<input type="text" value={searchString} onChange={(e)=>setSearchString(e.target.value.trim())} placeholder="Sök efter kund (Kundnummer, email, för- eller efternamn, minst 2 tecken)..." />
 			<button onClick={()=>setSearchString("")} disabled={searchString===""}>Återställ</button>
 		</div>
 	  );

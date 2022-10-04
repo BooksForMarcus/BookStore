@@ -66,45 +66,44 @@ const AdminBookNavBar = ({ setLocalBooks, books,setShowAddBook,showAddBook,bookT
         <fieldset>
           <legend>Filter</legend>
           <label>
-            Alla
+            
             <input
               type="radio"
               name="filter"
               value="all"
               checked={filter === "all"}
               onChange={(e) => setFilter(e.target.value)}
-            />
+            />Alla
           </label>
           <label>
-            {" "}
-            Säljs av site
+            
             <input
               type="radio"
               name="filter"
               value="store"
               checked={filter === "store"}
               onChange={(e) => setFilter(e.target.value)}
-            />
+            />Säljs av site
           </label>
           <label>
-            Säljs av kund
+            
             <input
               type="radio"
               name="filter"
               value="customer"
               checked={filter === "customer"}
               onChange={(e) => setFilter(e.target.value)}
-            />
+            />Säljs av kund
           </label>
           <label>
-            Slut i lager
+            
             <input
               type="radio"
               name="filter"
               value="soldout"
               checked={filter === "soldout"}
               onChange={(e) => setFilter(e.target.value)}
-            />
+            />Slut i lager
           </label>
         </fieldset>
       </form>
