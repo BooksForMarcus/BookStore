@@ -2,9 +2,11 @@ import { useRecoilState } from "recoil";
 import cartState from "../../atoms/cartState";
 import begstamp from "../../assets/begagnad-stamp.png";
 import logo from "../../assets/boklogo.png";
+import { useState } from "react";
 
 const BookDetails = ({ book }) => {
   const [cart, setCart] = useRecoilState(cartState);
+  const [showNotInStock, setShowNotInStock] = useState(false);
 
   const addToCart = () => {
     let cartUpdate = [];
@@ -79,8 +81,19 @@ const BookDetails = ({ book }) => {
                   book.numInstock
               }
             >
-              Lägg i varukorgen
+              {cart.find((cartBook) => cartBook.id === book.id) 
+              ? (<span>{cart.find((cartBook) => cartBook.id === book.id).numInstock}st i varukorgen</span>)
+              :
+              (<span>Lägg i varukorgen</span>)
+              }
             </button>
+            {cart.some((cartBook) => cartBook.id === book.id) &&
+              cart.find((cartBook) => cartBook.id === book.id).numInstock >=
+              book.numInstock ? (
+                <span className="out-of-stock-text">Nu finns det inte fler av denna vara i lager</span>
+              ) : (
+                <span></span>
+              )}
           </div>
         </div>
       </div>
