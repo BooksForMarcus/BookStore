@@ -8,6 +8,9 @@ import ModalBaseFull from "../Modal/ModalBaseFull";
 import EditCategories from "../ManageBooks/EditCategories";
 import booksState from "../../atoms/booksState";
 import { useNavigate } from "react-router-dom";
+import BookUpdatedModal from "./BookUpdatedModal";
+import BookAddedModal from "./BookAddedModal";
+import BookDeleteConfirmModal from "./BookDeleteConfirmModal";
 
 const BookCrud = ({ isEdit, book, setBookToEdit }) => {
   const [books, setBooks] = useRecoilState(booksState);
@@ -26,9 +29,10 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
   const [weight, setWeight] = useState(isEdit && book!==undefined ? book.weight : 0);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [bookCreated, setBookCreated] = useState(null);
+  const [bookUpdated, setBookUpdated] = useState(null);
   const navigate = useNavigate();
   let bookSoldById =
-    user !== null && isEdit
+    user !== null && isEdit && book!==undefined
       ? book.soldById
       : user !== null && user.isAdmin
       ? "store"
@@ -54,19 +58,19 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
     };
   };
   useEffect(() => {
-    bookId = isEdit ? book.id : "";
-    setIsbn(isEdit ? book.isbn : "");
-    setAuthor(isEdit ? book.author : "");
-    setTitle(isEdit ? book.title : "");
-    setLanguage(isEdit ? book.language : "");
-    setCategories(isEdit ? book.categories : []);
-    setNumInstock(isEdit ? book.numInstock : 0);
-    setPrice(isEdit ? book.price : 0);
-    setYear(isEdit ? book.year : 0);
-    setImageURL(isEdit ? book.imageURL : "");
-    setPages(isEdit ? book.pages : 0);
-    setWeight(isEdit ? book.weight : 0);
-    bookSoldById = isEdit ? book.soldById : user.isAdmin ? "store" : user.id;
+    bookId = isEdit && book!==undefined ? book.id : "";
+    setIsbn(isEdit && book!==undefined ? book.isbn : "");
+    setAuthor(isEdit && book!==undefined ? book.author : "");
+    setTitle(isEdit && book!==undefined ? book.title : "");
+    setLanguage(isEdit && book!==undefined ? book.language : "");
+    setCategories(isEdit && book!==undefined ? book.categories : []);
+    setNumInstock(isEdit && book!==undefined ? book.numInstock : 0);
+    setPrice(isEdit && book!==undefined ? book.price : 0);
+    setYear(isEdit && book!==undefined ? book.year : 0);
+    setImageURL(isEdit && book!==undefined ? book.imageURL : "");
+    setPages(isEdit && book!==undefined ? book.pages : 0);
+    setWeight(isEdit && book!==undefined ? book.weight : 0);
+    bookSoldById = isEdit && book!==undefined ? book.soldById : user.isAdmin ? "store" : user.id;
   }, [book]);
 
   useEffect(() => {
@@ -109,7 +113,6 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
   const updateBook = async (e) => {
     e.preventDefault();
     const updatedBook = buildBook();
-    console.log(updatedBook);
     const requestOptions = {
       method: "PUT",
       headers: {
@@ -122,13 +125,16 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
 
     let resp = await fetch("/api/book", requestOptions);
     if (resp.ok) {
+	  console.log("Book updated");
       let json = await resp.json();
       //setUpdateOk(true);
       var newBooks = books.filter((b) => b.id !== updatedBook.id);
       newBooks.push(updatedBook);
       newBooks.sort((a, b) => a.title.localeCompare(b.title));
       setBooks(newBooks);
+	  setBookUpdated("ok");
     } else {
+		setBookUpdated("fail");
       //setUpdateOk(false);
     }
   };
@@ -148,43 +154,20 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
       let newBooks = books.filter((b) => b.id !== bookToDelete.id);
       setBooks(newBooks);
       setBookToEdit(null);
+	  isEdit = false;
     }
   };
 
   return (
-    <div>
+    <div className="book-crud-container">
       {showDeleteConfirm && (
-        <ModalBaseFull>
-          <div className="modal-card">
-            <h3>Är du säker på att du vill ta bort den här boken?</h3>
-            <div className="btn-area">
-              <button type="button" className="btn-danger" onClick={deleteBook}>
-                Ja
-              </button>
-              <button type="button" onClick={() => setShowDeleteConfirm(false)}>
-                Nej
-              </button>
-            </div>
-          </div>
-        </ModalBaseFull>
+        <BookDeleteConfirmModal deleteBook={deleteBook} setShowDeleteConfirm={setShowDeleteConfirm}/>
       )}
       {bookCreated != null && (
-        <ModalBaseFull>
-          <div className="modal-card">
-            <h3>
-              {bookCreated === "ok"
-                ? "Boken har lagts till"
-                : "Kunde inte lägga till boken"}
-            </h3>
-            <button
-              type="button"
-              onClick={() => setBookCreated(null)}
-              className="btn-call-to-action"
-            >
-              Ok
-            </button>
-          </div>
-        </ModalBaseFull>
+        <BookAddedModal bookCreated={bookCreated} setBookCreated={setBookCreated}/>
+      )}
+	  {bookUpdated != null && (
+		<BookUpdatedModal bookUpdated={bookUpdated} setBookUpdated={setBookUpdated}/>
       )}
 
       <form className="add-book-wrap" onSubmit={isEdit ? updateBook : addBook}>
@@ -313,7 +296,7 @@ const BookCrud = ({ isEdit, book, setBookToEdit }) => {
           </label>
         </div>
         <div className="btn-area">
-          <button type="submit" onClick={() => setShowBookCreated(true)}>
+          <button type="submit">
             {isEdit ? "Uppdatera bok" : "Lägg upp bok"}
           </button>
           {isEdit && (
