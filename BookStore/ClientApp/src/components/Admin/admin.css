@@ -280,10 +280,11 @@ header.admin-book-list-item {
   font-size: 0.8em;
 }
 .admin-book-filter{
-	  grid-column: 8/13;
+	  grid-column: 8/14;
+	  margin: 0em 0.5em;
 }
 input[type="radio"] {
-	margin: 0.3em;
+	margin: 0.4em;
 	padding: 0em;
 	width: auto;
 }
@@ -292,7 +293,7 @@ input[type="radio"] {
 	margin: 0em 0.3em;
 }
 .btn-admin-book-nav-reset{
-	grid-column: 13/15;
+	grid-column: 14/16;
 	justify-self: start;
 }
 .btn-admin-book-nav-add-book{
@@ -325,6 +326,7 @@ input[type="radio"] {
 	display: flex;
 	place-content: center;
 	margin: 5em;
+	position: relative;
 }
 .admin-order-show{
 	display: grid;
@@ -366,7 +368,15 @@ input[type="radio"] {
 }
 .admin-order-status{
 	grid-area: order-status;
+	display: flex;
 }
+.admin-order-status > select{
+	margin: 0.5em;
+	font-size: 1.1em;
+	border-radius:0.2em;
+	padding: 0.3em;
+}
+
 .admin-order-customer-name{
 	grid-area: customer-name;
 }

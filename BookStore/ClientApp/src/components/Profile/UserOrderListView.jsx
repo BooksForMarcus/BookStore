@@ -13,7 +13,7 @@ const UserOrderListView = ({orders,setView}) => {
                 {orders !== null 
                 ? orders.map(o => <div 
                 className="user-order-user-list" 
-                key={"user"+o.id}
+                key={"userorderlist"+o.id}
                 onClick={()=>setView("details-"+o.id)}>
                     <span className="user-order-profile-user-order-listitem">{o.id}</span>
                     <span className="user-order-profile-user-order-listitem">{o.date.slice(0,10)}</span>

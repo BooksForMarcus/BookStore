@@ -10,38 +10,22 @@ namespace BookStore.DbAccess
 		private IMongoCollection<Order> orders;
 		private CustomerCrud customers;
 		private BookCrud books;
+        private OrderProcessor orderProcessor;
 
-		public OrderCRUD(MongoDbAccess db)
-		{
-			orders = db.OrdersCollection;
-			customers = new CustomerCrud(db);
-		}
+        public OrderCRUD(MongoDbAccess db, OrderProcessor orderProcessor)
+        {
+            orders = db.OrdersCollection;
+            customers = new CustomerCrud(db);
+            this.orderProcessor = orderProcessor;
+        }
 
 		public async Task<bool> CreateOrder(Order order)
 		{
 			//make sure to strip id from sources such as swagger
 			order.Id = String.Empty;
-			var mail = new MailHelper();
-			
-			await orders.InsertOneAsync(order);
-			var result = !String.IsNullOrWhiteSpace(order.Id);
-            if (result)
-            {
-				if (EnvironmentHelper.IsDev)
-				{
-					Console.WriteLine(result);
-				}
-				else
-				{
-					mail.SendMail(
-						order.Customer.Email,
-						$"Orderbekräftelse för {order.Ordernumber}",
-						$"Hej {order.Customer.FirstName}!<br><br>Din order är lagd. Du har beställt {order}<br><br>Mvh. Bokcirkeln.");
-
-				}
-				
-            }
-
+            var processedOrder = await orderProcessor.Process(order);
+            await orders.InsertOneAsync(processedOrder);
+			var result = !String.IsNullOrWhiteSpace(processedOrder.Id);
 			return result;
 		}
 
