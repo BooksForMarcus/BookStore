@@ -20,7 +20,6 @@ function CategoryView() {
           b.categories.some((c) => c === category)
         );
       }
-      console.log("newBooks is: ", newBooks);
       setFilteredBooks(newBooks);
     }
   }, [category]);
