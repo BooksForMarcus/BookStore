@@ -14,6 +14,7 @@ import logo from './assets/boklogo.png'
 import {useRecoilState} from "recoil"
 import Search from "./components/Search/BookSearch"
 import UserProfileView from "./views/userProfileView/UserProfileView";
+import CategoryView from "./views/CategoryView/CategoryView";
 import loggedInUserState from "./atoms/loggedInUserState";
 import SearchResults from "./components/Search/SearchResults";
 import { useEffect } from "react";
@@ -64,7 +65,7 @@ function App() {
                             <NavLink to="/" className="menu-link">HEM</NavLink>
                         </div>
                         <div className="menu-item" >
-                            <NavLink to="/">KATEGORIER</NavLink>
+                            <NavLink to="/category">KATEGORIER</NavLink>
                         </div>
                         <div className="menu-item" >
                             {user ? <NavLink to="/profile">MIN SIDA</NavLink> : <NavLink to="/login">LOGGA IN</NavLink>}
@@ -84,6 +85,7 @@ function App() {
                         <Route path='/book/:bookid' element={<BookView />} />
                         <Route path='/search_result/book/:bookid' element={<BookView />} />
                         <Route path='/cart' element={<CartView />} />
+                        <Route path='/category' element={<CategoryView />} />
 
                     </Routes>
                 </main>
