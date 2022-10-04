@@ -7,6 +7,7 @@ import loggedInUserState from "../../atoms/loggedInUserState";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CarListItem from "./CartListItem";
+import calculatePostage from "./calculatePostage";
 
 function CartView() {
   const [books,setBooks] = useRecoilState(booksState);
@@ -40,15 +41,18 @@ function CartView() {
   };
 
   const newCart = () => {
-	let orderSum = 0;
+	let orderBookPriceSum = 0;
 	cart.forEach((book) => {
-		orderSum += book.price * book.numInstock;
+		orderBookPriceSum += book.price * book.numInstock;
 	});
-	const orderVat = orderSum * 0.06;
+	const postage = calculatePostage(cart)
+	const orderTotal = orderBookPriceSum + postage;
+	const orderVat = orderBookPriceSum * 0.06 + postage*0.25;
     return {
       customer: user,
       books: cart,
-	  orderSum: orderSum,
+	  orderSum: orderTotal,
+	  postage: postage,
 	  VAT: orderVat
     };
   };
