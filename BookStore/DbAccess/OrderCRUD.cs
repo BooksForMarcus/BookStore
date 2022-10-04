@@ -1,4 +1,5 @@
 ﻿using BookStore.DTO;
+using BookStore.Helpers;
 using BookStore.Models;
 using MongoDB.Driver;
 
@@ -8,6 +9,7 @@ namespace BookStore.DbAccess
     {
 		private IMongoCollection<Order> orders;
 		private CustomerCrud customers;
+		private BookCrud books;
         private OrderProcessor orderProcessor;
 
         public OrderCRUD(MongoDbAccess db, OrderProcessor orderProcessor)
@@ -46,20 +48,6 @@ namespace BookStore.DbAccess
 			return resp.ToList();
 		}
 
-		//public async Task<bool> UpdateOrders(string customerId, string updatedorder )
-  //      {
-		//	var updatefilter = Builders<Order>.Filter.Eq("OrderId", customerId);
-		//	var update = Builders<Order>.Update.Set("Order", updatedorder);
-		//	var resp = await orders.UpdateOneAsync(updatefilter, update);
-		//	return resp.IsAcknowledged;
-		//}
-
-		//public async Task<bool> DeleteOrders(Order deletedOrder)
-  //      {
-		//	var deletefilter = Builders<Order>.Filter.Eq("OrderId",deletedOrder.Id);
-		//	var result = await orders.DeleteOneAsync(d => d.Id == deletedOrder.Id);
-		//	return result.IsAcknowledged && result.DeletedCount > 0;
-		//}
 
 		public async Task<bool> DeleteOrders(string id)
         {

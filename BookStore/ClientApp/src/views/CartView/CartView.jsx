@@ -57,6 +57,8 @@ function CartView() {
     };
   };
 
+
+
   const createNewOrder = async (e) => {
     e.preventDefault();
     const newOrder = newCart();
@@ -79,7 +81,7 @@ function CartView() {
 	  setCart([]);
 	  localStorage.removeItem("cart");
     } else {
-      console.log("customer create failed.");
+      console.log("order create failed.");
       let json = await resp.json();
       console.log(json);
     }
@@ -93,7 +95,13 @@ function CartView() {
 			<CarListItem key={"cart-"+book.id} book={book} decreaseInCart={decreaseInCart}/>
         )): <div>Cart is empty</div>}
         <div>
-          {(cart!==null && cart.length>0) && <button onClick={createNewOrder}>Skapa order</button>}
+          {(cart!==null && cart.length>0) ?
+          <div className="order-info">
+           <span className="order-info"> Summa varukorg (exkl. frakt): {newCart(cart).orderSum + newCart(cart).VAT}</span> 
+           <span className="order-info"> Varav moms: {newCart(cart).VAT}</span>
+           </div>
+            : null}
+          {(cart!==null && cart.length>0) ? <button className='cart-btn' onClick={createNewOrder}>Skapa order</button> : <h3> Din kundvagn är tom</h3>}
         </div>
       </div>
     );
