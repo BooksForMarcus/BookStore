@@ -54,7 +54,7 @@ public class CustomerController : ControllerBase
     }
 
     /// <summary>
-    /// Updates customer.
+    /// Updates customer (Basic Auth required).
     /// </summary>
     /// <returns>The replaces Customer object on success, otherwise null. ATTENTION: returns the *replaced* object, not the current!</returns>
     /// <response code="200">Customer update ok. Will also return the changed customer object.</response>
@@ -87,7 +87,7 @@ public class CustomerController : ControllerBase
     }
 
     /// <summary>
-    /// If done by an Admin, will remove customer from database, otherwise will set account to IsActive = false
+    /// If done by an Admin, will remove customer from database, otherwise will set account to IsActive = false (Auth required).
     /// </summary>
     /// <param name="customerToDelete">Only field used from customer object is Id.</param>
     /// <response code="200">Customer remove/deactivate ok.</response>
@@ -111,24 +111,12 @@ public class CustomerController : ControllerBase
         }
         return BadRequest();
     }
-
+        
     /// <summary>
-    /// Attempts to login with an object containing email and password.
+    /// Login requires the name + password to be set in the Authorization header.
     /// </summary>
-    /// <param name="auth">Object containing email and password.</param>
-    /// <response code="200">Login in ok.</response>
-    /// <response code="400">Login failed.</response>
-    /// <remarks>Attempts to login using the given email and password,
-    /// will return the customer object if credentials matches and the customer is flagged
-    /// as active, otherwise will return null.</remarks>
-    [HttpPost("login/")]
-    public async Task<IActionResult> Login(CustomerAuthorize auth)
-    {
-        var result = await _customerCrud.Login(auth);
-        return result is null ? BadRequest() : Ok(result);
-    }
-
-    [AllowAnonymous]
+    /// <returns>The user object for the logged in user</returns>
+    /// <exception cref="System.Exception">The authorization header is either empty or isn't Basic.</exception>
     [HttpGet("login/")]
     public async Task<IActionResult> GetLogin()
     {
@@ -156,6 +144,12 @@ public class CustomerController : ControllerBase
         return result is null ? BadRequest() : Ok(result);
     }
 
+    /// <summary>
+    /// Will reset and send a new password to the customer.
+    /// </summary>
+    /// <param name="forgetful"><see cref="Customer"/> object containing email of the forgetful customer.</param>
+    /// <remarks>The only field used from the customer object is email, the rest can and should be left blank. In fact, posting an object just containing a email field is encouraged.</remarks>
+    /// <returns></returns>
     [HttpPost("forgotpassword/")]
     [AllowAnonymous]
     public async Task<IActionResult> ForgotPassword(Customer forgetful)

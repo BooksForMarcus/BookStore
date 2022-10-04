@@ -17,6 +17,9 @@ namespace BookStore.DbAccess
 
 		public async Task<bool> CreateOrder(Order order)
 		{
+			//make sure to strip id from sources such as swagger
+			order.Id = String.Empty;
+
 			await orders.InsertOneAsync(order);
 			var result = !String.IsNullOrWhiteSpace(order.Id);
 			return result;
@@ -35,7 +38,7 @@ namespace BookStore.DbAccess
 			return result;
 		}
 
-		public async Task<List<Order>> CustomerGetOrder(string id)
+		public async Task<List<Order>> CustomerGetOrders(string id)
         {
 			var resp = await orders.FindAsync(x=>x.Customer.Id == id);
 			return resp.ToList();

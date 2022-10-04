@@ -15,19 +15,18 @@ const CategoryListItem = ({ category, categories, setCategories }) => {
         console.log(categories);
     };
 
-    return (
-        <div className="category-list-item" key={category.id}>
-            {/*console.log(category.id, book.categories.some((c) => c === category.id),book)*/}
-            <input
-                type="checkbox"
-                checked={checked}
-                onChange={updateBook}
-                name={category.name}
-                id={category.name}
-            />
-            <label htmlFor={category.name}>{category.name}</label>
-        </div>
-    );
+  return (
+    <div className="category-list-item" key={category.id}>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={updateBook}
+        name={category.name}
+        id={category.name}
+      />
+      <label htmlFor={category.name}>{category.name}</label>
+    </div>
+  );
 };
 
 export default CategoryListItem;

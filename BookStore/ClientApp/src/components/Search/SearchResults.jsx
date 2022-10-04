@@ -13,14 +13,16 @@ function SearchResults() {
 	const displayBooksResults = () => {
 
 		if (searchWord.length > 0) {
-			return <div className='card'>
+			return <div>
+			<h3>Titel träffar:</h3>
+			<div className='search-result-area'>
 				{books.filter((book) => {
 					if (searchWord === '') {
 						return book
 					} else return book.title.toLowerCase().includes(searchWord.toLowerCase())
 				}).map(book => (
                     <Link
-                        to="/book"
+                        to={`book/${book.id}`}
                         state={book}
                         className="card-product-link" key={book.id}>
                             <div className="card-product-result">
@@ -39,20 +41,24 @@ function SearchResults() {
                     </Link>
 				))}
 			</div>
+				
+				</div>
+			
 		}
 	}
 
 	const displayAuthorResults = () => {
 
 		if (searchWord.length > 0) {
-			return <div className='card'>
+			return <div>
+			<h3>Författar träffar:</h3><div className='search-result-area'>
 				{books.filter((book) => {
 					if (searchWord === '') {
 						return book
 					} else return book.author.toLowerCase().includes(searchWord.toLowerCase())
 				}).map(book => (
                     <Link
-                        to="/book"
+                        to={`book/${book.id}`}
                         state={book}
                         className="card-product-link" key={book.id}>
                             <div className="card-product-result">
@@ -70,6 +76,7 @@ function SearchResults() {
                             </div>
                     </Link>
 				))}
+			</div>
 			</div>
 		}
 	}

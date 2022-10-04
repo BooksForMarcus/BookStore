@@ -1,21 +1,38 @@
 import { useRecoilState } from "recoil";
 import booksState from "../../../atoms/booksState";
 import AdminBookList from "./AdminBookList";
-import AdminBookEdit from "./AdminBookEdit";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import BookCrud from "../../AddBook/BookCrud";
+import AdminBookNavBar from "./AdminBookNavBar";
+
 
 function AdminBookView() {
   const [books, setBooks] = useRecoilState(booksState);
+  const [localBooks, setLocalBooks] = useState(books);
   const [bookToEdit, setBookToEdit] = useState(null);
+  const [showAddBook, setShowAddBook] = useState(false);
+
+  useEffect(() => {
+	setLocalBooks(books);
+  }, [books]);
+
   return (
     <div className="admin-book-view">
-      <h1>Admin Book View placeholder</h1>
-      {bookToEdit === null ? (
-        <AdminBookList books={books} setBookToEdit={setBookToEdit} />
-      ) : (
-        <AdminBookEdit
-          books={books}
-          setBooks={setBooks}
+      <AdminBookNavBar
+        localBooks={localBooks}
+        setLocalBooks={setLocalBooks}
+        books={books}
+        showAddBook={showAddBook}
+        setShowAddBook={setShowAddBook}
+        bookToEdit={bookToEdit}
+      />
+      {bookToEdit === null && showAddBook && <BookCrud isEdit={false} />}
+      {bookToEdit === null && !showAddBook && (
+        <AdminBookList books={localBooks} setBookToEdit={setBookToEdit} />
+      )}
+      {bookToEdit !== null && !showAddBook && (
+        <BookCrud
+          isEdit={true}
           book={books.find((b) => b.id === bookToEdit)}
           setBookToEdit={setBookToEdit}
         />
