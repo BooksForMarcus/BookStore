@@ -1,3 +1,10 @@
+.book-crud-container{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	place-content: center;
+	place-items: center;
+}
 .add-book-wrap {
     display: grid;
     grid-template-areas: 
@@ -6,6 +13,7 @@
     "container-2";
 	margin: 0em 3%;
 	padding:0;
+	max-width: 50vw;
 }
 
 .cr-container-1 {

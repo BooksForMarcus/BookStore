@@ -1,19 +1,19 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 
 const CategoryListItem = ({ category, categories, setCategories }) => {
-  const [checked, setChecked] = useState(
-    categories.some((c) => c === category.id)
-  );
+    const [checked, setChecked] = useState(
+        categories.some((c) => c === category.id)
+    );
 
-  const updateBook = () => {
-    if (checked) {
-      setCategories(categories.filter((c) => c !== category.id));
-    } else {
-      setCategories([...categories, category.id]);
-    }
-    setChecked(!checked);
-    console.log(categories);
-  };
+    const updateBook = () => {
+        if (checked) {
+            setCategories(categories.filter((c) => c !== category.id));
+        } else {
+            setCategories([...categories, category.id]);
+        }
+        setChecked(!checked);
+        console.log(categories);
+    };
 
   return (
     <div className="category-list-item" key={category.id}>

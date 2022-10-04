@@ -28,8 +28,10 @@ const AdminOrderView = ({orders,setOrders}) => {
   };
 
   return (
-    <div>
+    <div className="admin-order-view">
+	<div className="admin-order-nav-bar">
       <h1>Admin order nav ph</h1>
+	</div>
       {orders === null && <button onClick={getAllOrders}>Hämta alla ordrar.</button>}
 	  {orders !== null && nav==="list" && <AdminOrderList orders={orders} setNav={setNav}/>}
 	  {orders !== null && nav.includes("show-") && <AdminOrderShow order={orders.find(o=>o.ordernumber === nav.split("-")[1])} setNav={setNav}/>}

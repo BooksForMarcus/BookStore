@@ -31,11 +31,13 @@ function AdminBookView() {
         <AdminBookList books={localBooks} setBookToEdit={setBookToEdit} />
       )}
       {bookToEdit !== null && !showAddBook && (
-        <BookCrud
-          isEdit={true}
-          book={books.find((b) => b.id === bookToEdit)}
-          setBookToEdit={setBookToEdit}
-        />
+		<div className="admin-book-view-crud-container">
+			<BookCrud
+			isEdit={true}
+			book={books.find((b) => b.id === bookToEdit)}
+			setBookToEdit={setBookToEdit}
+			/>
+		</div>
       )}
     </div>
   );
