@@ -97,10 +97,11 @@ const AdminCategoryList = ({ categories, setCategories }) => {
                     <div className="jonas-tr" key={b.id}>
                         <div>{b.name} </div>
                         {/*<NavLink className="nav_logo" to="/"><img className="nav_logo" src={logo} alt="An image of bookstore logo" /></NavLink>*/}
-                        <div> <img src={deleteImg} className="jonas-input" onClick={event => handleClick(event, b.id)} /></div>
+                        <div> <button className="jonas-button" onClick={event => handleClick(event, b.id)} >Ta Bort</button></div>
                         {/*<div><input className="jonas-input2" type="text" name={b.id} id={b.id} value={myName} onChange={(e) => setName(e.target.value)} /></div>*/}
-                        <div><input   className="jonas-input2" type="text" name={b.id} id={b.id} onChange={(e) => setName(e.target.value)} /></div>
-                        <div>  <img src={editImg} className="jonas-input" onClick={event => handleClick2(event, b.id, name)} /></div>
+                        <div>Nytt namn:</div>
+                        <div> <input className="jonas-input2" type="text" name={b.id} id={b.id} onChange={(e) => setName(e.target.value)} /></div>
+                        <div>  <button className="jonas-button" onClick={event => handleClick2(event, b.id, name)} >Ändra</button></div>
  
                     </div>)
 }

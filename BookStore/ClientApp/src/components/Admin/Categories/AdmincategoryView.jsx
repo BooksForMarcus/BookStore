@@ -52,16 +52,27 @@ function AdminCategoryView() {
 
 
         <div className="admin-category-view">
-            <h1>Admin Category View placeholder</h1>
-            <label htmlFor="CategoryName">Kategorinamn</label>
-            <input
+            {/*<h1>Admin Category View placeholder</h1>*/}
+            <label htmlFor="CategoryName">Kategorinamn: </label>
+            <input className="jonas-input3"
+                width="20em"
                 type="text"
                 name="name"
                 id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
-            <button onClick={() => fetch("/api/category/", requestOptionsCreate)}>Create</button>
+            <button className="jonas-button" onClick={() => fetch("/api/category/", requestOptionsCreate)}>Skapa Ny</button>
+     
+
+            <div className="jonas-tr">
+                    <div><h3>Kategorinamn</h3></div>
+                    <div></div>
+                    <div><h3>Nytt namn</h3></div>
+                    <div></div>
+                    <div></div>
+ 
+            </div>
             <AdminCategoryList categories={allCategories} setCategories={setAllCategories} />
  
  

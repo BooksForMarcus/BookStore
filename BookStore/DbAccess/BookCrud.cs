@@ -81,6 +81,9 @@ public class BookCrud
   
                 var newCats = theBooks2[i].Categories.Where(x => x != Id).ToArray();
                 theBooks2[i].Categories = newCats;
+                //var deletefilter = Builders<Book>.Filter.Eq("Id", theBooks2[i].Id);
+                //books.ReplaceOne()
+                await books.FindOneAndReplaceAsync(b => b.Id == theBooks2[i].Id, theBooks2[i]);
             }
             return true;
         }
