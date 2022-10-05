@@ -6,9 +6,9 @@ import booksState from "../../atoms/booksState";
 
 function CategoryView() {
   const getCategories = useRecoilValue(categoriesState);
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState("all");
   const books = useRecoilValue(booksState);
-  const [filteredBooks, setFilteredBooks] = useState("all");
+  const [filteredBooks, setFilteredBooks] = useState(null);
 
   useEffect(() => {
     let newBooks;
@@ -22,7 +22,7 @@ function CategoryView() {
       }
       setFilteredBooks(newBooks);
     }
-  }, [category]);
+  }, [category,books]);
 
   return (
     <div>
@@ -47,7 +47,7 @@ function CategoryView() {
       )}
       {filteredBooks !== null &&
         filteredBooks.map((book) => (
-          <div>
+          <div key={book.id}>
             <h5>{book.title}</h5>
           </div>
         ))}
