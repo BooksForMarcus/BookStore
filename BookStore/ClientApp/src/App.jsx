@@ -9,6 +9,7 @@ import logo from "./assets/boklogo.png";
 import { useRecoilState } from "recoil";
 import Search from "./components/Search/BookSearch";
 import UserProfileView from "./views/userProfileView/UserProfileView";
+import CategoryView from "./views/CategoryView/CategoryView";
 import loggedInUserState from "./atoms/loggedInUserState";
 import SearchResults from "./components/Search/SearchResults";
 import { useEffect } from "react";
