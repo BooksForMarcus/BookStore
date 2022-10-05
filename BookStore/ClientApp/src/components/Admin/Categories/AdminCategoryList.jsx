@@ -7,7 +7,8 @@ import ModalBaseFull from "../../Modal/ModalBaseFull";
 
 import deleteImg from  "../../../assets/delete.png";
 import editImg from "../../../assets/edit.png";
- 
+import AdminCategoryListItem from "./AdminCategoryListItem"
+
 
 const AdminCategoryList = ({ categories, setCategories }) => {
  
@@ -106,59 +107,54 @@ const AdminCategoryList = ({ categories, setCategories }) => {
     return (
  
         <div style={{ width: '100%'  }} className="jonas-fult">
-            {/*{showDeleteConfirm && (*/}
-            {/*    <ModalBaseFull>*/}
-            {/*        <div className="modal-card">*/}
-            {/*            <h3>Är du säker på att du vill ta bort den här kategorin?</h3>*/}
-            {/*            <div className="btn-area">*/}
-            {/*                <button type="button" className="btn-danger" onClick={event => handleClick(event, b.id)  }>*/}
-            {/*                    Ja*/}
-
-            {/*                </button> */}
-            {/*                <button type="button" onClick={() => setShowDeleteConfirm(false)}>*/}
-            {/*                    Nej*/}
-            {/*                </button>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </ModalBaseFull>*/}
-            {/*)}*/}
+  
             {categories !== null &&
- 
-                categories.map((b) =>
-                    <div className="jonas-tr" key={b.id}>
-                        <div>{b.name} </div>
+
+                categories.map((b) => (
+
+                    <AdminCategoryListItem key={b.id} category={b} />
+
+
+
+                ))};
+
+                     {/*<div className="jonas-tr" key={b.id}>*/}
+                     {/*    <div>{b.name} </div>*/}
+
+
                         {/*<NavLink className="nav_logo" to="/"><img className="nav_logo" src={logo} alt="An image of bookstore logo" /></NavLink>*/}
 
 
-                        {showDeleteConfirm && (
-                            <ModalBaseFull>
-                                <div className="modal-card">
-                                    <h3>Är du säker på att du vill ta bort den här kategorin?</h3>
-                                    <div className="btn-area">
-                                        <button type="button" className="btn-danger" onClick={event => handleClick(event, b.id)}>
-                                            Ja
+                        {/*{showDeleteConfirm && (*/}
+                        {/*    <ModalBaseFull>*/}
+                        {/*        <div className="modal-card">*/}
+                        {/*            <h3>Är du säker på att du vill ta bort den här kategorin?</h3>*/}
+                        {/*            <div className="btn-area">*/}
+                        {/*                <button type="button" className="btn-danger" onClick={event => handleClick(event, b.id)}>*/}
+                        {/*                    Ja*/}
 
-                                        </button>
-                                        <button type="button" onClick={() => setShowDeleteConfirm(false)}>
-                                            Nej
-                                        </button>
-                                    </div>
-                                </div>
-                            </ModalBaseFull>
-                        )}
-
-
+                        {/*                </button>*/}
+                        {/*                <button type="button" onClick={() => setShowDeleteConfirm(false)}>*/}
+                        {/*                    Nej*/}
+                        {/*                </button>*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*    </ModalBaseFull>*/}
+                        {/*)}*/}
 
 
-                        <div> <button className="jonas-button" onClick={() => setShowDeleteConfirm(true)} >Ta Bort</button></div>
+
+
+                        {/*<div> <button className="jonas-button" onClick={() => setShowDeleteConfirm(true)} >Ta Bort</button></div>*/}
                         {/*<div><input className="jonas-input2" type="text" name={b.id} id={b.id} value={myName} onChange={(e) => setName(e.target.value)} /></div>*/}
-                        <div>Nytt namn:</div>
-                        <div> <input className="jonas-input2" type="text" name={b.id} id={b.id} onChange={(e) => setName(e.target.value)} /></div>
-                        <div>  <button className="jonas-button" onClick={event => handleClick2(event, b.id, name)} >Ändra</button></div>
+                        {/*<div>Nytt namn:</div>*/}
+                        {/*<div> <input className="jonas-input2" type="text" name={b.id} id={b.id} onChange={(e) => setName(e.target.value)} /></div>*/}
+                        {/*<div>  <button className="jonas-button" onClick={event => handleClick2(event, b.id, name)} >Ändra</button></div>*/}
  
-                    </div>)
-}
-        </div>
+                     
+        )
+
+           </div> 
     );
 };
 
