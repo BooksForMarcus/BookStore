@@ -125,7 +125,7 @@ function App() {
           )}
           <span
             className="contact-link"
-            onClick={() => (window.location = "mailto:yourmail@gmail.com")}
+            onClick={() => (window.location = "mailto:bookstoreformarcus@outlook.com")}
           >
             KONTAKTA OSS
           </span>
