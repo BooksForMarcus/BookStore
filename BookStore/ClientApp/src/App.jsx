@@ -93,7 +93,7 @@ function App() {
             <div className="menu-item">
               <NavLink to="/categories">KATEGORIER</NavLink>
             </div>
-            <div className="menu-item">
+            <div className="menu-item-userlogin">
               {user ? (
                 <NavLink to="/profile">MIN SIDA</NavLink>
               ) : (
@@ -101,7 +101,7 @@ function App() {
               )}
             </div>
             <div className="menu-item-cart">
-              <NavLink to="/cart">{<FontAwesomeIcon icon={faBagShopping} />}</NavLink>
+              <NavLink to="/cart" className="cart-icon">{<FontAwesomeIcon icon={faBagShopping} />}</NavLink>
               <span className="menu-cart-amount">({cart.length})</span>
             </div>
           </div>
