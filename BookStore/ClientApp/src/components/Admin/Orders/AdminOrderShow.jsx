@@ -79,11 +79,11 @@ const AdminOrderShow = ({ order, setNav, orderStatus,orders,setOrders }) => {
         <div className="admin-order-status">
           <p>Status: </p>
 		  <select value={localStatus} onChange={(e)=>setLocalStatus(e.target.value)}>
-			<option value={orderStatus.PENDING} >Pågående</option>
-			<option value={orderStatus.PROCESSING} >Behandlas</option>
-			<option value={orderStatus.SHIPPED} >Skickad</option>
-			<option value={orderStatus.CANCELED} >Avbruten</option>
-			<option value={orderStatus.RETURNED} >Återbördad</option>
+			<option value={orderStatus.PENDING} >{orderStatus.PENDING_SV}</option>
+			<option value={orderStatus.PROCESSING} >{orderStatus.PROCESSING_SV}</option>
+			<option value={orderStatus.SHIPPED} >{orderStatus.SHIPPED_SV}</option>
+			<option value={orderStatus.CANCELED} >{orderStatus.CANCELED_SV}</option>
+			<option value={orderStatus.RETURNED} >{orderStatus.RETURNED_SV}</option>
 		  </select>
 		  {localStatus!== order.status && <button type="button" onClick={updateOrder}>Uppdatera</button>}
         </div>
