@@ -3,7 +3,8 @@
 using BookStore.Helpers;
 using BookStore.Models;
 using MongoDB.Driver;
-using System;
+using System.Text;
+using static BookStore.Helpers.EnvironmentHelper;
 
 public class OrderProcessor
 {
@@ -26,10 +27,7 @@ public class OrderProcessor
         _order = order;
         await ValidateAndUpdateOrderAndBooks();
         await GenerateSellerObjects();
-        //await MailExternalSellers();
-
-
-        //maila varje säljare med vilka böcker
+        if (!IsDev) await MailExternalSellers();
         return _order;
     }
 
@@ -59,17 +57,37 @@ public class OrderProcessor
 
     private async Task MailExternalSellers()
     {
-        //hitta distinkta säljare som inte är store
-        var sellers = _order.books.Select(b => b.SoldById).Distinct().Where(s => s != "store").ToList();
-        //sortera ut böcker per säljare
-        foreach (var seller in sellers)
+
+        foreach (var seller in _order.Sellers)
         {
-            var sellerBooks = _order.books.Where(b => b.SoldById == seller).ToList();
-            //finish writing this method
+            var sellerBooks = _order.books.Where(b => b.SoldById == seller.Id).ToList();
+            var bookStringBuilder = new StringBuilder();
+            foreach (var book in sellerBooks)
+            {
+                bookStringBuilder.Append(book.Title).Append(" - ").Append(book.Price).Append(" kr<br>");
+            }
+            var bookString = bookStringBuilder.ToString();
+            SendMail(seller, bookString);
         }
-        //finish writing this method
-        //finish writing this method
-        //finish writing this method
+    }
+
+    private void SendMail(Seller seller, string bookString)
+    {
+        string subject = "Ny order från Bokcirceln";
+        string body = @$"Hej {seller.FirstName}!<br>
+<br>
+Du har fått en ny order på följande böcker:<br>
+{bookString}<br>
+<br>
+Kundens namn: {_order.Customer.FirstName} {_order.Customer.LastName}<br>
+Kundens epost: {_order.Customer.Email}<br>
+Kundens address: {_order.Customer.Address}<br>
+<br>
+Vänligen skicka böckerna till kunden så snart som möjligt.<br>
+
+Med vänlig hälsning<br>
+Bokcirceln";
+        new MailHelper().SendMail(seller.Email, subject, body);
     }
 
     private async Task ValidateAndUpdateOrderAndBooks()

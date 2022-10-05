@@ -137,7 +137,7 @@ public class CustomerCrud
             mailer.SendMail(
                 customer.Email,
                 $"Välkommen till Bokcirkeln {customer.FirstName}",
-                $"Välkommer till Bokcirkeln!<br><br>Ditt temporära lösenord är: {unhashedPassword}<br>Kom ihåg att ändra ditt lösen efter första gången du loggat in.<br><br>Mvh. Bokcirkeln.");
+                $"Välkommen till Bokcirkeln!<br><br>Ditt temporära lösenord är: {unhashedPassword}<br>Kom ihåg att ändra ditt lösen efter första gången du loggat in.<br><br>Mvh. Bokcirkeln.");
         }
         //check results
         if (createResult.DbCreateSucceeded
@@ -166,27 +166,25 @@ public class CustomerCrud
            || op.CustomerToUpdate is null
            || string.IsNullOrWhiteSpace(op.CustomerToUpdate.Id)) return result;
 
+        var customerToDelete = new Customer();
         if (op.CustomerToUpdate.Id.Length == 24)
         {
-            if (op.IsAdmin && op.Id != op.CustomerToUpdate.Id)
+            customerToDelete = await GetCustomerById(op.CustomerToUpdate.Id);
+            if (op.IsAdmin && op.Id != op.CustomerToUpdate.Id && customerToDelete is not null)
             {
                 var response = await customers.DeleteOneAsync(x => x.Id == op.CustomerToUpdate.Id);
                 result = response.IsAcknowledged && response.DeletedCount > 0;
             }
-            else if (op.Id == op.CustomerToUpdate.Id)
+            else if (op.Id == op.CustomerToUpdate.Id && customerToDelete is not null)
             {
-                var customerToDelete = await GetCustomerById(op.CustomerToUpdate.Id);
-                if (customerToDelete is not null)
-                {
-                    var updatefilter = Builders<Customer>.Filter.Eq("Id", op.CustomerToUpdate.Id);
+                var updatefilter = Builders<Customer>.Filter.Eq("Id", op.CustomerToUpdate.Id);
 
-                    var update = Builders<Customer>.Update.Set("IsActive", false);
-                    var resp = await customers.UpdateOneAsync(updatefilter, update);
-                    result = resp.IsAcknowledged && resp.ModifiedCount > 0;
-                }
+                var update = Builders<Customer>.Update.Set("IsActive", false);
+                var resp = await customers.UpdateOneAsync(updatefilter, update);
+                result = resp.IsAcknowledged && resp.ModifiedCount > 0;
             }
         }
-
+        if (result && !IsDev) CustomerHelper.SendGoodByeMail(customerToDelete!);
         return result;
     }
 

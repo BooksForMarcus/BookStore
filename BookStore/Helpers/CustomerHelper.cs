@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
+using static MailHelper;
 
 public static class CustomerHelper
 {
@@ -78,5 +79,19 @@ public static class CustomerHelper
         }
 
         return temp.ToString();
+    }
+
+    internal static void SendGoodByeMail(Customer customer)
+    {
+        var mailer = new MailHelper();
+        mailer.SendMail(
+            customer.Email,
+            $"På återseende från Bokcirkeln",
+            @$"<h3>Tack för den här tiden {customer.FirstName}</h3>
+                <br>
+                Ditt konto är borttaget från Bokcirkeln<br>
+                Hoppas vi ses igen i framtiden.<br>
+                <br>
+                Mvh. Bokcirkeln.");
     }
 }
