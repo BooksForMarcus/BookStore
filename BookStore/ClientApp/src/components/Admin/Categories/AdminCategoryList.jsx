@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import loggedInUserState from "../../../atoms/loggedInUserState";
 import { useState } from "react";
 import { useEffect } from "react";
+import ModalBaseFull from "../../Modal/ModalBaseFull";
 
 import deleteImg from  "../../../assets/delete.png";
 import editImg from "../../../assets/edit.png";
@@ -12,7 +13,8 @@ const AdminCategoryList = ({ categories, setCategories }) => {
  
     const [name, setName] = useState("");
     const [toggle, setToggle] = useState(false);
- 
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+    var goahead = false;
 //
 
 
@@ -46,29 +48,32 @@ const AdminCategoryList = ({ categories, setCategories }) => {
             })
 }
     const handleClick = (event, param) => {
+        setShowDeleteConfirm(false);
         console.log(event);
         console.log(param);
+        if (true) {
+            fetch('/api/book/' + param + '',
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: loggedInUser.password,
 
-        fetch('/api/book/' + param + '',
-            {
-                method: "DELETE",
-                headers: {
-                    Authorization: loggedInUser.password,
-
-                }
-            })
+                    }
+                })
 
 
-        fetch('/api/category/' +   param   + '',
-            {
-                method: "DELETE",
-                headers: {
-                    Authorization: loggedInUser.password,
+            fetch('/api/category/' + param + '',
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: loggedInUser.password,
 
-                }
-            })
+                    }
+                })
+
+        }
  
-         
+        
     };
 
     const getCategories = async () => {
@@ -101,14 +106,51 @@ const AdminCategoryList = ({ categories, setCategories }) => {
     return (
  
         <div style={{ width: '100%'  }} className="jonas-fult">
+            {/*{showDeleteConfirm && (*/}
+            {/*    <ModalBaseFull>*/}
+            {/*        <div className="modal-card">*/}
+            {/*            <h3>Är du säker på att du vill ta bort den här kategorin?</h3>*/}
+            {/*            <div className="btn-area">*/}
+            {/*                <button type="button" className="btn-danger" onClick={event => handleClick(event, b.id)  }>*/}
+            {/*                    Ja*/}
 
+            {/*                </button> */}
+            {/*                <button type="button" onClick={() => setShowDeleteConfirm(false)}>*/}
+            {/*                    Nej*/}
+            {/*                </button>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </ModalBaseFull>*/}
+            {/*)}*/}
             {categories !== null &&
  
                 categories.map((b) =>
                     <div className="jonas-tr" key={b.id}>
                         <div>{b.name} </div>
                         {/*<NavLink className="nav_logo" to="/"><img className="nav_logo" src={logo} alt="An image of bookstore logo" /></NavLink>*/}
-                        <div> <button className="jonas-button" onClick={event => handleClick(event, b.id)} >Ta Bort</button></div>
+
+
+                        {showDeleteConfirm && (
+                            <ModalBaseFull>
+                                <div className="modal-card">
+                                    <h3>Är du säker på att du vill ta bort den här kategorin?</h3>
+                                    <div className="btn-area">
+                                        <button type="button" className="btn-danger" onClick={event => handleClick(event, b.id)}>
+                                            Ja
+
+                                        </button>
+                                        <button type="button" onClick={() => setShowDeleteConfirm(false)}>
+                                            Nej
+                                        </button>
+                                    </div>
+                                </div>
+                            </ModalBaseFull>
+                        )}
+
+
+
+
+                        <div> <button className="jonas-button" onClick={() => setShowDeleteConfirm(true)} >Ta Bort</button></div>
                         {/*<div><input className="jonas-input2" type="text" name={b.id} id={b.id} value={myName} onChange={(e) => setName(e.target.value)} /></div>*/}
                         <div>Nytt namn:</div>
                         <div> <input className="jonas-input2" type="text" name={b.id} id={b.id} onChange={(e) => setName(e.target.value)} /></div>
