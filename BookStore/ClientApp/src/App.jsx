@@ -16,6 +16,8 @@ import booksState from "./atoms/booksState";
 import categoriesState from "./atoms/categoriesState";
 import CartView from "./views/CartView/CartView";
 import cartState from "./atoms/cartState";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faBagShopping} from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   const [user, setUser] = useRecoilState(loggedInUserState);
@@ -40,18 +42,23 @@ function App() {
   useEffect(() => {
     const MAXLOGINDAYS = 3;
     if (localStorage.getItem("lastVisit") !== null) {
-      const now = new Date();
-      const lastVisit = new Date(localStorage.getItem("lastVisit"));
+      const now = Date.now();
+      const lastVisit = localStorage.getItem("lastVisit");
       const millisecondsPerDay = 1000 * 60 * 60 * 24;
-      console.log(
-        "Time since last login(days): ",
-        (now - lastVisit) / millisecondsPerDay
+
+	  console.log(
+        "Time since last visit(minutes): ",
+        Math.round((now - lastVisit) / (1000 *60))
       );
+
       if ((now - lastVisit) / millisecondsPerDay > MAXLOGINDAYS) {
         localStorage.clear();
-		localStorage.setItem("lastVisit", now);
-      } 
-    } else localStorage.setItem("lastVisit", new Date());
+      }
+
+      localStorage.setItem("lastVisit", now);
+    } else {
+		localStorage.setItem("lastVisit", new Date());
+	}
     if (localStorage.getItem("user") !== null) {
       setUser(JSON.parse(localStorage.getItem("user")));
     }
@@ -92,8 +99,9 @@ function App() {
                 <NavLink to="/login">LOGGA IN</NavLink>
               )}
             </div>
-            <div className="menu-item">
-              <NavLink to="/cart">KUNDVAGN</NavLink>
+            <div className="menu-item-cart">
+              <NavLink to="/cart">{<FontAwesomeIcon icon={faBagShopping} />}</NavLink>
+              <span className="menu-cart-amount">({cart.length})</span>
             </div>
           </div>
         </header>

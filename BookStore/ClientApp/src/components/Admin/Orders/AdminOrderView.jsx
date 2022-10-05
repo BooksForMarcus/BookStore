@@ -1,13 +1,22 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import loggedInUserState from "../../../atoms/loggedInUserState";
 import AdminOrderList from "./AdminOrderList";
+import AdminOrderNav from "./AdminOrderNav";
 import AdminOrderShow from "./AdminOrderShow";
 
-const AdminOrderView = ({orders,setOrders}) => {
-  const [user,setUser] = useRecoilState(loggedInUserState);
-  const [nav,setNav] = useState("list");
+const AdminOrderView = ({ orders, setOrders }) => {
+  const [user, setUser] = useRecoilState(loggedInUserState);
+  const [nav, setNav] = useState("list");
+  const [localOrders, setLocalOrders] = useState(orders);
 
+ const orderStatus = {
+	PENDING: "Pending",
+	PROCESSING: "Processing",
+	SHIPPED: "Shipped",
+	CANCELED: "Canceled",
+	RETURNED: "Returned",
+ }
   const getAllOrders = async () => {
     const requestOptions = {
       method: "GET",
@@ -22,6 +31,7 @@ const AdminOrderView = ({orders,setOrders}) => {
     if (resp.ok) {
       let json = await resp.json();
       setOrders(json);
+	  setLocalOrders(json);
     } else {
       //maybe do something here?
     }
@@ -29,12 +39,20 @@ const AdminOrderView = ({orders,setOrders}) => {
 
   return (
     <div className="admin-order-view">
-	<div className="admin-order-nav-bar">
-      <h1>Admin order nav ph</h1>
-	</div>
-      {orders === null && <button onClick={getAllOrders}>Hämta alla ordrar.</button>}
-	  {orders !== null && nav==="list" && <AdminOrderList orders={orders} setNav={setNav}/>}
-	  {orders !== null && nav.includes("show-") && <AdminOrderShow order={orders.find(o=>o.ordernumber === nav.split("-")[1])} setNav={setNav}/>}
+      <AdminOrderNav orders={orders} setLocalOrders={setLocalOrders} orderStatus={orderStatus}/>
+      {orders === null && (
+        <button onClick={getAllOrders}>Hämta alla ordrar.</button>
+      )}
+      {orders !== null && nav === "list" && (
+        <AdminOrderList orders={localOrders} setNav={setNav} />
+      )}
+      {orders !== null && nav.includes("show-") && (
+        <AdminOrderShow
+          order={orders.find((o) => o.ordernumber === nav.split("-")[1])}
+          setNav={setNav} orderStatus={orderStatus}
+		  orders={orders} setOrders={setOrders}
+        />
+      )}
     </div>
   );
 };
