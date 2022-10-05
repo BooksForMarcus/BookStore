@@ -33,7 +33,7 @@ const UserOrderListView = ({order, setView}) => {
                         {order.books.map(b => <div className="user-book-order-details-container">
                             <span className="user-order-book-item">{b.title}</span>
                             <span className="user-order-book-item">{b.price}:-</span>
-                            <span className="user-order-book-item">Antal</span>
+                            <span className="user-order-book-item">{b.numInstock}</span>
                             {!b.imageURL ? (
                                 <div className="user-order-image-wrapper">
                                     <h4>Bild</h4>

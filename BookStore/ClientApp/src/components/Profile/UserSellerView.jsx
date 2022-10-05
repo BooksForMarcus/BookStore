@@ -81,6 +81,7 @@ function UserSellerView() {
           <span className="seller-profile-booklist-h-text">Pris</span>
           <span className="seller-profile-booklist-h-text">Antal</span>
           <span className="seller-profile-booklist-h-status">Status</span>
+          <span className="seller-profile-booklist-h-status"></span>
         </div>
         <ListBooks />
       </div>

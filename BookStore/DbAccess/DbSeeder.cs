@@ -4,7 +4,6 @@ using BookStore.Models;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
-using static System.Text.Json.JsonSerializer;
 
 public class DbSeeder
 {

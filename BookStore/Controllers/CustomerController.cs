@@ -111,12 +111,13 @@ public class CustomerController : ControllerBase
         }
         return BadRequest();
     }
-        
+
     /// <summary>
     /// Login requires the name + password to be set in the Authorization header.
     /// </summary>
     /// <returns>The user object for the logged in user</returns>
     /// <exception cref="System.Exception">The authorization header is either empty or isn't Basic.</exception>
+    [AllowAnonymous]
     [HttpGet("login/")]
     public async Task<IActionResult> GetLogin()
     {
