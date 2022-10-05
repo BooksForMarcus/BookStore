@@ -23,7 +23,7 @@ header {
     align-content: start;
     justify-self: end;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    width:75%;
+    width:80%;
 }
 
 .menu-item {
