@@ -67,7 +67,7 @@ function UserProfileView() {
                 LOGGA UT
               </span>
               {user && !user.isSeller ? (
-                <div className="profile-email-contact-container" onClick={() => window.location = 'mailto:yourmail@gmail.com'}>
+                <div className="profile-email-contact-container" onClick={() => window.location = 'mailto:bookstoreformarcus@outlook.com'}>
               <span className="profile-email-contact-link" >
                   Kontakta oss för att bli säljare
               </span>
