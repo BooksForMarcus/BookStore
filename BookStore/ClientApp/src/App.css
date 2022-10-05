@@ -19,24 +19,34 @@ header {
 }
 
 .navbar {
-    display: inline-grid;
+    display: grid;
     align-content: start;
-    place-items: center;
     justify-self: end;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     width:75%;
 }
 
 .menu-item {
-    padding-right: 2em;
+    padding-right: 3em;
+}
+
+.menu-item-userlogin {
+    padding-right: 3em;
+    display: inline;
+    white-space: nowrap;
+    
 }
 
 .menu-item-cart {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    place-items: center;
+    place-items: start;
     margin-right: 4em;
     font-size: 2rem;
+}
+
+.cart-icon {
+    margin-top: -0.3em;
 }
 
 .menu-cart-amount {
