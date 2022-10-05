@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import AdminBookView from "./Books/AdminBookView";
 import AdminOrderView from "./Orders/AdminOrderView";
+import AdminCategoryView from "./Categories/AdminCategoryView";
 
 const AdminMain = ({user}) => {
   const [nav, setNav] = useState("users");
@@ -25,6 +26,7 @@ const AdminMain = ({user}) => {
       {nav === "users" && <AdminUserView users={users} setUsers={setUsers} />}
 	  {nav === "books" && <AdminBookView/>}
 	  {nav === "orders" && <AdminOrderView orders={orders} setOrders={setOrders}/>}
+      {nav === "category" && <AdminCategoryView/>}
     </div>
   );
 };

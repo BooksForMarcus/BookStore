@@ -4,7 +4,7 @@ using BookStore.DbAccess;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using BookStore.Authorize;
- 
+
 [Authorize]
 [Route("api/[controller]")]
 [ApiController]
@@ -28,7 +28,7 @@ public class BookController : ControllerBase
     {
         return await _bookCrud.GetAllBooks();
     }
-    
+
     /// <summary>
     /// Skapa Bok. Måste vara admin och/eller stå som säljare av boken.
     /// </summary>
@@ -81,7 +81,7 @@ public class BookController : ControllerBase
             });
         }
     }
-    
+
     /// <summary>
     ///  Delete book. Users can only delete their own books.
     /// </summary>
@@ -106,7 +106,23 @@ public class BookController : ControllerBase
             return BadRequest(new { error = "You can only delete your own books, if nonadmin" });
         }
     }
-
+    /// <summary>
+    /// Remove all refernces to catogory with id "Id"
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAllInCat(string id)
+    {
+        //var result = await _bookCrud.DeleteAllInCategoryTest(id);
+        var result = await _bookCrud.DeleteAllRefsToCategory(id);
+        //if (result!="false")
+         if (result )
+        {
+            return Ok( );
+        }
+        return BadRequest("Något gick fel. Referenser till kategorin ej försvunna");
+    }
     /// <summary>
     /// Hämtar bok. Ingen login krävs.
     /// </summary>

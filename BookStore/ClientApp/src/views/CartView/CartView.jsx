@@ -7,6 +7,7 @@ import loggedInUserState from "../../atoms/loggedInUserState";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CarListItem from "./CartListItem";
+import calculatePostage from "./calculatePostage";
 
 function CartView() {
   const [books,setBooks] = useRecoilState(booksState);
@@ -40,18 +41,23 @@ function CartView() {
   };
 
   const newCart = () => {
-	let orderSum = 0;
+	let orderBookPriceSum = 0;
 	cart.forEach((book) => {
-		orderSum += book.price * book.numInstock;
+		orderBookPriceSum += book.price * book.numInstock;
 	});
-	const orderVat = orderSum * 0.06;
+	const postage = calculatePostage(cart)
+	const orderTotal = orderBookPriceSum + postage;
+	const orderVat = orderBookPriceSum * 0.06 + postage*0.25;
     return {
       customer: user,
       books: cart,
-	  orderSum: orderSum,
+	  orderSum: orderTotal,
+	  postage: postage,
 	  VAT: orderVat
     };
   };
+
+
 
   const createNewOrder = async (e) => {
     e.preventDefault();
@@ -75,7 +81,7 @@ function CartView() {
 	  setCart([]);
 	  localStorage.removeItem("cart");
     } else {
-      console.log("customer create failed.");
+      console.log("order create failed.");
       let json = await resp.json();
       console.log(json);
     }
@@ -89,7 +95,13 @@ function CartView() {
 			<CarListItem key={"cart-"+book.id} book={book} decreaseInCart={decreaseInCart}/>
         )): <div>Cart is empty</div>}
         <div>
-          {(cart!==null && cart.length>0) && <button onClick={createNewOrder}>Skapa order</button>}
+          {(cart!==null && cart.length>0) ?
+          <div className="order-info">
+           <span className="order-info"> Summa varukorg (exkl. frakt): {newCart(cart).orderSum + newCart(cart).VAT}</span> 
+           <span className="order-info"> Varav moms: {newCart(cart).VAT}</span>
+           </div>
+            : null}
+          {(cart!==null && cart.length>0) ? <button className='cart-btn' onClick={createNewOrder}>Skapa order</button> : <h3> Din kundvagn är tom</h3>}
         </div>
       </div>
     );
