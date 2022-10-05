@@ -91,7 +91,7 @@ function App() {
               </NavLink>
             </div>
             <div className="menu-item">
-              <NavLink to="/">KATEGORIER</NavLink>
+              <NavLink to="/categories">KATEGORIER</NavLink>
             </div>
             <div className="menu-item-userlogin">
               {user ? (
@@ -109,6 +109,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<HomeView />} />
+			<Route path="/categories" element={<CategoryView />} />
             <Route path="/admin" element={<AdminView user={user} />} />
             <Route path="/login" element={<LoginView />} />
             <Route path="/profile" element={<UserProfileView />} />
