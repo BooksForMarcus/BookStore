@@ -1,24 +1,26 @@
 import logo from '../../assets/boklogo.png'
+import begstamp from "../../assets/begagnad-stamp.png";
 import './CartView.css';
 
 const CarListItem = ({book,decreaseInCart}) => {
 	return (
 		<div className='cartView-container'>
       <div className='cartView-info-l'>
-        <span className='cartView-item-details'>{book.title}</span>
-        {!book.imageURL ? (
-                                <div className="order-image">
-                                    <h4>Bild</h4>
-                                </div>
-                            ) : (
-                                <div className="order-image">
-                                <img
-                                className="order-img"
-                                src={book.imageURL}
-                                alt="Front image of book"
-                                ></img>
-                                </div>
-                            )}
+        <span className='cartView-item-details-title'>{book.title}</span>
+        {book.soldById !== "store" ? (
+              <img
+                className="beg-stamp-bookView"
+                src={begstamp}
+                alt="Image of reused secondhand stamp"
+              />) : (
+              <div className="book-info-seller">
+              <span className="book-info-seller-text">SÄLJS AV</span>
+              <img
+                className="store_logo"
+                src={logo}
+                alt="An image of bookstore logo"
+              />
+              </div>)}
         <span className='cartView-item-details'>Utgivningsår: {book.year}</span>
         <span className='cartView-item-details'>Genre: {book.categories}</span>
         <span className='cartView-item-details'>á pris: {book.price}</span>

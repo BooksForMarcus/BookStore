@@ -97,11 +97,17 @@ function CartView() {
         <div>
           {(cart!==null && cart.length>0) ?
           <div className="order-info">
-           <span className="order-info"> Summa varukorg (exkl. frakt): {newCart(cart).orderSum + newCart(cart).VAT}</span> 
-           <span className="order-info"> Varav moms: {newCart(cart).VAT.toFixed(2)}</span>
+           <span className="order-info-item"> Frakt: {newCart(cart).postage.toFixed(2)}</span>
+           <span className="order-info-item"> Summa varukorg (inkl. frakt): {newCart(cart).orderSum + newCart(cart).VAT}</span> 
+           <span className="order-info-item"> Varav moms: {newCart(cart).VAT.toFixed(2)}</span>
            </div>
             : null}
-          {(cart!==null && cart.length>0) ? <button className='cart-btn' onClick={createNewOrder}>Skapa order</button> : <h3> Din kundvagn är tom</h3>}
+          {(cart!==null && cart.length>0) ? 
+          (<div>
+            <button className='cart-btn' onClick={createNewOrder}>Skapa order</button>
+          </div>
+          ): 
+          <h3> Din kundvagn är tom</h3>}
         </div>
       </div>
     );
