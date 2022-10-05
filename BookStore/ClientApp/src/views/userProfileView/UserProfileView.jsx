@@ -7,12 +7,14 @@ import loggedInUserState from "../../atoms/loggedInUserState";
 import EditProfile from "../../components/Profile/EditProfile";
 import UserSellerView from "../../components/Profile/UserSellerView";
 import UserProfileOrderView from "../../components/Profile/UserProfileOrderView";
+import cartState from "../../atoms/cartState";
 
 function UserProfileView() {
 	
   const [user, setUser] = useRecoilState(loggedInUserState);
   const navigate = useNavigate();
   const [nav, setNav] = useState("details");
+  const [cart, setCart] = useRecoilState(cartState);
 
   useEffect(() => {
 	if(localStorage.getItem("user")===null){
@@ -62,7 +64,7 @@ function UserProfileView() {
               )}
               <span
                 className="profile-navlink"
-                onClick={() => {localStorage.clear(); setUser(null);}}
+                onClick={() => {localStorage.clear(); setUser(null);setCart(null)}}
               >
                 LOGGA UT
               </span>
