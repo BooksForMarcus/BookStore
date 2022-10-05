@@ -102,7 +102,7 @@ function App() {
             </div>
             <div className="menu-item-cart">
               <NavLink to="/cart" className="cart-icon">{<FontAwesomeIcon icon={faBagShopping} />}</NavLink>
-              <span className="menu-cart-amount">({cart.length})</span>
+              {cart!==null && <span className="menu-cart-amount">({cart.length})</span>}
             </div>
           </div>
         </header>
