@@ -51,7 +51,7 @@ function CategoryView() {
         filteredBooks.map((book) => (
             <Link className="card-category-items-link"
                   key={book.id}
-                  to={`book/${book.id}`}
+                  to={`/book/${book.id}`}
                   state={book}>
               <img
                     className="book-img"
