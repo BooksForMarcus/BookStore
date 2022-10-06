@@ -5,6 +5,7 @@ const AdminNav = ({setNav})=> {
 			<button onClick={()=>setNav("orders")}>Beställningar</button>
 			<button onClick={() => setNav("books")}>Böcker</button>
 			<button onClick={() => setNav("category")}>Kategorier</button>
+			<button onClick={() => setNav("stats")}>Statistik</button>
 		</div>
 	  );
 }
