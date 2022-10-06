@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import "../../App";
+import "./CategoryView.css";
 import { useRecoilValue } from "recoil";
 import categoriesState from "../../atoms/categoriesState";
 import booksState from "../../atoms/booksState";
+import { Link } from "react-router-dom";
 
 function CategoryView() {
   const getCategories = useRecoilValue(categoriesState);
@@ -45,12 +46,23 @@ function CategoryView() {
       ) : (
         <h1>Loading...</h1>
       )}
+      <div className="card-category-items">
       {filteredBooks !== null &&
         filteredBooks.map((book) => (
-          <div key={book.id}>
-            <h5>{book.title}</h5>
-          </div>
+            <Link className="card-category-items-link"
+                  key={book.id}
+                  to={`book/${book.id}`}
+                  state={book}>
+              <img
+                    className="book-img"
+                    src={book.imageURL}
+                    alt="Front image of book"
+                    >
+                    </img>
+             <h5>{book.title}</h5>
+            </Link>
         ))}
+        </div>
     </div>
   );
 }
