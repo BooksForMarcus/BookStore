@@ -1,42 +1,34 @@
-﻿import { Button } from "@mui/material";
+
 import { useRecoilState } from "recoil";
 import loggedInUserState from "../../../atoms/loggedInUserState";
 import { useState } from "react";
 import { useEffect } from "react";
 import ModalBaseFull from "../../Modal/ModalBaseFull";
 
-import deleteImg from  "../../../assets/delete.png";
+import deleteImg from "../../../assets/delete.png";
 import editImg from "../../../assets/edit.png";
+
 import AdminCategoryListItem from "./AdminCategoryListItem"
 
 
 const AdminCategoryList = ({ categories, setCategories }) => {
- 
-    const [name, setName] = useState("");
-    const [toggle, setToggle] = useState(false);
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-    var goahead = false;
-//
+  const [name, setName] = useState("");
+  const [toggle, setToggle] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  var goahead = false;
+  //
 
+  async function refresh() {
+    let resp = await fetch("/api/category");
+    if (resp.ok) {
+      const json = await resp.json();
+      json.sort((a, b) => a.name.localeCompare(b.title));
 
- 
-
-    async function refresh() {
-
-        let resp = await fetch("/api/category");
-        if (resp.ok) {
-
-
-            const json = await resp.json();
-            json.sort((a, b) => a.name.localeCompare(b.title));
- 
-            setCategories(json);
-            setToggle(!toggle);
- 
-        } else {
-
-        }
+      setCategories(json);
+      setToggle(!toggle);
+    } else {
     }
+ 
  
 
     function fetchDelete(id) {
@@ -156,6 +148,8 @@ const AdminCategoryList = ({ categories, setCategories }) => {
 
            </div> 
     );
+
+ 
 };
 
 export default AdminCategoryList;
