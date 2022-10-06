@@ -354,6 +354,7 @@ input:not(:placeholder-shown) + .red-fl-label{
     grid-template-columns: 1fr 3fr;
     padding: 2em;
     margin: 1em 0em;
+	color: #415d51;
 }
 
 .bookView-image-placeholder {
@@ -361,6 +362,7 @@ input:not(:placeholder-shown) + .red-fl-label{
     place-items: center;
     background-color: #504e4d;
     height: 50%;
+	padding: 3em;
 }
 
 .bookView-image-wrapper {
