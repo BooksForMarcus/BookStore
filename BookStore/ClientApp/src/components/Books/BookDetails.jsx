@@ -77,20 +77,20 @@ const BookDetails = ({ book }) => {
               onClick={addToCart}
               disabled={
                 cart.some((cartBook) => cartBook.id === book.id) &&
-                cart.find((cartBook) => cartBook.id === book.id).numInstock >=
-                  book.numInstock
+                cart.find((cartBook) => cartBook.id === book.id).numInstock >= book.numInstock
+                || book.numInstock <= 0
               }
             >
               {cart.find((cartBook) => cartBook.id === book.id) 
-              ? (<span>{cart.find((cartBook) => cartBook.id === book.id).numInstock}st i varukorgen</span>)
+              ? (<span>{cart.find((cartBook) => cartBook.id === book.id).numInstock} st i varukorgen</span>)
               :
               (<span>Lägg i varukorgen</span>)
               }
             </button>
             {cart.some((cartBook) => cartBook.id === book.id) &&
               cart.find((cartBook) => cartBook.id === book.id).numInstock >=
-              book.numInstock ? (
-                <span className="out-of-stock-text">Nu finns det inte fler av denna vara i lager</span>
+              book.numInstock || book.numInstock <= 0 ? (
+                <span className="out-of-stock-text">Slut i lager</span>
               ) : (
                 <span></span>
               )}
