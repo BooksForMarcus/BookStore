@@ -87,4 +87,5 @@ const AdminCategoryList = ({ categories, setCategories }) => {
   }
 };
 
+
 export default AdminCategoryList;
