@@ -1,3 +1,5 @@
+import { translateStatus } from "../../script/orderStatus";
+
 const UserOrderListView = ({order, setView}) => {
     let tempSeller = null;
 
@@ -9,7 +11,7 @@ const UserOrderListView = ({order, setView}) => {
       <div className="user-order-profile-booklist">
                   <div className="user-order-details-container" key={"user"+order.id}>
                     <div className="user-order-details-container-1">
-                        <span className="user-order-details-status">Status: {order.status}</span>
+                        <span className="user-order-details-status">Status: {translateStatus(order.status)}</span>
                         <div className="user-order-details-wrap-date">
                             <span className="user-order-details-item">Datum:</span>
                             <span className="user-order-details-item">{order.date.slice(0,10)}</span>
