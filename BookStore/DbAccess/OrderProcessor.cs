@@ -33,7 +33,6 @@ public class OrderProcessor
 
     internal void SendMailsAsRequired(Order order)
     {
-        if (IsDev) return;
         _order = order;
         MailExternalSellers();
         MailCustomerConfirmation();
@@ -197,7 +196,12 @@ justify-self: start;
     <p>Bokcirkeln</p>
     </div>");
         var mailBody = sb.ToString();
-        mailer.SendMail(_order.Customer.Email, $"Orderbekräftelse {_order.Id}", mailBody);
+        if (!IsDev)mailer.SendMail(_order.Customer.Email, $"Orderbekräftelse {_order.Id}", mailBody);
+        else
+        {
+            Directory.CreateDirectory("./Helpers/DevMail");
+            File.WriteAllText("./Helpers/DevMail/OrderConfirmationMail.html", mailBody);
+        }
     }
 
     private async Task GenerateSellerObjects()
@@ -273,7 +277,13 @@ html {{font - family: arial,helvetica;
 	Med vänlig hälsning<br>
 Bokcirkeln
 </div>";
-        new MailHelper().SendMail(seller.Email, subject, body);
+        if(!IsDev) new MailHelper().SendMail(seller.Email, subject, body);
+        else
+        {
+            Directory.CreateDirectory("./Helpers/DevMail");
+            var now = DateTime.Now;
+            File.WriteAllText($"./Helpers/DevMail/RequestDeliveryMail{now.Ticks}.html", body);
+        }
     }
 
     private async Task ValidateAndUpdateOrderAndBooks()
