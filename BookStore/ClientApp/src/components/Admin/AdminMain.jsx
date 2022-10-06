@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import AdminBookView from "./Books/AdminBookView";
 import AdminOrderView from "./Orders/AdminOrderView";
 import AdminCategoryView from "./Categories/AdminCategoryView";
+import AdminStatsMainView from "./Stats/AdminStatsMainView"
 
 const AdminMain = ({user}) => {
   const [nav, setNav] = useState("users");
@@ -27,6 +28,7 @@ const AdminMain = ({user}) => {
 	  {nav === "books" && <AdminBookView/>}
 	  {nav === "orders" && <AdminOrderView orders={orders} setOrders={setOrders}/>}
       {nav === "category" && <AdminCategoryView/>}
+      {nav === "stats" && <AdminStatsMainView/>}
     </div>
   );
 };
