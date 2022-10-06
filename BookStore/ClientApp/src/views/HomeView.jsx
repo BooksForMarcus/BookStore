@@ -66,7 +66,6 @@ function HomeView() {
       })
     );
   };
-
   const ShowRandomBooks = () => {
     return books === null ? (
       <div className="card-product">
