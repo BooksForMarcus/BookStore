@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 
 const AdminOrderNav = ({ orders, setLocalOrders,orderStatus }) => {
-  const PENDING = "Pending";
-  const PROCESSING = "Processing";
-  const SHIPPED = "Shipped";
-  const CANCELED = "Canceled";
-  const RETURNED = "Returned";
   const [filteredOrders, setFilteredOrders] = useState(orders);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("all");
@@ -13,7 +8,7 @@ const AdminOrderNav = ({ orders, setLocalOrders,orderStatus }) => {
   const updateSearch = () => {
     if (searchTerm.length > 1) {
       const lowerSearchTerm = searchTerm.toLowerCase();
-      if (filteredOrder !== null) {
+      if (filteredOrders !== null) {
         const searchedOrders = filteredOrders.filter(
           (o) =>
             o.id.toLowerCase().includes(lowerSearchTerm) ||
@@ -96,7 +91,7 @@ const AdminOrderNav = ({ orders, setLocalOrders,orderStatus }) => {
               checked={filter === orderStatus.PENDING}
               onChange={(e) => setFilter(e.target.value)}
             />
-            {orderStatus.PENDING}
+            {orderStatus.PENDING_SV}
           </label>
           <label>
             <input
@@ -106,7 +101,7 @@ const AdminOrderNav = ({ orders, setLocalOrders,orderStatus }) => {
               checked={filter === orderStatus.PROCESSING}
               onChange={(e) => setFilter(e.target.value)}
             />
-            {orderStatus.PROCESSING}
+            {orderStatus.PROCESSING_SV}
           </label>
           <label>
             <input
@@ -116,7 +111,7 @@ const AdminOrderNav = ({ orders, setLocalOrders,orderStatus }) => {
               checked={filter === orderStatus.SHIPPED}
               onChange={(e) => setFilter(e.target.value)}
             />
-            {orderStatus.SHIPPED}
+            {orderStatus.SHIPPED_SV}
           </label>
           <label>
             <input
@@ -126,17 +121,17 @@ const AdminOrderNav = ({ orders, setLocalOrders,orderStatus }) => {
               checked={filter === orderStatus.CANCELED}
               onChange={(e) => setFilter(e.target.value)}
             />
-            {orderStatus.CANCELED}
+            {orderStatus.CANCELED_SV}
           </label>
           <label>
             <input
               type="radio"
               name="filter"
               value={orderStatus.RETURNED}
-              checked={filter === RETURNED}
+              checked={filter === orderStatus.RETURNED}
               onChange={(e) => setFilter(e.target.value)}
             />
-            {orderStatus.RETURNED}
+            {orderStatus.RETURNED_SV}
           </label>
         </fieldset>
       </form>
