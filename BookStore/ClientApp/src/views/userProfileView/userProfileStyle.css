@@ -183,6 +183,8 @@
     place-self: center;
 }
 
+/*===== UserOrderView - Details =====*/
+
 .user-order-details-container {
     display: grid;
     background-color: #fcf8e8;
@@ -194,7 +196,7 @@
     grid-template-columns: 5fr 1fr;
 }
 
-.user-order-details-date {
+.user-order-details-wrap {
     display: grid;
     grid-template-rows: 1fr 1fr;
 }
@@ -207,25 +209,50 @@
     padding: 0.6em;
 }
 
+.user-order-details-wrap-date {
+    display: grid;
+    font-weight: bolder;
+    grid-template-rows: 1fr 1fr;
+}
+
 .user-order-details-container-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin: 2em 2em;
+    font-weight: bolder;
+    color:#df7861;
 }
 
 .user-order-details-container-3 {
     border-top: #aaceb7 solid 1px;
+    margin: 0em 1em;
+}
+
+.user-book-order-details-header-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+    background-color: #688472;
+    font-size: smaller;
+    font-weight: bold;
+    color: #fcf8e8;
+    padding: 0.5em;
+
+}
+
+.user-order-book-item-h {
+    margin-left: 1em;
 }
 
 .user-book-order-details-container {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
     border-bottom: #e3e4da solid 1px;
+    padding: 1em;
 }
 
 .user-order-details-item {
-    font-weight: bolder;
     color:#df7861;
+    margin-bottom: 0.5em;
 }
 
 .user-order-book-item {
@@ -233,25 +260,60 @@
     margin: 2em 1em;
 }
 
+.user-order-book-info {
+    display: grid;
+    grid-template-rows: 1fr 1fr 2fr;
+    padding-left: 1em;
+}
+
+.user-order-book-info-title {
+    font-weight: bolder;
+    color:#688472;
+}
+
+.user-order-book-info-item {
+    color: #415d51;
+    font-size: 0.8rem;
+}
+
+.user-order-book-seller-info {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    color: #df7861;
+    font-size: 0.8rem;
+}
+
+.user-order-book-seller-info-item-h {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
 .user-order-image-wrapper {
-    place-self: end;
-    width: 50%;
-    margin: 1em 2em 1em 0em;
+    place-self: center;
+    margin: 0em 2em 0em 0em;
 }
 .user-order-img{
-    width: 70%;
+    width: 80%;
 }
 
 .user-order-details-container-4 {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
-    place-items: center;
-    margin: 2em;
+    grid-template-columns: 1fr 1fr;
+    place-items: start;
+    width: 50%;
+    margin: 3em;
+    color: #415d51;
+}
+
+.user-order-details-sum-item {
+    color:#415d51;
+    margin-bottom: 0.5em;
 }
 
 .user-order-details-item-sum {
-    margin-bottom: 0;
     place-self: center;
+    margin: 0 0;
 }
 
 .user-order-details-totalSum {
@@ -259,7 +321,7 @@
 }
 
 .user-order-details-close {
-    margin-top: 2em;
+    margin: 1em;
     place-self: center;
     width: 50%;
 }

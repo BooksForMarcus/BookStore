@@ -1,4 +1,4 @@
-
+import { translateStatus } from "../../script/orderStatus";
 
 const UserOrderListView = ({orders,setView}) => {
   return (
@@ -18,7 +18,7 @@ const UserOrderListView = ({orders,setView}) => {
                     <span className="user-order-profile-user-order-listitem">{o.id}</span>
                     <span className="user-order-profile-user-order-listitem">{o.date.slice(0,10)}</span>
                     <span className="user-order-profile-user-order-listitem">{o.orderSum} sek</span>
-                    <span className="user-order-profile-user-order-listitem-center">{o.status}</span>
+                    <span className="user-order-profile-user-order-listitem-center">{translateStatus(o.status)}</span>
                 </div>)
                 : null}
                 
