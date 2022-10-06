@@ -17,21 +17,27 @@ function HomeView() {
   };
 
   const getFiveUsedBooks = () => {
-    var usedBooks = books.filter((b) => b.soldById != "store");
+    var usedBooks = books.filter(
+      (b) => b.soldById != "store" && b.numInstock > 0
+    );
     var firstFiveUsedBooks = usedBooks.slice(0, 5);
     return firstFiveUsedBooks;
   };
 
   const getRandomBooks = (books) => {
-    if (books.length <= 5) return books;
+    const localBooks = books.filter(
+      (b) =>
+        b.soldById == "store" || (b.soldById != "store" && b.numInstock > 0)
+    );
+    if (localBooks.length <= 5) return localBooks;
 
     let fiveRandomBooks = [];
     let usedNumbers = [];
     for (let i = 0; i < 5; i++) {
-      let random = getRandomNumber(0, books.length);
+      let random = getRandomNumber(0, localBooks.length);
       if (!usedNumbers.includes(random)) {
         usedNumbers.push(random);
-        fiveRandomBooks.push(books[random]);
+        fiveRandomBooks.push(localBooks[random]);
       }
     }
     return fiveRandomBooks;
