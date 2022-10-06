@@ -32,6 +32,8 @@ function AdminBookView() {
       )}
       {bookToEdit !== null && !showAddBook && (
 		<div className="admin-book-view-crud-container">
+		<h3>ID: {bookToEdit}</h3>
+		<h3>Säljar ID: {books.find((b) => b.id === bookToEdit).soldById}</h3>
 			<BookCrud
 			isEdit={true}
 			book={books.find((b) => b.id === bookToEdit)}

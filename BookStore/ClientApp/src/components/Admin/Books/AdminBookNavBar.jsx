@@ -14,7 +14,8 @@ const AdminBookNavBar = ({ setLocalBooks, books,setShowAddBook,showAddBook,bookT
 			b.title.toLowerCase().includes(lowerSearchTerm) ||
 			b.author.toLowerCase().includes(lowerSearchTerm) ||
 			b.isbn.toLowerCase().includes(lowerSearchTerm) ||
-			b.soldById.toLowerCase().includes(lowerSearchTerm)
+			b.soldById.toLowerCase().includes(lowerSearchTerm) ||
+			b.id.toLowerCase().includes(lowerSearchTerm)
 		);
 		setLocalBooks(searchedBooks);
 	  } else {
@@ -57,7 +58,7 @@ const AdminBookNavBar = ({ setLocalBooks, books,setShowAddBook,showAddBook,bookT
         <input
           type="text"
           id="search"
-          placeholder="Sök efter titel, författare, ISBN eller säljare..."
+          placeholder="Sök efter Id, titel, författare, ISBN eller säljare..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value.trimStart())}
         />

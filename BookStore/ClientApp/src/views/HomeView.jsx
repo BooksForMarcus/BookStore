@@ -5,190 +5,79 @@ import booksState from "../atoms/booksState";
 import sideImageone from "../assets/image1.jpg";
 import sideImagetwo from "../assets/image2.jpg";
 import { Link } from "react-router-dom";
+import BookCard from "../components/Books/BookCard";
 
 function HomeView() {
-    const [books, setBooks] = useRecoilState(booksState);
-/*    const [book, setBook] = useRecoilState(bookState);*/
+  const [books, setBooks] = useRecoilState(booksState);
 
-//   const getBooks = async () => {
-//         const resp = await fetch("/api/Book");
-//         const json = await resp.json();
-//         setBooks(json);
-//     };
-
-    const getFiveNewBooks = () => {
-        var newBooks = books.filter((b) => b.year == 2022 && b.soldById == "store");
-        var firstFiveNewBooks = newBooks.slice(0, 5);
-        return firstFiveNewBooks;
+  const getFiveNewBooks = () => {
+    var newBooks = books.filter((b) => b.year == 2022 && b.soldById == "store");
+    var firstFiveNewBooks = newBooks.slice(0, 5);
+    return firstFiveNewBooks;
   };
 
   const getFiveUsedBooks = () => {
-        var usedBooks = books.filter((b) => b.soldById != "store");
-        var firstFiveUsedBooks = usedBooks.slice(0, 5);
-        return firstFiveUsedBooks;
+    var usedBooks = books.filter((b) => b.soldById != "store");
+    var firstFiveUsedBooks = usedBooks.slice(0, 5);
+    return firstFiveUsedBooks;
   };
 
   const getRandomBooks = (books) => {
-        if (books.length <= 5) return books
+    if (books.length <= 5) return books;
 
-        let fiveRandomBooks = [];
-        let usedNumbers = [];
-        for (let i = 0; i < 5; i++) {
-            let random = getRandomNumber(0, books.length);
-            if (!usedNumbers.includes(random)) {
-                usedNumbers.push(random);
-                fiveRandomBooks.push(books[random]);
-            }
-        }
-        return fiveRandomBooks;
+    let fiveRandomBooks = [];
+    let usedNumbers = [];
+    for (let i = 0; i < 5; i++) {
+      let random = getRandomNumber(0, books.length);
+      if (!usedNumbers.includes(random)) {
+        usedNumbers.push(random);
+        fiveRandomBooks.push(books[random]);
+      }
+    }
+    return fiveRandomBooks;
   };
 
   const getRandomNumber = (min, max) => {
-        return Math.floor(Math.random() * (max - min) + min);
+    return Math.floor(Math.random() * (max - min) + min);
   };
 
   const ShowTopFiveNewBooks = () => {
-
     return books === null ? (
       <div className="card-product">
-        <div className="book-image-wrapper">
-            
-        </div>
+        <div className="book-image-wrapper"></div>
         <p>Kommer snart</p>
       </div>
     ) : (
       getFiveNewBooks().map((b, i) => {
-          return (
-            <Link
-                  to={`book/${b.id}`}
-                  state={b}
-            className="card-product-link" key={b.id}>
-            <div className="card-product">
-            {b.numInstock === 0 ? (
-                      <div className="book-image-wrapper">
-                      <img
-                      className="book-img"
-                      src={b.imageURL}
-                      alt="Front image of book"
-                      >
-                      </img>
-                      <div className="book-img-sold-out">
-                        <p className="book-img-sold-out-text">Slut i lager</p>
-                      </div>
-                      </div>
-                    ): 
-                    (<div className="book-image-wrapper">
-                    <img
-                    className="book-img"
-                    src={b.imageURL}
-                    alt="Front image of book"
-                    >
-                    </img>
-                    </div>)}
-                <span className="card-product-title">{b.title}</span>
-                <span className="card-product-price">{b.price} kr</span>
-            </div>
-            </Link>
-          );
+        return <BookCard book={b} key={"newbook" + b.id} />;
       })
     );
   };
 
   const ShowTopFiveUsedBooks = () => {
-
-      return books === null ? (
+    return books === null ? (
       <div className="card-product">
         <div className="book-image-wrapper"></div>
         <p>Kommer snart</p>
       </div>
     ) : (
       getFiveUsedBooks().map((b, i) => {
-          return (
-            <Link
-            to={`book/${b.id}`}
-            state={b}
-            className="card-product-link" key={b.id}>
-            <div className="card-product">
-                    {b.numInstock === 0 ? (
-                      <div className="book-image-wrapper">
-                      <img
-                      className="book-img"
-                      src={b.imageURL}
-                      alt="Front image of book"
-                      >
-                      </img>
-                      <div className="book-img-sold-out">
-                        <p className="book-img-sold-out-text">Slut i lager</p>
-                      </div>
-                      </div>
-                    ): 
-                    (<div className="book-image-wrapper">
-                    <img
-                    className="book-img"
-                    src={b.imageURL}
-                    alt="Front image of book"
-                    >
-                    </img>
-                    </div>)}
-                <span className="card-product-title">{b.title}</span>
-                <span className="card-product-price">{b.price} kr</span>
-             </div>
-             </Link>
-          );
+        return <BookCard book={b} key={"used-" + b.id} />;
       })
     );
   };
-
-    const ShowRandomBooks = () => {
-
-        return books === null ? (
-            <div className="card-product">
-                <div className="book-image-wrapper"></div>
-                <p>Kommer snart</p>
-            </div>
-        ) : (
-            getRandomBooks(books).map((b, i) => {
-                return (
-                  <Link
-                    to={`book/${b.id}`}
-                    state={b}
-                    className="card-product-link" key={b.id}>
-                    <div className="card-product">
-                    {b.numInstock === 0 ? (
-                      <div className="book-image-wrapper">
-                      <img
-                      className="book-img"
-                      src={b.imageURL}
-                      alt="Front image of book"
-                      >
-                      </img>
-                      <div className="book-img-sold-out">
-                        <p className="book-img-sold-out-text">Slut i lager</p>
-                      </div>
-                      </div>
-                    ): 
-                    (<div className="book-image-wrapper">
-                    <img
-                    className="book-img"
-                    src={b.imageURL}
-                    alt="Front image of book"
-                    >
-                    </img>
-                    </div>)}
-                        <span className="card-product-title">{b.title}</span>
-                        <span className="card-product-price">{b.price} kr</span>
-                    </div>
-                    </Link>
-                );
-            })
-        );
-    };
-
-//   useEffect(() => {
-//     if(books===null){
-// 		getBooks();
-// 	} 
-//   }, []);
+  const ShowRandomBooks = () => {
+    return books === null ? (
+      <div className="card-product">
+        <div className="book-image-wrapper"></div>
+        <p>Kommer snart</p>
+      </div>
+    ) : (
+      getRandomBooks(books).map((b, i) => {
+        return <BookCard book={b} key={"random-" + b.id} />;
+      })
+    );
+  };
 
   return (
     <div className="main-container">

@@ -181,7 +181,7 @@ button:hover {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	align-items: flex-start;
+	align-items: center;
 	justify-items: flex-start;
 }
 .admin-book-list-item {
