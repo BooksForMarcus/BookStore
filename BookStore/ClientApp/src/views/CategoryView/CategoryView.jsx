@@ -46,20 +46,24 @@ function CategoryView() {
       ) : (
         <h1>Loading...</h1>
       )}
-      <div className="card-category-items">
+      <div className="card-category">
       {filteredBooks !== null &&
         filteredBooks.map((book) => (
             <Link className="card-category-items-link"
                   key={book.id}
                   to={`/book/${book.id}`}
                   state={book}>
-              <img
-                    className="book-img"
-                    src={book.imageURL}
-                    alt="Front image of book"
-                    >
-                    </img>
-             <h5>{book.title}</h5>
+                    <div className="card-category-items">
+                      <img
+                      className="card-category-img"
+                      src={book.imageURL}
+                      alt="Front image of book"
+                      >
+                      </img>
+                    <h5 className="card-category-items-title">{book.title}</h5>
+                    <p className="card-category-items-author">{book.author}</p>
+                    <h6 className="card-category-items-price">{book.price} kr</h6>
+                    </div>
             </Link>
         ))}
         </div>
