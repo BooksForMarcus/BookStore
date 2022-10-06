@@ -26,6 +26,7 @@ namespace BookStore.DbAccess
             var processedOrder = await orderProcessor.Process(order);
             await orders.InsertOneAsync(processedOrder);
 			var result = !String.IsNullOrWhiteSpace(processedOrder.Id);
+			if (result) orderProcessor.SendMailsAsRequired(order);
 			return result;
 		}
 
