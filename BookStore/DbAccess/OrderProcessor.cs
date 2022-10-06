@@ -254,7 +254,7 @@ justify-self: start;
     {
         string subject = "Ny order från Bokcirceln";
         string body = @$"<style>
-html {{font - family: arial,helvetica;
+html {{font-family: arial,helvetica;
 }}
 .mail-body {{margin: 1em;
 }}
