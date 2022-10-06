@@ -64,14 +64,27 @@ function HomeView() {
                   state={b}
             className="card-product-link" key={b.id}>
             <div className="card-product">
-                <div className="book-image-wrapper">
+            {b.numInstock === 0 ? (
+                      <div className="book-image-wrapper">
+                      <img
+                      className="book-img"
+                      src={b.imageURL}
+                      alt="Front image of book"
+                      >
+                      </img>
+                      <div className="book-img-sold-out">
+                        <p className="book-img-sold-out-text">Slut i lager</p>
+                      </div>
+                      </div>
+                    ): 
+                    (<div className="book-image-wrapper">
                     <img
                     className="book-img"
                     src={b.imageURL}
                     alt="Front image of book"
                     >
                     </img>
-                </div>
+                    </div>)}
                 <span className="card-product-title">{b.title}</span>
                 <span className="card-product-price">{b.price} kr</span>
             </div>
@@ -96,14 +109,27 @@ function HomeView() {
             state={b}
             className="card-product-link" key={b.id}>
             <div className="card-product">
-                <div className="book-image-wrapper">
+                    {b.numInstock === 0 ? (
+                      <div className="book-image-wrapper">
+                      <img
+                      className="book-img"
+                      src={b.imageURL}
+                      alt="Front image of book"
+                      >
+                      </img>
+                      <div className="book-img-sold-out">
+                        <p className="book-img-sold-out-text">Slut i lager</p>
+                      </div>
+                      </div>
+                    ): 
+                    (<div className="book-image-wrapper">
                     <img
                     className="book-img"
                     src={b.imageURL}
                     alt="Front image of book"
                     >
                     </img>
-                </div>
+                    </div>)}
                 <span className="card-product-title">{b.title}</span>
                 <span className="card-product-price">{b.price} kr</span>
              </div>
@@ -128,14 +154,27 @@ function HomeView() {
                     state={b}
                     className="card-product-link" key={b.id}>
                     <div className="card-product">
-                        <div className="book-image-wrapper">
-                            <img
-                                className="book-img"
-                                src={b.imageURL}
-                                alt="Front image of book"
-                            >
-                            </img>
-                        </div>
+                    {b.numInstock === 0 ? (
+                      <div className="book-image-wrapper">
+                      <img
+                      className="book-img"
+                      src={b.imageURL}
+                      alt="Front image of book"
+                      >
+                      </img>
+                      <div className="book-img-sold-out">
+                        <p className="book-img-sold-out-text">Slut i lager</p>
+                      </div>
+                      </div>
+                    ): 
+                    (<div className="book-image-wrapper">
+                    <img
+                    className="book-img"
+                    src={b.imageURL}
+                    alt="Front image of book"
+                    >
+                    </img>
+                    </div>)}
                         <span className="card-product-title">{b.title}</span>
                         <span className="card-product-price">{b.price} kr</span>
                     </div>

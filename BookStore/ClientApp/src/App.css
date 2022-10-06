@@ -146,12 +146,33 @@ footer {
 }
 
 .book-img {
+    position: relative;
     display: grid;
     place-self: center;
     height: 100%;
     max-width: 150px;
     max-height: 200px;
+    background-color: #688472;
 }
+
+.book-img-sold-out {
+    display: grid;
+    position: absolute;
+    z-index: 3;
+    height: 100%;
+    width: 100%;
+    max-width: 150px;
+    max-height: 200px;
+    text-align: center;
+    background-color: #fffff494;
+}
+
+.book-img-sold-out-text {
+    place-self: center;
+    color: #bb4a31;
+    font-weight: bold;
+}
+
 .card-product-link {
     color:#415d51;
     letter-spacing: 0.2px;
