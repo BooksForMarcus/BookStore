@@ -9,12 +9,14 @@ const BookCard = ({ book }) => {
       className="card-product-link"
       key={b.id}
     >
-      <div
-        className={
-          b.soldById === "store" ? "card-product" : "card-product used-book"
-        }
-      >
-        <div className="book-image-wrapper">
+      <div className="card-product">
+        <div
+          className={
+            b.soldById === "store"
+              ? "book-image-wrapper"
+              : "book-image-wrapper used-book"
+          }
+        >
           <img
             className="book-img"
             src={b.imageURL}
