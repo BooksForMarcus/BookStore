@@ -1,9 +1,15 @@
+.cart-main-wrapper{
+    background-color: #ECB390;
+}
 .cartView-container{
     display: grid;
+    margin-top: 0.2em;
     grid-template-columns: 1fr;
     justify-content: center;
-    align-items: center;
-    margin-left: 2em;
+    margin-left: 10em;
+    background-color: antiquewhite;
+    border-radius: 20px;
+    width: 60%;
 }
 .cartView-info{
     display: flex;
@@ -12,7 +18,6 @@
     display: grid;
     grid-template-columns: 4fr 2fr;
     width: 90%;
-    border: 4px solid rgba(238, 87, 18, 0.804);
     padding-top: 2em;
     border-radius: 10px;
     margin: 1px;
@@ -35,16 +40,17 @@
 
 .order-info{
     display: grid;
+    background-color: antiquewhite;
     font-weight: bold;
-    margin-left: 2em;
+    margin-left: 10em;
+    margin-top: 1em;
     padding: 1em;
-    border: 2px solid;
     border-radius: 10px;
     width: 20%;
 }
 .cart-btn{
     display: flex;
-	margin-left: 2em;
+	margin-left: 6.5em;
 	justify-content: center;
     padding: 1em;
 

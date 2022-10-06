@@ -79,6 +79,7 @@ function CartView() {
       let json = await resp.json();
       console.log(json);
 	  setCart([]);
+    setBooks()
 	  localStorage.removeItem("cart");
     } else {
       console.log("order create failed.");
@@ -89,7 +90,7 @@ function CartView() {
 
   const displayCart = () => {
     return (
-      <div>
+      <div className='cart-main-wrapper'>
 	  {cart!==null || cart.length>0?
         cart.map((book) => (
 			<CarListItem key={"cart-"+book.id} book={book} decreaseInCart={decreaseInCart}/>
