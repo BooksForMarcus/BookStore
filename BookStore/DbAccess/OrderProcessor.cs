@@ -28,9 +28,176 @@ public class OrderProcessor
         _order = order;
         await ValidateAndUpdateOrderAndBooks();
         await GenerateSellerObjects();
-        //if (!IsDev) await MailExternalSellers();
-        await MailExternalSellers();
         return _order;
+    }
+
+    internal void SendMailsAsRequired(Order order)
+    {
+        if (IsDev) return;
+        _order = order;
+        MailExternalSellers();
+        MailCustomerConfirmation();
+    }
+
+    private void MailCustomerConfirmation()
+    {
+        if (_order.Customer.Email?.Length == 0) return;
+        var mailer = new MailHelper();
+        var sb = new StringBuilder();
+
+        sb.Append($@"<style>
+* {{
+	font-family: arial,helvetica;
+	box-sizing: border-box;
+}}
+.mail-body {{
+	margin: 1em;
+}}
+.admin-order-show-container {{
+	display: flex;
+	place-content: center;
+	margin: 2em;
+	position: relative;
+}}
+.admin-order-show {{
+	display: grid;
+	grid-template-columns: repeat(3, 2fr);
+	place-items: center;
+	margin: 0em 0em;
+	width: 100%;
+	justify-self: center;
+	align-self: center;
+	grid-template-areas:
+	""order-number order-number order-status""
+	""customer-name customer-email order-date""
+	""customer-address customer-address customer-address""
+	""order-items order-items order-items"";
+}}
+.admin-order-show>div {{
+	border:2px solid #ecb390;
+	width: 100%;
+	height: 100%;
+	padding: 0.5em;
+	font-size: larger;
+	place-items: center;
+}}
+.admin-order-show>h1 {{
+	grid-area: order-number;
+	margin: 0em;
+}}
+.admin-order-number {{
+	grid-area: order-number;
+}}
+.admin-order-number>h1{{
+	margin: 0;
+}}
+.admin-order-date {{
+	grid-area: order-date;
+}}
+.admin-order-status {{
+	grid-area: order-status;
+	display: flex;
+}}
+.admin-order-customer-name {{
+	grid-area: customer-name;
+}}
+.admin-order-customer-email {{
+	grid-area: customer-email;
+}}
+.admin-order-customer-address{{
+	grid-area: customer-address;
+}}
+.admin-order-items-container  {{
+	grid-area: order-items;
+	display: grid;
+	grid-template-columns: 2fr 2fr repeat(3, 1fr);
+	
+}}
+.admin-order-items-container>h3 {{
+	grid-column: 1/6;
+	justify-self: start;
+}}
+.admin-order-items-container>h4 {{
+	color: #df7861;
+	justify-self: start;
+}}
+.admin-order-item {{
+	display: grid;
+	grid-column: 1/6;
+	grid-template-columns: 2fr 2fr 1fr 1fr 1fr;
+	width: 100%;
+	border-bottom: 1px solid #ecb390;
+}}
+.admin-order-item>p {{
+justify-self: start;
+}}
+.admin-order-items-total {{
+	grid-column: 4;
+}}
+.admin-order-items-number {{
+	grid-column: 5;
+	justify-self: start;
+}}
+.admin-order-items-vat {{
+	grid-column: 4;
+}}
+</style>
+<div class=""mail-body"">
+<h3>Hej {_order.Customer.FirstName}!</h3>
+<br>
+<p>Här kommer en bekräftelse på din order från Bokcirkeln:
+<br>
+<div class=""admin-order-show-container"">
+<div class=""admin-order-show"" >
+        <div class=""admin-order-number"">
+          <h3>Order #{_order.Id}</h3>
+        </div>
+        <div class=""admin-order-date"">
+          <p>
+            Order skapad:{_order.Date.ToShortDateString()}
+          </p>
+        </div>
+        <div class=""admin-order-customer-name"">
+          <p>
+            Beställare:{_order.Customer.FirstName + " " +_order.Customer.LastName}
+          </p>
+        </div>
+        <div class=""admin-order-status"">
+          <p>Status: {_order.Status}</p>
+        </div>
+        <div class=""admin-order-customer-email"">
+          <p>Email: {_order.Customer.Email}</p>
+        </div>
+        <div class=""admin-order-customer-address"">
+          <p>Adress: {_order.Customer.Address}</p>
+        </div>
+        <div class=""admin-order-items-container"">
+          <h3>Artiklar:</h3>
+          <h4>Artikel nummer</h4>
+          <h4>Titel</h4>
+          <h4>Antal</h4>
+          <h4>á pris</h4>
+          <h4>Radsumma</h4>");
+        foreach (var book in _order.books)
+        {
+            sb.Append($"<div class=\"admin-order-item\"><p>{book.Id}</p><p>{book.Title}</p><p>{book.NumInstock}</p><p>{book.Price} kr</p><p>{(book.NumInstock==0?"Slut i lager":book.NumInstock*book.Price + " kr")}</p></div>");
+        }
+        sb.Append($@"<h4 class=""admin-order-items-total"">Porto:</h4>
+          <p class=""admin-order-items-number"">{_order.Postage} kr</p>
+          <h4 class=""admin-order-items-total"">Totalt:</h4>
+          <p class=""admin-order-items-number"">{_order.OrderSum} kr</p>
+          <h4 class=""admin-order-items-vat"">Varav moms:</h4>
+          <p class=""admin-order-items-number"">{_order.VAT} kr</p>
+        </div>
+      </div>
+    </div>
+    <br>
+    <h3>Tack för att du handlar hos oss!</h3>
+    <p>Med vänliga hälsningar,</p>
+    <p>Bokcirkeln</p>
+    </div>");
+        var mailBody = sb.ToString();
+        mailer.SendMail(_order.Customer.Email, $"Orderbekräftelse {_order.Id}", mailBody);
     }
 
     private async Task GenerateSellerObjects()
@@ -57,29 +224,39 @@ public class OrderProcessor
         }
     }
 
-    private async Task MailExternalSellers()
+    private void MailExternalSellers()
     {
-
         foreach (var seller in _order.Sellers)
         {
             var sellerBooks = _order.books.Where(b => b.SoldById == seller.Id).ToList();
             var bookStringBuilder = new StringBuilder();
             foreach (var book in sellerBooks)
             {
-                bookStringBuilder.Append(book.Title).Append(" - ").Append(book.Price).Append(" kr<br>");
+                if (book.NumInstock > 0)
+                {
+                    bookStringBuilder
+                        .Append(book.NumInstock)
+                        .Append(" st ")
+                        .Append(book.Title)
+                        .Append(" av ")
+                        .Append(book.Author)
+                        .Append(" - ")
+                        .Append(book.Price)
+                        .Append(" kr.<br>");
+                }
             }
             var bookString = bookStringBuilder.ToString();
-            SendMail(seller, bookString);
+            if (!string.IsNullOrEmpty(bookString)) SendRequestDeliveryMail(seller, bookString);
         }
     }
 
-    private void SendMail(Seller seller, string bookString)
+    private void SendRequestDeliveryMail(Seller seller, string bookString)
     {
         string subject = "Ny order från Bokcirceln";
         string body = @$"<style>
 html {{font - family: arial,helvetica;
 }}
-.mail-body {{margin: 3em;
+.mail-body {{margin: 1em;
 }}
 </style>
 <div class='mail-body'>
