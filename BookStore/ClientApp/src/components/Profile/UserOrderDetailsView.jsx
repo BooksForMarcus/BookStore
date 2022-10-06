@@ -1,18 +1,24 @@
 const UserOrderListView = ({order, setView}) => {
+    let tempSeller = null;
+
+    const setTempSeller = (b) => {
+        b.soldById !== "store" ? tempSeller = order.sellers.find(s=> s.id === b.soldById) : null
+    }
+    
     return (
       <div className="user-order-profile-booklist">
                   <div className="user-order-details-container" key={"user"+order.id}>
                     <div className="user-order-details-container-1">
                         <span className="user-order-details-status">Status: {order.status}</span>
-                        <div className="user-order-details-date">
+                        <div className="user-order-details-wrap-date">
                             <span className="user-order-details-item">Datum:</span>
                             <span className="user-order-details-item">{order.date.slice(0,10)}</span>
                         </div>
                         <h2 className="user-order-details-item-OrderId">Order: #{order.id}</h2>
                     </div>
                     <div className="user-order-details-container-2">
-                        <div className="user-order-details-date">
-                            <span className="user-order-details-item">Skickas till:</span>
+                        <div className="user-order-details-wrap">
+                            <span className="user-order-details-send">Skickas till:</span>
                             <span className="user-order-details-item">
                                 {order.customer.firstName} {order.customer.lastName}
                             </span>
@@ -20,7 +26,7 @@ const UserOrderListView = ({order, setView}) => {
                                 {order.customer.address}
                             </span>
                         </div>
-                        <div className="user-order-details-date">
+                        <div className="user-order-details-wrap">
                             <span className="user-order-details-item">
                                 KundID: #{order.customer.id}
                             </span>
@@ -30,10 +36,42 @@ const UserOrderListView = ({order, setView}) => {
                         </div>
                     </div>
                     <div className="user-order-details-container-3">
-                        {order.books.map(b => <div className="user-book-order-details-container">
-                            <span className="user-order-book-item">{b.title}</span>
+                    <div className="user-book-order-details-header-container">
+                        <span className="user-order-book-item-h">Bokinformation</span>
+                        <span className="user-order-book-item-h">à pris</span>
+                        <span className="user-order-book-item-h">Antal</span>
+                        <span className="user-order-book-item-h">Radsumma</span></div>
+                        <span className="user-order-book-item-h"></span>
+                        {order.books.map(b => <div className="user-book-order-details-container" key={"orderbook"+b.id}>
+                            <div className="user-order-book-info">
+                            <span className="user-order-book-info-title">{b.title}</span>
+                            <span className="user-order-book-info-item">ID# {b.id}</span>
+                            {setTempSeller(b)}
+                            {tempSeller !== null ? 
+                            (
+                                <div className="user-order-book-seller-info">
+                                    <span className="user-order-book-seller-info-item-h">SÄLJS AV :</span>
+                                    <span className="user-order-book-seller-info-item">
+                                        {tempSeller.firstName}{" "}{tempSeller.lastName}
+                                    </span>
+                                    <span className="user-order-book-seller-info-item">
+                                        {tempSeller.email}
+                                    </span>
+                                </div>
+                            ) : (
+                            <div className="user-order-book-seller-info">
+                                <span className="user-order-book-seller-info-item-h">SÄLJS AV :</span>
+                                <span className="user-order-book-seller-info-item">
+                                    Bokcirkeln
+                                </span>
+                            </div>
+                            )
+                            }
+                            </div>
                             <span className="user-order-book-item">{b.price}:-</span>
                             <span className="user-order-book-item">{b.numInstock}</span>
+                            <span className="user-order-book-item">{b.price*b.numInstock}:-</span>
+                            
                             {!b.imageURL ? (
                                 <div className="user-order-image-wrapper">
                                     <h4>Bild</h4>
@@ -50,13 +88,16 @@ const UserOrderListView = ({order, setView}) => {
                             </div>)}
                     </div>
                     <div className="user-order-details-container-4">
-                    <span className="user-order-details-item">Total summa (exkl. frakt): {order.orderSum}:-</span>
-                    <span className="user-order-details-item">Moms: {order.vat}:-</span>
-                    <span className="user-order-details-item">Frakt: {order.postage}:-</span>
+                        <span className="user-order-details-sum-item">Total summa (exkl. frakt) =</span>
+                        <span className="user-order-details-sum-item">{order.orderSum - order.postage} :-</span>
+                        <span className="user-order-details-sum-item">Frakt (inkl. moms) =</span>
+                        <span className="user-order-details-sum-item">{order.postage} :-</span>
+                        <span className="user-order-details-sum-item">Moms =</span>
+                        <span className="user-order-details-sum-item">{order.vat} :-</span>
                     </div>
-                    <h2 className="user-order-details-item-sum">Total summa (inkl. frakt):</h2>
-                    <h2 className="user-order-details-totalSum">{order.orderSum + order.postage}:-</h2>
-                    <button  className="user-order-details-close" onClick={() => setView("list")}>Stäng</button>
+                        <h2 className="user-order-details-item-sum">Total summa (inkl. frakt):</h2>
+                        <h2 className="user-order-details-totalSum">{order.orderSum}:-</h2>
+                        <button  className="user-order-details-close" onClick={() => setView("list")}>Stäng</button>
                   </div>
       </div>
     );
