@@ -79,6 +79,7 @@ function CartView() {
       let json = await resp.json();
       console.log(json);
 	  setCart([]);
+    setBooks()
 	  localStorage.removeItem("cart");
     } else {
       console.log("order create failed.");
@@ -89,7 +90,7 @@ function CartView() {
 
   const displayCart = () => {
     return (
-      <div>
+      <div className='cart-main-wrapper'>
 	  {cart!==null || cart.length>0?
         cart.map((book) => (
 			<CarListItem key={"cart-"+book.id} book={book} decreaseInCart={decreaseInCart}/>
@@ -97,11 +98,17 @@ function CartView() {
         <div>
           {(cart!==null && cart.length>0) ?
           <div className="order-info">
-           <span className="order-info"> Summa varukorg (exkl. frakt): {newCart(cart).orderSum + newCart(cart).VAT}</span> 
-           <span className="order-info"> Varav moms: {newCart(cart).VAT.toFixed(2)}</span>
+           <span className="order-info-item"> Frakt: {newCart(cart).postage.toFixed(2)}</span>
+           <span className="order-info-item"> Summa varukorg (inkl. frakt): {newCart(cart).orderSum + newCart(cart).VAT}</span> 
+           <span className="order-info-item"> Varav moms: {newCart(cart).VAT.toFixed(2)}</span>
            </div>
             : null}
-          {(cart!==null && cart.length>0) ? <button className='cart-btn' onClick={createNewOrder}>Skapa order</button> : <h3> Din kundvagn är tom</h3>}
+          {(cart!==null && cart.length>0) ? 
+          (<div>
+            <button className='cart-btn' onClick={createNewOrder}>Skapa order</button>
+          </div>
+          ): 
+          <h3> Din kundvagn är tom</h3>}
         </div>
       </div>
     );
