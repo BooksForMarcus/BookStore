@@ -131,13 +131,23 @@ public class CustomerCrud
         }
 
         //if in production, send confirmation mail to user with the password
-        if (createResult.DbCreateSucceeded && !_isDev)
+        if (createResult.DbCreateSucceeded)
         {
-            var mailer = new MailHelper();
-            mailer.SendMail(
-                customer.Email,
-                $"Välkommen till Bokcirkeln {customer.FirstName}",
-                $"Välkommen till Bokcirkeln!<br><br>Ditt temporära lösenord är: {unhashedPassword}<br>Kom ihåg att ändra ditt lösen efter första gången du loggat in.<br><br>Mvh. Bokcirkeln.");
+            var mailBody = $"Välkommen till Bokcirkeln!<br><br>Ditt temporära lösenord är: {unhashedPassword}<br>Kom ihåg att ändra ditt lösen efter första gången du loggat in.<br><br>Mvh. Bokcirkeln.";
+            if (!_isDev)
+            {
+                var mailer = new MailHelper();
+                mailer.SendMail(
+                    customer.Email,
+                    $"Välkommen till Bokcirkeln {customer.FirstName}",
+                    mailBody
+                    );
+            }
+            else
+            {
+                Directory.CreateDirectory("./Helpers/DevMail");
+                File.WriteAllText("./Helpers/DevMail/WelcomeMail.html", mailBody);
+            }
         }
         //check results
         if (createResult.DbCreateSucceeded
@@ -184,7 +194,7 @@ public class CustomerCrud
                 result = resp.IsAcknowledged && resp.ModifiedCount > 0;
             }
         }
-        if (result && !IsDev) CustomerHelper.SendGoodByeMail(customerToDelete!);
+        if (result) CustomerHelper.SendGoodByeMail(customerToDelete!);
         return result;
     }
 
@@ -289,16 +299,20 @@ public class CustomerCrud
                 result = resp.IsAcknowledged && resp.ModifiedCount > 0;
                 if (result)
                 {
+                    var mailBody = $"Hej {customer.FirstName}!<br><br>Ditt nya lösenord är: {newPass}<br><br>Mvh. Bokcirkeln.";
                     if (EnvironmentHelper.IsDev)
                     {
                         forgetful.Password = newPass;
+                        Directory.CreateDirectory("./Helpers/DevMail");
+                        File.WriteAllText("./Helpers/DevMail/ForgotMail.html", mailBody);
                     }
                     else
                     {
                         mailer.SendMail(
                             customer.Email,
                             $"Ditt nya lösenord till Bokcirkeln",
-                            $"Hej {customer.FirstName}!<br><br>Ditt nya lösenord är: {newPass}<br><br>Mvh. Bokcirkeln.");
+                            mailBody
+                            );
                     }
                 }
             }

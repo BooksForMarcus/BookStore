@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
-using static MailHelper;
+using static Helpers.EnvironmentHelper;
 
 public static class CustomerHelper
 {
@@ -83,15 +83,24 @@ public static class CustomerHelper
 
     internal static void SendGoodByeMail(Customer customer)
     {
-        var mailer = new MailHelper();
-        mailer.SendMail(
-            customer.Email,
-            $"På återseende från Bokcirkeln",
-            @$"<h3>Tack för den här tiden {customer.FirstName}</h3>
+        var mailBody = @$"<h3>Tack för den här tiden {customer.FirstName}</h3>
                 <br>
                 Ditt konto är borttaget från Bokcirkeln<br>
                 Hoppas vi ses igen i framtiden.<br>
                 <br>
-                Mvh. Bokcirkeln.");
+                Mvh. Bokcirkeln.";
+        var mailer = new MailHelper();
+        if(!IsDev)
+        {
+            mailer.SendMail(
+            customer.Email,
+            $"På återseende från Bokcirkeln",
+            mailBody);
+        }
+        else
+        {
+            Directory.CreateDirectory("./Helpers/DevMail");
+            File.WriteAllText("./Helpers/DevMail/GoodByeMail.html", mailBody);
+        }
     }
 }

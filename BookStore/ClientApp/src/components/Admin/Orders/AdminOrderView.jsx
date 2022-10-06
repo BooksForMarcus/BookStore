@@ -11,18 +11,6 @@ const AdminOrderView = ({ orders, setOrders }) => {
   const [nav, setNav] = useState("list");
   const [localOrders, setLocalOrders] = useState(orders);
 
-//  const orderStatus = {
-// 	PENDING: "Pending",
-// 	PROCESSING: "Processing",
-// 	SHIPPED: "Shipped",
-// 	CANCELED: "Canceled",
-// 	RETURNED: "Returned",
-// 	PENDING_SV: "Pågående",
-// 	PROCESSING_SV: "Bearbetas",
-// 	SHIPPED_SV: "Skickad",
-// 	CANCELED_SV: "Avbeställd",
-// 	RETURNED_SV: "Returnerad"
-//  }
   const getAllOrders = async () => {
     const requestOptions = {
       method: "GET",
