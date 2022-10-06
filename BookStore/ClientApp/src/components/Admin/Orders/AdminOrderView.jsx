@@ -4,19 +4,25 @@ import loggedInUserState from "../../../atoms/loggedInUserState";
 import AdminOrderList from "./AdminOrderList";
 import AdminOrderNav from "./AdminOrderNav";
 import AdminOrderShow from "./AdminOrderShow";
+import { orderStatus } from "../../../script/orderStatus";
 
 const AdminOrderView = ({ orders, setOrders }) => {
   const [user, setUser] = useRecoilState(loggedInUserState);
   const [nav, setNav] = useState("list");
   const [localOrders, setLocalOrders] = useState(orders);
 
- const orderStatus = {
-	PENDING: "Pending",
-	PROCESSING: "Processing",
-	SHIPPED: "Shipped",
-	CANCELED: "Canceled",
-	RETURNED: "Returned",
- }
+//  const orderStatus = {
+// 	PENDING: "Pending",
+// 	PROCESSING: "Processing",
+// 	SHIPPED: "Shipped",
+// 	CANCELED: "Canceled",
+// 	RETURNED: "Returned",
+// 	PENDING_SV: "Pågående",
+// 	PROCESSING_SV: "Bearbetas",
+// 	SHIPPED_SV: "Skickad",
+// 	CANCELED_SV: "Avbeställd",
+// 	RETURNED_SV: "Returnerad"
+//  }
   const getAllOrders = async () => {
     const requestOptions = {
       method: "GET",
@@ -44,7 +50,7 @@ const AdminOrderView = ({ orders, setOrders }) => {
         <button onClick={getAllOrders}>Hämta alla ordrar.</button>
       )}
       {orders !== null && nav === "list" && (
-        <AdminOrderList orders={localOrders} setNav={setNav} />
+        <AdminOrderList orders={localOrders} setNav={setNav} orderStatus={orderStatus} />
       )}
       {orders !== null && nav.includes("show-") && (
         <AdminOrderShow
