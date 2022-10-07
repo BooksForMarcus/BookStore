@@ -1,11 +1,15 @@
+import { useRecoilState } from 'recoil';
 import logo from '../../assets/boklogo.png'
+import cartState from '../../atoms/cartState';
 import './CartView.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
-const CarListItem = ({book,decreaseInCart}) => {
+const CarListItem = ({book,decreaseInCart, removeFromCart, addToCart}) => {
+  const cart = useRecoilState(cartState);
 	return (
 		<div className='cartView-container'>
       <div className='cartView-info-l'>
-        <span className='cartView-item-details'>{book.title}</span>
         {!book.imageURL ? (
                                 <div className="order-image">
                                     <h4>Bild</h4>
@@ -19,20 +23,27 @@ const CarListItem = ({book,decreaseInCart}) => {
                                 ></img>
                                 </div>
                             )}
-        <span className='cartView-item-details'>Utgivningsår: {book.year}</span>
-        <span className='cartView-item-details'>Genre: {book.categories}</span>
+        <span className='cartView-item-details'>{book.title}</span>
         <span className='cartView-item-details'>á pris: {book.price}</span>
-        <span className='cartView-item-details'>Antal i varukorg: {book.numInstock}</span>
         <span className='cartView-item-details'>Summa: {book.price * book.numInstock}</span>
         {book.soldById !== "store" ? (
-                    <span className="cartView-item-details"> Säljs begangnad av {book.soldById}</span>
+                    <div className="order-image"> Säljs begangnad av {book.soldById}</div>
                   ) : (
+                    <div className='order-image'>
                     <img
-                      className="store_logo"
+                      className="store-logo"
                       src={logo}
                       alt="An image of bookstore logo"
-                    />)}
-        <button className='cart-item-button' onClick={()=>decreaseInCart(book)}>Ta bort från varukorg</button>
+                    />
+                    </div> )}
+        {book.numInstock >= 2 ? <button className='cart-item-button' onClick={()=>decreaseInCart(book)}>-</button>
+         : <button className='cart-item-button' disabled>-</button> }
+         <span className='cartView-item-details-amount'>{book.numInstock}</span>
+         <button className='cart-item-button' onClick={()=> addToCart(book)} 
+         disabled={cart.some((cartBook) => cartBook.id === book.id) && cart.find((cartBook)=> cartBook.id === book.id).numInstock >= book.numInstock
+         || book.numInstock === 0}>
+         + </button>
+        <button className='cart-item-remove-button' onClick={()=>removeFromCart(book)}><FontAwesomeIcon icon={faTrashCan}/></button>
       </div>
     </div>
 	  );
