@@ -92,6 +92,7 @@ function CartView() {
   const displayCart = () => {
     return (
       <div className='cart-main-wrapper'>
+        <h3 className="order-title">Kundvagn</h3>
 	  {cart!==null || cart.length>0?
         cart.map((book) => (
 			<CarListItem key={"cart-"+book.id} allBooks={books} cart={cart} setCart={setCart} listItemBook={book}  />
@@ -110,7 +111,7 @@ function CartView() {
             : null}
           {(cart!==null && cart.length>0) ? 
           (<div>
-            <button className='cart-btn' onClick={createNewOrder}>Skapa order</button>
+            <button className='cart-btn' onClick={createNewOrder}>Beställ</button>
           </div>
           ): 
           <h3> Din kundvagn är tom</h3>}

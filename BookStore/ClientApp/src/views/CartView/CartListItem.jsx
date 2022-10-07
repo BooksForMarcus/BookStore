@@ -64,13 +64,6 @@ const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
           Summa: {listItemBook.price * listItemBook.numInstock}
         </span>
         {listItemBook.soldById !== "store" ? (
-<<<<<<< HEAD
-          <img
-          className="beg-stamp-bookView"
-          src={begstamp}
-          alt="Image of reused secondhand stamp"
-        />
-=======
           <div className="order-logo">
 		  <img
               className="store-logo"
@@ -78,7 +71,6 @@ const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
               alt="Image of reused secondhand stamp"
             />
           </div>
->>>>>>> dev
         ) : (
           <div className="order-logo">
             <img

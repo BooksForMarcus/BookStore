@@ -6,6 +6,9 @@
 	width: 100%;
 
 }
+.order-title{
+	font-size: 2em;
+}
 .cartView-container{
     display: grid;
     margin-top: 0.2em;
@@ -25,7 +28,8 @@
 	"logo img title title info"
 	"logo img price total info";
 	padding: 1em;
-	min-width: 60vw;
+	width: 60vw;
+	min-width: 40em;
 }
  
 .cartView-item-details{
@@ -37,14 +41,7 @@
 	place-items: center;
 }
 .cartView-item-details-amount{
-<<<<<<< HEAD
-    padding: 1em;
-    border-bottom: 1px;
-    font-size: 1.2em;
-    font-weight: bold;
-=======
     
->>>>>>> dev
 }
 
 .order-info{
@@ -62,12 +59,6 @@
 }
 
 .cart-item-button{
-<<<<<<< HEAD
-    display: grid;
-	justify-content: center;
-    width: 30%;
-    height: 70%;
-=======
 	margin: 0em;
 	border-radius: 50%;
 	background-color: antiquewhite;
@@ -84,7 +75,6 @@
 }
 .cart-item-button:focus{
 	outline: none;
->>>>>>> dev
 }
 
 .cart-item-remove-button{
