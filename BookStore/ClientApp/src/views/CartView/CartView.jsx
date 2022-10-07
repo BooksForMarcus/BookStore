@@ -63,7 +63,6 @@ function CartView() {
   const createNewOrder = async (e) => {
     e.preventDefault();
     const newOrder = newCart();
-    console.log(newOrder);
     const requestOptions = {
       method: "POST",
       headers: {
@@ -75,17 +74,13 @@ function CartView() {
     };
     let resp = await fetch("/api/order/", requestOptions);
     if (resp.ok) {
-      console.log("create order ok");
       setOrderCreated(true);
       let json = await resp.json();
-      console.log(json);
 	  setCart([]);
     setBooks()
 	  localStorage.removeItem("cart");
     } else {
-      console.log("order create failed.");
       let json = await resp.json();
-      console.log(json);
     }
   };
 

@@ -47,11 +47,6 @@ function App() {
       const lastVisit = localStorage.getItem("lastVisit");
       const millisecondsPerDay = 1000 * 60 * 60 * 24;
 
-	  console.log(
-        "Time since last visit(minutes): ",
-        Math.round((now - lastVisit) / (1000 *60))
-      );
-
       if ((now - lastVisit) / millisecondsPerDay > MAXLOGINDAYS) {
         localStorage.clear();
       }

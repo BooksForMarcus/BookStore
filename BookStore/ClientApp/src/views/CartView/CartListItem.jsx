@@ -22,13 +22,11 @@ const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
   };
 
   const removeFromCart = (bookToRemove) => {
-    console.log("in decreaseInCart, bookToDecrease is: ", bookToRemove);
     const newCart = cart.filter((book) => book.id !== bookToRemove.id);
     setCart(newCart);
   };
 
   const decreaseInCart = (bookToDecrease) => {
-    console.log("in decreaseInCart, bookToDecrease is: ", bookToDecrease);
     if (bookToDecrease.numInstock >= 2) {
       const newCart = cart.map((book) => {
         if (book.id === bookToDecrease.id && bookToDecrease.numInstock >= 1) {
