@@ -31,7 +31,7 @@ function AdminCategoryView() {
     }
 
     useEffect(() => {
-        //if (allCategories === null) getCategories();
+        if (allCategories === null) getCategories();
         getCategories();
     }, []);
  
@@ -83,7 +83,7 @@ function AdminCategoryView() {
             <div className="jonas-fult">
                 {allCategories !== null &&
                     allCategories.map((b) => (
-                        <AdminCategoryListItem key={b.id} category={b} toggle={toggle} setToggle={setToggle} />
+                        <AdminCategoryListItem key={b.id} category={b} toggle={toggle} setToggle={setToggle}  setAllCategories={setAllCategories} />
                     ))}
                 ;
             </div>

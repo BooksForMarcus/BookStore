@@ -18,10 +18,10 @@ const DeleteConfirm = ({ id, setShowDeleteConfirm, toggle, setToggle }) => {
 
     const handleClick = (event, param) => {
         setShowDeleteConfirm(false);
-        console.log(event);
-        console.log(param);
+        //console.log(event);
+        //console.log(param);
         if (true) {
-            setToggle(!toggle);
+            setToggle(!toggle); 
             fetch('/api/book/' + param + '',
                 {
                     method: "DELETE",
@@ -41,6 +41,7 @@ const DeleteConfirm = ({ id, setShowDeleteConfirm, toggle, setToggle }) => {
                     }
                 }).then(blah());
             //blah();
+            setToggle(!toggle);
         }
 
 

@@ -8,7 +8,8 @@ import ModalBaseFull from "../../Modal/ModalBaseFull";
 import DeleteConfirm from "./DeleteConfirm";
  
 
-const AdminCategoryListItem = ({ category, toggle, setToggle }) => {
+const AdminCategoryListItem = ({ category, toggle, setToggle, setAllCategories }) => {
+//const AdminCategoryListItem = ({   toggle, setToggle, setAllCategories }) => {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
     const [name, setName] = useState("");
@@ -16,6 +17,7 @@ const AdminCategoryListItem = ({ category, toggle, setToggle }) => {
 
 
     const handleClick2 = (event, param, param2) => {
+        setToggle(!toggle);
         console.log(event);
         console.log("param" + param + "param2" + param2);
         fetch('/api/category/',
@@ -27,11 +29,20 @@ const AdminCategoryListItem = ({ category, toggle, setToggle }) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ Id: param, Name: param2 }),
-            })
-
+            }).then(blah());
+        setToggle(!toggle);
         //console.log("error ");
         //refresh();
     };
+
+    async function blah() {
+        setToggle(!toggle);
+        const resp = await fetch("/api/category");
+        const json = await resp.json();
+        json.sort((a, b) => a.name.localeCompare(b.name));
+        setAllCategories(json);
+        console.log("blah");
+    }
 
  
 
