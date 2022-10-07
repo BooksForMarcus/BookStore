@@ -116,6 +116,7 @@ function App() {
             <Route path="/search_result" element={<SearchResults />} />
             <Route path="/book/:bookid" element={<BookView />} />
             <Route path="/search_result/book/:bookid" element={<BookView />} />
+            <Route path="/categories/book/:bookid" element={<BookView />} />
             <Route path="/cart" element={<CartView />} />
           </Routes>
         </main>
