@@ -1,0 +1,73 @@
+.card-category{
+	display: grid;
+    max-width: 90%;
+    min-width: 90%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    color: #415d51;
+    background-color: #FCF8E8;
+    padding: 0.5em;
+    padding-left: 2em;
+  }
+  
+  .card-category-items{
+	display: grid;
+    grid-template-rows: 3fr 1fr 1fr 1fr;
+    place-items: center;
+	padding: 2em;
+	width: 15em;
+	height: 20em;
+  }
+
+  .card-category-items-link{
+	color:#415d51;
+    letter-spacing: 0.2px;
+    font-size: 0.9rem;
+  }
+
+
+   .card-category-items-link:hover {
+	background-color: #FCF8E8;
+    color:#415d51;
+}
+
+  .card-category-img-wrapper{
+	height: 200px;
+    width: 150px;
+    background-color: #FCF8E8;
+    display: grid;
+    align-self: start;
+  }
+
+  .card-category-img{
+	display: grid;
+    place-self: center;
+    width: 5em;
+	height: 8em;
+  }
+
+  .card-category-items-title{
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 1.285714285714286;
+	max-height: 2.571428571428571em ;
+	overflow: hidden;
+	word-wrap: break-word;
+	margin-bottom: 20px;
+  }
+
+  .card-category-items-author{
+	font-size: 10px;
+	font-style: normal;
+	line-height: 1.5;
+  font-weight: 400;
+	
+  }
+
+  .card-category-items-price{
+  color: #DF7861;
+	padding: 2px;
+	margin: 1px;
+  align-self: start;
+  }
+
+  

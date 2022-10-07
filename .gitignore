@@ -362,3 +362,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /BookStore/Properties/ServiceDependencies/BookstoreForMarcus - Web Deploy/profile.arm.json
+
+
+#directory containing html files generated in develepment instead of sending actual mails
+DevMail/
