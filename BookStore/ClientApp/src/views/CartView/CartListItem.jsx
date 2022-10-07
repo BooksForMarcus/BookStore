@@ -3,6 +3,7 @@ import logo from "../../assets/boklogo.png";
 import "./CartView.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import begstamp from "../../assets/begagnad-stamp.png";
 
 const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
   const addToCart = (book) => {
@@ -56,20 +57,23 @@ const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
             ></img>
           </div>
         )}
-        <span className="cartView-item-details">{listItemBook.title}</span>
-        <span className="cartView-item-details">
+        <span className="cartView-item-title">{listItemBook.title}</span>
+        <span className="cartView-item-price">
           á pris: {listItemBook.price}
         </span>
-        <span className="cartView-item-details">
+        <span className="cartView-item-total">
           Summa: {listItemBook.price * listItemBook.numInstock}
         </span>
         {listItemBook.soldById !== "store" ? (
-          <div className="order-image">
-            {" "}
-            Säljs begangnad av {listItemBook.soldById}
+          <div className="order-logo">
+		  <img
+              className="store-logo"
+              src={begstamp}
+              alt="Image of reused secondhand stamp"
+            />
           </div>
         ) : (
-          <div className="order-image">
+          <div className="order-logo">
             <img
               className="store-logo"
               src={logo}
@@ -77,37 +81,39 @@ const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
             />
           </div>
         )}
-        {listItemBook.numInstock >= 2 ? (
-          <button
-            className="cart-item-button"
-            onClick={() => decreaseInCart(listItemBook)}
-          >
-            -
-          </button>
-        ) : (
-          <button className="cart-item-button" disabled>
-            -
-          </button>
-        )}
+		<div className="cartView-item-button-area">
+			{listItemBook.numInstock >= 2 ? (
+			<button
+				className="cart-item-button"
+				onClick={() => decreaseInCart(listItemBook)}
+			>
+				-
+			</button>
+			) : (
+			<button className="cart-item-button" disabled>
+				-
+			</button>
+			)}
         <span className="cartView-item-details-amount">
           {listItemBook.numInstock}
         </span>
-        <button
-          className="cart-item-button"
-          onClick={() => addToCart(listItemBook)}
-          disabled={
-            listItemBook.numInstock >=
-            allBooks.find((book) => book.id === listItemBook.id).numInstock
-          }
-        >
-          +{" "}
-        </button>
-        <button
-          className="cart-item-remove-button"
-          onClick={() => removeFromCart(listItemBook)}
-        >
-          <FontAwesomeIcon icon={faTrashCan} />
-        </button>
+			<button
+			className="cart-item-button"
+			onClick={() => addToCart(listItemBook)}
+			disabled={
+				listItemBook.numInstock >=
+				allBooks.find((book) => book.id === listItemBook.id).numInstock
+			}
+			>
+			+{" "}
+			</button>
+			<button
+			className="cart-item-remove-button"
+			onClick={() => removeFromCart(listItemBook)}
+			>
+			<FontAwesomeIcon icon={faTrashCan} />
+			</button>
+		</div>
       </div>
     </div>
   );

@@ -3,16 +3,16 @@
 	flex-direction: column;
 	background-color: #ECB390;
     align-items: center;
+	width: 100%;
 
 }
 .cartView-container{
     display: grid;
     margin-top: 0.2em;
     justify-content: center;
-    margin-left: 10em;
     background-color: antiquewhite;
     border-radius: 20px;
-    width: 45%;
+    width: 1fr;
     border-bottom: 2px solid;
 
 }
@@ -20,10 +20,12 @@
 .cartView-info-l{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-row-gap: 1em;
-    grid-column-gap: 1em;
-    justify-content: baseline;
+	grid-template-rows: repeat(2, 4em);
+	grid-template-areas: 
+	"logo img title title info"
+	"logo img price total info";
 	padding: 1em;
+	min-width: 60vw;
 }
  
 .cartView-item-details{
@@ -35,11 +37,7 @@
 	place-items: center;
 }
 .cartView-item-details-amount{
-    margin-top: 1em;
-    padding: 1em;
-    border-bottom: 1px;
-    font-size: small;
-    font-weight: bold;
+    
 }
 
 .order-info{
@@ -53,31 +51,64 @@
     width: 20%;
 }
 .cart-item-button{
-    display: grid;
-	justify-content: center;
-    width: 30%;
-    height: 60%;
+	margin: 0em;
+	border-radius: 50%;
+	background-color: antiquewhite;
+	color: black;
+	border: 2px solid transparent;
+	padding: 0.3em 0.6em;
+	min-width: 2em;
+	
+}
+.cart-item-button:hover{
+	border: 2px solid black;
+	background-color: antiquewhite;
+	color: black;
+}
+.cart-item-button:focus{
+	outline: none;
 }
 
 .cart-item-remove-button{
-    display: grid;
-	justify-content: center;
-    width: 100%;
-    height: 80%;
+	border-radius: 50%;
 }
 .order-image{
-    align-items: center;
+	grid-area: img;
+    display: flex;
+	align-items: center;
+	justify-content: center;
 	position: relative;
-
+}
+.order-logo{
+	grid-area: logo;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
 }
 .store-logo{
-    margin-top: 1em;
-    width: 100%;
+    max-height: 100%;
+	filter: invert(100%);
     -webkit-filter: invert(100%);
 }
 .order-img{
-    max-width: 50%;
-    margin-left: 1em;
-    margin-top: 1em;
-    padding-bottom: 0em;
+    max-height: 100%;
+	max-width: fit-content;
+}
+.cartView-item-title{
+	grid-area: title;
+	place-items: center;
+}
+.cartView-item-price{
+	grid-area: price;
+}
+.cartView-item-total{
+	grid-area: total;
+}
+.cartView-item-button-area{
+	grid-area: info;
+	display: flex;
+	place-items: center;
+	width: 100%;
+	justify-content: space-evenly;
 }
