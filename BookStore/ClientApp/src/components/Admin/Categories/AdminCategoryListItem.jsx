@@ -8,15 +8,15 @@ import ModalBaseFull from "../../Modal/ModalBaseFull";
 import DeleteConfirm from "./DeleteConfirm";
  
 
-const AdminCategoryListItem = ({ category }) => {
+const AdminCategoryListItem = ({ category, toggle, setToggle }) => {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
     const [name, setName] = useState("");
-    const [toggle, setToggle] = useState(false);
+    //const [toggle, setToggle] = useState(false);
 
 
     const handleClick2 = (event, param, param2) => {
-        console.log(event);
+        //console.log(event);
         console.log("param" + param + "param2" + param2);
         fetch('/api/category/',
             {
@@ -29,7 +29,7 @@ const AdminCategoryListItem = ({ category }) => {
                 body: JSON.stringify({ Id: param, Name: param2 }),
             })
 
-        console.log("error ");
+        //console.log("error ");
         //refresh();
     };
 
@@ -38,16 +38,20 @@ const AdminCategoryListItem = ({ category }) => {
     return (
  
         <div className="jonas-tr">
-            {showDeleteConfirm && (
-                <DeleteConfirm id={category.id} setShowDeleteConfirm={setShowDeleteConfirm} />
-            )
-            }
+            {/*{showDeleteConfirm && (*/}
+            {/*    <DeleteConfirm id={category.id} setShowDeleteConfirm={setShowDeleteConfirm} toggle={toggle} setToggle={setToggle}/>*/}
+            {/*)*/}
+            {/*}*/}
                         <div>{category.name} </div>
                         <div> <button className="jonas-button" onClick={() =>  setShowDeleteConfirm(true) } >Ta Bort</button></div>
  
                         <div>Nytt namn:</div>
                         <div>  <input className="jonas-input2" type="text"    onChange={(e) =>  setName(e.target.value)   } /></div>
-                        <div>  <button className="jonas-button" onClick={event => handleClick2(event, category.id, name)} >Ändra</button></div>
+            <div>  <button className="jonas-button" onClick={event => handleClick2(event, category.id, name)} >Ändra</button></div>
+            {showDeleteConfirm && (
+                <DeleteConfirm id={category.id} setShowDeleteConfirm={setShowDeleteConfirm} toggle={toggle} setToggle={setToggle} />
+            )
+            }
         </div>
         );
 

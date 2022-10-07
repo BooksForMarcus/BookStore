@@ -5,14 +5,18 @@ import loggedInUserState from "../../../atoms/loggedInUserState";
 import categoriesState from "../../../atoms/categoriesState";
 import { useEffect } from "react";
 import AdminCategoryList from "./AdminCategoryList"
+import AdminCategoryListItem from "./AdminCategoryListItem"
 
 function AdminCategoryView() {
 
 
-    const [toggle, SetToggle] = useState(false);
+    const [toggle, setToggle] = useState(false);
     const [allCategories, setAllCategories] = useRecoilState(categoriesState);
+ 
+    //const [allCategories, setAllCategories] = useState(null);
     const [name, setName] = useState("");
     const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
+    //const [toggle, setToggle] = useState(false);
 
     const getCategories = async () => {
         const resp = await fetch("/api/category");
@@ -26,15 +30,17 @@ function AdminCategoryView() {
         name
     }
 
-
+    useEffect(() => {
+        //if (allCategories === null) getCategories();
+        getCategories();
+    }, []);
  
 
     useEffect(() => {
-        //Runs on the first render
-        //And any time any dependency value changes
+ 
         getCategories();
-    }, [allCategories]);//loop 8..?
-
+        console.log("toggle" + toggle);
+    }, [toggle]); 
    
 
     const requestOptionsCreate = {
@@ -73,7 +79,14 @@ function AdminCategoryView() {
                     <div></div>
  
             </div>
-            <AdminCategoryList categories={allCategories} setCategories={setAllCategories} />
+            {/*<AdminCategoryList categories={allCategories} setCategories={setAllCategories} toggle={toggle} setToggle={setToggle} />*/}
+            <div className="jonas-fult">
+                {allCategories !== null &&
+                    allCategories.map((b) => (
+                        <AdminCategoryListItem key={b.id} category={b} toggle={toggle} setToggle={setToggle} />
+                    ))}
+                ;
+            </div>
  
  
             

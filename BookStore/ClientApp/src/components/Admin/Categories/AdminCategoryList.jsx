@@ -3,9 +3,9 @@ import loggedInUserState from "../../../atoms/loggedInUserState";
 import { useState } from "react";
 import AdminCategoryListItem from "./AdminCategoryListItem";
 
-const AdminCategoryList = ({ categories, setCategories }) => {
+const AdminCategoryList = ({ categories, setCategories, toggle, setToggle }) => {
   const [name, setName] = useState("");
-  const [toggle, setToggle] = useState(false);
+  //const [toggle, setToggle] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   var goahead = false;
 
@@ -30,8 +30,8 @@ const AdminCategoryList = ({ categories, setCategories }) => {
     }
     const handleClick = (event, param) => {
       setShowDeleteConfirm(false);
-      console.log(event);
-      console.log(param);
+      //console.log(event);
+      //console.log(param);
       if (true) {
         fetch("/api/book/" + param + "", {
           method: "DELETE",
@@ -57,7 +57,7 @@ const AdminCategoryList = ({ categories, setCategories }) => {
     };
 
     const handleClick2 = (event, param, param2) => {
-      console.log(event);
+      console.log("hejhcl2"+event);
       console.log("param" + param + "param2" + param2);
       fetch("/api/category/", {
         method: "PUT",
@@ -69,17 +69,24 @@ const AdminCategoryList = ({ categories, setCategories }) => {
         body: JSON.stringify({ Id: param, Name: param2 }),
       });
 
-      console.log("error ");
+      //console.log("error ");
       refresh();
     };
 
     const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
-      console.log(categories);
+    console.log(categories);
+
+
+
+
+
+
+
     return (
-      <div style={{ width: "100%" }} className="jonas-fult">
+      <div   className="jonas-fult">
         {categories !== null &&
           categories.map((b) => (
-            <AdminCategoryListItem key={b.id} category={b} />
+              <AdminCategoryListItem key={b.id} category={b} toggle={toggle} setToggle={setToggle}/>
           ))}
         ;
       </div>
