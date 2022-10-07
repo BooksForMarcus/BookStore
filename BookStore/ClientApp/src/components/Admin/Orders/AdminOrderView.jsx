@@ -16,6 +16,11 @@ const AdminOrderView = ({ orders, setOrders }) => {
 	SHIPPED: "Shipped",
 	CANCELED: "Canceled",
 	RETURNED: "Returned",
+	PENDING_SV: "Pågående",
+	PROCESSING_SV: "Bearbetas",
+	SHIPPED_SV: "Skickad",
+	CANCELED_SV: "Avbeställd",
+	RETURNED_SV: "Returnerad"
  }
   const getAllOrders = async () => {
     const requestOptions = {
@@ -44,7 +49,7 @@ const AdminOrderView = ({ orders, setOrders }) => {
         <button onClick={getAllOrders}>Hämta alla ordrar.</button>
       )}
       {orders !== null && nav === "list" && (
-        <AdminOrderList orders={localOrders} setNav={setNav} />
+        <AdminOrderList orders={localOrders} setNav={setNav} orderStatus={orderStatus} />
       )}
       {orders !== null && nav.includes("show-") && (
         <AdminOrderShow
