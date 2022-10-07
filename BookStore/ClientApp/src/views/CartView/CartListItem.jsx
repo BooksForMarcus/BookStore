@@ -1,8 +1,8 @@
-import { useRecoilState } from "recoil";
 import logo from "../../assets/boklogo.png";
 import "./CartView.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import begstamp from "../../assets/begagnad-stamp.png";
 
 const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
   const addToCart = (book) => {
@@ -64,10 +64,11 @@ const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
           Summa: {listItemBook.price * listItemBook.numInstock}
         </span>
         {listItemBook.soldById !== "store" ? (
-          <div className="order-image">
-            {" "}
-            Säljs begangnad av {listItemBook.soldById}
-          </div>
+          <img
+          className="beg-stamp-bookView"
+          src={begstamp}
+          alt="Image of reused secondhand stamp"
+        />
         ) : (
           <div className="order-image">
             <img

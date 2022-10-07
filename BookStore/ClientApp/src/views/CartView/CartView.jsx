@@ -96,15 +96,15 @@ function CartView() {
         cart.map((book) => (
 			<CarListItem key={"cart-"+book.id} allBooks={books} cart={cart} setCart={setCart} listItemBook={book}  />
         )): <div>Cart is empty</div>}
-        <div>
+        <div className="order-info">
           {(cart!==null && cart.length>0) ?
           <div> 
-            <div className="order-info">
+            <div >
            <span className="order-info-item"> Frakt: {newCart(cart).postage.toFixed(2)} kr</span> 
            <span className="order-info-item"> Moms: {newCart(cart).VAT.toFixed(2)} kr</span>
            </div>
-           <div className="order-info">
-           <span className="order-info-item"> Summa totalt: {newCart(cart).orderSum + newCart(cart).VAT} kr</span>
+           <div className="order-info-item">
+           <span className="order-info-item"> Summa totalt: {newCart(cart).orderSum}kr</span>
            </div>
            </div>
             : null}
