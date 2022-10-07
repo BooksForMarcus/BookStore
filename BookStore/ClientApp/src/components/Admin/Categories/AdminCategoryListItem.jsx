@@ -16,7 +16,7 @@ const AdminCategoryListItem = ({ category, toggle, setToggle }) => {
 
 
     const handleClick2 = (event, param, param2) => {
-        //console.log(event);
+        console.log(event);
         console.log("param" + param + "param2" + param2);
         fetch('/api/category/',
             {
@@ -42,6 +42,7 @@ const AdminCategoryListItem = ({ category, toggle, setToggle }) => {
             {/*    <DeleteConfirm id={category.id} setShowDeleteConfirm={setShowDeleteConfirm} toggle={toggle} setToggle={setToggle}/>*/}
             {/*)*/}
             {/*}*/}
+
                         <div>{category.name} </div>
                         <div> <button className="jonas-button" onClick={() =>  setShowDeleteConfirm(true) } >Ta Bort</button></div>
  

@@ -39,8 +39,8 @@ const DeleteConfirm = ({ id, setShowDeleteConfirm, toggle, setToggle }) => {
                         Authorization: loggedInUser.password,
 
                     }
-                })
-            blah();
+                }).then(blah());
+            //blah();
         }
 
 
