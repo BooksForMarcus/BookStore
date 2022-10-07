@@ -28,7 +28,11 @@ const BookCard = ({ book }) => {
                       </div>
                       </div>
                     ): 
-                    (<div className="book-image-wrapper">
+                    (<div className={
+                        b.soldById === "store"
+                          ? "book-image-wrapper"
+                          : "book-image-wrapper used-book"
+                      }>
                     <img
                     className="book-img"
                     src={b.imageURL}

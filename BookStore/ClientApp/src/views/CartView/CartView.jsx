@@ -22,23 +22,24 @@ function CartView() {
     }
   }, []);
 
-    const decreaseInCart = (bookToDecrease) => {
-      console.log("in decreaseInCart, bookToDecrease is: ", bookToDecrease)
-	if(bookToDecrease.numInstock >= 2){
-		const newCart = cart.map((book) => {
-		  if (book.id === bookToDecrease.id) {
-			return { ...book, numInstock: book.numInstock - 1 };
-		  } else {
-			return book;
-		  }
-		});
-		setCart(newCart);
-	}
-	else {
-		const newCart = cart.filter((book) => book.id !== bookToDecrease.id);
-		setCart(newCart);
-	}
+    
+
+  const addToCart = (book) => {
+    let cartUpdate = [];
+    if (!cart.some((cartBook) => cartBook.id === book.id)) {
+      cartUpdate = [...cart, { ...book, numInstock: 1 }];
+    } else {
+      cartUpdate = cart.map((cartBook) => {
+        return cartBook.id === book.id
+          ? { ...cartBook, numInstock: cartBook.numInstock + 1 }
+          : cartBook;
+      });
+    }
+    setCart(cartUpdate);
+    localStorage.setItem("cart", JSON.stringify(cartUpdate));
   };
+
+  
 
   const newCart = () => {
 	let orderBookPriceSum = 0;
@@ -93,14 +94,18 @@ function CartView() {
       <div className='cart-main-wrapper'>
 	  {cart!==null || cart.length>0?
         cart.map((book) => (
-			<CarListItem key={"cart-"+book.id} book={book} decreaseInCart={decreaseInCart}/>
+			<CarListItem key={"cart-"+book.id} allBooks={books} cart={cart} setCart={setCart} listItemBook={book}  />
         )): <div>Cart is empty</div>}
         <div>
           {(cart!==null && cart.length>0) ?
-          <div className="order-info">
-           <span className="order-info-item"> Frakt: {newCart(cart).postage.toFixed(2)}</span>
-           <span className="order-info-item"> Summa varukorg (inkl. frakt): {newCart(cart).orderSum + newCart(cart).VAT}</span> 
-           <span className="order-info-item"> Varav moms: {newCart(cart).VAT.toFixed(2)}</span>
+          <div> 
+            <div className="order-info">
+           <span className="order-info-item"> Frakt: {newCart(cart).postage.toFixed(2)} kr</span> 
+           <span className="order-info-item"> Moms: {newCart(cart).VAT.toFixed(2)} kr</span>
+           </div>
+           <div className="order-info">
+           <span className="order-info-item"> Summa totalt: {newCart(cart).orderSum + newCart(cart).VAT} kr</span>
+           </div>
            </div>
             : null}
           {(cart!==null && cart.length>0) ? 
