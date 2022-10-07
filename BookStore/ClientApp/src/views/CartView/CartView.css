@@ -25,7 +25,8 @@
 	"logo img title title info"
 	"logo img price total info";
 	padding: 1em;
-	min-width: 60vw;
+	width: 60vw;
+	min-width: 40em;
 }
  
 .cartView-item-details{
