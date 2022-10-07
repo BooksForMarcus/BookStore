@@ -31,8 +31,7 @@ const AdminCategoryListItem = ({ category, toggle, setToggle, setAllCategories }
                 body: JSON.stringify({ Id: param, Name: param2 }),
             }).then(blah());
         setToggle(!toggle);
-        //console.log("error ");
-        //refresh();
+ 
     };
 
     async function blah() {
@@ -42,6 +41,7 @@ const AdminCategoryListItem = ({ category, toggle, setToggle, setAllCategories }
         json.sort((a, b) => a.name.localeCompare(b.name));
         setAllCategories(json);
         console.log("blah");
+        setToggle(!toggle);
     }
 
  
