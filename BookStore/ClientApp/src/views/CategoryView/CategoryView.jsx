@@ -28,8 +28,8 @@ function CategoryView() {
   return (
     <div>
       {getCategories !== null ? (
-        <div>
-          <h3>Categories</h3>
+        <div className="category-select-container">
+          <h3>Kategori</h3>
           <select
             name="categories"
             id=""
