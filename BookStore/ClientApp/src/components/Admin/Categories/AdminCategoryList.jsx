@@ -9,17 +9,17 @@ const AdminCategoryList = ({ categories, setCategories }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   var goahead = false;
 
-  async function refresh() {
-    let resp = await fetch("/api/category");
-    if (resp.ok) {
-      const json = await resp.json();
-      json.sort((a, b) => a.name.localeCompare(b.title));
+    async function refresh() {
+        let resp = await fetch("/api/category");
+        if (resp.ok) {
+            const json = await resp.json();
+            json.sort((a, b) => a.name.localeCompare(b.title));
 
-      setCategories(json);
-      setToggle(!toggle);
-    } else {
+            setCategories(json);
+            setToggle(!toggle);
+        } else {
+        }
     }
-
     function fetchDelete(id) {
       fetch("/api/category/" + { id } + "", {
         method: "DELETE",
@@ -74,7 +74,7 @@ const AdminCategoryList = ({ categories, setCategories }) => {
     };
 
     const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
-
+      console.log(categories);
     return (
       <div style={{ width: "100%" }} className="jonas-fult">
         {categories !== null &&
@@ -83,8 +83,7 @@ const AdminCategoryList = ({ categories, setCategories }) => {
           ))}
         ;
       </div>
-    );
-  }
+    );  
 };
 
 
