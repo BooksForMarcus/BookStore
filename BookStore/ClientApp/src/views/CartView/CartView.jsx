@@ -22,19 +22,7 @@ function CartView() {
     }
   }, []);
 
-    const decreaseInCart = (bookToDecrease) => {
-      console.log("in decreaseInCart, bookToDecrease is: ", bookToDecrease)
-	if(bookToDecrease.numInstock >= 2){
-		const newCart = cart.map((book) => {
-		  if (book.id === bookToDecrease.id && bookToDecrease.numInstock >= 1) {
-			return { ...book, numInstock: book.numInstock - 1 };
-		  } else {
-			return book;
-		  }
-		});
-		setCart(newCart);
-	}
-  };
+    
 
   const addToCart = (book) => {
     let cartUpdate = [];
@@ -51,11 +39,7 @@ function CartView() {
     localStorage.setItem("cart", JSON.stringify(cartUpdate));
   };
 
-  const removeFromCart = (bookToRemove) => {
-    console.log("in decreaseInCart, bookToDecrease is: ", bookToRemove)
-      const newCart = cart.filter((book) => book.id !== bookToRemove.id);
-		setCart(newCart);
-	}
+  
 
   const newCart = () => {
 	let orderBookPriceSum = 0;
@@ -110,7 +94,7 @@ function CartView() {
       <div className='cart-main-wrapper'>
 	  {cart!==null || cart.length>0?
         cart.map((book) => (
-			<CarListItem key={"cart-"+book.id} book={book} decreaseInCart={decreaseInCart} removeFromCart={removeFromCart} addToCart={addToCart}/>
+			<CarListItem key={"cart-"+book.id} allBooks={books} cart={cart} setCart={setCart} listItemBook={book}  />
         )): <div>Cart is empty</div>}
         <div>
           {(cart!==null && cart.length>0) ?

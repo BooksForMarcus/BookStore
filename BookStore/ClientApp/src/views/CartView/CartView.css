@@ -1,6 +1,9 @@
 .cart-main-wrapper{
-    background-color: #ECB390;
+    display: flex;
+	flex-direction: column;
+	background-color: #ECB390;
     align-items: center;
+
 }
 .cartView-container{
     display: grid;
@@ -20,13 +23,16 @@
     grid-row-gap: 1em;
     grid-column-gap: 1em;
     justify-content: baseline;
+	padding: 1em;
 }
  
 .cartView-item-details{
-    margin-top: 1em;
+	display: flex;
+	margin-top: 1em;
     padding: 1em;
     border-bottom: 1px;
     font-size: small;
+	place-items: center;
 }
 .cartView-item-details-amount{
     margin-top: 1em;
@@ -61,6 +67,7 @@
 }
 .order-image{
     align-items: center;
+	position: relative;
 
 }
 .store-logo{
