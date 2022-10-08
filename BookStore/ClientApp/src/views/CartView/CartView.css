@@ -6,6 +6,9 @@
 	width: 100%;
 
 }
+.order-title{
+	font-size: 2em;
+}
 .cartView-container{
     display: grid;
     margin-top: 0.2em;
@@ -45,12 +48,16 @@
     display: grid;
     background-color: antiquewhite;
     font-weight: bold;
-    margin-left: 10em;
     margin-top: 1em;
     padding: 1em;
     border-radius: 10px;
-    width: 20%;
+    grid-template-columns: 2fr 2fr;
 }
+.order-info-item{
+    display: flex;
+    padding: 0.5em;
+}
+
 .cart-item-button{
 	margin: 0em;
 	border-radius: 50%;

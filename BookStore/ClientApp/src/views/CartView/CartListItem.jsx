@@ -1,4 +1,3 @@
-import { useRecoilState } from "recoil";
 import logo from "../../assets/boklogo.png";
 import "./CartView.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
