@@ -19,6 +19,7 @@ import CartView from "./views/CartView/CartView";
 import cartState from "./atoms/cartState";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faBagShopping} from "@fortawesome/free-solid-svg-icons";
+import CategoryPickerBtn from "./views/CategoryView/CategoryPickerBtn";
 
 function App() {
   const [user, setUser] = useRecoilState(loggedInUserState);
@@ -26,6 +27,7 @@ function App() {
   const [showSearch, setShowSearch] = useState(false);
   const [categories, setCategories] = useRecoilState(categoriesState);
   const [cart, setCart] = useRecoilState(cartState);
+  const [currentCategory, setCurrentCategory] = useState("");
 
   const getBooks = async () => {
     const resp = await fetch("/api/Book");
@@ -86,7 +88,8 @@ function App() {
               </NavLink>
             </div>
             <div className="menu-item">
-              <NavLink to="/categories">KATEGORIER</NavLink>
+              {/*<NavLink to="/category">KATEGORIER</NavLink>*/}
+			  <CategoryPickerBtn currentCategory={currentCategory} setCurrentCategory={setCurrentCategory}/>
             </div>
             <div className="menu-item-userlogin">
               {user ? (
@@ -104,7 +107,8 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<HomeView />} />
-			<Route path="/categories" element={<CategoryView />} />
+			<Route path="/category" element={<CategoryView currentCategory={currentCategory} setCurrentCategory={setCurrentCategory}/>} />
+			<Route path="/category/:category" element={<CategoryView currentCategory={currentCategory} setCurrentCategory={setCurrentCategory}/>} />
             <Route path="/admin" element={<AdminView user={user} />} />
             <Route path="/login" element={<LoginView />} />
             <Route path="/profile" element={<UserProfileView />} />

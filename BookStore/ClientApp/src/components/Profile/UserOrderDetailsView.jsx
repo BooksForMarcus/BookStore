@@ -4,20 +4,8 @@ const UserOrderListView = ({order, setView}) => {
     let tempSeller = null;
 
     const setTempSeller = (b) => {
-		console.log(b.soldById);
         b.soldById !== "store" ? tempSeller = order.sellers.find(s=> s.id === b.soldById) : null
     }
-	const getSeller = (b) => {
-		return order.sellers.find(s=> s.id === b.soldById)
-	}
-	const getSellerName = (b) => {
-		var seller = getSeller(b);
-		return seller.firstName + " " + seller.lastName;
-	}
-	const getSellerMail = (b) => {
-		return getSeller(b).email;
-	}
-
     
     return (
       <div className="user-order-profile-booklist">
@@ -61,15 +49,15 @@ const UserOrderListView = ({order, setView}) => {
                             <span className="user-order-book-info-title">{b.title}</span>
                             <span className="user-order-book-info-item">ID# {b.id}</span>
                             {setTempSeller(b)}
-                            {b.soldById !== "store" ? 
+                            {tempSeller!== null ? 
                             (
                                 <div className="user-order-book-seller-info">
                                     <span className="user-order-book-seller-info-item-h">SÄLJS AV :</span>
                                     <span className="user-order-book-seller-info-item">
-                                        {getSellerName(b)}
+                                        {tempSeller.firstName+ " "+tempSeller.lastName}
                                     </span>
                                     <span className="user-order-book-seller-info-item">
-                                        {getSellerMail(b)}
+                                        {tempSeller.email}
                                     </span>
                                 </div>
                             ) : (
