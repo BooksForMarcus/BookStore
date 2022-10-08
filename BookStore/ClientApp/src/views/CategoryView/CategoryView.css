@@ -97,6 +97,7 @@
 	position: relative;
 	background-color: transparent;
 	display: flex;
+	margin: 0em;
   }
   .category-picker-btn:hover{
 	background-color:transparent;

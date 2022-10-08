@@ -3,7 +3,8 @@
 header {
     background-color: #688472;
     display: grid;
-    grid-template-columns: 1fr 2fr 2fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: repeat(2, 5em);
     padding-top: 2em;
     width: 100%;
 }
@@ -13,28 +14,34 @@ header {
 }
 
 .nav_logo {
+	grid-column: 1/2;
+	grid-row: 1/3;
     display: grid;
     place-self: center;
     width: 14rem;
 }
 
 .navbar {
-    display: grid;
+	grid-column: 4/6;
+	grid-row: 1;
+    display: flex;
     align-content: start;
 	align-items: center;
     justify-self: end;
+	justify-content: space-between;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    width:80%;
+    width:100%;
+	margin: 0em 2em;
 }
 
 .menu-item {
-    padding-right: 3em;
+    /* padding-right: 3em; */
 }
 
 .menu-item-userlogin {
-    padding-right: 3em;
+    /* padding-right: 3em;
     display: inline;
-    white-space: nowrap;
+    white-space: nowrap; */
     
 }
 
@@ -42,7 +49,7 @@ header {
     display: grid;
     grid-template-columns: 1fr 1fr;
     place-items: start;
-    margin-right: 4em;
+    /* margin-right: 4em; */
     font-size: 2rem;
 }
 
@@ -58,10 +65,12 @@ header {
 
 /*===== Searchbar =====*/
 .searchBar {
+	grid-column: 2/5;
+	grid-row: 2;
     display: grid;
     place-self: center;
-    align-self: end;
-    justify-self: end;
+    align-self: center;
+    justify-self: center;
 }
 
 /*===== Main shared =====*/
