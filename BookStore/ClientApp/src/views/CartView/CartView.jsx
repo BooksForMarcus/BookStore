@@ -80,7 +80,6 @@ function CartView() {
       let json = await resp.json();
       console.log(json);
 	  setCart([]);
-    setBooks()
 	  localStorage.removeItem("cart");
     } else {
       console.log("order create failed.");
@@ -104,8 +103,8 @@ function CartView() {
            <span className="order-info-item"> Frakt: {newCart(cart).postage.toFixed(2)} kr</span> 
            <span className="order-info-item"> Moms: {newCart(cart).VAT.toFixed(2)} kr</span>
            </div>
-           <div className="order-info-item">
-           <span className="order-info-item"> Summa totalt: {newCart(cart).orderSum}kr</span>
+           <div className="order-info">
+           <span className="order-info-item"> Summa totalt: {newCart(cart).orderSum} kr</span>
            </div>
            </div>
             : null}
