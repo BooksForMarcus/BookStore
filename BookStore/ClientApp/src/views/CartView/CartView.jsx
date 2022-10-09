@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CarListItem from "./CartListItem";
 import calculatePostage from "./calculatePostage";
+import { getBooks } from "../../App";
 
 function CartView() {
   const [books,setBooks] = useRecoilState(booksState);
@@ -80,6 +81,7 @@ function CartView() {
       let json = await resp.json();
       console.log(json);
 	  setCart([]);
+    getBooks(setBooks)
 	  localStorage.removeItem("cart");
     } else {
       console.log("order create failed.");

@@ -212,7 +212,7 @@ justify-self: start;
         {
             if (id != "store")
             {
-                var user = (await _customers.FindAsync(c => c.Id == _order.Customer.Id)).FirstOrDefault();
+                var user = (await _customers.FindAsync(c => c.Id == id)).FirstOrDefault();
                 if (user != null)
                 {
                     var seller = new Seller
