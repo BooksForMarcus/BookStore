@@ -6,6 +6,9 @@
 	width: 100%;
 
 }
+.order-title{
+	font-size: 2em;
+}
 .cartView-container{
     display: grid;
     margin-top: 0.2em;
@@ -37,20 +40,38 @@
     font-size: small;
 	place-items: center;
 }
-.cartView-item-details-amount{
-    
-}
 
 .order-info{
     display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: repeat(2, 2em);
     background-color: antiquewhite;
-    font-weight: bold;
-    margin-left: 10em;
-    margin-top: 1em;
-    padding: 1em;
     border-radius: 10px;
-    width: 20%;
+	border-bottom: 2px solid;
+    grid-template-areas: 
+	"postage" "VAT" "sum" "create"
+	"postage" "VAT" "sum" "create";
 }
+.order-info-item-postage{
+    grid-area: postage;
+	display: flex;
+    padding: 0.5em;
+}
+.order-info-item-vat{
+    grid-area: VAT;
+	display: flex;
+    padding: 0.5em;
+}
+.order-info-item-sum{
+    grid-area: sum;
+	display: flex;
+    padding: 0.5em;
+}
+
+.cart-btn{
+	grid-area: create;
+}
+
 .cart-item-button{
 	margin: 0em;
 	border-radius: 50%;

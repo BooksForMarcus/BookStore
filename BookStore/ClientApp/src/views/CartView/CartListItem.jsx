@@ -1,4 +1,3 @@
-import { useRecoilState } from "recoil";
 import logo from "../../assets/boklogo.png";
 import "./CartView.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +22,13 @@ const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
 
   const removeFromCart = (bookToRemove) => {
     const newCart = cart.filter((book) => book.id !== bookToRemove.id);
+    if (newCart?.length) {
+      localStorage.setItem("cart", JSON.stringify(newCart));
+    }
+    else {
+      localStorage.removeItem("cart")
+    }
+    
     setCart(newCart);
   };
 
@@ -35,6 +41,12 @@ const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
           return book;
         }
       });
+      if (newCart?.length) {
+        localStorage.setItem("cart", JSON.stringify(newCart));
+      }
+      else {
+        localStorage.removeItem("cart")
+      }
       setCart(newCart);
     }
   };

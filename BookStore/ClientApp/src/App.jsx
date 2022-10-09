@@ -21,6 +21,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faBagShopping} from "@fortawesome/free-solid-svg-icons";
 import CategoryPickerBtn from "./views/CategoryView/CategoryPickerBtn";
 
+export const getBooks = async (setBooks) => {
+  const resp = await fetch("/api/Book");
+  const json = await resp.json();
+  json.sort((a, b) => a.title.localeCompare(b.title));
+  setBooks(json);
+};
+
 function App() {
   const [user, setUser] = useRecoilState(loggedInUserState);
   const [books, setBooks] = useRecoilState(booksState);
@@ -29,12 +36,7 @@ function App() {
   const [cart, setCart] = useRecoilState(cartState);
   const [currentCategory, setCurrentCategory] = useState("");
 
-  const getBooks = async () => {
-    const resp = await fetch("/api/Book");
-    const json = await resp.json();
-    json.sort((a, b) => a.title.localeCompare(b.title));
-    setBooks(json);
-  };
+ 
   const getCategories = async () => {
     const resp = await fetch("/api/category");
     const json = await resp.json();
@@ -63,7 +65,7 @@ function App() {
     if (localStorage.getItem("cart") !== null) {
       setCart(JSON.parse(localStorage.getItem("cart")));
     }
-    if (books === null) getBooks();
+    if (books === null) getBooks(setBooks);
     if (categories === null) getCategories();
   }, []);
 
