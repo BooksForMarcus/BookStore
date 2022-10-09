@@ -52,9 +52,6 @@ public class CategoryCrud
     }
     public Category? GetMyCategory(string Id)
     {
-        //TODO: kolla så att id är 24d hex, inte bara length 24?
-        // annars failar  med error 500 i nästa steg om 24char, men inte ett hextal?
-
         if (Id.Length != 24)
         {
             return null;
