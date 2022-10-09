@@ -1,21 +1,14 @@
 ﻿import { useState } from "react";
- 
 import { useRecoilState } from "recoil";
 import loggedInUserState from "../../../atoms/loggedInUserState";
- 
-import { useEffect } from "react";
-import ModalBaseFull from "../../Modal/ModalBaseFull";
 import DeleteConfirm from "./DeleteConfirm";
  
+function AdminCategoryListItem   ({ category, toggle, setToggle, setAllCategories })  {
 
-const AdminCategoryListItem = ({ category, toggle, setToggle, setAllCategories }) => {
-//const AdminCategoryListItem = ({   toggle, setToggle, setAllCategories }) => {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
     const [name, setName] = useState("");
-    //const [toggle, setToggle] = useState(false);
-
-
+ 
     const handleClick2 = (event, param, param2) => {
         setToggle(!toggle);
         console.log(event);
@@ -30,8 +23,7 @@ const AdminCategoryListItem = ({ category, toggle, setToggle, setAllCategories }
                 },
                 body: JSON.stringify({ Id: param, Name: param2 }),
             }).then(blah());
-        setToggle(!toggle);
- 
+        setToggle(!toggle); 
     };
 
     async function blah() {
@@ -44,16 +36,8 @@ const AdminCategoryListItem = ({ category, toggle, setToggle, setAllCategories }
         setToggle(!toggle);
     }
 
- 
-
     return (
- 
         <div className="jonas-tr">
-            {/*{showDeleteConfirm && (*/}
-            {/*    <DeleteConfirm id={category.id} setShowDeleteConfirm={setShowDeleteConfirm} toggle={toggle} setToggle={setToggle}/>*/}
-            {/*)*/}
-            {/*}*/}
-
                         <div>{category.name} </div>
                         <div> <button className="jonas-button" onClick={() =>  setShowDeleteConfirm(true) } >Ta Bort</button></div>
  

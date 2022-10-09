@@ -82,12 +82,19 @@ public class CategoryCrud
 
     public async Task<string> UpdateCategory(Category updateCategory)
     {
-        if (updateCategory.Id.Length == 24)
-        {
-            var newCategory = await categories.FindOneAndReplaceAsync(b => b.Id == updateCategory.Id, updateCategory);
-            return updateCategory.Id;
-        }
+        var findFilter = Builders<Category>.Filter.Eq("Name", updateCategory.Name);
+        var sameName = await categories.FindAsync(findFilter);
+        var sameNameList = await sameName.ToListAsync();
+        int sameNameCount = sameNameList.Count;
 
+        if (sameNameCount == 0)
+        {
+            if (updateCategory.Id.Length == 24)
+            {
+                var newCategory = await categories.FindOneAndReplaceAsync(b => b.Id == updateCategory.Id, updateCategory);
+                return updateCategory.Id;
+            }
+        }
         return String.Empty;
     }
 }
