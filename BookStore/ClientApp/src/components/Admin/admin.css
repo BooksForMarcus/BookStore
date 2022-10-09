@@ -430,32 +430,15 @@ justify-self: start;
 	border-radius: 3px;
 	border: 1px solid transparent;
 	padding: 0.1em 0.4em;
-
-	/*	color: #fcf8e8;
-	border-radius: 8px;
-	border: 1px solid transparent;
-	padding: 0.6em 1.2em;
-	font-size: 1.3rem;
-	font-weight: 500;
-	font-family: inherit;
-	background-color: #df7861;
-	cursor: pointer;
-	transition: border-color 0.25s;*/
 }
 .jonas-input3 {
 	display: inline-block;
-	/*	font-size: 16px;*/
 	background-color: antiquewhite;
-	/*color: black;*/
-	/*border-bottom: 2px solid #DF7861;*/
 	width: 20em;
 	margin-bottom: 0em;
 	padding: 0em;
 	border: none;
-	/*border-bottom: 2px solid #DF7861;*/
-	/*    background-color: #FCF8E8;*/
 	outline: none;
-	/*    color: #bb4a31;*/
 	font-size: 15px;
 }
 	.jonas-input3 :focus {
@@ -471,7 +454,6 @@ justify-self: start;
 	margin-left: 25%;
 	margin-top: 5%;
 	border-bottom: none;
-	/*	margin-right: 30%;*/
 }
 
 .jonas-fult {
