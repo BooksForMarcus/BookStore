@@ -443,7 +443,7 @@ justify-self: start;
 	transition: border-color 0.25s;*/
 }
 .jonas-input3 {
-	display: inline;
+	display: inline-block;
 	/*	font-size: 16px;*/
 	background-color: antiquewhite;
 	/*color: black;*/
@@ -468,14 +468,30 @@ justify-self: start;
 	background-color: #ddd7c0;
 }
 .admin-category-view {
- 
 	margin-left: 25%;
 	margin-top: 5%;
-/*	margin-right: 30%;*/
+	border-bottom: none;
+	/*	margin-right: 30%;*/
 }
 
 .jonas-fult {
 	display: flex;
 	flex-direction: column;
-	margin-right: 25%
+	margin-right: 25% ;
+	border-bottom: none;
+}
+
+.add-stuff {
+	display: flex;
+	flex-direction: row;
+	margin-right: 25%;
+	margin-left: 25%;
+	border-bottom: none;
+}
+.jonas-tr-h {
+	display: grid;
+	grid-template-columns: 20em 7em 5em 20em 3em;
+	max-width: 100%;
+	border-bottom: none;
+	padding: 3px;
 }

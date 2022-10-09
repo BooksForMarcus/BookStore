@@ -9,7 +9,7 @@ function AdminCategoryListItem   ({ category, toggle, setToggle, setAllCategorie
     const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
     const [name, setName] = useState("");
  
-    const handleClick2 = (event, param, param2) => {
+    const editClick = (event, param, param2) => {
         setToggle(!toggle);
         console.log(event);
         console.log("param" + param + "param2" + param2);
@@ -22,11 +22,11 @@ function AdminCategoryListItem   ({ category, toggle, setToggle, setAllCategorie
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ Id: param, Name: param2 }),
-            }).then(blah());
+            }).then(updateCats());
         setToggle(!toggle); 
     };
 
-    async function blah() {
+    async function updateCats() {
         setToggle(!toggle);
         const resp = await fetch("/api/category");
         const json = await resp.json();
@@ -39,11 +39,10 @@ function AdminCategoryListItem   ({ category, toggle, setToggle, setAllCategorie
     return (
         <div className="jonas-tr">
                         <div>{category.name} </div>
-                        <div> <button className="jonas-button" onClick={() =>  setShowDeleteConfirm(true) } >Ta Bort</button></div>
- 
+                        <div> <button className="jonas-button" onClick={() =>  setShowDeleteConfirm(true) } >Ta Bort</button></div> 
                         <div>Nytt namn:</div>
-                        <div>  <input className="jonas-input2" type="text"    onChange={(e) =>  setName(e.target.value)   } /></div>
-            <div>  <button className="jonas-button" onClick={event => handleClick2(event, category.id, name)} >Ändra</button></div>
+                        <div>  <input className="jonas-input2" type="text" onChange={(e) =>  setName(e.target.value) } /></div>
+            <div>  <button className="jonas-button" onClick={event => editClick(event, category.id, name)} >Ändra</button></div>
             {showDeleteConfirm && (
                 <DeleteConfirm id={category.id} setShowDeleteConfirm={setShowDeleteConfirm} toggle={toggle} setToggle={setToggle} />
             )

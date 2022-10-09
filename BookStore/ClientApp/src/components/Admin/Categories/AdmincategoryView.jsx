@@ -26,9 +26,11 @@ function AdminCategoryView() {
 
     return (
         <div className="admin-category-view">
+            <div className="add-stuff">
             <AddStuff allCategories={allCategories} setAllCategories={setAllCategories} toggle={toggle} setToggle={setToggle} />
-    
-            <div className="jonas-tr">
+            </div>
+                <div className="jonas-tr-h">
+ 
                     <div><h3>Kategorinamn</h3></div>
                     <div></div>
                     <div><h3>Nytt namn</h3></div>
