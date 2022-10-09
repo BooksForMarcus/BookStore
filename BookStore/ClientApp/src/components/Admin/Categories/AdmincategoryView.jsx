@@ -31,10 +31,10 @@ function AdminCategoryView() {
         name
     }
 
-    useEffect(() => {
-        if (allCategories === null) getCategories();
-        //getCategories();
-    }, []);
+    //useEffect(() => {
+    //    if (allCategories === null) getCategories();
+    //    //getCategories();
+    //}, []);
  
 
     useEffect(() => {
@@ -78,8 +78,6 @@ function AdminCategoryView() {
                 body: JSON.stringify(  createThisCategory  ),
             }).then(blah());
         setToggle(!toggle);
-        //console.log("error ");
-        //refresh();
     };
 
     return (
