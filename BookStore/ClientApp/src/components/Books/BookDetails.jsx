@@ -25,7 +25,6 @@ const BookDetails = ({ book }) => {
 
   return (
     <div className="bookView-main-wrapper">
-	  {console.log("in bookDetails",book.imageURL,book.imageURL==="")}
       {!book.imageURL || book.imageURL.lenght===0? (
         <div className="bookView-image-wrapper">
 			<div className="bookView-image-placeholder">

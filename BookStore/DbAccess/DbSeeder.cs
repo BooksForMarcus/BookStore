@@ -19,6 +19,7 @@ public class DbSeeder
     private const string ordersFile = "orders.json";
     private const string categoriesFile = "Categories.json";
     private const string path = "./DbAccess/Seeds/";
+    private const string devMailPath = "./Helpers/DevMail";
 
     public DbSeeder()
     {
@@ -31,6 +32,7 @@ public class DbSeeder
         if (File.Exists(path + booksFile)) await SeedBooks();
         if (File.Exists(path + categoriesFile)) await SeedCategories();
         if (File.Exists(path + ordersFile)) await SeedOrders();
+        if (Directory.Exists(devMailPath)) Directory.Delete(devMailPath, true);
     }
     private async Task SeedOrders()
     {

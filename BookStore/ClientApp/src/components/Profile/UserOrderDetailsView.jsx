@@ -49,12 +49,12 @@ const UserOrderListView = ({order, setView}) => {
                             <span className="user-order-book-info-title">{b.title}</span>
                             <span className="user-order-book-info-item">ID# {b.id}</span>
                             {setTempSeller(b)}
-                            {tempSeller !== null ? 
+                            {tempSeller!== null ? 
                             (
                                 <div className="user-order-book-seller-info">
                                     <span className="user-order-book-seller-info-item-h">SÄLJS AV :</span>
                                     <span className="user-order-book-seller-info-item">
-                                        {tempSeller.firstName}{" "}{tempSeller.lastName}
+                                        {tempSeller.firstName+ " "+tempSeller.lastName}
                                     </span>
                                     <span className="user-order-book-seller-info-item">
                                         {tempSeller.email}
