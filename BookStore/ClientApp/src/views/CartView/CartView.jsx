@@ -14,7 +14,7 @@ function CartView() {
   const [books,setBooks] = useRecoilState(booksState);
   const [cart, setCart] = useRecoilState(cartState);
   const [user, setUser] = useRecoilState(loggedInUserState);
-  const [orderOK, setOrderOK] = useState(null);
+  const [orderOK, setOrderOK] = useState(false);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -57,7 +57,7 @@ function CartView() {
     };
     let resp = await fetch("/api/order/", requestOptions);
     if (resp.ok) {
-      setOrderCreated(true);
+      setOrderOK(true);
       let json = await resp.json();
 	  setCart([]);
     getBooks(setBooks);
