@@ -23,6 +23,13 @@ const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
   const removeFromCart = (bookToRemove) => {
     console.log("in decreaseInCart, bookToDecrease is: ", bookToRemove);
     const newCart = cart.filter((book) => book.id !== bookToRemove.id);
+    if (newCart?.length) {
+      localStorage.setItem("cart", JSON.stringify(newCart));
+    }
+    else {
+      localStorage.removeItem("cart")
+    }
+    
     setCart(newCart);
   };
 
@@ -36,6 +43,12 @@ const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
           return book;
         }
       });
+      if (newCart?.length) {
+        localStorage.setItem("cart", JSON.stringify(newCart));
+      }
+      else {
+        localStorage.removeItem("cart")
+      }
       setCart(newCart);
     }
   };
