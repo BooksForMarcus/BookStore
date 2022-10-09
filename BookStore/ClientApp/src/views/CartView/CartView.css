@@ -40,22 +40,36 @@
     font-size: small;
 	place-items: center;
 }
-.cartView-item-details-amount{
-    
-}
 
 .order-info{
     display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-template-rows: repeat(2, 2em);
     background-color: antiquewhite;
-    font-weight: bold;
-    margin-top: 1em;
-    padding: 1em;
     border-radius: 10px;
-    grid-template-columns: 2fr 2fr;
+	border-bottom: 2px solid;
+    grid-template-areas: 
+	"postage" "VAT" "sum" "create"
+	"postage" "VAT" "sum" "create";
 }
-.order-info-item{
-    display: flex;
+.order-info-item-postage{
+    grid-area: postage;
+	display: flex;
     padding: 0.5em;
+}
+.order-info-item-vat{
+    grid-area: VAT;
+	display: flex;
+    padding: 0.5em;
+}
+.order-info-item-sum{
+    grid-area: sum;
+	display: flex;
+    padding: 0.5em;
+}
+
+.cart-btn{
+	grid-area: create;
 }
 
 .cart-item-button{
