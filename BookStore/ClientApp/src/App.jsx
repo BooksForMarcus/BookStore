@@ -20,6 +20,13 @@ import cartState from "./atoms/cartState";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faBagShopping} from "@fortawesome/free-solid-svg-icons";
 
+export const getBooks = async (setBooks) => {
+  const resp = await fetch("/api/Book");
+  const json = await resp.json();
+  json.sort((a, b) => a.title.localeCompare(b.title));
+  setBooks(json);
+};
+
 function App() {
   const [user, setUser] = useRecoilState(loggedInUserState);
   const [books, setBooks] = useRecoilState(booksState);
@@ -27,12 +34,7 @@ function App() {
   const [categories, setCategories] = useRecoilState(categoriesState);
   const [cart, setCart] = useRecoilState(cartState);
 
-  const getBooks = async () => {
-    const resp = await fetch("/api/Book");
-    const json = await resp.json();
-    json.sort((a, b) => a.title.localeCompare(b.title));
-    setBooks(json);
-  };
+ 
   const getCategories = async () => {
     const resp = await fetch("/api/category");
     const json = await resp.json();
@@ -66,7 +68,7 @@ function App() {
     if (localStorage.getItem("cart") !== null) {
       setCart(JSON.parse(localStorage.getItem("cart")));
     }
-    if (books === null) getBooks();
+    if (books === null) getBooks(setBooks);
     if (categories === null) getCategories();
   }, []);
 
@@ -116,6 +118,7 @@ function App() {
             <Route path="/search_result" element={<SearchResults />} />
             <Route path="/book/:bookid" element={<BookView />} />
             <Route path="/search_result/book/:bookid" element={<BookView />} />
+            <Route path="/categories/book/:bookid" element={<BookView />} />
             <Route path="/cart" element={<CartView />} />
           </Routes>
         </main>
