@@ -151,10 +151,10 @@ button:hover {
 }
 .jonas-tr {
 	display: grid;
-	grid-template-columns: 20em 7em 10em 20em 3em;
-
+	grid-template-columns: 20em 7em 5em 20em 3em;
 	max-width: 100%;
- 
+	border-bottom: 2px solid #DF7861;
+	padding: 3px;
 }
 .jonas-input {
 	display: inline;
@@ -168,10 +168,11 @@ button:hover {
 
 	    width: 90%;
     margin-bottom: 0em;
+	align-self:flex-start;
     padding: 0em;
     border: none;
-    border-bottom: 2px solid #DF7861;
-/*    background-color: #FCF8E8;*/
+    border-bottom: none;
+    background-color:antiquewhite;
     outline: none;
 /*    color: #bb4a31;*/
     font-size: 15px;
@@ -444,20 +445,37 @@ justify-self: start;
 .jonas-input3 {
 	display: inline;
 	/*	font-size: 16px;*/
-	/*	background-color: white;
-	color: black;*/
-
+	background-color: antiquewhite;
+	/*color: black;*/
+	/*border-bottom: 2px solid #DF7861;*/
 	width: 20em;
 	margin-bottom: 0em;
 	padding: 0em;
 	border: none;
-	border-bottom: 2px solid #DF7861;
+	/*border-bottom: 2px solid #DF7861;*/
 	/*    background-color: #FCF8E8;*/
 	outline: none;
 	/*    color: #bb4a31;*/
 	font-size: 15px;
 }
+	.jonas-input3 :focus {
+		border-bottom: none;
+	}
+	.jonas-input2 :focus {
+		border-bottom: none;
+	}
+.jonas-fult :hover {
+	background-color: #ddd7c0;
+}
 .admin-category-view {
+ 
 	margin-left: 25%;
 	margin-top: 5%;
+/*	margin-right: 30%;*/
+}
+
+.jonas-fult {
+	display: flex;
+	flex-direction: column;
+	margin-right: 25%
 }

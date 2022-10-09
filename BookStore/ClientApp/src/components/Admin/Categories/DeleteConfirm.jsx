@@ -1,24 +1,27 @@
 ﻿import { useState } from "react";
 
 import { useRecoilState } from "recoil";
+ 
 import loggedInUserState from "../../../atoms/loggedInUserState";
 
 import { useEffect } from "react";
 import ModalBaseFull from "../../Modal/ModalBaseFull";
+import categoriesState from "../../../atoms/categoriesState";
 
 
 
-const DeleteConfirm = ({ id, setShowDeleteConfirm }) => {
- 
+const DeleteConfirm = ({ id, setShowDeleteConfirm, toggle, setToggle }) => {
+    const [allCategories, setAllCategories] = useRecoilState(categoriesState);
     const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
     const [name, setName] = useState("");
-    const [toggle, setToggle] = useState(false);
+/*    const [toggle, setToggle] = useState(false);*/
 
     const handleClick = (event, param) => {
         setShowDeleteConfirm(false);
-        console.log(event);
-        console.log(param);
+        //console.log(event);
+        //console.log(param);
         if (true) {
+            setToggle(!toggle); 
             fetch('/api/book/' + param + '',
                 {
                     method: "DELETE",
@@ -36,13 +39,22 @@ const DeleteConfirm = ({ id, setShowDeleteConfirm }) => {
                         Authorization: loggedInUser.password,
 
                     }
-                })
-
+                }).then(blah());
+            //blah();
+            setToggle(!toggle);
         }
 
 
     };
+
+    async function blah() {
  
+        const resp = await fetch("/api/category");
+        const json = await resp.json();
+        json.sort((a, b) => a.name.localeCompare(b.name));
+        setAllCategories(json);
+        console.log("blah");
+    }
 
 
 
