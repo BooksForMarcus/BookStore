@@ -24,18 +24,12 @@ function AddStuff   ({  toggle, setToggle, setAllCategories })  {
     };
 
     async function blah() {
- 
         const resp = await fetch("/api/category");
         const json = await resp.json();
         json.sort((a, b) => a.name.localeCompare(b.name));
-        //var dummy = await
         setAllCategories(json);
-        console.log("blah");
-
         setToggle(!toggle);
     }
-
-
 
     return (
         <div >

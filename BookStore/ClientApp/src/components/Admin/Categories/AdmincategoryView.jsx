@@ -2,7 +2,6 @@
 import { useState } from "react";
 import categoriesState from "../../../atoms/categoriesState";
 import { useEffect } from "react";
-/*import AdminCategoryList from "./AdminCategoryList";*/  // No longer needed
 import AdminCategoryListItem from "./AdminCategoryListItem";
 import AddStuff from "./AddStuff";
 
@@ -15,32 +14,17 @@ function AdminCategoryView() {
         const json = await resp.json();
         json.sort((a, b) => a.name.localeCompare(b.name));
         setAllCategories(json);
-        //SetToggle(!toggle);
     };
 
     useEffect(() => {
  
-        //getCategories();
-        //console.log("toggle" + toggle);
-        //console.log("tick");
         setTimeout(() => {
             getCategories();
             console.log("tock");
         }, 100);
     });
 
-    //useEffect(() => {
-
-    //    getCategories();
-    //    //console.log("toggle" + toggle);
-    //    //console.log("tick");
-
-    //}, [toggle]);
-
     return (
-
-
-
         <div className="admin-category-view">
             <AddStuff allCategories={allCategories} setAllCategories={setAllCategories} toggle={toggle} setToggle={setToggle} />
     
@@ -57,7 +41,6 @@ function AdminCategoryView() {
                     allCategories.map((b) => (
                         <AdminCategoryListItem key={b.id} category={b} toggle={toggle} setToggle={setToggle}  setAllCategories={setAllCategories} />
                     ))}
-                ;
             </div>   
         </div>
     );

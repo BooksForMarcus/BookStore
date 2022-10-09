@@ -50,6 +50,5 @@ function AdminCategoryListItem   ({ category, toggle, setToggle, setAllCategorie
             }
         </div>
         );
-
 }
 export default AdminCategoryListItem;
