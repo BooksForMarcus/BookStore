@@ -21,8 +21,20 @@ function AdminCategoryView() {
     useEffect(() => {
  
         getCategories();
-        console.log("toggle" + toggle);
-    }, [toggle]); 
+        //console.log("toggle" + toggle);
+        console.log("tick");
+        setTimeout(() => {
+            console.log("tock");
+        }, 1000);
+    });
+
+    //useEffect(() => {
+
+    //    getCategories();
+    //    //console.log("toggle" + toggle);
+    //    //console.log("tick");
+
+    //}, [toggle]);
 
     return (
 
