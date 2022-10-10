@@ -139,6 +139,11 @@
   .category-card{
 	width:250px;
   }
+  .category-side{
+	padding: 0.5em;
+	padding-right:1em;
+
+  }
  .category-side-link {
 	color: #415d51;
   }
@@ -148,6 +153,9 @@
  } 
   .category-side-link.active{
 	color: white;
+  }
+  .category-side-list>h3{
+	margin-left: 1em;
   }
 
   

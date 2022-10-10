@@ -53,7 +53,7 @@ function CategoryView({ currentCategory }) {
     <div className="category-view-container">
       <div className="side category-side">
         {allCategories !== null && (
-          <div className="category-list">
+          <div className="category-side-list">
             <h3>Kategorier:</h3>
             <ul>
               <NavLink to="/category/all" className="category-side-link" key={"cat-all"}>
