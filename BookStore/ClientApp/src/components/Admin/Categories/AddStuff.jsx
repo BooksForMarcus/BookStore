@@ -30,13 +30,6 @@ function AddStuff({ allCategories, setAllCategories }) {
     }
   };
 
-  async function updateCats() {
-    const resp = await fetch("/api/category");
-    const json = await resp.json();
-    json.sort((a, b) => a.name.localeCompare(b.name));
-    setAllCategories(json);
-  }
-
   return (
     <div>
       {createSuccess !== null && (
