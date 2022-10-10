@@ -31,7 +31,7 @@ const BookDetails = ({ book }) => {
       {!book.imageURL || book.imageURL.lenght === 0 ? (
         <div className="bookView-image-wrapper">
           <div className="bookView-image-placeholder">
-            <h4>Bild</h4>
+            <h4>Bild saknas</h4>
           </div>
         </div>
       ) : (
@@ -98,7 +98,8 @@ const BookDetails = ({ book }) => {
               ) : (
                 <span>Lägg i varukorgen</span>
               )}
-            </button>:<Link to="/login">Logga in för att beställa böcker.</Link>}
+                </button> : 
+                <Link to="/login" className="login-message">Logga in för att beställa böcker.</Link>}
             {(cart !==null && cart.some((cartBook) => cartBook.id === book.id) &&
               cart.find((cartBook) => cartBook.id === book.id).numInstock >=
                 book.numInstock) ||
@@ -108,7 +109,7 @@ const BookDetails = ({ book }) => {
               <span></span>
 			 
             )}
-          </div>{console.log(user)}
+          </div>
         </div>
       </div>
     </div>
