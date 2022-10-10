@@ -24,7 +24,6 @@ function UserProfileOrderView() {
             let resp = await fetch("/api/Order/customer/getorders", requestOptions);
             if (resp.ok) {
                 let json = await resp.json();
-				console.log(json);
                 setOrders(json);
             } else {
 

@@ -83,11 +83,27 @@ const AdminStatsMainView = ({}) => {
   }, []);
 
   const getTopTenOrders = () => {
-    var sortedorders = [...orders].sort((a, b) => b.orderSum > a.orderSum);
+    var sortedorders = [...orders].sort((a, b) => b.orderSum - a.orderSum);
     var topTenOrders = sortedorders.splice(0, 10);
 
     return topTenOrders;
   };
+
+  const getTopTenCustomers = () => {
+	var distinctCustomers = [...new Set(orders.map(o => o.customer.id))];
+	var customerOrderSum = [];
+	distinctCustomers.forEach(c => {
+		var customerOrders = orders.filter(o => o.customer.id === c);
+		const firstName = customerOrders[0].customer.firstName;
+		const lastName = customerOrders[0].customer.lastName;
+		var sum = 0;
+		customerOrders.forEach(o => sum += (o.orderSum-o.postage));
+		customerOrderSum.push({id: c, sum: sum, name: firstName + " " + lastName});
+	});
+	var sortedCustomerOrderSum = customerOrderSum.sort((a, b) => b.sum - a.sum);
+	var topTenCustomers = sortedCustomerOrderSum.splice(0, 10);
+	return topTenCustomers;
+  }
 
   const getTotalSellNumbers = () => {
     var getAllOrderSums = orders?.map((o) => o.orderSum - o.postage).flat();
@@ -117,12 +133,12 @@ const AdminStatsMainView = ({}) => {
           </div>
           <div className="admin-stats-items-1">
             {orders != null ? (
-              getTopTenOrders().map((c) => (
+              getTopTenCustomers().map((c) => (
                 <div className="admin-stats-item-1" key={"topCustomer" + c.id}>
                   <span>
-                    {c.customer.firstName} {c.customer.lastName}
+                    {c.name}
                   </span>
-                  <span>{c.orderSum} kr</span>
+                  <span>{c.sum} kr</span>
                 </div>
               ))
             ) : (
@@ -166,7 +182,7 @@ const AdminStatsMainView = ({}) => {
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
         /></label>
-		Orrdersumma för perioden: {dateFilteredOrders===null?0:dateFilteredOrders.reduce((total,order) =>total+order.orderSum,0)}
+		Orrdersumma för perioden: {dateFilteredOrders===null?0:dateFilteredOrders.reduce((total,order) =>total+(order.orderSum-order.postage),0)}
         {dateFilteredOrders !== null ? (
           dateFilteredOrders.map((o) => (
             <p>

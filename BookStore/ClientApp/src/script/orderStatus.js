@@ -21,7 +21,7 @@ const translateStatus = (status) => {
 	SHIPPED: "Shipped",
 	CANCELED: "Canceled",
 	RETURNED: "Returned",
-	PENDING_SV: "Smörgås",
+	PENDING_SV: "Pågående",
 	PROCESSING_SV: "Bearbetas",
 	SHIPPED_SV: "Skickad",
 	CANCELED_SV: "Avbeställd",

@@ -4,12 +4,12 @@ const BookCard = ({ book }) => {
   const b = book;
   return (
     <Link
-      to={`book/${b.id}`}
+      to={`/book/${b.id}`}
       state={b}
       className="card-product-link"
       key={b.id}
     >
-      <div className="card-product">
+      <div className="card-product" >
         {b.numInstock === 0 ? (
                       <div
                       className={

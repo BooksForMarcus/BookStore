@@ -1,12 +1,7 @@
 .card-category{
-	display: grid;
-    max-width: 90%;
-    min-width: 90%;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    color: #415d51;
-    background-color: #FCF8E8;
-    padding: 0.5em;
-    padding-left: 2em;
+	display: flex;
+	flex-wrap:wrap;
+	padding: 0em 1em;
   }
   
   .card-category-items{
@@ -68,6 +63,92 @@
 	padding: 2px;
 	margin: 1px;
   align-self: start;
+  }
+  .category-select-container{
+	display: flex;
+	width: 100%;
+	place-items: center;
+	place-content: center;
+	padding: 1em;
+  }
+  .category-select-container>h3{
+	padding: 0em 1em;
+  }
+  .category-select-container>select{
+	font-size: 1.3em;
+  }
+  .category-picker-list-item{
+	display: flex;
+	padding: 0.3em 0.5em;
+  }
+  .category-picker-list-item> a{
+	width: 100%;
+	color: #415d51;
+	border: 2px solid transparent;
+	padding: 0.5em;
+  }
+  .category-picker-list-item> a.active{
+	border: 2px solid #415d51;
+  }
+  .category-picker-list-item> a:hover{
+	background-color: #FCF8E8;
+  }
+  .category-picker-btn{
+	position: relative;
+	background-color: transparent;
+	display: flex;
+	margin: 0em;
+	padding: 0.5em;
+  }
+  .category-picker-btn:hover{
+	background-color:transparent;
+  }
+  .category-picker-btn:focus{
+	outline: none;
+  }
+  .category-picker-btn-active{
+	border:#ecb390 2px solid;
+	border-bottom: transparent;
+	border-radius: 0;
+	padding: 0.5em;
+  }
+  .category-picker-btn>svg{
+	margin: 0em 0.5em;
+  }
+  .category-picker-list{
+	position: absolute;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	right: 1.5em;
+	top: 2.5em;
+	border: 2px solid #ecb390;
+	background-color: white;
+	width: max-content;
+	z-index: 5;
+	padding: 0.5em 0em;
+  }
+  .category-view-container{
+	display: grid;
+	grid-template-columns: 1fr 6fr;
+  }
+  .category-cards-container{
+	display: flex;
+	flex-wrap: wrap;
+	padding: 5%;
+	justify-content: space-around;
+  }
+  .category-card{
+	width:250px;
+  }
+ .category-side-link {
+	color: #415d51;
+  }
+  .category-side-link>li:hover{
+	background-color: #415d51;
+	color: antiquewhite;
+ } 
+  .category-side-link.active{
+	color: white;
   }
 
   
