@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CarListItem from "./CartListItem";
 import calculatePostage from "./calculatePostage";
-import { getBooks } from "../../App";
+
 
 function CartView() {
   const [books,setBooks] = useRecoilState(booksState);
@@ -23,7 +23,12 @@ function CartView() {
     }
   }, []);
 
-
+  const getBooks = async (setBooks) => {
+    const resp = await fetch("/api/Book");
+    const json = await resp.json();
+    json.sort((a, b) => a.title.localeCompare(b.title));
+    setBooks(json);
+  };
   const newCart = () => {
 	let orderBookPriceSum = 0;
 	cart.forEach((book) => {
@@ -78,9 +83,9 @@ function CartView() {
         <div className="order-info">
           {(cart!==null && cart.length>0) ?
           <div> 
-           <span className="order-info-item-postage"> Frakt: {newCart(cart).postage.toFixed(2)} kr</span> 
-           <span className="order-info-item-vat"> Moms: {newCart(cart).VAT.toFixed(2)} kr</span>
-           <span className="order-info-item-sum"> Summa totalt: {newCart(cart).orderSum} kr</span>
+           <span className="order-info-item-postage"> Frakt: {newCart(cart).postage.toFixed(2)}kr</span> 
+           <span className="order-info-item-vat"> Moms: {newCart(cart).VAT.toFixed(2)}kr</span>
+           <span className="order-info-item-sum"> Totalt: {newCart(cart).orderSum}kr</span>
            </div>
             : null}
           {(cart!==null && cart.length>0) ? 
