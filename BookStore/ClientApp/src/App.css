@@ -1,9 +1,8 @@
-/*===== Header =====*/
-
 header {
     background-color: #688472;
     padding-top: 1em;
     width: 100%;
+	min-height: 14vh;
 }
 header.app-header{
 	display: grid;
@@ -80,7 +79,7 @@ header.app-header{
 /*===== Main shared =====*/
 
 main{
-	min-height: 77vh;
+	min-height: 78.6vh;
 }
 .main-container {
     display: grid;

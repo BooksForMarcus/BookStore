@@ -82,7 +82,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="App">
+      <body className="App">
         <header className="app-header">
           <NavLink className="nav_logo" to="/">
             <img
@@ -170,7 +170,7 @@ function App() {
             KONTAKTA OSS
           </span>
         </footer>
-      </div>
+      </body>
     </BrowserRouter>
   );
 }
