@@ -2,7 +2,6 @@
 import { useState } from "react";
 import categoriesState from "../../../atoms/categoriesState";
 import { useEffect } from "react";
-/*import AdminCategoryList from "./AdminCategoryList";*/  // No longer needed
 import AdminCategoryListItem from "./AdminCategoryListItem";
 import AddStuff from "./AddStuff";
 
@@ -15,36 +14,29 @@ function AdminCategoryView() {
         const json = await resp.json();
         json.sort((a, b) => a.name.localeCompare(b.name));
         setAllCategories(json);
-        //SetToggle(!toggle);
     };
 
-    useEffect(() => {
- 
-        //getCategories();
-        //console.log("toggle" + toggle);
-        //console.log("tick");
-        setTimeout(() => {
-            getCategories();
-            console.log("tock");
-        }, 100);
-    });
-
     //useEffect(() => {
+ 
+    //    setTimeout(() => {
+    //        getCategories();
+    //        console.log("tock");
+    //    }, 100);
+    //});
 
-    //    getCategories();
-    //    //console.log("toggle" + toggle);
-    //    //console.log("tick");
+    useEffect(() => {
 
-    //}, [toggle]);
+        getCategories();
+        console.log("toggle" + toggle);
+    }, [toggle]);
 
     return (
-
-
-
         <div className="admin-category-view">
+            <div className="add-stuff">
             <AddStuff allCategories={allCategories} setAllCategories={setAllCategories} toggle={toggle} setToggle={setToggle} />
-    
-            <div className="jonas-tr">
+            </div>
+                <div className="jonas-tr-h">
+ 
                     <div><h3>Kategorinamn</h3></div>
                     <div></div>
                     <div><h3>Nytt namn</h3></div>
@@ -57,7 +49,6 @@ function AdminCategoryView() {
                     allCategories.map((b) => (
                         <AdminCategoryListItem key={b.id} category={b} toggle={toggle} setToggle={setToggle}  setAllCategories={setAllCategories} />
                     ))}
-                ;
             </div>   
         </div>
     );
