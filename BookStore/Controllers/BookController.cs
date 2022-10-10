@@ -107,16 +107,15 @@ public class BookController : ControllerBase
         }
     }
     /// <summary>
-    /// Remove all refernces to catogory with id "Id"
+    /// Remove all references to catogory with id "Id"
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
+    /// <param name="id">the id of the category</param>
+    /// <response code="200">References deleted</response>
+    /// <response code="400">References not deleted</response>
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAllInCat(string id)
     {
-        //var result = await _bookCrud.DeleteAllInCategoryTest(id);
         var result = await _bookCrud.DeleteAllRefsToCategory(id);
-        //if (result!="false")
          if (result )
         {
             return Ok( );
