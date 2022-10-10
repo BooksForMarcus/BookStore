@@ -32,7 +32,7 @@ public class CategoryController : ControllerBase
     /// <returns></returns>
     /// <response code="200">It worked. The response body contains the Id of the created book</response>
     /// <response code="400">it didnt work. check body for hints as to why this might be.</response>
-    /// <response code="500">Programmeraren har klantat sig</response> 
+    /// <response code="500">The programmer screwed up</response> 
     [HttpPost]
     public async Task<IActionResult> Post(Category category)
     {
@@ -42,11 +42,11 @@ public class CategoryController : ControllerBase
         {
             var result = await _categoryCrud.CreateCategory(category);
             if (!String.IsNullOrEmpty(result)) return Ok(result);
-            else return BadRequest("la categorie n'a pas ete crée");
+            else return BadRequest("The category was not created");
         }
         else
         {
-            return BadRequest( "Sie mussen Admin-privilegien haben, um ein neue kategorie zu shaffen" );
+            return BadRequest( "You need admin privileges to create a category" );
         }
         return Ok();
     }
@@ -66,7 +66,7 @@ public class CategoryController : ControllerBase
         {
             var result = await _categoryCrud.DeleteCategory(category);
             if (result) return Ok("deleted");
-            else return BadRequest("la categoria non era cancellato");
+            else return BadRequest("The category was not deleted");
         }
         else
         {
@@ -76,7 +76,7 @@ public class CategoryController : ControllerBase
     /// <summary>
     /// Update a Category. Requires Admin privileges.
     /// </summary>
-    /// <param name="category"></param>
+    /// <param name="category">the category</param>
     /// <returns></returns>
     /// <response code="200">It worked. Body contains Id of updated category.</response>
     /// <response code="400">it didnt work. check body for hints as to why this might be.</response>
@@ -97,6 +97,12 @@ public class CategoryController : ControllerBase
             return BadRequest(" you are not admin, get out!");
         }
     }
+    /// <summary>
+    /// Deletes a category. Requires Admin privileges.
+    /// </summary>
+    /// <param name="id">the category id</param>
+    /// <response code="200">It worked. </response>
+    /// <response code="400">it didnt work. Check body for hints as to why this might be.</response>
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCat(string id) 
     {
@@ -108,17 +114,14 @@ public class CategoryController : ControllerBase
             {
                 var result = await _categoryCrud.DeleteCategory(myCat);
                 if (result) return Ok(id + " deleted");
-                else return BadRequest("la categoria non era cancellato");
+                else return BadRequest("category was not deleted");
             }
             return BadRequest("null luck");
         }
         else
         {
             return BadRequest(new { error = "Need admin priviledge to delete category." });
-        }
- 
+        } 
     }
-
-
 }
 

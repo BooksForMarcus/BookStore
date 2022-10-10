@@ -26,7 +26,7 @@ const CategoryPickerBtn = ({ currentCategory, setCurrentCategory }) => {
       <button
         type="button"
         onClick={() => setShowCategories(!showCategories)}
-        className="category-picker-btn"
+        className={showCategories ? "category-picker-btn category-picker-btn-active": "category-picker-btn"}
       >
         {showCategories ?<FontAwesomeIcon icon={faPlus} />:<FontAwesomeIcon icon={faBars} />} KATEGORIER
       </button>
