@@ -4,8 +4,17 @@
 
 .admin-stats-view {
     display: grid;
+    
     place-items: center;
     margin: 2em;
+    
+}
+
+.admin-stats-wrapper-1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    width: 100%;
 }
 
 .admin-stats-container-1 {
@@ -13,7 +22,7 @@
     place-items: center;
     align-items: start;
     grid-template-columns: 1fr 1fr;
-    width: 50%;
+    width: 80%;
     grid-column-gap: 7em;
     margin-top: 2em;
 }
@@ -61,4 +70,64 @@
     font-size: 2em;
     margin-top: 1em;
     font-weight: bolder;
+}
+
+.admin-stats-by-date-container {
+    width: 80%;
+}
+
+.admin-stats-header-2-text {
+    color: #DF7861;
+}
+
+.admin-stats-by-date-container-1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+}
+
+.admin-stats-by-date-datecomponent {
+    max-width: 70%;
+    color:#688472;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.admin-stats-item-header-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    width: 100%;
+    place-items: center;
+    background-color: #688472;
+    padding: 1em;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-weight: bold;
+    color: #FCF8E8;
+}
+
+.admin-stats-item-header-text-id {
+    place-self: start;
+    margin-left: 0.5em;
+}
+
+.admin-stats-item-text {
+    color:#686161;
+    
+}
+
+.admin-stats-by-date-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    width: 100%;
+    place-items: center;
+    padding: 0.7em;
+    border-bottom: #d0dfd5 solid 1px;
+    font-size: 0.9rem;
+}
+
+.admin-stats-item-text-id {
+    place-self: start;
+    color:#686161;
+    margin-left: 0.5em;
 }

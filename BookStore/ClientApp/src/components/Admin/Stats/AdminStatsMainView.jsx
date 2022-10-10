@@ -82,13 +82,6 @@ const AdminStatsMainView = ({}) => {
     }
   }, []);
 
-  const getTopTenOrders = () => {
-    var sortedorders = [...orders].sort((a, b) => b.orderSum - a.orderSum);
-    var topTenOrders = sortedorders.splice(0, 10);
-
-    return topTenOrders;
-  };
-
   const getTopTenCustomers = () => {
 	var distinctCustomers = [...new Set(orders.map(o => o.customer.id))];
 	var customerOrderSum = [];
@@ -126,26 +119,26 @@ const AdminStatsMainView = ({}) => {
   return (
     <div className="admin-stats-view">
       <h1>Bokcirkelns Statistik</h1>
-      <div className="admin-stats-container-1">
-        <div className="admin-stats-body-1">
-          <div className="admin-stats-header-1">
-            <h3 className="admin-stats-header-1-text">Top 10 kunder</h3>
+      <div className="admin-stats-wrapper-1">
+        <div className="admin-stats-container-1">
+          <div className="admin-stats-body-1">
+            <div className="admin-stats-header-1">
+              <h3 className="admin-stats-header-1-text">Top 10 kunder</h3>
+            </div>
+            <div className="admin-stats-items-1">
+              {orders != null ? (
+                getTopTenCustomers().map((c) => (
+                  <div className="admin-stats-item-1" key={"topCustomer" + c.id}>
+                    <span>{c.name}</span>
+                    <span>{c.sum} kr</span>
+                  </div>
+                ))
+                ) : 
+                (
+                <span>tom</span>
+              )}
+            </div>
           </div>
-          <div className="admin-stats-items-1">
-            {orders != null ? (
-              getTopTenCustomers().map((c) => (
-                <div className="admin-stats-item-1" key={"topCustomer" + c.id}>
-                  <span>
-                    {c.name}
-                  </span>
-                  <span>{c.sum} kr</span>
-                </div>
-              ))
-            ) : (
-              <span>tom</span>
-            )}
-          </div>
-        </div>
         <div className="admin-stats-container-2">
           <div className="admin-stats-body-1">
             <div className="admin-stats-header-1">
@@ -170,28 +163,56 @@ const AdminStatsMainView = ({}) => {
             </div>
           </div>
         </div>
-		<label>Start datum
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        /></label>
-		<label>Slut datum
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        /></label>
-		Orrdersumma för perioden: {dateFilteredOrders===null?0:dateFilteredOrders.reduce((total,order) =>total+(order.orderSum-order.postage),0)}
-        {dateFilteredOrders !== null ? (
-          dateFilteredOrders.map((o) => (
-            <p>
-              {o.id}</p>
-          ))
-        ) : (
-          <p>tom</p>
-        )}
-
+        </div>
+        <div className="admin-stats-by-date-container">
+          <div className="admin-stats-by-date-container-1">
+          <div className="admin-stats-by-date-datecomponent">
+		        <label>Start datum
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+              </label>
+		        <label>Slut datum
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+            />
+            </label>
+          </div>
+          <div className="admin-stats-body-1">
+            <div className="admin-stats-header-1">
+              <h3 className="admin-stats-header-1-text">Ordersumma för perioden:</h3>
+            </div>
+            <div className="admin-stats-items-1">
+              <span className="admin-stats-sum-text">
+              {dateFilteredOrders===null?0:dateFilteredOrders.reduce((total,order) =>total+(order.orderSum-order.postage),0)} sek
+              </span>
+            </div>
+          </div>
+          </div>
+          <div className="admin-stats-items-1">
+          <h3 className="admin-stats-header-2-text">Ordrar för perioden:</h3>
+          <div className="admin-stats-item-header-container">
+            <span className="admin-stats-item-header-text-id">Order ID</span>
+            <span className="admin-stats-item-header-text">Datum</span>
+            <span className="admin-stats-item-header-text">Summa</span>
+          </div>
+            {dateFilteredOrders !== null ? (
+              dateFilteredOrders.map((o) => (
+              <div className="admin-stats-by-date-item" key={"orders" + o.id}>
+              <span className="admin-stats-item-text-id">{o.id}</span>
+              <span className="admin-stats-item-text">{o.date.slice(0,10)}</span>
+              <span className="admin-stats-item-text">{o.orderSum - o.postage}</span>
+              </div>
+            ))
+            ) : (
+            <p>tom</p>
+              )}
+          </div>
+        </div>
       </div>
     </div>
   );
