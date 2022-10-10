@@ -1,16 +1,16 @@
 ﻿import React, { useState } from "react";
 import "./SearchBar.css";
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { useRecoilState } from "recoil";
 import booksState from "../../atoms/booksState";
 import searchWordState from "../../atoms/searchWordState";
-import searchItemState from "../../atoms/searchItemState";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
-import { Link } from "react-router-dom";
 
 function BookSearch() {
+  const loc = useLocation();
+  const navigate = useNavigate();
   const books = useRecoilValue(booksState);
   const [search, setSearch] = useState("");
   const [searchWord, setSearchWord] = useRecoilState(searchWordState);
@@ -110,6 +110,19 @@ function BookSearch() {
           <input
             type="text"
             onChange={(event) => setSearch(event.target.value)}
+            onKeyDown={(event) => {
+              if(event.key === "Enter") {
+              setSearchWord(search);
+            clearSearchBar();
+            if(loc.pathname.split("/")[1] !== "search_result") {
+              navigate("/search_result");
+            }
+          }
+        if(event.key === "Escape") {
+          setSearch("");
+          }
+        }
+      }
             placeholder="Sök.."
             value={search}
           />
