@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CarListItem from "./CartListItem";
 import calculatePostage from "./calculatePostage";
-import { getBooks } from "../../App";
+
 
 function CartView() {
   const [books,setBooks] = useRecoilState(booksState);
@@ -23,7 +23,12 @@ function CartView() {
     }
   }, []);
 
-
+  const getBooks = async (setBooks) => {
+    const resp = await fetch("/api/Book");
+    const json = await resp.json();
+    json.sort((a, b) => a.title.localeCompare(b.title));
+    setBooks(json);
+  };
   const newCart = () => {
 	let orderBookPriceSum = 0;
 	cart.forEach((book) => {
