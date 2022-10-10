@@ -108,3 +108,19 @@
   #clearBtn {
 	cursor: pointer;
   }
+
+  .search-result{
+	display: flex;
+	flex-wrap: wrap;
+	padding: 5%;
+	justify-content: center;
+  }
+
+  .search-result-card{
+	width:250px;
+  }
+  h3 {
+	padding-left: 20px;
+  }
+
+  
