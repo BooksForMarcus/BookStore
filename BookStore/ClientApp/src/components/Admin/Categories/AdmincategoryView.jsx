@@ -16,13 +16,19 @@ function AdminCategoryView() {
         setAllCategories(json);
     };
 
-    useEffect(() => {
+    //useEffect(() => {
  
-        setTimeout(() => {
-            getCategories();
-            console.log("tock");
-        }, 100);
-    });
+    //    setTimeout(() => {
+    //        getCategories();
+    //        console.log("tock");
+    //    }, 100);
+    //});
+
+    useEffect(() => {
+
+        getCategories();
+        console.log("toggle" + toggle);
+    }, [toggle]);
 
     return (
         <div className="admin-category-view">
