@@ -130,6 +130,7 @@ footer {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     color: #415d51;
     background-color: #FCF8E8;
+    border-bottom: #e6e2d2 solid 1px;
     padding: 0.5em;
     padding-left: 2em;
 	place-items: center;
@@ -192,7 +193,22 @@ footer {
     max-width: 150px;
     max-height: 200px;
     text-align: center;
-    background-color: #fffff494;
+    background-color: #fcf8e8bd;
+}
+
+.book-no-img {
+    position: relative;
+    display: grid;
+    place-self: center;
+    height: 100%;
+    width: 100%;
+    background-color: #688472;
+}
+
+.book-no-img-text {
+    place-self: center;
+    margin-bottom: 5em;
+    color: #FCF8E8;
 }
 
 .book-img-sold-out-text {
@@ -410,8 +426,9 @@ input:not(:placeholder-shown) + .red-fl-label{
 .bookView-image-placeholder {
     display: grid;
     place-items: center;
-    background-color: #504e4d;
-    height: 50%;
+    background-color: #688472;
+    height: 100%;
+    width: 60%;
 	padding: 3em;
 }
 
@@ -479,10 +496,19 @@ input:not(:placeholder-shown) + .red-fl-label{
     color:#DF7861;
 }
 
-.btn-area{
-	display: flex;
-	margin: 1em;
-	justify-content: center;
+.login-message {
+    color: #DF7861;
+}
+
+.login-message:hover {
+    color: #688472;
+    background-color: #FCF8E8;
+}
+
+.btn-area {
+    display: flex;
+    margin: 1em;
+    justify-content: center;
 }
 .search-result-area{
 	display: flex;

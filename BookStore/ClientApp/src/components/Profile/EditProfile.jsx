@@ -48,7 +48,7 @@ function EditProfile() {
       password: password,
       address: address,
     });
-    console.log(newUser);
+
     const requestOptions = {
       method: "PUT",
       headers: {
