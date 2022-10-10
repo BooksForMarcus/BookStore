@@ -83,7 +83,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <header>
+        <header className="app-header">
           <NavLink className="nav_logo" to="/">
             <img
               className="nav_logo"

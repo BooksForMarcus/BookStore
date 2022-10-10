@@ -2,7 +2,11 @@
 
 header {
     background-color: #688472;
-    display: grid;
+    padding-top: 1em;
+    width: 100%;
+}
+header.app-header{
+	display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	grid-template-rows: repeat(2, 5em);
     padding-top: 1em;
