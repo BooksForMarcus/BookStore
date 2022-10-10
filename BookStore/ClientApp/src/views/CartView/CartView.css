@@ -51,6 +51,10 @@
     grid-template-areas: 
 	"postage" "VAT" "sum" "create"
 	"postage" "VAT" "sum" "create";
+	margin-bottom: 0.5em;
+	padding: 0.5em;
+	width: 60vw;
+	min-width: 40em;
 }
 .order-info-item-postage{
     grid-area: postage;
@@ -112,6 +116,11 @@
     max-height: 100%;
 	filter: invert(100%);
     -webkit-filter: invert(100%);
+	width: 70%;
+}
+.customer-logo{
+	max-height: 100%;
+	width: 70%;
 }
 .order-img{
     max-height: 100%;

@@ -77,7 +77,7 @@ const CarListItem = ({ cart, setCart, allBooks, listItemBook }) => {
         {listItemBook.soldById !== "store" ? (
           <div className="order-logo">
 		  <img
-              className="store-logo"
+              className="customer-logo"
               src={begstamp}
               alt="Image of reused secondhand stamp"
             />

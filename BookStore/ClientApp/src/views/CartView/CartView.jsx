@@ -78,9 +78,9 @@ function CartView() {
         <div className="order-info">
           {(cart!==null && cart.length>0) ?
           <div> 
-           <span className="order-info-item-postage"> Frakt: {newCart(cart).postage.toFixed(2)} kr</span> 
-           <span className="order-info-item-vat"> Moms: {newCart(cart).VAT.toFixed(2)} kr</span>
-           <span className="order-info-item-sum"> Summa totalt: {newCart(cart).orderSum} kr</span>
+           <span className="order-info-item-postage"> Frakt: {newCart(cart).postage.toFixed(2)}kr</span> 
+           <span className="order-info-item-vat"> Moms: {newCart(cart).VAT.toFixed(2)}kr</span>
+           <span className="order-info-item-sum"> Totalt: {newCart(cart).orderSum}kr</span>
            </div>
             : null}
           {(cart!==null && cart.length>0) ? 
