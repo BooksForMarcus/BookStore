@@ -84,7 +84,6 @@ public class CategoryCrud
     /// <returns>true on success, or false</returns>
     public async Task<bool> DeleteCategory(Category category)
     {
-
         if (category.Id.Length == 24)
         {
             var deletefilter = Builders<Category>.Filter.Eq("Id", category.Id);
