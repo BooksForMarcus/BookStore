@@ -18,8 +18,9 @@ import categoriesState from "./atoms/categoriesState";
 import CartView from "./views/CartView/CartView";
 import cartState from "./atoms/cartState";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faBagShopping} from "@fortawesome/free-solid-svg-icons";
+import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
 import CategoryPickerBtn from "./views/CategoryView/CategoryPickerBtn";
+import booksForShowState from "./atoms/booksForShowState";
 
 export const getBooks = async (setBooks) => {
   const resp = await fetch("/api/Book");
@@ -35,8 +36,8 @@ function App() {
   const [categories, setCategories] = useRecoilState(categoriesState);
   const [cart, setCart] = useRecoilState(cartState);
   const [currentCategory, setCurrentCategory] = useState("");
+  const [booksForShow, setBooksForShow] = useRecoilState(booksForShowState);
 
- 
   const getCategories = async () => {
     const resp = await fetch("/api/category");
     const json = await resp.json();
@@ -57,8 +58,8 @@ function App() {
 
       localStorage.setItem("lastVisit", now);
     } else {
-		localStorage.setItem("lastVisit", new Date());
-	}
+      localStorage.setItem("lastVisit", new Date());
+    }
     if (localStorage.getItem("user") !== null) {
       setUser(JSON.parse(localStorage.getItem("user")));
     }
@@ -66,8 +67,18 @@ function App() {
       setCart(JSON.parse(localStorage.getItem("cart")));
     }
     if (books === null) getBooks(setBooks);
+    
     if (categories === null) getCategories();
   }, []);
+  useEffect(() => {
+	if (booksForShow === null && books !== null)  {
+		const localBooks = books.filter(
+		  (b) =>
+			b.soldById == "store" || (b.soldById != "store" && b.numInstock > 0)
+		);
+		setBooksForShow(localBooks);
+	  }
+  }, [books]);
 
   return (
     <BrowserRouter>
@@ -91,7 +102,10 @@ function App() {
             </div>
             <div className="menu-item">
               {/*<NavLink to="/category">KATEGORIER</NavLink>*/}
-			  <CategoryPickerBtn currentCategory={currentCategory} setCurrentCategory={setCurrentCategory}/>
+              <CategoryPickerBtn
+                currentCategory={currentCategory}
+                setCurrentCategory={setCurrentCategory}
+              />
             </div>
             <div className="menu-item-userlogin">
               {user ? (
@@ -101,16 +115,36 @@ function App() {
               )}
             </div>
             <div className="menu-item-cart">
-              <NavLink to="/cart" className="cart-icon">{<FontAwesomeIcon icon={faBagShopping} />}</NavLink>
-              {cart!==null && <span className="menu-cart-amount">({cart.length})</span>}
+              <NavLink to="/cart" className="cart-icon">
+                {<FontAwesomeIcon icon={faBagShopping} />}
+              </NavLink>
+              {cart !== null && (
+                <span className="menu-cart-amount">({cart.length})</span>
+              )}
             </div>
           </div>
         </header>
         <main>
           <Routes>
             <Route path="/" element={<HomeView />} />
-			<Route path="/category" element={<CategoryView currentCategory={currentCategory} setCurrentCategory={setCurrentCategory}/>} />
-			<Route path="/category/:category" element={<CategoryView currentCategory={currentCategory} setCurrentCategory={setCurrentCategory}/>} />
+            <Route
+              path="/category"
+              element={
+                <CategoryView
+                  currentCategory={currentCategory}
+                  setCurrentCategory={setCurrentCategory}
+                />
+              }
+            />
+            <Route
+              path="/category/:category"
+              element={
+                <CategoryView
+                  currentCategory={currentCategory}
+                  setCurrentCategory={setCurrentCategory}
+                />
+              }
+            />
             <Route path="/admin" element={<AdminView user={user} />} />
             <Route path="/login" element={<LoginView />} />
             <Route path="/profile" element={<UserProfileView />} />
@@ -129,7 +163,9 @@ function App() {
           )}
           <span
             className="contact-link"
-            onClick={() => (window.location = "mailto:bookstoreformarcus@outlook.com")}
+            onClick={() =>
+              (window.location = "mailto:bookstoreformarcus@outlook.com")
+            }
           >
             KONTAKTA OSS
           </span>

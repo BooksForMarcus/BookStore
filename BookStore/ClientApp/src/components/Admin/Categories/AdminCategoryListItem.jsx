@@ -1,53 +1,73 @@
 ﻿import { useState } from "react";
 import { useRecoilState } from "recoil";
 import loggedInUserState from "../../../atoms/loggedInUserState";
-import DeleteConfirm from "./DeleteConfirm";
- 
-function AdminCategoryListItem   ({ category, toggle, setToggle, setAllCategories })  {
 
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-    const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
-    const [name, setName] = useState("");
- 
-    const editClick = (event, param, param2) => {
-        setToggle(!toggle);
-        console.log(event);
-        console.log("param" + param + "param2" + param2);
-        fetch('/api/category/',
-            {
-                method: "PUT",
-                headers: {
-                    Authorization: loggedInUser.password,
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ Id: param, Name: param2 }),
-            }).then(updateCats());
-        setToggle(!toggle); 
-    };
+function AdminCategoryListItem({
+  category,
+  allCategories,
+  setAllCategories,
+  setShowDeleteConfirm,
+  setCategoryToDeleteId,
+}) {
+  const [loggedInUser, setLoggedInUser] = useRecoilState(loggedInUserState);
+  const [name, setName] = useState(category.name);
 
-    async function updateCats() {
-        setToggle(!toggle);
-        const resp = await fetch("/api/category");
-        const json = await resp.json();
-        json.sort((a, b) => a.name.localeCompare(b.name));
-        setAllCategories(json);
-        console.log("blah");
-        setToggle(!toggle);
-    }
+  const editClick = (event, param, param2) => {
+    fetch("/api/category/", {
+      method: "PUT",
+      headers: {
+        Authorization: loggedInUser.password,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ Id: param, Name: param2 }),
+    }).then(updateCats());
+  };
 
-    return (
-        <div className="jonas-tr">
-                        <div>{category.name} </div>
-                        <div> <button className="jonas-button" onClick={() =>  setShowDeleteConfirm(true) } >Ta Bort</button></div> 
-                        <div>Nytt namn:</div>
-                        <div>  <input className="jonas-input2" type="text" onChange={(e) =>  setName(e.target.value) } /></div>
-            <div>  <button className="jonas-button" onClick={event => editClick(event, category.id, name)} >Ändra</button></div>
-            {showDeleteConfirm && (
-                <DeleteConfirm id={category.id} setShowDeleteConfirm={setShowDeleteConfirm} toggle={toggle} setToggle={setToggle} />
-            )
-            }
-        </div>
-        );
+  async function updateCats() {
+    const newCat = { ...category, name: name };
+    const newCats = allCategories.map((c) =>
+      c.id === category.id ? newCat : c
+    );
+    setAllCategories(newCats);
+  }
+
+  return (
+    <div className="jonas-tr">
+      <div>{category.name} </div>
+      <div>
+        {" "}
+        <button
+          className="jonas-button"
+          onClick={() => {
+            setShowDeleteConfirm(true);
+            setCategoryToDeleteId(category.id);
+          }}
+        >
+          Ta Bort
+        </button>
+      </div>
+      <div>Nytt namn:</div>
+      <div>
+        {" "}
+        <input
+          className="jonas-input2"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </div>
+      <div>
+        {" "}
+        <button
+          className="jonas-button"
+          disabled={name.trim() === category.name}
+          onClick={(event) => editClick(event, category.id, name)}
+        >
+          Ändra
+        </button>
+      </div>
+    </div>
+  );
 }
 export default AdminCategoryListItem;
