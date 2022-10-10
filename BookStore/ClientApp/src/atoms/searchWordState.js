@@ -2,7 +2,7 @@
 
 const searchWordState = atom({
 	key: 'searchWordState',
-	default: null
+	default: ''
 })
 
 export default searchWordState
