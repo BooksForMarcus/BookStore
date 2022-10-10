@@ -13,7 +13,8 @@ a {
 
 a:hover {
   color: #edb183;
-  background-color: #688472;
+  /* background-color: #688472; */
+  background-color: transparent;
 }
 
 body {

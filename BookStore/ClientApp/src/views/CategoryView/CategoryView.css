@@ -107,7 +107,6 @@
 	outline: none;
   }
   .category-picker-btn-active{
-	border:#ecb390 2px solid;
 	border-bottom: transparent;
 	border-radius: 0;
 	padding: 0.5em;
