@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import { useRecoilState } from "recoil";
-import booksState from "../atoms/booksState";
 import sideImageone from "../assets/image1.jpg";
 import sideImagetwo from "../assets/image2.jpg";
 import { Link } from "react-router-dom";
 import BookCard from "../components/Books/BookCard";
+import booksForShowState from "../atoms/booksForShowState";
 
 function HomeView() {
-  const [books, setBooks] = useRecoilState(booksState);
+  const [books, setBooks] = useRecoilState(booksForShowState);
 
   const getFiveNewBooks = () => {
     var newBooks = books.filter((b) => b.year == 2022 && b.soldById == "store");
