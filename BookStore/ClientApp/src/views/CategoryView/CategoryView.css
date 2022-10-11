@@ -142,7 +142,7 @@
   .category-side{
 	padding: 0.5em;
 	padding-right:1em;
-
+	padding-left: 8%;
   }
  .category-side-link {
 	color: #415d51;
@@ -156,6 +156,10 @@
   }
   .category-side-list>h3{
 	margin-left: 1em;
+  }
+  .category-view-container{
+	display: grid;
+	grid-template-columns: 1fr 4fr;
   }
 
   
