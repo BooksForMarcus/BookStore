@@ -13,7 +13,8 @@
 .admin-stats-wrapper-1 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    place-items: center;
+    justify-items: center;
+	align-items: start;
     width: 100%;
 }
 
