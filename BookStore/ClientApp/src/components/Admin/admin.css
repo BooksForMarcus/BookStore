@@ -153,8 +153,8 @@ button:hover {
 	display: grid;
 	grid-template-columns: 20em 7em 5em 20em 3em;
 	max-width: 100%;
-	border-bottom: 2px solid #DF7861;
-	padding: 3px;
+	border-bottom: 1px solid #DF7861; 
+ 	padding: 3px;
 }
 .jonas-input {
 	display: inline;
@@ -162,21 +162,16 @@ button:hover {
 }
 .jonas-input2 {
 	display: inline;
-/*	font-size: 16px;*/
-/*	background-color: white;
-	color: black;*/
-
-	    width: 90%;
-    margin-bottom: 0em;
-	align-self:flex-start;
-    padding: 0em;
-    border: none;
-    border-bottom: none;
-    background-color:antiquewhite;
-    outline: none;
-/*    color: #bb4a31;*/
-    font-size: 15px;
-
+	width: 90%;
+	margin-bottom: 0em;
+	align-self: flex-start;
+	padding: 0em;
+	border: none;
+	border-bottom: none;
+	background-color: antiquewhite;
+	outline: none;
+	font-size: 15px;
+	outline: 2px solid white;
 }
 .admin-book-view-crud-container{
 	display: flex;
@@ -436,9 +431,9 @@ justify-self: start;
 	background-color: antiquewhite;
 	width: 20em;
 	margin-bottom: 0em;
-	padding: 0em;
+	padding: 3px;
 	border: none;
-	outline: none;
+	outline: 3px solid white;
 	font-size: 15px;
 }
 	.jonas-input3 :focus {
@@ -459,8 +454,9 @@ justify-self: start;
 .jonas-fult {
 	display: flex;
 	flex-direction: column;
-	margin-right: 25% ;
+	margin-right: 25%;
 	border-bottom: none;
+	padding: 5px;
 }
 
 .add-stuff {
@@ -475,5 +471,5 @@ justify-self: start;
 	grid-template-columns: 20em 7em 5em 20em 3em;
 	max-width: 100%;
 	border-bottom: none;
-	padding: 3px;
+	padding: 4px;
 }
