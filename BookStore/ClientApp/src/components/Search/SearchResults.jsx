@@ -1,9 +1,8 @@
 ﻿import React, { useState } from 'react'
-import "../../App.css";
+import"./SearchBar.css";
 import { useRecoilValue } from "recoil";
 import searchWordState from "../../atoms/searchWordState";
 import booksState from "../../atoms/booksState";
-import { Link } from "react-router-dom";
 import BookCard from '../Books/BookCard';
 
 function SearchResults() {
@@ -26,35 +25,34 @@ function SearchResults() {
 
     return (
         <div>
-            <div>
             {bookresuls.length > 0 ? (
                 <div>
                     <h3>
-                        Böcker
+                        Sökningen "{searchWord}" gav {bookresuls.length} träffar i böckerna
                     </h3>
-			    {bookresuls.map((book) => (
-                <BookCard book={book} key={book.id} />
-            ))}
-        </div>
+                        <div className='search-result'>
+                            {bookresuls.map((book) => (
+                            <BookCard book={book} key={book.id} />
+                         ))}
+                        </div>
+                </div>
             ) : null}
-        </div>
         
-        <div>
             {authorresults.length > 0 ? (
                 <div>
                     <h3>
-                        Författare
+                        Sökningen "{searchWord}" gav {authorresults.length} träffar i författarna
                     </h3>
-			    {authorresults.map((book) => (
-                <BookCard book={book} key={'Author' + book.id} />
-            ))}
-        </div>
+                        <div className='search-result'
+                        >
+                            {authorresults.map((book) => (
+                            <BookCard book={book} key={'Author' + book.id} />
+                            ))}
+                        </div>
+                </div>
             ) : null}
-        </div>  
-        {bookresuls.length === 0 && authorresults.length === 0 ?<h3>Inga träffar</h3> : null}
+        {bookresuls.length === 0 && authorresults.length === 0 ?<h3>Sökningen gav inga träffar</h3> : null}
         </div>
-        
-		
     )
 }
 export default SearchResults;
