@@ -44,7 +44,7 @@ public class OrderProcessor
         var mailer = new MailHelper();
         var sb = new StringBuilder();
 
-        sb.Append($@"<style>
+        sb.Append($@"<style type=""text/css"">
 * {{
 	font-family: arial,helvetica;
 	box-sizing: border-box;
