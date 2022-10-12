@@ -21,7 +21,9 @@ const AdminOrderNav = ({ orders, setLocalOrders,orderStatus }) => {
       } else {
         setLocalOrders(filteredOrders);
       }
-    }
+    } else{
+		setLocalOrders(filteredOrders);
+	}
   };
 
   useEffect(() => {
@@ -43,7 +45,7 @@ const AdminOrderNav = ({ orders, setLocalOrders,orderStatus }) => {
         newOrderArr = orders.filter((o) => o.status === orderStatus.RETURNED);
         break;
       default:
-        newOrderArr = orders;
+        newOrderArr = orders===null?orders:[...orders];
         break;
     }
     setFilteredOrders(newOrderArr);
@@ -60,6 +62,7 @@ const AdminOrderNav = ({ orders, setLocalOrders,orderStatus }) => {
 
   return (
     <div className="admin-order-nav-bar">
+		{console.log(searchTerm)}
       <div className="admin-book-search">
         <label htmlFor="search">Sök böcker</label>
         <input

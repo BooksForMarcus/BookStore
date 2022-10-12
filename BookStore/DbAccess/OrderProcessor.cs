@@ -44,22 +44,30 @@ public class OrderProcessor
         var mailer = new MailHelper();
         var sb = new StringBuilder();
 
-        sb.Append($@"<style type=""text/css"">
-* {{
-	font-family: arial,helvetica;
-	box-sizing: border-box;
-}}
-.mail-body {{
-	margin: 1em;
-}}
-.admin-order-show-container {{
-	display: flex;
-	place-content: center;
-	margin: 2em;
-	position: relative;
-}}
-.admin-order-show {{
-	display: grid;
+        sb.Append($@"<!DOCTYPE HTML PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 4.01 Transitional//EN"" ""http://www.w3.org/TR/html4/loose.dtd"">
+<htmlxmlns:v=""urn:schemas-microsoft-com:vml""xmlns:o=""urn:schemas-microsoft-com:office:office"">
+<head>
+	<!--[if gte mso 9]>
+		<xml>
+			<o:OfficeDocumentSettings>
+			<o:AllowPNG/>
+			<o:PixelsPerInch>96</o:PixelsPerInch>
+			</o:OfficeDocumentSettings>
+		</xml>
+	<![endif]-->
+	<meta name=""format-detection"" content=""date=no""/>
+	<meta name=""format-detection"" content=""telephone=no""/>
+	<meta content=""width=device-width, initial-scale=1"" name=""viewport"" />
+	<style type=""text/css""></style>
+</head>
+<body style=""padding:0px; margin:0px; font-family: arial,helvetica; box-sizing: border-box;"">
+<h3>Hej {_order.Customer.FirstName}!</h3>
+<br>
+<p>Här kommer en bekräftelse på din order från Bokcirkeln:
+<br>
+<div style=""display: flex; place-content: center; margin: 2em; position: relative;"">
+<div style=""display: grid;
 	grid-template-columns: repeat(3, 2fr);
 	place-items: center;
 	margin: 0em 0em;
@@ -67,126 +75,93 @@ public class OrderProcessor
 	justify-self: center;
 	align-self: center;
 	grid-template-areas:
-	""order-number order-number order-status""
-	""customer-name customer-email order-date""
-	""customer-address customer-address customer-address""
-	""order-items order-items order-items"";
-}}
-.admin-order-show>div {{
-	border:2px solid #ecb390;
+	'order-number order-number order-status'
+	'customer-name customer-email order-date'
+	'customer-address customer-address customer-address'
+	'order-items order-items order-items';"">
+        <div style=""border:2px solid #ecb390;
 	width: 100%;
 	height: 100%;
-	padding: 0.5em;
+	padding: 0em;
 	font-size: larger;
-	place-items: center;
-}}
-.admin-order-show>h1 {{
-	grid-area: order-number;
-	margin: 0em;
-}}
-.admin-order-number {{
-	grid-area: order-number;
-}}
-.admin-order-number>h1{{
-	margin: 0;
-}}
-.admin-order-date {{
-	grid-area: order-date;
-}}
-.admin-order-status {{
-	grid-area: order-status;
-	display: flex;
-}}
-.admin-order-customer-name {{
-	grid-area: customer-name;
-}}
-.admin-order-customer-email {{
-	grid-area: customer-email;
-}}
-.admin-order-customer-address{{
-	grid-area: customer-address;
-}}
-.admin-order-items-container  {{
-	grid-area: order-items;
-	display: grid;
-	grid-template-columns: 2fr 2fr repeat(3, 1fr);
-	
-}}
-.admin-order-items-container>h3 {{
-	grid-column: 1/6;
-	justify-self: start;
-}}
-.admin-order-items-container>h4 {{
-	color: #df7861;
-	justify-self: start;
-}}
-.admin-order-item {{
-	display: grid;
-	grid-column: 1/6;
-	grid-template-columns: 2fr 2fr 1fr 1fr 1fr;
-	width: 100%;
-	border-bottom: 1px solid #ecb390;
-}}
-.admin-order-item>p {{
-justify-self: start;
-}}
-.admin-order-items-total {{
-	grid-column: 4;
-}}
-.admin-order-items-number {{
-	grid-column: 5;
-	justify-self: start;
-}}
-.admin-order-items-vat {{
-	grid-column: 4;
-}}
-</style>
-<div class=""mail-body"">
-<h3>Hej {_order.Customer.FirstName}!</h3>
-<br>
-<p>Här kommer en bekräftelse på din order från Bokcirkeln:
-<br>
-<div class=""admin-order-show-container"">
-<div class=""admin-order-show"" >
-        <div class=""admin-order-number"">
+	place-items: center; grid-area: order-number;"" class=""admin-order-number"">
           <h3>Order #{_order.Id}</h3>
         </div>
-        <div class=""admin-order-date"">
+        <div style=""border:2px solid #ecb390;
+	width: 100%;
+	height: 100%;
+	padding: 0em;
+	font-size: larger;
+	place-items: center; grid-area: order-date;"" class=""admin-order-date"">
           <p>
             Order skapad:{_order.Date.ToShortDateString()}
           </p>
         </div>
-        <div class=""admin-order-customer-name"">
+        <div style=""border:2px solid #ecb390;
+	width: 100%;
+	height: 100%;
+	padding: 0em;
+	font-size: larger;
+	place-items: center;grid-area: customer-name;"" class=""admin-order-customer-name"">
           <p>
             Beställare:{_order.Customer.FirstName + " " +_order.Customer.LastName}
           </p>
         </div>
-        <div class=""admin-order-status"">
+        <div style=""border:2px solid #ecb390;
+	width: 100%;
+	height: 100%;
+	padding: 0em;
+	font-size: larger;
+	place-items: center; grid-area: order-status;
+	display: flex;"" class=""admin-order-status"">
           <p>Status: {_order.Status}</p>
         </div>
-        <div class=""admin-order-customer-email"">
+        <div style=""border:2px solid #ecb390;
+	width: 100%;
+	height: 100%;
+	padding: 0em;
+	font-size: larger;
+	place-items: center; grid-area: customer-email;"" class=""admin-order-customer-email"">
           <p>Email: {_order.Customer.Email}</p>
         </div>
-        <div class=""admin-order-customer-address"">
+        <div style=""border:2px solid #ecb390;
+	width: 100%;
+	height: 100%;
+	padding: 0em;
+	font-size: larger;
+	place-items: center;grid-area: customer-address;"" class=""admin-order-customer-address"">
           <p>Adress: {_order.Customer.Address}</p>
         </div>
-        <div class=""admin-order-items-container"">
-          <h3>Artiklar:</h3>
-          <h4>Artikel nummer</h4>
-          <h4>Titel</h4>
-          <h4>Antal</h4>
-          <h4>á pris</h4>
-          <h4>Radsumma</h4>");
+        <div style=""border:2px solid #ecb390;
+	width: 100%;
+	height: 100%;
+	padding: 0em;
+	font-size: larger;
+	place-items: center;grid-area: order-items;
+	display: grid;
+	grid-template-columns: 2fr 2fr repeat(3, 1fr);"" class=""admin-order-items-container"">
+          <h3 style=""grid-column: 1/6;
+	justify-self: start;"">Artiklar:</h3>
+          <h4 style=""color: #df7861;
+	justify-self: start;"">Artikel nummer</h4>
+          <h4 style=""color: #df7861;
+	justify-self: start;"">Titel</h4>
+          <h4 style=""color: #df7861;
+	justify-self: start;"">Antal</h4>
+          <h4 style=""color: #df7861;
+	justify-self: start;"">á pris</h4>
+          <h4 style=""color: #df7861;
+	justify-self: start;"">Radsumma</h4>");
         foreach (var book in _order.books)
         {
-            sb.Append($"<div class=\"admin-order-item\"><p>{book.Id}</p><p>{book.Title}</p><p>{book.NumInstock}</p><p>{book.Price} kr</p><p>{(book.NumInstock==0?"Slut i lager":book.NumInstock*book.Price + " kr")}</p></div>");
+            sb.Append($"<div style='display: grid;grid-column: 1/6;grid-template-columns: 2fr 2fr 1fr 1fr 1fr;width: 100%;border-bottom: 1px solid #ecb390;' class='admin-order-item'><p style='justify-self: start;'>{book.Id}</p><p style='justify-self: start;'>{book.Title}</p><p style='justify-self: start;'>{book.NumInstock}</p><p style='justify-self: start;'>{book.Price} kr</p><p style='justify-self: start;'>{(book.NumInstock==0?"Slut i lager":book.NumInstock*book.Price + " kr")}</p></div>");
         }
-        sb.Append($@"<h4 class=""admin-order-items-total"">Porto:</h4>
-          <p class=""admin-order-items-number"">{_order.Postage} kr</p>
-          <h4 class=""admin-order-items-total"">Totalt:</h4>
-          <p class=""admin-order-items-number"">{_order.OrderSum} kr</p>
-          <h4 class=""admin-order-items-vat"">Varav moms:</h4>
-          <p class=""admin-order-items-number"">{_order.VAT} kr</p>
+        sb.Append($@"<h4 style=""grid-column: 4;"" class=""admin-order-items-total"">Porto:</h4>
+          <p style=""grid-column: 5; justify-self: start;"" class=""admin-order-items-number"">{_order.Postage} kr</p>
+          <h4 style=""grid-column: 4;"" class=""admin-order-items-total"">Totalt:</h4>
+          <p style=""grid-column: 5; justify-self: start;"" class=""admin-order-items-number"">{_order.OrderSum} kr</p>
+          <h4 style=""grid-column: 4;"" class=""admin-order-items-vat"">Varav moms:</h4>
+          <p style=""grid-column: 5; justify-self: start;"" class=""admin-order-items-number"">{_order.VAT} kr</p>
         </div>
       </div>
     </div>
@@ -194,7 +169,7 @@ justify-self: start;
     <h3>Tack för att du handlar hos oss!</h3>
     <p>Med vänliga hälsningar,</p>
     <p>Bokcirkeln</p>
-    </div>");
+    </body>");
         var mailBody = sb.ToString();
         if (!IsDev)mailer.SendMail(_order.Customer.Email, $"Orderbekräftelse {_order.Id}", mailBody);
         else
