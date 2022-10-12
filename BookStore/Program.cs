@@ -16,6 +16,7 @@ builder.Services.AddSingleton<CustomerCrud>();
 builder.Services.AddSingleton<OrderCRUD>();
 builder.Services.AddSingleton<BookCrud>();
 builder.Services.AddSingleton<CategoryCrud>();
+builder.Services.AddSingleton<OrderProcessor>();
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -37,6 +38,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    await new DbSeeder().Seed();
 }
 
 // Configure the HTTP request pipeline.

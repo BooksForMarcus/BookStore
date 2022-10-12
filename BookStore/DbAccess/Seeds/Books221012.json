@@ -1,0 +1,1062 @@
+[
+  {
+    "_id": {
+      "$oid": "631f20c72057b9123a9f0693"
+    },
+    "ISBN": "9789189359772",
+    "Author": "Sosuke Natsukawa",
+    "Title": "Katten som räddade böcker",
+    "Language": "svenska",
+    "Categories": [
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 10,
+    "Price": "249",
+    "Year": 2022,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789189359772_200x_katten-som-raddade-bocker",
+    "Pages": 255,
+    "Weight": 372
+  },
+  {
+    "_id": {
+      "$oid": "631f21cd2057b9123a9f0694"
+    },
+    "ISBN": "9789177953852",
+    "Author": "Elisabeth Åsbrink",
+    "Title": "Mitt stora vackra hat",
+    "Language": "svenska",
+    "Categories": [
+      "6335829ab128c42d48872f64"
+    ],
+    "NumInstock": 10,
+    "Price": "279",
+    "Year": 2022,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789177953852_200x_mitt-stora-vackra-hat",
+    "Pages": 544,
+    "Weight": 930
+  },
+  {
+    "_id": {
+      "$oid": "631f22632057b9123a9f0695"
+    },
+    "ISBN": "9789179770976",
+    "Author": "Callum Bloodworth",
+    "Title": "Berätta tre saker",
+    "Language": "svenska",
+    "Categories": [
+      "633582aab128c42d48872f65"
+    ],
+    "NumInstock": 10,
+    "Price": "229",
+    "Year": 2022,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789179770976_200x_beratta-tre-saker_haftad",
+    "Pages": 360,
+    "Weight": 333
+  },
+  {
+    "_id": {
+      "$oid": "631f22d12057b9123a9f0696"
+    },
+    "ISBN": " 9789180064910",
+    "Author": "Sharon Jones",
+    "Title": "Bekänn och bränn",
+    "Language": "svenska",
+    "Categories": [
+      "633582b8b128c42d48872f66"
+    ],
+    "NumInstock": 10,
+    "Price": "119",
+    "Year": 2022,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789180064910_200x_bekann-och-brann_haftad",
+    "Pages": 143,
+    "Weight": 322
+  },
+  {
+    "_id": {
+      "$oid": "631f23ba2057b9123a9f0697"
+    },
+    "ISBN": "9789113098197",
+    "Author": "Sofia Wood",
+    "Title": "Chez Wood : en kokbok för vardag, vila och fest",
+    "Language": "svenska",
+    "Categories": [
+      "633582c7b128c42d48872f67"
+    ],
+    "NumInstock": 5,
+    "Price": "319",
+    "Year": 2019,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789113098197_200x_chez-wood-en-kokbok-for-vardag-vila-och-fest",
+    "Pages": 159,
+    "Weight": 782
+  },
+  {
+    "_id": {
+      "$oid": "631f24202057b9123a9f0698"
+    },
+    "ISBN": "9789127178519",
+    "Author": "Frida Ronge",
+    "Title": "Nordisk sushi",
+    "Language": "svenska",
+    "Categories": [
+      "633582c7b128c42d48872f67"
+    ],
+    "NumInstock": 5,
+    "Price": "299",
+    "Year": 2022,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789127178519_200x_nordisk-sushi",
+    "Pages": 175,
+    "Weight": 748
+  },
+  {
+    "_id": {
+      "$oid": "631f334bee58a7b2d7655ad5"
+    },
+    "ISBN": "9781786495259",
+    "Author": "Andre Aciman",
+    "Title": "Call Me By Your Name ",
+    "Language": "engelska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "633582d5b128c42d48872f68"
+    ],
+    "NumInstock": 1,
+    "Price": "101",
+    "Year": 2017,
+    "SoldById": "6324faf8eb71bb02a0a824cc",
+    "ImageURL": "https://image.bokus.com/images/9781786495259_200x_call-me-by-your-name_haftad",
+    "Pages": 256,
+    "Weight": 240
+  },
+  {
+    "_id": {
+      "$oid": "631f36bcee58a7b2d7655ad6"
+    },
+    "ISBN": "9789113099538",
+    "Author": "N K Jemisin",
+    "Title": "Stenhimlen ",
+    "Language": "svenska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 1,
+    "Price": "69",
+    "Year": 2020,
+    "SoldById": "6324faf8eb71bb02a0a824cc",
+    "ImageURL": "https://image.bokus.com/images/9789113099538_200x_stenhimlen_pocket",
+    "Pages": 415,
+    "Weight": 226
+  },
+  {
+    "_id": {
+      "$oid": "631f3756ee58a7b2d7655ad7"
+    },
+    "ISBN": "9780141036144",
+    "Author": "George Orwell",
+    "Title": "1984",
+    "Language": "svenska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "633582efb128c42d48872f69"
+    ],
+    "NumInstock": 1,
+    "Price": "169",
+    "Year": 1949,
+    "SoldById": "6324faf8eb71bb02a0a824d2",
+    "ImageURL": "https://image.bokus.com/images/9780141036144_200x_1984_haftad",
+    "Pages": 336,
+    "Weight": 180
+  },
+  {
+    "_id": {
+      "$oid": "631f3834ee58a7b2d7655ad8"
+    },
+    "ISBN": "9781449474256",
+    "Author": "Rupi Kaur",
+    "Title": "Milk and Honey",
+    "Language": "engelska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "633582fbb128c42d48872f6a"
+    ],
+    "NumInstock": 2,
+    "Price": "132",
+    "Year": 2015,
+    "SoldById": "6324faf8eb71bb02a0a824da",
+    "ImageURL": "https://image.bokus.com/images/9781449474256_200x_milk-and-honey_haftad",
+    "Pages": 208,
+    "Weight": 210
+  },
+  {
+    "_id": {
+      "$oid": "631f38f8ee58a7b2d7655ad9"
+    },
+    "ISBN": "9780060777104",
+    "Author": "Michael Chabon",
+    "Title": "The Final Solution: A Story of Detection",
+    "Language": "engelska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "63358305b128c42d48872f6b"
+    ],
+    "NumInstock": 1,
+    "Price": "175",
+    "Year": 2005,
+    "SoldById": "6324faf8eb71bb02a0a824de",
+    "ImageURL": "https://image.bokus.com/images/9780060777104_200x_the-final-solution-a-story-of-detection_haftad",
+    "Pages": 160,
+    "Weight": 145
+  },
+  {
+    "_id": {
+      "$oid": "631f8b1bd55b66ddf74712c1"
+    },
+    "ISBN": "9789129723922",
+    "Author": "J K Rowling",
+    "Title": "Harry Potter och Fenixorden",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c",
+      "633582aab128c42d48872f65",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 7,
+    "Price": "299",
+    "Year": 2003,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789129723922_200x_harry-potter-och-fenixorden",
+    "Pages": 993,
+    "Weight": 1162
+  },
+  {
+    "_id": {
+      "$oid": "631f8b1dd55b66ddf74712c2"
+    },
+    "ISBN": "9789129723922",
+    "Author": "J K Rowling",
+    "Title": "Harry Potter och Fenixorden",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c",
+      "633582aab128c42d48872f65",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 1,
+    "Price": "299",
+    "Year": 2003,
+    "SoldById": "6324faf8eb71bb02a0a824cd",
+    "ImageURL": "https://image.bokus.com/images/9789129723922_200x_harry-potter-och-fenixorden",
+    "Pages": 993,
+    "Weight": 1162
+  },
+  {
+    "_id": {
+      "$oid": "631f8bfcd55b66ddf74712c3"
+    },
+    "ISBN": "9789129723939",
+    "Author": "J K Rowling",
+    "Title": "Harry Potter och Dödsrelikerna",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c",
+      "633582aab128c42d48872f65",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 5,
+    "Price": "299",
+    "Year": 2007,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789129723939_200x_harry-potter-och-dodsrelikerna",
+    "Pages": 779,
+    "Weight": 932
+  },
+  {
+    "_id": {
+      "$oid": "631f8c5dd55b66ddf74712c4"
+    },
+    "ISBN": "9789129723946",
+    "Author": "J K Rowling",
+    "Title": "Harry Potter och De vises sten",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c",
+      "633582aab128c42d48872f65",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 12,
+    "Price": "269",
+    "Year": 1997,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789129723946_200x_harry-potter-och-de-vises-sten",
+    "Pages": 375,
+    "Weight": 503
+  },
+  {
+    "_id": {
+      "$oid": "631f8eafd55b66ddf74712c5"
+    },
+    "ISBN": "9780063081918",
+    "Author": "Neil Gaiman",
+    "Title": "American Gods",
+    "Language": "engelska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 1,
+    "Price": "289",
+    "Year": 2001,
+    "SoldById": "6324faf8eb71bb02a0a824cc",
+    "ImageURL": "https://image.bokus.com/images/9780063081918_200x_american-gods_haftad",
+    "Pages": 560,
+    "Weight": 409
+  },
+  {
+    "_id": {
+      "$oid": "63230d8445724131388cca40"
+    },
+    "ISBN": "9789129723960",
+    "Author": "J K Rowling",
+    "Title": "Harry Potter och Hemligheternas kammare",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c",
+      "633582aab128c42d48872f65",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 5,
+    "Price": "221",
+    "Year": 1998,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789129723960_200x_harry-potter-och-hemligheternas-kammare",
+    "Pages": 360,
+    "Weight": 487
+  },
+  {
+    "_id": {
+      "$oid": "63230df445724131388cca41"
+    },
+    "ISBN": "9789129723953",
+    "Author": "J K Rowling",
+    "Title": "Harry Potter och Fången från Azkaban",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c",
+      "633582aab128c42d48872f65",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 7,
+    "Price": "221",
+    "Year": 1999,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789129723953_200x_harry-potter-och-fangen-fran-azkaban",
+    "Pages": 528,
+    "Weight": 665
+  },
+  {
+    "_id": {
+      "$oid": "63230e7345724131388cca42"
+    },
+    "ISBN": "9789129723915",
+    "Author": "J K Rowling",
+    "Title": "Harry Potter och den flammande bägaren",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c",
+      "633582aab128c42d48872f65",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 9,
+    "Price": "221",
+    "Year": 2000,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789129723915_200x_harry-potter-och-den-flammande-bagaren",
+    "Pages": 748,
+    "Weight": 897
+  },
+  {
+    "_id": {
+      "$oid": "63230ed645724131388cca43"
+    },
+    "ISBN": "9789129723908",
+    "Author": "J K Rowling",
+    "Title": "Harry Potter och halvblodsprinsen",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c",
+      "633582aab128c42d48872f65",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 4,
+    "Price": "221",
+    "Year": 2005,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789129723908_200x_harry-potter-och-halvblodsprinsen",
+    "Pages": 664,
+    "Weight": 929
+  },
+  {
+    "ISBN": "9789129665505",
+    "Author": "Gunilla Bergström",
+    "Title": "Aja baja, Alfons Åberg!",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c"
+    ],
+    "NumInstock": 1,
+    "Price": "89",
+    "Year": 1973,
+    "SoldById": "6324faf8eb71bb02a0a824fb",
+    "ImageURL": "https://image.bokus.com/images/9789129665505_200x_aja-baja-alfons-aberg_kartonnage",
+    "Pages": 25,
+    "Weight": 220
+  },
+  {
+    "ISBN": "9789100196219",
+    "Author": "Zlatan Ibrahimovic, Luigi Garlando",
+    "Title": "Adrenalina : mina okända berättelser",
+    "Language": "svenska",
+    "Categories": [
+      "6335829ab128c42d48872f64"
+    ],
+    "NumInstock": 5,
+    "Price": "199",
+    "Year": 2021,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789100196219_200x_adrenalina-mina-okanda-berattelser",
+    "Pages": 250,
+    "Weight": 333
+  },
+  {
+    "ISBN": "9789100181406",
+    "Author": "Måns Mosesson",
+    "Title": "Tim : Biografin om Avicii",
+    "Language": "svenska",
+    "Categories": [
+      "6335829ab128c42d48872f64"
+    ],
+    "NumInstock": 5,
+    "Price": "229",
+    "Year": 2021,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789100181406_200x_tim-biografin-om-avicii",
+    "Pages": 330,
+    "Weight": 606
+  },
+  {
+    "ISBN": "9789127168343",
+    "Author": "Tara Westover",
+    "Title": "Allt jag fått lära mig",
+    "Language": "svenska",
+    "Categories": [
+      "6335829ab128c42d48872f64"
+    ],
+    "NumInstock": 7,
+    "Price": "89",
+    "Year": 2020,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789127168343_200x_allt-jag-fatt-lara-mig_pocket",
+    "Pages": 395,
+    "Weight": 218
+  },
+  {
+    "ISBN": "9789113096766",
+    "Author": "Åsa Axelsson",
+    "Title": "Jag lämnar ekorrhjulet : ett liv utan lönearbete",
+    "Language": "svenska",
+    "Categories": [
+      "6335829ab128c42d48872f64"
+    ],
+    "NumInstock": 3,
+    "Price": "69",
+    "Year": 2020,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789113096766_200x_jag-lamnar-ekorrhjulet-ett-liv-utan-lonearbete_pocket",
+    "Pages": 179,
+    "Weight": 109
+  },
+  {
+    "ISBN": "9789150961683",
+    "Author": "Anna James",
+    "Title": "Tilly och bokvandrarna",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c"
+    ],
+    "NumInstock": 8,
+    "Price": "169",
+    "Year": 2020,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789150961683_200x_tilly-och-bokvandrarna_kartonnage",
+    "Pages": 387,
+    "Weight": 400
+  },
+  {
+    "ISBN": "9789150965582",
+    "Author": "Anna James",
+    "Title": "Tilly och äventyrskartan",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c"
+    ],
+    "NumInstock": 6,
+    "Price": "169",
+    "Year": 2021,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789150965582_200x_tilly-och-aventyrskartan",
+    "Pages": 427,
+    "Weight": 418
+  },
+  {
+    "ISBN": "9789150970982",
+    "Author": "Anna James",
+    "Title": "Boksmugglarna",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c"
+    ],
+    "NumInstock": 5,
+    "Price": "169",
+    "Year": 2022,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789150970982_200x_boksmugglarna_kartonnage",
+    "Pages": 419,
+    "Weight": 418
+  },
+  {
+    "ISBN": "9781529074437",
+    "Author": "Antoni Porowski",
+    "Title": "Let's Do Dinner",
+    "Language": "engelska",
+    "Categories": [
+      "633582c7b128c42d48872f67"
+    ],
+    "NumInstock": 2,
+    "Price": "239",
+    "Year": 2021,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9781529074437_200x_lets-do-dinner",
+    "Pages": 272,
+    "Weight": 589
+  },
+  {
+    "ISBN": "9789171263599",
+    "Author": "Lani Kingston",
+    "Title": "Konsten att göra kaffe : vägen till den perfekta smaken",
+    "Language": "svenska",
+    "Categories": [
+      "633582c7b128c42d48872f67"
+    ],
+    "NumInstock": 8,
+    "Price": "159",
+    "Year": 2016,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789171263599_200x_konsten-att-gora-kaffe-vagen-till-den-perfekta-smaken",
+    "Pages": 160,
+    "Weight": 260
+  },
+  {
+    "ISBN": "9789113122151",
+    "Author": " Annie Ernaux",
+    "Title": "Omständigheter",
+    "Language": "svenska",
+    "Categories": [
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 1,
+    "Price": "219",
+    "Year": 2022,
+    "SoldById": "6324faf8eb71bb02a0a824fb",
+    "ImageURL": "https://image.bokus.com/images/9789113122151_200x_omstandigheter",
+    "Pages": 127,
+    "Weight": 234
+  },
+  {
+    "ISBN": "9789152702352",
+    "Author": "Valérie Perrin",
+    "Title": "Färskt vatten till blommorna",
+    "Language": "svenska",
+    "Categories": [
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 1,
+    "Price": "239",
+    "Year": 2022,
+    "SoldById": "6324faf8eb71bb02a0a824fb",
+    "ImageURL": "https://image.bokus.com/images/9789152702352_200x_farskt-vatten-till-blommorna",
+    "Pages": 473,
+    "Weight": 790
+  },
+  {
+    "ISBN": "9780141192437",
+    "Author": "Sir Arthur Conan Doyle",
+    "Title": "The Hound of the Baskervilles",
+    "Language": "engelska",
+    "Categories": [
+      "63358305b128c42d48872f6b",
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 1,
+    "Price": "169",
+    "Year": 2009,
+    "SoldById": "6324faf8eb71bb02a0a824de",
+    "ImageURL": "https://image.bokus.com/images/9780141192437_200x_the-hound-of-the-baskervilles",
+    "Pages": 240,
+    "Weight": 350
+  },
+  {
+    "ISBN": "9789180230377",
+    "Author": "Stuart Turton",
+    "Title": "Djävulen och det mörka vattnet",
+    "Language": "svenska",
+    "Categories": [
+      "63358305b128c42d48872f6b",
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 15,
+    "Price": "228",
+    "Year": 2022,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789180230377_200x_djavulen-och-det-morka-vattnet",
+    "Pages": 489,
+    "Weight": 688
+  },
+  {
+    "ISBN": "9789177716242",
+    "Author": "Sarah Jio",
+    "Title": "Bokträdgården i Primrose Hill",
+    "Language": "svenska",
+    "Categories": [
+      "633582d5b128c42d48872f68",
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 1,
+    "Price": "229",
+    "Year": 2022,
+    "SoldById": "6324faf8eb71bb02a0a824ec",
+    "ImageURL": "https://image.bokus.com/images/9789177716242_200x_boktradgarden-i-primrose-hill",
+    "Pages": 393,
+    "Weight": 464
+  },
+  {
+    "ISBN": "9789198696066",
+    "Author": "Anna Arvidsdotter",
+    "Title": "Händer att hålla i",
+    "Language": "svenska",
+    "Categories": [
+      "633582fbb128c42d48872f6a"
+    ],
+    "NumInstock": 1,
+    "Price": "230",
+    "Year": 2021,
+    "SoldById": "6324faf8eb71bb02a0a824ec",
+    "ImageURL": "https://image.bokus.com/images/9789198696066_200x_hander-att-halla-i_haftad",
+    "Pages": 112,
+    "Weight": 222
+  },
+  {
+    "ISBN": "9781529029581",
+    "Author": "Toshikazu Kawaguchi",
+    "Title": "Before the Coffee Gets Cold",
+    "Language": "engelska",
+    "Categories": [
+      "633582c7b128c42d48872f67"
+    ],
+    "NumInstock": 1,
+    "Price": "129",
+    "Year": 2019,
+    "SoldById": "6324faf8eb71bb02a0a824ec",
+    "ImageURL": "https://image.bokus.com/images/9781529029581_200x_before-the-coffee-gets-cold_haftad",
+    "Pages": 224,
+    "Weight": 172
+  },
+  {
+    "ISBN": "9789178934751",
+    "Author": "Frank Herbert",
+    "Title": "Dune",
+    "Language": "svenska",
+    "Categories": [
+      "633582efb128c42d48872f69",
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 16,
+    "Price": "230",
+    "Year": 2020,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789178934751_200x_dune",
+    "Pages": 719,
+    "Weight": 950
+  },
+  {
+    "ISBN": "9789180183055",
+    "Author": "Felix Åberg",
+    "Title": "Kolonin",
+    "Language": "svenska",
+    "Categories": [
+      "633582efb128c42d48872f69",
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 18,
+    "Price": "219",
+    "Year": 2022,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789180183055_200x_kolonin",
+    "Pages": 459,
+    "Weight": 638
+  },
+  {
+    "ISBN": "9789188849403",
+    "Author": "Hans Hägglund",
+    "Title": "Bastuboken : heta fakta om bastu och hälsa",
+    "Language": "svenska",
+    "Categories": [
+      "633582b8b128c42d48872f66"
+    ],
+    "NumInstock": 1,
+    "Price": "195",
+    "Year": 2020,
+    "SoldById": "6324faf8eb71bb02a0a82553",
+    "ImageURL": "https://image.bokus.com/images/9789188849403_200x_bastuboken-heta-fakta-om-bastu-och-halsa",
+    "Pages": 252,
+    "Weight": 462
+  },
+  {
+    "ISBN": "9780141393391",
+    "Author": "Mary Shelley",
+    "Title": "Frankenstein",
+    "Language": "engelska",
+    "Categories": [
+      "633582efb128c42d48872f69",
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 1,
+    "Price": "179",
+    "Year": 1818,
+    "SoldById": "6324faf8eb71bb02a0a825e4",
+    "ImageURL": "https://image.bokus.com/images/9780141393391_200x_frankenstein",
+    "Pages": 352,
+    "Weight": 460
+  },
+  {
+    "ISBN": "9789173631099",
+    "Author": "Anders Hansen",
+    "Title": "Hjärnstark : hur motion och träning stärker din hjärna ",
+    "Language": "svenska",
+    "Categories": [
+      "633582b8b128c42d48872f66"
+    ],
+    "NumInstock": 1,
+    "Price": "109",
+    "Year": 2017,
+    "SoldById": "6324faf8eb71bb02a0a825e4",
+    "ImageURL": "https://image.bokus.com/images/9789173631099_200x_hjarnstark-hur-motion-och-traning-starker-din-hjarna_storpocket",
+    "Pages": 253,
+    "Weight": 270
+  },
+  {
+    "ISBN": "9789178870882",
+    "Author": "Anders Hansen",
+    "Title": "Skärmhjärnan : hur en hjärna i osynk med sin tid kan göra oss stressade, deprimerade och ångestfyllda",
+    "Language": "svenska",
+    "Categories": [
+      "633582b8b128c42d48872f66"
+    ],
+    "NumInstock": 1,
+    "Price": "120",
+    "Year": 2020,
+    "SoldById": "6324faf8eb71bb02a0a82547",
+    "ImageURL": "https://image.bokus.com/images/9789178870882_200x_skarmhjarnan-hur-en-hjarna-i-osynk-med-sin-tid-kan-gora-oss-stressade-deprimerade-och-angestfyllda_storpocket",
+    "Pages": 208,
+    "Weight": 188
+  },
+  {
+    "ISBN": "9789137503851",
+    "Author": "Olof Röhlander",
+    "Title": "Bli din egen bästa vän : konsten att odla mod och skörda drömmar",
+    "Language": "svenska",
+    "Categories": [
+      "633582b8b128c42d48872f66"
+    ],
+    "NumInstock": 1,
+    "Price": "209",
+    "Year": 2022,
+    "SoldById": "6324faf8eb71bb02a0a82547",
+    "ImageURL": "https://image.bokus.com/images/9789137503851_200x_bli-din-egen-basta-van-konsten-att-odla-mod-och-skorda-drommar",
+    "Pages": 200,
+    "Weight": 234
+  },
+  {
+    "ISBN": "9780141441146",
+    "Author": "Charlotte Bronte",
+    "Title": "Jane Eyre",
+    "Language": "engelska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "633582d5b128c42d48872f68"
+    ],
+    "NumInstock": 1,
+    "Price": "105",
+    "Year": 1847,
+    "SoldById": "6324faf8eb71bb02a0a8254a",
+    "ImageURL": "https://image.bokus.com/images/9780141441146_200x_jane-eyre_haftad",
+    "Pages": 624,
+    "Weight": 420
+  },
+  {
+    "ISBN": "9780141196886",
+    "Author": "Bram Stoker",
+    "Title": "Dracula",
+    "Language": "engelska",
+    "Categories": [
+      "633582efb128c42d48872f69",
+      "63358285b128c42d48872f63",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 1,
+    "Price": "169",
+    "Year": 1897,
+    "SoldById": "6324faf8eb71bb02a0a8255e",
+    "ImageURL": "https://image.bokus.com/images/9780141196886_200x_dracula",
+    "Pages": 512,
+    "Weight": 640
+  },
+  {
+    "ISBN": "9789129657661",
+    "Author": "Astrid Lindgren",
+    "Title": "Nils Karlsson-Pyssling",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c"
+    ],
+    "NumInstock": 1,
+    "Price": "159",
+    "Year": 1949,
+    "SoldById": "6324faf8eb71bb02a0a8255f",
+    "ImageURL": "https://image.bokus.com/images/9789129657661_200x_nils-karlsson-pyssling",
+    "Pages": 136,
+    "Weight": 330
+  },
+  {
+    "ISBN": "9789129657708",
+    "Author": "Astrid Lindgren",
+    "Title": "Mio, min Mio",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c",
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 1,
+    "Price": "175",
+    "Year": 1954,
+    "SoldById": "6324faf8eb71bb02a0a8255f",
+    "ImageURL": "https://image.bokus.com/images/9789129657708_200x_mio-min-mio",
+    "Pages": 184,
+    "Weight": 400
+  },
+  {
+    "ISBN": "9789129657517",
+    "Author": "Astrid Lindgren",
+    "Title": "Ronja Rövardotter",
+    "Language": "svenska",
+    "Categories": [
+      "63358310b128c42d48872f6c",
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 1,
+    "Price": "164",
+    "Year": 1984,
+    "SoldById": "6324faf8eb71bb02a0a8255f",
+    "ImageURL": "https://image.bokus.com/images/9789129657517_200x_ronja-rovardotter",
+    "Pages": 248,
+    "Weight": 520
+  },
+  {
+    "ISBN": "9789174297669",
+    "Author": "Mari Jungstedt",
+    "Title": "Det fjärde offret",
+    "Language": "svenska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "63358305b128c42d48872f6b"
+    ],
+    "NumInstock": 1,
+    "Price": "59",
+    "Year": 2019,
+    "SoldById": "6324faf8eb71bb02a0a82561",
+    "ImageURL": "https://image.bokus.com/images/9789174297669_200x_det-fjarde-offret_pocket",
+    "Pages": 350,
+    "Weight": 191
+  },
+  {
+    "ISBN": "9789174297621",
+    "Author": "Mari Jungstedt",
+    "Title": "Den dubbla tystnaden",
+    "Language": "svenska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "63358305b128c42d48872f6b"
+    ],
+    "NumInstock": 1,
+    "Price": "79",
+    "Year": 2019,
+    "SoldById": "6324faf8eb71bb02a0a82561",
+    "ImageURL": "https://image.bokus.com/images/9789174297621_200x_den-dubbla-tystnaden_pocket",
+    "Pages": 362,
+    "Weight": 198
+  },
+  {
+    "ISBN": "9789174297607",
+    "Author": "Mari Jungstedt",
+    "Title": "I denna ljuva sommartid",
+    "Language": "svenska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "63358305b128c42d48872f6b"
+    ],
+    "NumInstock": 1,
+    "Price": "59",
+    "Year": 2019,
+    "SoldById": "6324faf8eb71bb02a0a82561",
+    "ImageURL": "https://image.bokus.com/images/9789174297607_200x_i-denna-ljuva-sommartid_pocket",
+    "Pages": 316,
+    "Weight": 175
+  },
+  {
+    "ISBN": "9781399805094",
+    "Author": "Bear Grylls",
+    "Title": "Mind Fuel",
+    "Language": "engelska",
+    "Categories": [
+      "633582b8b128c42d48872f66"
+    ],
+    "NumInstock": 1,
+    "Price": "189",
+    "Year": 2022,
+    "SoldById": "6324faf8eb71bb02a0a8256c",
+    "ImageURL": "https://image.bokus.com/images/9781399805094_200x_mind-fuel",
+    "Pages": 384,
+    "Weight": 469
+  },
+  {
+    "ISBN": "9789174291285",
+    "Author": "William Golding",
+    "Title": "Flugornas herre",
+    "Language": "svenska",
+    "Categories": [
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 1,
+    "Price": "76",
+    "Year": 1954,
+    "SoldById": "6324faf8eb71bb02a0a8257a",
+    "ImageURL": "https://image.bokus.com/images/9789174291285_200x_flugornas-herre_pocket",
+    "Pages": 210,
+    "Weight": 120
+  },
+  {
+    "ISBN": "9789178934188",
+    "Author": "Jane Austen",
+    "Title": "Stolthet och fördom",
+    "Language": "svenska",
+    "Categories": [
+      "63358285b128c42d48872f63"
+    ],
+    "NumInstock": 1,
+    "Price": "89",
+    "Year": 1813,
+    "SoldById": "6324faf8eb71bb02a0a8257a",
+    "ImageURL": "https://image.bokus.com/images/9789178934188_200x_stolthet-och-fordom_pocket",
+    "Pages": 345,
+    "Weight": 190
+  },
+  {
+    "ISBN": "9781529100914",
+    "Author": "Naomi Novik",
+    "Title": "The Golden Enclaves",
+    "Language": "engelska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 18,
+    "Price": "179",
+    "Year": 2022,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9781529100914_200x_the-golden-enclaves",
+    "Pages": 419,
+    "Weight": 678
+  },
+  {
+    "ISBN": "9781399710428",
+    "Author": "Mary E Pearson",
+    "Title": "Dance of Thieves",
+    "Language": "engelska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "63316a657b1919c7fde45a4e"
+    ],
+    "NumInstock": 1,
+    "Price": "189",
+    "Year": 2022,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9781399710428_200x_dance-of-thieves_haftad",
+    "Pages": 528,
+    "Weight": 456
+  },
+  {
+    "ISBN": "9789163768576",
+    "Author": "Sofia Sivertsdotter",
+    "Title": "Strimmor av ljus",
+    "Language": "svenska",
+    "Categories": [
+      "633582fbb128c42d48872f6a"
+    ],
+    "NumInstock": 6,
+    "Price": "196",
+    "Year": 2014,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789163768576_200x_strimmor-av-ljus_haftad",
+    "Pages": 144,
+    "Weight": 130
+  },
+  {
+    "ISBN": "9789100199609",
+    "Author": "Sally Rooney",
+    "Title": "Vackra värld, var är du",
+    "Language": "svenska",
+    "Categories": [
+      "63358285b128c42d48872f63",
+      "633582d5b128c42d48872f68"
+    ],
+    "NumInstock": 10,
+    "Price": "59",
+    "Year": 2022,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789100199609_200x_vackra-varld-var-ar-du_pocket",
+    "Pages": 409,
+    "Weight": 222
+  },
+  {
+    "ISBN": "9789127173583",
+    "Author": "Ann Fernholm",
+    "Title": "Fejkmaten : så blir vi vilseledda",
+    "Language": "svenska",
+    "Categories": [
+      "633582c7b128c42d48872f67",
+      "633582b8b128c42d48872f66"
+    ],
+    "NumInstock": 13,
+    "Price": "229",
+    "Year": 2022,
+    "SoldById": "store",
+    "ImageURL": "https://image.bokus.com/images/9789127173583_200x_fejkmaten-sa-blir-vi-vilseledda_haftad",
+    "Pages": 231,
+    "Weight": 358
+  }
+]

@@ -1,0 +1,80 @@
+.book-crud-container{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	place-content: center;
+	place-items: center;
+}
+.add-book-wrap {
+    display: grid;
+    grid-template-areas: 
+    "title"
+    "container-1"
+    "container-2";
+	margin: 0em 3%;
+	padding:0;
+	max-width: 50vw;
+}
+
+.cr-container-1 {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    grid-area: container-1;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 4em;
+}
+
+.cr-container-2 {
+    display: grid;
+    place-items: center;
+    grid-area: container-2;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 3em;
+}
+
+.cr-category-container {
+    display: gird;
+    width: 100%;
+    place-self: start;
+}
+
+label {
+    width: 100%;
+    position: relative;
+}
+
+input {
+    padding-top: 1.4em;
+    padding-left: 1.4em;
+    padding-bottom: 0.8em;
+}
+
+.add-book-wrap input::placeholder{
+    opacity:0;
+}
+
+.cr-book-title {
+    grid-area: title;
+    width: 100%;
+	justify-self: center;
+}
+
+.cr-book-fl-label {
+    position: absolute;
+    top: -0.8em;
+    left: 1.2em;
+    padding: 0.2em;
+    transform:translateY(30px);
+    font-size:0.9em;
+    color:  #DF7861;
+    transition-duration:300ms;
+}
+
+label:focus-within > .cr-book-fl-label,
+input:not(:placeholder-shown) + .cr-book-fl-label{
+    color: #688472;
+    transform:translateY(1em);
+    margin-top: 0.3em;
+    font-size:0.7em;
+}

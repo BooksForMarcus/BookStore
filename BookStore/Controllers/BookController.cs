@@ -4,7 +4,7 @@ using BookStore.DbAccess;
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using BookStore.Authorize;
- 
+
 [Authorize]
 [Route("api/[controller]")]
 [ApiController]
@@ -28,7 +28,7 @@ public class BookController : ControllerBase
     {
         return await _bookCrud.GetAllBooks();
     }
-    
+
     /// <summary>
     /// Skapa Bok. Måste vara admin och/eller stå som säljare av boken.
     /// </summary>
@@ -40,9 +40,8 @@ public class BookController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(Book book)
     {
-
         var cust = HttpContext.Items["Customer"] as Customer;
-        if (cust!.IsAdmin || cust.Id == book.SoldById)
+        if (cust!.IsAdmin || (cust.Id == book.SoldById && cust.IsSeller))
         {
             var result = await _bookCrud.CreateBook(book);
             if (!String.IsNullOrEmpty(result)) return Ok(result);
@@ -82,7 +81,7 @@ public class BookController : ControllerBase
             });
         }
     }
-    
+
     /// <summary>
     ///  Delete book. Users can only delete their own books.
     /// </summary>
@@ -107,7 +106,22 @@ public class BookController : ControllerBase
             return BadRequest(new { error = "You can only delete your own books, if nonadmin" });
         }
     }
-
+    /// <summary>
+    /// Remove all references to catogory with id "Id"
+    /// </summary>
+    /// <param name="id">the id of the category</param>
+    /// <response code="200">References deleted</response>
+    /// <response code="400">References not deleted</response>
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAllInCat(string id)
+    {
+        var result = await _bookCrud.DeleteAllRefsToCategory(id);
+         if (result )
+        {
+            return Ok( );
+        }
+        return BadRequest("Något gick fel. Referenser till kategorin ej försvunna");
+    }
     /// <summary>
     /// Hämtar bok. Ingen login krävs.
     /// </summary>

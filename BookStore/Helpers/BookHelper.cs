@@ -21,7 +21,7 @@ public static class BookHelper
         return weightInGrams;
     }
 
-    public static float GetPostagePrice(float weightInGrams) => weightInGrams switch
+    public static int GetPostagePrice(float weightInGrams) => weightInGrams switch
     {
         //simplification based on PostNord prices
         //for the sake of this school project, we will assume we can
@@ -41,6 +41,7 @@ public static class BookHelper
         <= 10000f => 224,
         <= 15000f => 265,
         <= 20000f => 310,
-        _ => -1
+        //if weight is greater than 20kg, we will assume it is a package and just charge 1000 kr.
+        _ => 1000
     };
 }

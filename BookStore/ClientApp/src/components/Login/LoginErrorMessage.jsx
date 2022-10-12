@@ -7,7 +7,7 @@ const LoginErrorMessage = ({ errorState }) => {
     <div className="login-error-message-container">
       <div className="login-error-message">
 	  	<FontAwesomeIcon icon={faFaceSadTear} />
-        <h3>Inloggning misslyckades.</h3>
+        <h3 className="login-error-message-h">Inloggning misslyckades.</h3>
         {!error.userFound &&<p>Användaren hittades inte.</p>}
 		{(error.userFound && !error.validPassword) &&<p>Felaktigt lösenord.</p>}
 		{error.isBlocked &&

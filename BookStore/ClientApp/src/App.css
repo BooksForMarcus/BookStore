@@ -1,62 +1,86 @@
-/*===== Header =====*/
-
 header {
     background-color: #688472;
-    display: grid;
-    grid-template-columns: 1fr;
-    align-items:end;
-    padding: 2em;
+    padding-top: 1em;
+    width: 100%;
+	min-height: 14vh;
+}
+header.app-header{
+	display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-rows: repeat(2, 5em);
+    padding-top: 1em;
+    width: 100%;
 }
 .App{
 	position: relative;
+	min-height: 100vh;
 }
 
 .nav_logo {
+	grid-column: 1/2;
+	grid-row: 1/3;
     display: grid;
     place-self: center;
-    width: 18rem;
+    width: 14rem;
 }
 
 .navbar {
-    display: inline-grid;
-    align-items: center;
-    place-items: center;
+	grid-column: 4/6;
+	grid-row: 1;
+    display: flex;
+    align-content: start;
+	align-items: center;
+    justify-self: end;
+	justify-content: space-between;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    width:100%;
+	margin: 0.5em 2em;
+}
+
+.menu-item {
+    /* padding-right: 3em; */
+}
+
+.menu-item-userlogin {
+    /* padding-right: 3em;
+    display: inline;
+    white-space: nowrap; */
+    
+}
+
+.menu-item-cart {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: start;
+    /* margin-right: 4em; */
+    font-size: 2rem;
+}
+
+.cart-icon {
+    margin-top: -0.3em;
+}
+
+.menu-cart-amount {
+    font-size: 1.2rem;
+    margin-left: 0.5em;
+    color: #ECB390;
 }
 
 /*===== Searchbar =====*/
-
-.nav-item-search {
-    color: #FCF8E8;
-}
-
-.nav-item-search:hover {
-    color: #EDB183;
-    background-color: #688472;
-    cursor: pointer;
-}
-
-.nav-modal {
-    display: grid;
-    z-index: 1;
-    position: absolute;
-    background-color: #688472;
-    opacity: 80%;
-    width: 50%;
-    height: 5em;
-    padding: 1.5em;
-    place-self: center;
-    align-self: start;
-}
-
 .searchBar {
+	grid-column: 2/5;
+	grid-row: 2;
+    display: grid;
     place-self: center;
-    align-items: center;
-    justify-content: center;
+    align-self: center;
+    justify-self: center;
 }
 
 /*===== Main shared =====*/
 
+main{
+	min-height: 78.6vh;
+}
 .main-container {
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -72,8 +96,20 @@ header {
 /*===== Footer =====*/
 
 footer {
+    display: grid;
+    place-items: center;
     background-color: #688472;
-    padding: 2em;
+    padding: 3em;
+	max-height: 3vh;
+}
+
+.contact-link {
+    color: #FCF8E8;
+}
+
+.contact-link:hover{
+    color: #ECB390;
+    cursor: pointer;
 }
 
 
@@ -97,31 +133,95 @@ footer {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     color: #415d51;
     background-color: #FCF8E8;
+    border-bottom: #e6e2d2 solid 1px;
     padding: 0.5em;
     padding-left: 2em;
+    place-items: center;
+    align-items: start;
 }
 
 .card-product {
     display: grid;
     grid-template-rows: 3fr 1fr 1fr;
+    max-height: 370px;
     place-items: center;
+	position: relative;
+	max-width: 250px;
 }
 
+.card-product-result{
+    display: grid;
+    grid-template-rows: 3fr 1fr 1fr 1fr;
+    place-items: center;
+	padding: 2em;
+	width: 15em;
+}
 .book-image-wrapper {
     height: 200px;
     width: 150px;
     background-color: #FCF8E8;
     display: grid;
     align-self: start;
+	position: relative;
+}
+
+.used-book::after {
+	content: "Begagnad";
+	position: absolute;
+	top: 1.8em;
+	left: 3.2em;
+	width: 80%;
+	background-color: #688472;
+	color: #FCF8E8;
+	clip-path: polygon(13% 0%, 87% 0%, 100% 100%, 0% 100%);
+	text-align: center;
+	transform: rotate(45deg);
+	box-shadow: black 10px 10px 15px;
 }
 
 .book-img {
+    position: relative;
     display: grid;
     place-self: center;
     height: 100%;
     max-width: 150px;
     max-height: 200px;
+    background-color: #688472;
 }
+
+.book-img-sold-out {
+    display: grid;
+    position: absolute;
+    z-index: 3;
+    height: 100%;
+    width: 100%;
+    max-width: 150px;
+    max-height: 200px;
+    text-align: center;
+    background-color: #fcf8e8bd;
+}
+
+.book-no-img {
+    position: relative;
+    display: grid;
+    place-self: center;
+    height: 100%;
+    width: 100%;
+    background-color: #688472;
+}
+
+.book-no-img-text {
+    place-self: center;
+    margin-bottom: 5em;
+    color: #FCF8E8;
+}
+
+.book-img-sold-out-text {
+    place-self: center;
+    color: #bb4a31;
+    font-weight: bold;
+}
+
 .card-product-link {
     color:#415d51;
     letter-spacing: 0.2px;
@@ -136,13 +236,14 @@ footer {
 .card-product-title {
     padding: 1em;
     align-self: start;
+	text-align: center;
 } 
 .card-product-price {
     font-size: 1rem;
     align-self: start;
 }
 
-/*===== LoginView + UserProfileView =====*/
+/*===== LoginView =====*/
 
 .login-view {
     display: grid;
@@ -152,8 +253,13 @@ footer {
 
 .login-wrap{
     display: grid;
-    place-items: center;
-    padding: 3em;
+    place-items: start;
+    justify-items: center;
+    padding: 1em;
+    padding-bottom: 4em;
+}
+.login-wrap >h2{
+	align-self: end;
 }
 
 form {
@@ -161,22 +267,85 @@ form {
     place-items: center;
 }
 
+label {
+    width: 100%;
+    position: relative;
+}
+
+/*===== Default Light inputfields - Use on red or green background=====*/
+
 input {
     width: 100%;
     margin-bottom: 2em;
-    padding: 1em;
+    padding-top: 1.4em;
+    padding-left: 1.4em;
+    padding-bottom: 0.8em;
     border: none;
     border-bottom: 2px solid #DF7861;
     background-color: #FCF8E8;
     outline: none;
-    color: #bb4a31;
+    color: #DF7861;
     font-size: 15px;
 }
 
 input:focus {
     border: none;
     border-bottom: 2px solid #bb4a31;
+    color: #DF7861;
+}
+
+input::placeholder{
+    opacity:0;
+}
+
+.fl-label {
+    position: absolute;
+    top: -0.8em;
+    left: 1.2em;
+    padding: 0.2em;
+    transform:translateY(30px);
+    font-size:0.9em;
+    color:  #FCF8E8;
+    transition-duration:300ms;
+}
+
+label:focus-within > .fl-label,
+input:not(:placeholder-shown) + .fl-label{
+    color: #FCF8E8;
+    transform:translateY(1em);
+    margin-top: 0.3em;
+    font-size:0.7em;
+}
+
+/*===== Red inputfields - Use on light background =====*/
+
+.red-input {
+    color:#DF7861;
+}
+
+.red-input:focus {
+    border: none;
+    border-bottom: 2px solid #bb4a31;
+    color: #DF7861;
+}
+
+.red-fl-label {
+    position: absolute;
+    top: -0.8em;
+    left: 1.2em;
+    padding: 0.2em;
+    transform:translateY(30px);
+    font-size:0.9em;
+    transition-duration:300ms;
+    color:#415d51;
+}
+
+label:focus-within > .red-fl-label,
+input:not(:placeholder-shown) + .red-fl-label{
     color: #415d51;
+    transform:translateY(1em);
+    margin-top: 0.3em;
+    font-size:0.7em;
 }
 
 .login-button{
@@ -184,11 +353,29 @@ input:focus {
     width: 100%;
 }
 
+.login-forgott-password {
+    color: #DF7861;
+    margin-top: 2em;
+    font-size: 0.9em;
+
+}
+
+.login-forgott-password:hover {
+    color: #c3604a;
+    cursor: pointer;
+    
+}
+
 .add-account-wrap {
     background-color: #ECB390;
     display: grid;
-    place-items: center;
-    padding: 3em;
+    place-items: start;
+    justify-items: center;
+    padding: 1em;
+    padding-bottom: 4em;
+}
+.add-account-wrap >h2{
+	align-self: end;
 }
 
 .cr-account {
@@ -200,7 +387,7 @@ input:focus {
 
 .cr-account:focus {
     background-color: #ECB390;
-    color: #DF7861;
+    color: #fcfbf6;
     border: none;
     border-bottom: 2px solid #DF7861;
 }
@@ -228,15 +415,6 @@ input:focus {
     max-width: 15%;
 }
 
-.ud-head-text {
-    color: #FCF8E8;
-    margin-bottom: 2em;
-}
-
-.profile-view-links {
-    color: #DF7861;
-}
-
 /*====== BookView ======*/
 
 .bookView-main-container {
@@ -247,27 +425,28 @@ input:focus {
     grid-template-columns: 1fr 3fr;
     padding: 2em;
     margin: 1em 0em;
+	color: #415d51;
 }
 
 .bookView-image-placeholder {
     display: grid;
     place-items: center;
-    background-color: #504e4d;
-    height: 21em;
-    width: 12em;
+    background-color: #688472;
+    height: 100%;
+    width: 60%;
+	padding: 3em;
 }
 
 .bookView-image-wrapper {
     display: grid;
     place-items: center;
-    padding: 1em;
-    height: 21em;
-    width: 12em;
+    height: 50%;
+    margin-top: 2em;
 }
 
 .book-info-wrapper {
     display: grid;
-    grid-template-columns: 1fr 1fr 3fr;
+    grid-template-columns: 1fr 1fr 2fr;
 }
 
 .bookview-title {
@@ -297,18 +476,46 @@ input:focus {
 }
 
 .store_logo{
-    width: 25%;
+    width: 40%;
     -webkit-filter: invert(100%);
 }
 
-.book-info-seller {
+.book-info-seller-text {
     letter-spacing: 1.5px;
     color: #DF7861;
     font-weight: bold;
     margin-bottom: 1em ;
 }
-.searchBar{
-	position: absolute;
-	top: 19em;
-	z-index: 2;
+
+.book-info-seller {
+    display: grid;
+    place-items: center;
+}
+
+.beg-stamp-bookView {
+    width: 30%;
+}
+
+.out-of-stock-text {
+    margin-top: 0.7em;
+    color:#DF7861;
+}
+
+.login-message {
+    color: #DF7861;
+}
+
+.login-message:hover {
+    color: #688472;
+    background-color: #FCF8E8;
+}
+
+.btn-area {
+    display: flex;
+    margin: 1em;
+    justify-content: center;
+}
+.search-result-area{
+	display: flex;
+	flex-wrap: wrap;
 }

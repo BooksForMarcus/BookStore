@@ -1,0 +1,134 @@
+.admin-stats-header-1-text {
+    color:#FCF8E8;
+}
+
+.admin-stats-view {
+    display: grid;
+    
+    place-items: center;
+    margin: 2em;
+    
+}
+
+.admin-stats-wrapper-1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+	align-items: start;
+    width: 100%;
+}
+
+.admin-stats-container-1 {
+    display: grid;
+    place-items: center;
+    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    width: 80%;
+    grid-column-gap: 7em;
+    margin-top: 2em;
+}
+
+.admin-stats-container-2 {
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-row-gap: 3em;
+}
+
+.admin-stats-header-1 {
+    background-color: #688472;
+    padding: 0.2em 1em;
+    width: 100%;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.admin-stats-body-1 {
+    width: 100%;
+    background-color: #FCF8E8;
+    color: #bb4a31;
+    display: grid;
+    place-items: center;
+    border: #e8e9e8 solid 1px;
+    padding-bottom: 2em;
+    border-radius: 10px;
+}
+
+.admin-stats-items-1 {
+    display: grid;
+    padding: 0.5em;
+}
+
+.admin-stats-item-1 {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    padding: 0.5em;
+    border-bottom: #d0dfd5 solid 1px;
+}
+
+.admin-stats-sum-text {
+    font-size: 2em;
+    margin-top: 1em;
+    font-weight: bolder;
+}
+
+.admin-stats-by-date-container {
+    width: 80%;
+}
+
+.admin-stats-header-2-text {
+    color: #DF7861;
+}
+
+.admin-stats-by-date-container-1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+}
+
+.admin-stats-by-date-datecomponent {
+    max-width: 70%;
+    color:#688472;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.admin-stats-item-header-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    width: 100%;
+    place-items: center;
+    background-color: #688472;
+    padding: 1em;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-weight: bold;
+    color: #FCF8E8;
+}
+
+.admin-stats-item-header-text-id {
+    place-self: start;
+    margin-left: 0.5em;
+}
+
+.admin-stats-item-text {
+    color:#686161;
+    
+}
+
+.admin-stats-by-date-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    width: 100%;
+    place-items: center;
+    padding: 0.7em;
+    border-bottom: #d0dfd5 solid 1px;
+    font-size: 0.9rem;
+}
+
+.admin-stats-item-text-id {
+    place-self: start;
+    color:#686161;
+    margin-left: 0.5em;
+}

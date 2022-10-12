@@ -1,4 +1,5 @@
 ﻿using BookStore.DTO;
+using BookStore.Helpers;
 using BookStore.Models;
 using MongoDB.Driver;
 
@@ -8,17 +9,24 @@ namespace BookStore.DbAccess
     {
 		private IMongoCollection<Order> orders;
 		private CustomerCrud customers;
+		private BookCrud books;
+        private OrderProcessor orderProcessor;
 
-		public OrderCRUD(MongoDbAccess db)
-		{
-			orders = db.OrdersCollection;
-			customers = new CustomerCrud(db);
-		}
+        public OrderCRUD(MongoDbAccess db, OrderProcessor orderProcessor)
+        {
+            orders = db.OrdersCollection;
+            customers = new CustomerCrud(db);
+            this.orderProcessor = orderProcessor;
+        }
 
 		public async Task<bool> CreateOrder(Order order)
 		{
-			await orders.InsertOneAsync(order);
-			var result = !String.IsNullOrWhiteSpace(order.Id);
+			//make sure to strip id from sources such as swagger
+			order.Id = String.Empty;
+            var processedOrder = await orderProcessor.Process(order);
+            await orders.InsertOneAsync(processedOrder);
+			var result = !String.IsNullOrWhiteSpace(processedOrder.Id);
+			if (result) orderProcessor.SendMailsAsRequired(order);
 			return result;
 		}
 
@@ -35,26 +43,12 @@ namespace BookStore.DbAccess
 			return result;
 		}
 
-		public async Task<List<Order>> CustomerGetOrder(string id)
+		public async Task<List<Order>> CustomerGetOrders(string id)
         {
 			var resp = await orders.FindAsync(x=>x.Customer.Id == id);
 			return resp.ToList();
 		}
 
-		//public async Task<bool> UpdateOrders(string customerId, string updatedorder )
-  //      {
-		//	var updatefilter = Builders<Order>.Filter.Eq("OrderId", customerId);
-		//	var update = Builders<Order>.Update.Set("Order", updatedorder);
-		//	var resp = await orders.UpdateOneAsync(updatefilter, update);
-		//	return resp.IsAcknowledged;
-		//}
-
-		//public async Task<bool> DeleteOrders(Order deletedOrder)
-  //      {
-		//	var deletefilter = Builders<Order>.Filter.Eq("OrderId",deletedOrder.Id);
-		//	var result = await orders.DeleteOneAsync(d => d.Id == deletedOrder.Id);
-		//	return result.IsAcknowledged && result.DeletedCount > 0;
-		//}
 
 		public async Task<bool> DeleteOrders(string id)
         {

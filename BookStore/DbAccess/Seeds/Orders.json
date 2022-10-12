@@ -1,0 +1,103 @@
+[
+  {
+    "_id": {
+      "$oid": "6339ab2fab6a22908a9078c7"
+    },
+    "Customer": {
+      "_id": {
+        "$oid": "6324fb523418b4e065cd7d83"
+      },
+      "Email": "admin@admin.se",
+      "Password": "",
+      "FirstName": "admin",
+      "LastName": "admin",
+      "Address": "666 Adminville",
+      "IsActive": true,
+      "IsBlocked": false,
+      "IsAdmin": true,
+      "IsSeller": true
+    },
+    "Date": {
+      "$date": {
+        "$numberLong": "1664723118580"
+      }
+    },
+    "OrderSum": {
+      "$numberDecimal": "856"
+    },
+    "VAT": {
+      "$numberDecimal": "51.36"
+    },
+    "books": [
+      {
+        "_id": {
+          "$oid": "631f20c72057b9123a9f0693"
+        },
+        "ISBN": "9789189359772",
+        "Author": "Sosuke Natsukawa",
+        "Title": "Katten som räddade böcker",
+        "Language": "svenska",
+        "Categories": [
+          "63358285b128c42d48872f63"
+        ],
+        "NumInstock": 2,
+        "Price": {
+          "$numberDecimal": "249"
+        },
+        "Year": 2022,
+        "SoldById": "store",
+        "ImageURL": "https://image.bokus.com/images/9789189359772_200x_katten-som-raddade-bocker",
+        "Pages": 255,
+        "Weight": 372
+      },
+      {
+        "_id": {
+          "$oid": "631f8c5dd55b66ddf74712c4"
+        },
+        "ISBN": "9789129723946",
+        "Author": "J K Rowling",
+        "Title": "Harry Potter och De vises sten",
+        "Language": "svenska",
+        "Categories": [
+          "63358310b128c42d48872f6c",
+          "633582aab128c42d48872f65",
+          "63316a657b1919c7fde45a4e"
+        ],
+        "NumInstock": 1,
+        "Price": {
+          "$numberDecimal": "269"
+        },
+        "Year": 1997,
+        "SoldById": "store",
+        "ImageURL": "https://image.bokus.com/images/9789129723946_200x_harry-potter-och-de-vises-sten",
+        "Pages": 375,
+        "Weight": 503
+      },
+      {
+        "_id": {
+          "$oid": "6338535a0a88169b87513ed8"
+        },
+        "ISBN": "9789129665505",
+        "Author": "Gunilla Bergström",
+        "Title": "Aja baja, Alfons Åberg!",
+        "Language": "svenska",
+        "Categories": [
+          "63358310b128c42d48872f6c"
+        ],
+        "NumInstock": 1,
+        "Price": {
+          "$numberDecimal": "89"
+        },
+        "Year": 1973,
+        "SoldById": "6324faf8eb71bb02a0a824fb",
+        "ImageURL": "https://image.bokus.com/images/9789129665505_200x_aja-baja-alfons-aberg_kartonnage",
+        "Pages": 25,
+        "Weight": 220
+      }
+    ],
+    "Postage": {
+      "$numberDecimal": "55"
+    },
+    "Status": "Pending"
+  }
+]

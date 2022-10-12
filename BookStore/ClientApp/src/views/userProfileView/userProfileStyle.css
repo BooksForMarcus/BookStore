@@ -1,0 +1,326 @@
+.userprofile-view {
+    display: grid;
+    grid-template-columns: 1fr 1fr 4fr;
+	position: relative;
+}
+
+.userprofile-wrap {
+    display: grid;
+    align-self: start;
+    place-items: center;
+    padding: 1em;
+}
+
+.profile-nav {
+    display: grid;
+    margin-top: 3em;
+}
+
+.profile-navlink {
+   color: #df7861;
+   font-weight: bolder;
+   font-size: larger;
+   margin-bottom: 1em;
+}
+
+.profile-navlink:hover {
+    cursor: pointer;
+    color: #688472;
+    background-color: #fcf8e8;
+}
+
+.h2-light {
+    place-self: center;
+    margin-bottom: 2em;
+}
+
+.profile-email-contact-container {
+    padding: 1em;
+    color: #fcf8e8;
+    margin-top: 4em;
+    background-color: #688472;
+}
+
+.profile-email-contact-container:hover {
+    cursor: pointer;
+}
+
+/*===== EditUserProfileView =====*/
+
+.edit-user-response{
+    color:#688472;
+    font-weight: bolder;
+}
+
+.edit-user-buttons {
+    margin-top: 2em;
+}
+
+/*===== SellerView =====*/
+
+.seller-wrap {
+    display: grid;
+    place-items: center;
+}
+
+.seller-profile-head-text {
+    color: #fcf8e8;
+    margin-bottom: 2em;
+}
+
+.seller-profile-booklist {
+    width: 100%;
+    background-color: #fcf8e8;
+    margin-bottom: 2em;
+}
+
+.seller-profile-booklist-h {
+    background-color: #415d51;
+    color: #fcf8e8;
+    padding: 1em;
+    font-weight: bolder;
+    display: grid;
+    grid-template-columns: 4fr 1fr 2fr 1fr 1fr;
+}
+
+.seller-profile-booklist-h-text {
+    display: grid;
+    place-self: center;
+}
+
+.seller-profile-booklist-h-titletext {
+    padding-left: 0em;
+}
+
+.seller-profile-booklist-h-status {
+    place-self: center;
+    margin-left: 1em;
+}
+
+.seller-book-listitem {
+    display: grid;
+    grid-template-columns: 4fr 1fr 2fr 1fr 1fr;
+    border-bottom: solid 1px #e3e4da;
+}
+
+ .seller-book-listitem-title {
+    color:#415d51;
+    padding: 1em 3em 1em 1em;
+    width: 100%;
+}
+
+.seller-book-listitem-text-status, .seller-book-listitem-text{
+    display: grid;
+    place-self: center;
+    font-size: 0.9em;
+    color:#415d51;
+}
+
+.seller-book-listitem-title:hover {
+    color: #df7861;
+    background-color: #fcf8e8;
+}
+
+.seller-book-listitem-icon {
+    place-self: center;
+    color:#688472;
+}
+
+.seller-book-listitem-icon:hover {
+    color:#415d51;
+    cursor: pointer;
+}
+
+.seller-book-listitem-empty {
+    width: 100%;
+    height: 2em;
+    background-color: #fcf8e8;
+}
+
+/*===== UserOrderView =====*/
+
+.user-order-wrap {
+    width: 80%;
+    display: grid;
+}
+
+.user-order-profile-booklist {
+    display: grid;
+}
+
+.user-order-profile-list-h {
+    background-color: #415d51;
+    color: #fcf8e8;
+    padding: 1em;
+    font-weight: bolder;
+    display: grid;
+    grid-template-columns: 5fr 2fr 2fr 2fr;
+    width: 100%;
+}
+
+.user-order-user-list {
+    background-color: #fcf8e8;
+    color: #415d51;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 5fr 2fr 2fr 2fr;
+    width: 100%;
+    border-bottom: solid #e3e4da 1px;
+}
+
+.user-order-user-list:hover {
+    cursor: pointer;
+    background-color: #f7f0d7;
+}
+
+.user-order-profile-booklist-h-text {
+    display: grid;
+    place-self: start;
+}
+
+.user-order-profile-booklist-h-text-center, .user-order-profile-user-order-listitem-center {
+    place-self: center;
+}
+
+/*===== UserOrderView - Details =====*/
+
+.user-order-details-container {
+    display: grid;
+    background-color: #fcf8e8;
+    padding: 2em;
+}
+
+.user-order-details-container-1 {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+.user-order-details-wrap {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.user-order-details-status {
+    font-size: larger;
+    color: #fcf8e8;
+    background-color: #688472;
+    width: fit-content;
+    padding: 0.6em;
+}
+
+.user-order-details-wrap-date {
+    display: grid;
+    font-weight: bolder;
+    grid-template-rows: 1fr 1fr;
+}
+
+.user-order-details-container-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 2em 2em;
+    font-weight: bolder;
+    color:#df7861;
+}
+
+.user-order-details-container-3 {
+    border-top: #aaceb7 solid 1px;
+    margin: 0em 1em;
+}
+
+.user-book-order-details-header-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+    background-color: #688472;
+    font-size: smaller;
+    font-weight: bold;
+    color: #fcf8e8;
+    padding: 0.5em;
+
+}
+
+.user-order-book-item-h {
+    margin-left: 1em;
+}
+
+.user-book-order-details-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+    border-bottom: #e3e4da solid 1px;
+    padding: 1em;
+}
+
+.user-order-details-item {
+    color:#df7861;
+    margin-bottom: 0.5em;
+}
+
+.user-order-book-item {
+    color: #415d51;
+    margin: 2em 1em;
+}
+
+.user-order-book-info {
+    display: grid;
+    grid-template-rows: 1fr 1fr 2fr;
+    padding-left: 1em;
+}
+
+.user-order-book-info-title {
+    font-weight: bolder;
+    color:#688472;
+}
+
+.user-order-book-info-item {
+    color: #415d51;
+    font-size: 0.8rem;
+}
+
+.user-order-book-seller-info {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    color: #df7861;
+    font-size: 0.8rem;
+}
+
+.user-order-book-seller-info-item-h {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.user-order-image-wrapper {
+    place-self: center;
+    margin: 0em 2em 0em 0em;
+}
+.user-order-img{
+    width: 80%;
+}
+
+.user-order-details-container-4 {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    place-items: start;
+    width: 50%;
+    margin: 3em;
+    color: #415d51;
+}
+
+.user-order-details-sum-item {
+    color:#415d51;
+    margin-bottom: 0.5em;
+}
+
+.user-order-details-item-sum {
+    place-self: center;
+    margin: 0 0;
+}
+
+.user-order-details-totalSum {
+    place-self: center;
+}
+
+.user-order-details-close {
+    margin: 1em;
+    place-self: center;
+    width: 50%;
+}
