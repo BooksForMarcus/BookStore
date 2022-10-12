@@ -136,12 +136,14 @@ footer {
     border-bottom: #e6e2d2 solid 1px;
     padding: 0.5em;
     padding-left: 2em;
-	place-items: center;
+    place-items: center;
+    align-items: start;
 }
 
 .card-product {
     display: grid;
     grid-template-rows: 3fr 1fr 1fr;
+    max-height: 370px;
     place-items: center;
 	position: relative;
 	max-width: 250px;
