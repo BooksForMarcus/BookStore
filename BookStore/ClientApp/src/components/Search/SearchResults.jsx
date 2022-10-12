@@ -2,13 +2,13 @@
 import"./SearchBar.css";
 import { useRecoilValue } from "recoil";
 import searchWordState from "../../atoms/searchWordState";
-import booksState from "../../atoms/booksState";
+import booksForShowState from '../../atoms/booksForShowState';
 import BookCard from '../Books/BookCard';
 
 function SearchResults() {
 
     const searchWord= useRecoilValue(searchWordState);
-	const books = useRecoilValue(booksState);
+	const books = useRecoilValue(booksForShowState);
     let bookresuls = [];
     let authorresults = [];
 
