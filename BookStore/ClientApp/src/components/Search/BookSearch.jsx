@@ -33,21 +33,23 @@ function BookSearch() {
                     className="dataItem"
                     to={`book/${book.id}`}
                     state={book}
-                    onClick={() => clearSearchBar()}>
+                    onClick={() => clearSearchBar()}
+                  >
                     <div>
                       <p>{book.title}: Begagnad</p>
                     </div>
                   </Link>
                 ) : (
                   <Link
-                  className="dataItem"
-                  to={`book/${book.id}`}
-                  state={book}
-                  onClick={() => clearSearchBar()}>
-                  <div>
-                    <p>{book.title}</p>
-                  </div>
-                </Link>
+                    className="dataItem"
+                    to={`book/${book.id}`}
+                    state={book}
+                    onClick={() => clearSearchBar()}
+                  >
+                    <div>
+                      <p>{book.title}</p>
+                    </div>
+                  </Link>
                 )}
               </div>
             ))}
@@ -77,7 +79,8 @@ function BookSearch() {
                 <NavLink
                   className="dataItem"
                   to="/search_result"
-                  onClick={() => setSearchWord(book.author) + clearSearchBar()}>
+                  onClick={() => setSearchWord(book.author) + clearSearchBar()}
+                >
                   <div>
                     <p>{book.author}: författare</p>
                   </div>
@@ -108,22 +111,22 @@ function BookSearch() {
       <div className="search">
         <div className="searchInputs">
           <input
+		  className="book-search-input"
             type="text"
             onChange={(event) => setSearch(event.target.value)}
             onKeyDown={(event) => {
-              if(event.key === "Enter") {
-              setSearchWord(search);
-            clearSearchBar();
-            if(loc.pathname.split("/")[1] !== "search_result") {
-              navigate("/search_result");
-            }
-          }
-        if(event.key === "Escape") {
-          setSearch("");
-          }
-        }
-      }
-            placeholder="Sök.."
+              if (event.key === "Enter") {
+                setSearchWord(search);
+                clearSearchBar();
+                if (loc.pathname.split("/")[1] !== "search_result") {
+                  navigate("/search_result");
+                }
+              }
+              if (event.key === "Escape") {
+                setSearch("");
+              }
+            }}
+            placeholder="Sök författare eller titel..."
             value={search}
           />
           <div className="closeIcon">

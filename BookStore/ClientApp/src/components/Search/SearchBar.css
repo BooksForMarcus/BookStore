@@ -6,6 +6,9 @@
   }
   
   .search input {
+	
+  }
+  .book-search-input[type="text"] {
 	background-color: white;
 	border: 0;
 	border-radius: 2px;
@@ -16,6 +19,9 @@
 	height: 2em;
 	width: 300px;
 	margin: 2em 0em;
+  }
+  .book-search-input[type="text"]::placeholder {
+	opacity: 1;
   }
 
 .searchIcon {
@@ -70,7 +76,7 @@
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 	overflow: hidden;
 	overflow-y: auto;
-	z-index: 2;
+	z-index: 800;
   }
 
 	.dataResult ::-webkit-scrollbar {
