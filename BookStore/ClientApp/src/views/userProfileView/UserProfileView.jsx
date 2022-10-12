@@ -64,7 +64,7 @@ function UserProfileView() {
               )}
               <span
                 className="profile-navlink"
-                onClick={() => {localStorage.clear(); setUser(null);setCart(null)}}
+                onClick={() => {localStorage.clear(); setUser(null);setCart([])}}
               >
                 LOGGA UT
               </span>

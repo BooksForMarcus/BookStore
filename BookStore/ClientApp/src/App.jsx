@@ -118,7 +118,7 @@ function App() {
               <NavLink to="/cart" className="cart-icon">
                 {<FontAwesomeIcon icon={faBagShopping} />}
               </NavLink>
-              {cart !== null && (
+              {user !== null && cart.length >= 0 && (
                 <span className="menu-cart-amount">({cart.length})</span>
               )}
             </div>
