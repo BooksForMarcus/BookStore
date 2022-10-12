@@ -100,7 +100,7 @@ const BookDetails = ({ book }) => {
               )}
                 </button> : 
                 <Link to="/login" className="login-message">Logga in för att beställa böcker.</Link>}
-            {(cart !==null && cart.some((cartBook) => cartBook.id === book.id) &&
+            {(cart !==null && cart.length > 0 && cart.some((cartBook) => cartBook.id === book.id) &&
               cart.find((cartBook) => cartBook.id === book.id).numInstock >=
                 book.numInstock) ||
             book.numInstock <= 0 ? (

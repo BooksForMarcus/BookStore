@@ -3,7 +3,7 @@ import "./SearchBar.css";
 import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { useRecoilState } from "recoil";
-import booksState from "../../atoms/booksState";
+import booksForShowState from "../../atoms/booksForShowState";
 import searchWordState from "../../atoms/searchWordState";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
@@ -11,7 +11,7 @@ import CloseIcon from "@mui/icons-material/Close";
 function BookSearch() {
   const loc = useLocation();
   const navigate = useNavigate();
-  const books = useRecoilValue(booksState);
+  const books = useRecoilValue(booksForShowState);
   const [search, setSearch] = useState("");
   const [searchWord, setSearchWord] = useRecoilState(searchWordState);
 
@@ -28,7 +28,7 @@ function BookSearch() {
             })
             .map((book) => (
               <div className="dataItem" key={book.id}>
-                {book.soldById === "kund" ? (
+                {book.soldById !== "store" ? (
                   <Link
                     className="dataItem"
                     to={`book/${book.id}`}
