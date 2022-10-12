@@ -87,7 +87,8 @@
 	}
 
 .dataItem:hover {
-	color: #fcf8e8;
+	background-color: #fcf8e8 ;
+	color: #DF7861;
 }
 
 .dataItem p {
