@@ -6,7 +6,6 @@ import UpdateFailed from "../UpdateFailed";
 import getBasicAuthString from "../../../getBasicAuthString";
 import ModalBaseFull from "../../Modal/ModalBaseFull";
 
-
 const AdminUserEdit = ({
   userToEdit,
   setUserToEdit,
@@ -15,7 +14,6 @@ const AdminUserEdit = ({
   users,
   setUsers,
 }) => {
-  
   const [email, setEmail] = useState(userToEdit.email);
   const [firstName, setFirstName] = useState(userToEdit.firstName);
   const [lastName, setLastName] = useState(userToEdit.lastName);
@@ -28,6 +26,8 @@ const AdminUserEdit = ({
   const [isActive, setIsActive] = useState(userToEdit.isActive);
   const [updateOk, setUpdateOk] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleteResult, setDeleteResult] = useState(null);
+  const [showDeleteResult, setShowDeleteResult] = useState(false);
 
   const sendUpdatedUserToApi = async (e) => {
     e.preventDefault();
@@ -79,46 +79,84 @@ const AdminUserEdit = ({
       setUpdateOk(false);
     }
   };
+
   const deleteUser = async () => {
-	  const userToDelete =JSON.stringify({id: userToEdit.id});
-	const requestOptions = {
-	  method: "DELETE",
-	  headers: {
-		Authorization: loggedInUser.password,
-		Accept: "application/json",
-		"Content-Type": "application/json",
-	  },
-	  body: userToDelete
-	};
-	let resp = await fetch(
-	  "/api/customer/",
-	  requestOptions
-	);
-	if (resp.ok) {
-	  let newUsers = users.filter((x) => x.id !== userToEdit.id);
-	  setUsers(newUsers);
-	  setUserToEdit(null);
-	}
-  }
+    const userToDelete = JSON.stringify({ id: userToEdit.id });
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        Authorization: loggedInUser.password,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: userToDelete,
+    };
+    let resp = await fetch("/api/customer/", requestOptions);
+    if (resp.ok) {
+      setDeleteResult(true);
+    } else {
+      setDeleteResult(false);
+    }
+    setShowDeleteConfirm(false);
+    setShowDeleteResult(true);
+  };
+  const deleteResultAcknowledge = () => {
+    if (deleteResult) {
+      let newUsers = users.filter((x) => x.id !== userToEdit.id);
+      setUsers(newUsers);
+      setUserToEdit(null);
+    }
+    setDeleteResult(null);
+    setShowDeleteResult(false);
+  };
 
   return (
     <div className="admin-user-edit">
-	{showDeleteConfirm && (
-		<ModalBaseFull>
-			<div className="modal-card">
-				<h2 className="modal-card-header">Är du säker på att du vill ta bort den här kunden?</h2>
-				<div className="modal-card-footer">
-					<button type="button" onClick={deleteUser} className="btn-danger">Radera</button>
-					<button type="button" onClick={(e) =>{setShowDeleteConfirm(false)}}>Avbryt</button>
-				</div>
-			</div>
-		</ModalBaseFull>
-	)}
+      {showDeleteConfirm && (
+        <ModalBaseFull>
+          <div className="modal-card">
+            <h2 className="modal-card-header">
+              Är du säker på att du vill ta bort den här kunden?
+            </h2>
+            <div className="modal-card-footer">
+              <button type="button" onClick={deleteUser} className="btn-danger">
+                Radera
+              </button>
+              <button type="button" onClick={deleteResultAcknowledge}>
+                Avbryt
+              </button>
+            </div>
+          </div>
+        </ModalBaseFull>
+      )}
+      {showDeleteResult && (
+        <ModalBaseFull>
+          <div className="modal-card">
+            <h3 className="modal-card-header">
+              {deleteResult
+                ? "Kunden borttagen."
+                : "Kunde inte ta bort kunden."}
+            </h3>
+            <div className="btn-area">
+              <button
+                type="button"
+                onClick={() => {
+                  setDeleteResult(null);
+                  setShowDeleteResult(false);
+                  if (deleteResult) setUserToEdit(null);
+                }}
+              >
+                Ok
+              </button>
+            </div>
+          </div>
+        </ModalBaseFull>
+      )}
       <button className="btn-x-mark" onClick={() => setUserToEdit(null)}>
         <FontAwesomeIcon icon={faXmark} />
       </button>
       <form onSubmit={sendUpdatedUserToApi}>
-      	<h2>Ändra användare</h2>
+        <h2>Ändra användare</h2>
         <label htmlFor="email">Email</label>
         <input
           type="text"
@@ -215,9 +253,20 @@ const AdminUserEdit = ({
           </div>
         </div>
         <div className="admin-user-edit-button-area">
-          <button type="button" onClick={() => setUserToEdit(null)}>Stäng</button>
+          <button type="button" onClick={() => setUserToEdit(null)}>
+            Stäng
+          </button>
           <button type="submit">Spara</button>
-		  <button type="button" className="btn-danger" onClick={(e)=>{e.preventDefault;setShowDeleteConfirm(true)}}>Radera</button>
+          <button
+            type="button"
+            className="btn-danger"
+            onClick={(e) => {
+              e.preventDefault;
+              setShowDeleteConfirm(true);
+            }}
+          >
+            Radera
+          </button>
         </div>
       </form>
       {updateOk === true && <UpdateOk />}
