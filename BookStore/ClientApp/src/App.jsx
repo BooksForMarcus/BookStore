@@ -70,8 +70,9 @@ function App() {
     
     if (categories === null) getCategories();
   }, []);
+  
   useEffect(() => {
-	if (booksForShow === null && books !== null)  {
+	if (books !== null)  {
 		const localBooks = books.filter(
 		  (b) =>
 			b.soldById == "store" || (b.soldById != "store" && b.numInstock > 0)
