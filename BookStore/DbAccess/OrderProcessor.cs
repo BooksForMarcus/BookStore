@@ -44,132 +44,39 @@ public class OrderProcessor
         var mailer = new MailHelper();
         var sb = new StringBuilder();
 
-        sb.Append($@"<!DOCTYPE HTML PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
-<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 4.01 Transitional//EN"" ""http://www.w3.org/TR/html4/loose.dtd"">
-<htmlxmlns:v=""urn:schemas-microsoft-com:vml""xmlns:o=""urn:schemas-microsoft-com:office:office"">
-<head>
-	<!--[if gte mso 9]>
-		<xml>
-			<o:OfficeDocumentSettings>
-			<o:AllowPNG/>
-			<o:PixelsPerInch>96</o:PixelsPerInch>
-			</o:OfficeDocumentSettings>
-		</xml>
-	<![endif]-->
-	<meta name=""format-detection"" content=""date=no""/>
-	<meta name=""format-detection"" content=""telephone=no""/>
-	<meta content=""width=device-width, initial-scale=1"" name=""viewport"" />
-	<style type=""text/css""></style>
-</head>
-<body style=""padding:0px; margin:0px; font-family: arial,helvetica; box-sizing: border-box;"">
-<h3>Hej {_order.Customer.FirstName}!</h3>
-<br>
-<p>Här kommer en bekräftelse på din order från Bokcirkeln:
-<br>
-<div style=""display: flex; place-content: center; margin: 2em; position: relative;"">
-<div style=""display: grid;
-	grid-template-columns: repeat(3, 2fr);
-	place-items: center;
-	margin: 0em 0em;
-	width: 100%;
-	justify-self: center;
-	align-self: center;
-	grid-template-areas:
-	'order-number order-number order-status'
-	'customer-name customer-email order-date'
-	'customer-address customer-address customer-address'
-	'order-items order-items order-items';"">
-        <div style=""border:2px solid #ecb390;
-	width: 100%;
-	height: 100%;
-	padding: 0em;
-	font-size: larger;
-	place-items: center; grid-area: order-number;"" class=""admin-order-number"">
-          <h3>Order #{_order.Id}</h3>
-        </div>
-        <div style=""border:2px solid #ecb390;
-	width: 100%;
-	height: 100%;
-	padding: 0em;
-	font-size: larger;
-	place-items: center; grid-area: order-date;"" class=""admin-order-date"">
-          <p>
-            Order skapad:{_order.Date.ToShortDateString()}
-          </p>
-        </div>
-        <div style=""border:2px solid #ecb390;
-	width: 100%;
-	height: 100%;
-	padding: 0em;
-	font-size: larger;
-	place-items: center;grid-area: customer-name;"" class=""admin-order-customer-name"">
-          <p>
-            Beställare:{_order.Customer.FirstName + " " +_order.Customer.LastName}
-          </p>
-        </div>
-        <div style=""border:2px solid #ecb390;
-	width: 100%;
-	height: 100%;
-	padding: 0em;
-	font-size: larger;
-	place-items: center; grid-area: order-status;
-	display: flex;"" class=""admin-order-status"">
-          <p>Status: {_order.Status}</p>
-        </div>
-        <div style=""border:2px solid #ecb390;
-	width: 100%;
-	height: 100%;
-	padding: 0em;
-	font-size: larger;
-	place-items: center; grid-area: customer-email;"" class=""admin-order-customer-email"">
-          <p>Email: {_order.Customer.Email}</p>
-        </div>
-        <div style=""border:2px solid #ecb390;
-	width: 100%;
-	height: 100%;
-	padding: 0em;
-	font-size: larger;
-	place-items: center;grid-area: customer-address;"" class=""admin-order-customer-address"">
-          <p>Adress: {_order.Customer.Address}</p>
-        </div>
-        <div style=""border:2px solid #ecb390;
-	width: 100%;
-	height: 100%;
-	padding: 0em;
-	font-size: larger;
-	place-items: center;grid-area: order-items;
-	display: grid;
-	grid-template-columns: 2fr 2fr repeat(3, 1fr);"" class=""admin-order-items-container"">
-          <h3 style=""grid-column: 1/6;
-	justify-self: start;"">Artiklar:</h3>
-          <h4 style=""color: #df7861;
-	justify-self: start;"">Artikel nummer</h4>
-          <h4 style=""color: #df7861;
-	justify-self: start;"">Titel</h4>
-          <h4 style=""color: #df7861;
-	justify-self: start;"">Antal</h4>
-          <h4 style=""color: #df7861;
-	justify-self: start;"">á pris</h4>
-          <h4 style=""color: #df7861;
-	justify-self: start;"">Radsumma</h4>");
+        sb.Append($@"
+            <h1>Order bekräftelse</h1>
+            <p>Tack för din beställning. Ditt order nummer är {_order.Id}.</p>
+            <p>Beställda artiklar:</p>
+            <table style='border: 1px solid black; width: 50%'>
+                <tr>
+                    <th style=""width: fit-content"">Bok</th>
+                    <th>Antal</th>
+                    <th>á pris</th>
+                    <th>Radsumma</th>
+                </tr>
+");
         foreach (var book in _order.books)
         {
-            sb.Append($"<div style='display: grid;grid-column: 1/6;grid-template-columns: 2fr 2fr 1fr 1fr 1fr;width: 100%;border-bottom: 1px solid #ecb390;' class='admin-order-item'><p style='justify-self: start;'>{book.Id}</p><p style='justify-self: start;'>{book.Title}</p><p style='justify-self: start;'>{book.NumInstock}</p><p style='justify-self: start;'>{book.Price} kr</p><p style='justify-self: start;'>{(book.NumInstock==0?"Slut i lager":book.NumInstock*book.Price + " kr")}</p></div>");
+            sb.Append(@$"<tr>
+                            <td style=""text-align: center;"">{book.Title}</td>
+                            <td style=""text-align: center;"">{book.NumInstock}</td>
+                            <td style=""text-align: center;"">{String.Format("{0:.00}",book.Price)}</td>
+                            <td style=""text-align: center;"">{String.Format("{0:.00}", (book.Price * book.NumInstock))}</td>
+                        </tr>");
         }
-        sb.Append($@"<h4 style=""grid-column: 4;"" class=""admin-order-items-total"">Porto:</h4>
-          <p style=""grid-column: 5; justify-self: start;"" class=""admin-order-items-number"">{_order.Postage} kr</p>
-          <h4 style=""grid-column: 4;"" class=""admin-order-items-total"">Totalt:</h4>
-          <p style=""grid-column: 5; justify-self: start;"" class=""admin-order-items-number"">{_order.OrderSum} kr</p>
-          <h4 style=""grid-column: 4;"" class=""admin-order-items-vat"">Varav moms:</h4>
-          <p style=""grid-column: 5; justify-self: start;"" class=""admin-order-items-number"">{_order.VAT} kr</p>
-        </div>
-      </div>
-    </div>
-    <br>
-    <h3>Tack för att du handlar hos oss!</h3>
-    <p>Med vänliga hälsningar,</p>
-    <p>Bokcirkeln</p>
-    </body>");
+        sb.Append(@$"
+            </table>
+            <p>Frakt: {_order.Postage}</p>       
+            <p>Totalt: {_order.OrderSum}</p>
+            <p>Varav moms: {_order.VAT}</p><br>
+            <p>Fraktadress:</p>
+            <p>{_order.Customer.Address}</p><br>
+            <p>Tack för att du handlar hos oss!</p>
+            <p>Med vänlig hälsning,</p>
+            <p>Bokcirkeln</p>
+");
+
         var mailBody = sb.ToString();
         if (!IsDev)mailer.SendMail(_order.Customer.Email, $"Orderbekräftelse {_order.Id}", mailBody);
         else
