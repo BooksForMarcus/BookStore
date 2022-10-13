@@ -19,7 +19,7 @@ public class MailHelper
         }
     }
 
-    public void SendMail(string mailTo,string subject, string msg)
+    public void SendMail(string mailTo, string subject, string msg)
     {
         if (_isDev) return;
         using (SmtpClient client = new())
@@ -31,16 +31,24 @@ public class MailHelper
             client.UseDefaultCredentials = false;
             client.Credentials = new NetworkCredential(_sender, _pass);
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            using (MailMessage mail = new())
+            try
             {
-                mail.From = new MailAddress(_sender, "Bokcirkeln");
-                mail.To.Add(new MailAddress(mailTo));
-                mail.Subject = subject;
-                mail.Body = msg;
-                mail.BodyEncoding = Encoding.UTF8;
-                mail.IsBodyHtml = true;
+                using (MailMessage mail = new())
+                {
+                    mail.From = new MailAddress(_sender, "Bokcirkeln");
+                    mail.To.Add(new MailAddress(mailTo));
+                    mail.Subject = subject;
+                    mail.Body = msg;
+                    mail.BodyEncoding = Encoding.UTF8;
+                    mail.IsBodyHtml = true;
 
-                client.Send(mail);
+                    client.Send(mail);
+                }
+            }
+            catch
+            {
+                //do nothing, try-catch here is to prevent page
+                //outage due to free email account being inactive
             }
         }
     }
